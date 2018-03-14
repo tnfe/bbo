@@ -3,7 +3,7 @@
  * +++++++++ a utility-belt library for JavaScript +++++++++
  * (c) 2011-2018 halld add
  * https://github.com/jiayi2/ppo
- * version 1.3.12
+ * version 1.3.13
  */
 
 (function(global, factory) {
@@ -192,6 +192,66 @@
         }
     };
 
+    //极简路由
+    ppo.Router = function() {
+        this.hash = window.location.hash.substring(1);
+    };
+
+    ppo.Router.prototype = {
+        // 设置路由
+        add: function(_hash, callback) {
+            var _this = this;
+            _checkRouter(_this.hash);
+            _this.bindHashChange(function(__hash) {
+                _checkRouter(__hash);
+            });
+
+            function _checkRouter(__hash) {
+                if (_hash == __hash) {
+                    if (typeof callback == 'function') {
+                        callback();
+                    }
+                }
+            }
+        },
+        // hashChange事件监听
+        bindHashChange: function(callback) {
+            var _this = this;
+            if ('onhashchange' in window) {
+                _this.addEvent(window, 'hashchange', function() {
+                    _this.hash = window.location.hash.substring(1);
+                    if (typeof callback == 'function') {
+                        callback(_this.hash);
+                    }
+                });
+            } else {
+                setInterval(function() {
+                    var ischanged = _this.hash != window.location.hash.substring(1);
+                    if (ischanged) {
+                        _this.hash = window.location.hash.substring(1);
+                        if (typeof callback == 'function') {
+                            callback(_this.hash);
+                        }
+                    }
+                }, 150);
+            }
+        },
+        // 事件绑定函数兼容
+        addEvent: function(el, eventType, callback) {
+            if (el.addEventListener) {
+                return el.addEventListener(eventType, callback, false);
+            } else if (el.attachEvent) {
+                return el.attachEvent(eventType, callback);
+            } else {
+                return el['on' + eventType] = callback;
+            }
+        }
+    };
+    // 实例化
+    ppo.Router.init = function() {
+        var router = new ppo.Router();
+        return router;
+    };
     /**
      * trigger event
      * https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
@@ -1033,7 +1093,7 @@
         },
         //字符串去重
         longUnique: function(target) {
-            
+
             // var newStr = "";
             // for (var i = 0; i < target.length; i++) {
             //     if (newStr.indexOf(target[i]) == -1) {
