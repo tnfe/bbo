@@ -356,13 +356,13 @@
             min = parseInt(time / (1000 * 60)),
             month = parseInt(day / 30),
             year = parseInt(month / 12);
-        if (year) return year + "年前"
-        if (month) return month + "个月前"
-        if (day) return day + "天前"
-        if (hour) return hour + "小时前"
-        if (min) return min + "分钟前"
-        else return '刚刚'
-    }
+        if (year) return year + "年前";
+        if (month) return month + "个月前";
+        if (day) return day + "天前";
+        if (hour) return hour + "小时前";
+        if (min) return min + "分钟前";
+        else return '刚刚';
+    };
 
     /**
      * 
@@ -385,7 +385,7 @@
             s = Math.floor(t / 1000 % 60);
         }
         return d + "天 " + h + "小时 " + m + "分钟 " + s + "秒";
-    }
+    };
 
     /************************************************************************
      * About Url Params
@@ -1473,7 +1473,7 @@
                 arr = reg.exec(temp);
             return arr[1].toLowerCase();
         }
-    }
+    };
 
     /**
      * to json
