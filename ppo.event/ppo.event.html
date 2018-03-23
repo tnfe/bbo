@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ppo.event</title>
+</head>
+
+<body>
+    <div id="toolBar">
+        <button event-click="click save">click save</button>
+        <span event-dblclick="double click open">double click open</span>
+        <button cmd="cmd save">cmd save</button>
+        <span down="down open">down open</span>
+    </div>
+    <div>
+        <button id="buttonFire">fire</button>
+    </div>
+     <script type="text/javascript" src="../ppo.js"></script>
+    <script type="text/javascript" src="ppo.event.js"></script>
+    <script>
+    (function() {
+        var handler = ppo.event.on("toolBar", function(command, element, e) {
+            alert(command);
+        });
+        document.getElementById("buttonFire").onclick = function() {
+            ppo.event.fire(handler, "fire");
+        };
+    })();
+    </script>
+
+</body>
+
+</html>

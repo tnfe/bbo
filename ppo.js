@@ -22,6 +22,8 @@
     /**
      * detect IOS
      * From https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
+     * more see:
+     * https://github.com/madrobby/zepto/blob/master/src/detect.js#files
      */
     ppo.isIOS = ppo.isIos = function() {
         return /iPad|iPhone|iPod/.test(ppo.ua());
@@ -1565,5 +1567,9 @@
         }
     };
 
+    //扩展ajax
+    ppo.ajax = ppo.ajax || {};
+    //扩展事件代理
+    ppo.event = ppo.event || {};
     return ppo;
 });
