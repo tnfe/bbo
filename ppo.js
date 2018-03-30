@@ -3,8 +3,8 @@
  * +++++++++ a utility-belt library for JavaScript +++++++++
  * (c) 2011-2018 halld add
  * https://github.com/jiayi2/ppo
- * version 1.3.14
- * add ppo.ajax, ppo.event
+ * version 1.3.15
+ * add ppo.template
  */
 
 (function(global, factory) {
@@ -1572,5 +1572,7 @@
     ppo.ajax = ppo.ajax || {};
     //扩展事件代理
     ppo.event = ppo.event || {};
+    //扩展模板
+    ppo.template = ppo.template || {};
     return ppo;
 });
