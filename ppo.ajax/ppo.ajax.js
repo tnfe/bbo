@@ -6,7 +6,7 @@
  * see demo http://www.openjs.com/scripts/jx/
  */
 ppo.ajax = {
-    getHTTPObject: function() {
+    getHTTPObject: function () {
         var http = false;
         if (typeof ActiveXObject != 'undefined') {
             try {
@@ -27,7 +27,7 @@ ppo.ajax = {
         };
         return http;
     },
-    load: function(url, callback, format) {
+    load: function (url, callback, format) {
         var http = this.init();
         if (!http || !url) return;
         if (http.overrideMimeType) http.overrideMimeType('text/xml');
@@ -41,7 +41,7 @@ ppo.ajax = {
 
         http.open("GET", url, true);
 
-        http.onreadystatechange = function() {
+        http.onreadystatechange = function () {
             if (http.readyState == 4) {
                 if (http.status == 200) {
                     var result = "";
@@ -60,7 +60,7 @@ ppo.ajax = {
         };
         http.send(null);
     },
-    init: function() {
+    init: function () {
         return this.getHTTPObject();
     }
 };
