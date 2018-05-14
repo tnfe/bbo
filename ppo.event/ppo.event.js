@@ -96,7 +96,7 @@ void function(exports) {
      * 	{Element} element 响应的dom
      * 	{Event} e 事件信息
      * @param {String|Array} events 绑定事件列表
-     * @return {Number} 返回事件句柄
+     * @return {Number} 返回事件
      */
     exports.on = function(element, callback, events) {
         if (!callback) return;
@@ -148,11 +148,11 @@ void function(exports) {
     };
 
     /**
-     * 派发事件
-     * @param {Number} handler 事件句柄
-     * @param {String} command 命令字符串
-     * @param {Element} element 事件Dom对象
-     * @param {Event} e 事件
+     * 派发
+     * @param {Number} handler 
+     * @param {String} command 
+     * @param {Element} element 
+     * @param {Event} e 
      */
     exports.fire = function(handler, command, element, e) {
         var eventItem = eventDict[handler];
@@ -161,7 +161,7 @@ void function(exports) {
 
     /**
      * 注销事件
-     * @param {Number} handler 事件对象句柄
+     * @param {Number} handler 事件对象handler
      */
     exports.un = function(handler) {
         var eventItem = eventDict[handler];
