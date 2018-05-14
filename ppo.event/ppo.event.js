@@ -1,7 +1,6 @@
 /**
  * @description 扩展事件的代理
  * @author halld
- * @dateTime    2018-03-23
  * @demo        [demo]
  */
 void function(exports) {
@@ -67,16 +66,6 @@ void function(exports) {
         }
     };
 
-    /**
-     * 事件字典
-     * 	key: handler
-     * 	value: {Object}
-     * 		{Element} target
-     *		{Object} events
-     * 			key: eventName
-     * 			value: {Function} eventCallback
-     *		{Function} callback
-     */
     var eventDict = {};
 
     /**
@@ -84,9 +73,6 @@ void function(exports) {
      */
     var defaultEvents = ["mousedown", "click", "dblclick"];
 
-    /**
-     * 事件句柄，为保证唯一
-     */
     var handler = 0;
 
     /**
