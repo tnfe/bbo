@@ -3,7 +3,7 @@
  * +++++++++ a utility-belt library for JavaScript +++++++++
  * (c) 2011-2018 halld add
  * https://github.com/jiayi2/ppo
- * version 1.3.16
+ * version 1.3.17
  * add ppo.g ppo.gc ppo.c
  */
 
