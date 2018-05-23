@@ -3,8 +3,8 @@
  * +++++++++ a utility-belt library for JavaScript +++++++++
  * (c) 2011-2018 halld add
  * https://github.com/jiayi2/ppo
- * version 1.3.17
- * add ppo.g ppo.gc ppo.c
+ * version 1.3.18
+ * add ppo.ua() => list
  */
 
 (function (global, factory) {
@@ -66,6 +66,18 @@
 
     ppo.isNewsApp = function (e) {
         return /qqnews/.test(ppo.ua());
+    };
+
+    ppo.mqqbrowser = function () {
+        return /mqqbrowser\//.test(ppo.ua()); // QQ浏览器
+    };
+
+    ppo.qq = function () {
+        return /qq\//.test(ppo.ua()); // 手机QQ
+    };
+
+    ppo.tenvideo = function () {
+        return /qqlivebrowser/.test(ppo.ua()); // 腾讯视频
     };
 
     /**
