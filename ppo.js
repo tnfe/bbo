@@ -3,11 +3,11 @@
  * +++++++++ a utility-belt library for JavaScript +++++++++
  * (c) 2011-2018 halld add
  * https://github.com/jiayi2/ppo
- * version 1.3.18
- * add ppo.ua() => list
+ * version 1.3.19
+ * add ppo.objectParam
  */
 
-(function (global, factory) {
+(function(global, factory) {
     if (typeof define === "function" && define.amd) {
         define([], factory);
     } else if (typeof module !== "undefined" && module.exports) {
@@ -15,7 +15,7 @@
     } else {
         global.ppo = factory();
     }
-})(this, function () {
+})(this, function() {
     function ppo() {}
     /************************************************************************
      * Detecting
@@ -26,15 +26,15 @@
      * more see:
      * https://github.com/madrobby/zepto/blob/master/src/detect.js#files
      */
-    ppo.isIOS = ppo.isIos = function () {
+    ppo.isIOS = ppo.isIos = function() {
         return /iPad|iPhone|iPod/.test(ppo.ua());
     };
 
-    ppo.isiPhone = function () {
+    ppo.isiPhone = function() {
         return /iPhone/.test(ppo.ua());
     };
 
-    ppo.isIPad = function () {
+    ppo.isIPad = function() {
         return /iPad/.test(ppo.ua());
     };
 
@@ -42,7 +42,7 @@
      * detect Android
      * From https://stackoverflow.com/questions/6031412/detect-android-phone-via-javascript-jquery
      */
-    ppo.isAndroid = function () {
+    ppo.isAndroid = function() {
         return ppo.ua("l").indexOf("android") > -1;
     };
 
@@ -50,33 +50,33 @@
      * detect PC / Mobile
      * From https://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery
      */
-    ppo.isMobile = function () {
+    ppo.isMobile = function() {
         return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(
             ppo.ua("l")
         );
     };
 
-    ppo.isPC = function () {
+    ppo.isPC = function() {
         return !this.isMobile();
     };
 
-    ppo.isWeixin = function () {
+    ppo.isWeixin = function() {
         return /MicroMessenger/i.test(ppo.ua("l"));
     };
 
-    ppo.isNewsApp = function (e) {
+    ppo.isNewsApp = function(e) {
         return /qqnews/.test(ppo.ua());
     };
 
-    ppo.mqqbrowser = function () {
+    ppo.mqqbrowser = function() {
         return /mqqbrowser\//.test(ppo.ua()); // QQ浏览器
     };
 
-    ppo.qq = function () {
+    ppo.qq = function() {
         return /qq\//.test(ppo.ua()); // 手机QQ
     };
 
-    ppo.tenvideo = function () {
+    ppo.tenvideo = function() {
         return /qqlivebrowser/.test(ppo.ua()); // 腾讯视频
     };
 
@@ -84,7 +84,7 @@
      * detect ie
      * From https://stackoverflow.com/questions/10964966/detect-ie-version-prior-to-v9-in-javascript
      */
-    ppo.isIE = function () {
+    ppo.isIE = function() {
         return ppo.ieVer() > 0;
     };
 
@@ -96,7 +96,7 @@
      * Edge 12 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
      * Edge 13 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
      */
-    ppo.ieVersion = ppo.ieVer = function () {
+    ppo.ieVersion = ppo.ieVer = function() {
         var ua = ppo.ua();
         var msie = ua.indexOf("MSIE ");
         if (msie > 0) {
@@ -120,7 +120,7 @@
     /**
      * navigator.userAgent
      */
-    ppo.ua = function (lower) {
+    ppo.ua = function(lower) {
         return lower ?
             window.navigator.userAgent.toLowerCase() :
             window.navigator.userAgent;
@@ -132,7 +132,7 @@
     /**
      * log on mobile html body
      */
-    ppo.log = function (msg, styles) {
+    ppo.log = function(msg, styles) {
         var ele = document.getElementById("_ppo_log");
         if (ele === null) {
             ele = document.createElement("div");
@@ -155,7 +155,7 @@
     /**
      * ppo.logs('onlyid&10', 1, 2);
      */
-    ppo.logs = function () {
+    ppo.logs = function() {
         if (window.console && window.console.log) {
             var onlyid = arguments[0] + "";
             var times = parseInt(onlyid.split("&")[1]) || 10;
@@ -171,7 +171,7 @@
         }
     };
 
-    ppo.removeConsole = function (clear) {
+    ppo.removeConsole = function(clear) {
         try {
             if (!window.console) window.console = {};
             window.console.log = window.console.info = window.console.dir = window.console.warn = window.console.trace =
@@ -186,7 +186,7 @@
     /**
      * open new url dont not blocked by browser
      */
-    ppo.open = function (href) {
+    ppo.open = function(href) {
         var id = "_ppo_open_proxy";
         var a = document.getElementById(id) || document.createElement("a");
         a.setAttribute("id", id);
@@ -198,7 +198,7 @@
         this.trigger(a, "click", "MouseEvents");
     };
 
-    ppo.stopPropagation = function (e) {
+    ppo.stopPropagation = function(e) {
         var e = e || window.event;
         if (e.stopPropagation) {
             e.stopPropagation(); //W3C
@@ -207,15 +207,15 @@
         }
     };
 
-    ppo.g = function (i) {
+    ppo.g = function(i) {
         return document.getElementById(i);
     };
 
-    ppo.gc = function (cn) {
+    ppo.gc = function(cn) {
         return document.getElementsByClassName(cn);
     };
 
-    ppo.c = function (t, cn, i, id) {
+    ppo.c = function(t, cn, i, id) {
         var el = document.createElement(t); //t就是创建的标签
         if (cn) {
             el.setAttribute('class', cn); //给t标签添加cn这个类
@@ -229,16 +229,16 @@
         return el;
     };
     //极简路由
-    ppo.Router = function () {
+    ppo.Router = function() {
         this.hash = window.location.hash.substring(1);
     };
 
     ppo.Router.prototype = {
         // 设置路由
-        add: function (_hash, callback) {
+        add: function(_hash, callback) {
             var _this = this;
             _checkRouter(_this.hash);
-            _this.bindHashChange(function (__hash) {
+            _this.bindHashChange(function(__hash) {
                 _checkRouter(__hash);
             });
 
@@ -251,17 +251,17 @@
             }
         },
         // hashChange事件监听
-        bindHashChange: function (callback) {
+        bindHashChange: function(callback) {
             var _this = this;
             if ('onhashchange' in window) {
-                _this.addEvent(window, 'hashchange', function () {
+                _this.addEvent(window, 'hashchange', function() {
                     _this.hash = window.location.hash.substring(1);
                     if (typeof callback == 'function') {
                         callback(_this.hash);
                     }
                 });
             } else {
-                setInterval(function () {
+                setInterval(function() {
                     var ischanged = _this.hash != window.location.hash.substring(1);
                     if (ischanged) {
                         _this.hash = window.location.hash.substring(1);
@@ -273,7 +273,7 @@
             }
         },
         // 事件绑定函数兼容
-        addEvent: function (el, eventType, callback) {
+        addEvent: function(el, eventType, callback) {
             if (el.addEventListener) {
                 return el.addEventListener(eventType, callback, false);
             } else if (el.attachEvent) {
@@ -284,7 +284,7 @@
         }
     };
     // 实例化
-    ppo.Router.init = function () {
+    ppo.Router.init = function() {
         var router = new ppo.Router();
         return router;
     };
@@ -292,7 +292,7 @@
      * trigger event
      * https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
      */
-    ppo.trigger = function (element, event, eventType) {
+    ppo.trigger = function(element, event, eventType) {
         if (document.createEventObject) {
             var e = document.createEventObject();
             return element.fireEvent("on" + event, e);
@@ -307,7 +307,7 @@
      * setInterval func fix times
      * https://stackoverflow.com/questions/2956966/javascript-telling-setinterval-to-only-fire-x-amount-of-times
      */
-    ppo.setTimesout = function () {
+    ppo.setTimesout = function() {
         var func = arguments[0];
         var delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
         var times = arguments[2] === undefined ? 1 : parseInt(arguments[2]);
@@ -318,7 +318,7 @@
             over: false
         };
 
-        var id = setInterval(function () {
+        var id = setInterval(function() {
             target.index++;
             if (target.index > times) {
                 clearInterval(id);
@@ -331,7 +331,7 @@
         return id;
     };
 
-    ppo.clearTimesout = function (id) {
+    ppo.clearTimesout = function(id) {
         clearInterval(id);
     };
 
@@ -339,7 +339,7 @@
      * construct
      * https://stackoverflow.com/questions/1606797/use-of-apply-with-new-operator-is-this-possible
      */
-    ppo.construct = function () {
+    ppo.construct = function() {
         var classs = arguments[0];
         return new(Function.prototype.bind.apply(classs, arguments))();
     };
@@ -348,7 +348,7 @@
      * Gets all the formal parameter names of a function
      * https://www.zhihu.com/question/28912825
      */
-    ppo.paramsName = function (fn) {
+    ppo.paramsName = function(fn) {
         return /\(\s*([\s\S]*?)\s*\)/.exec(fn.toString())[1].split(/\s*,\s*/);
     };
 
@@ -359,7 +359,7 @@
      * getDate
      * https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
      */
-    ppo.getDate = function (d1, d2) {
+    ppo.getDate = function(d1, d2) {
         var today = new Date();
 
         var dd = today.getDate();
@@ -388,7 +388,7 @@
      * @param  {Date} startTime 
      * @return {String}
      */
-    ppo.formatPassTime = function (startTime) {
+    ppo.formatPassTime = function(startTime) {
         var currentTime = Date.parse(new Date()),
             time = currentTime - startTime,
             day = parseInt(time / (1000 * 60 * 60 * 24)),
@@ -410,7 +410,7 @@
      * @param  {Date} endTime  
      * @return {String}
      */
-    ppo.formatRemainTime = function (endTime) {
+    ppo.formatRemainTime = function(endTime) {
         var startDate = new Date(); //开始时间
         var endDate = new Date(endTime); //结束时间
         var t = endDate.getTime() - startDate.getTime(); //时间差
@@ -435,7 +435,7 @@
      * getUrlParam / deleteUrlParam
      * From https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
      */
-    ppo.getUrlParam = function (name, url) {
+    ppo.getUrlParam = function(name, url) {
         if (!url) url = window.location.href;
         name = name.replace(/[\[\]]/g, "\\$&");
         var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
@@ -450,7 +450,7 @@
      * setUrlParam
      * From https://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
      */
-    ppo.setUrlParam = function (key, value, url) {
+    ppo.setUrlParam = function(key, value, url) {
         if (!url) url = window.location.href;
         var re = new RegExp("([?|&])" + key + "=.*?(&|#|$)", "i");
 
@@ -470,7 +470,7 @@
         }
     };
 
-    ppo.deleteUrlParam = ppo.delUrlParam = function (param, url) {
+    ppo.deleteUrlParam = ppo.delUrlParam = function(param, url) {
         if (!url) url = window.location.href;
         //prefer to use l.search if you have a location/link object
         var urlparts = url.split("?");
@@ -493,6 +493,38 @@
         }
     };
 
+    ppo.objectParam = function(arr) {
+        var str = '';
+        if (Array.isArray(arr)) {
+            str = arr.map(function(item) {
+                return item.name + '=' + item.value;
+            }).join('&');
+        } else {
+            str = ppo.objectParam(ppo.objectBigParam(arr));
+        };
+        return str;
+    };
+
+    ppo.objectBigParam = function(obj) {
+        var arr = [];
+        Object.keys(obj).forEach(function(k) {
+            if (Array.isArray(obj[k])) {
+                arr = arr.concat(obj[k].map(function(v) {
+                    return {
+                        name: k,
+                        value: v
+                    };
+                }));
+            } else {
+                arr.push({
+                    name: k,
+                    value: obj[k]
+                });
+            };
+        });
+        return arr;
+    };
+
     /************************************************************************
      * Cookies
      *************************************************************************/
@@ -501,7 +533,7 @@
      * From https://stackoverflow.com/questions/1458724/how-do-i-set-unset-cookie-with-jquery/1458728#1458728
      * change by a-jie
      */
-    ppo.setCookie = function (name, value, option) {
+    ppo.setCookie = function(name, value, option) {
         var longTime = 10;
         var path = "; path=/";
         var val = option && option.raw ? value : encodeURIComponent(value);
@@ -533,7 +565,7 @@
         document.cookie = cookie;
     };
 
-    ppo.getCookie = function (name) {
+    ppo.getCookie = function(name) {
         var nameEQ = encodeURIComponent(name) + "=";
         var ca = document.cookie.split(";");
         for (var i = 0; i < ca.length; i++) {
@@ -546,7 +578,7 @@
         return null;
     };
 
-    ppo.deleteCookie = ppo.delCookie = function (name) {
+    ppo.deleteCookie = ppo.delCookie = function(name) {
         this.setCookie(name, "", {
             hour: -1
         });
@@ -555,7 +587,7 @@
      * cookie
      * https://github.com/jiayi2/onavo/blob/master/onavo.js#L209
      */
-    ppo.cookie = function () {
+    ppo.cookie = function() {
         function _extend() {
             var i = 0;
             var result = {};
@@ -662,17 +694,17 @@
             }
 
             api.set = api;
-            api.get = function (key) {
+            api.get = function(key) {
                 return api.call(api, key);
             };
-            api.getJSON = api.getjson = api.getJson = function () {
+            api.getJSON = api.getjson = api.getJson = function() {
                 return api.apply({
                     json: true
                 }, [].slice.call(arguments));
             };
             api.defaults = {};
 
-            api.remove = function (key, attributes) {
+            api.remove = function(key, attributes) {
                 api(
                     key,
                     "",
@@ -686,29 +718,29 @@
 
             return api;
         }
-        return init(function () {});
+        return init(function() {});
     };
 
     /************************************************************************
      * Random And Math
      *************************************************************************/
-    ppo.randomColor = function () {
+    ppo.randomColor = function() {
         return (
             "#" +
             ("00000" + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6)
         );
     };
 
-    ppo.randomFromArray = ppo.randomfArr = function (arr) {
+    ppo.randomFromArray = ppo.randomfArr = function(arr) {
         return arr[Math.floor(Math.random() * arr.length)];
     };
 
-    ppo.randomFromA2B = ppo.randomA2B = function (a, b, int) {
+    ppo.randomFromA2B = ppo.randomA2B = function(a, b, int) {
         var result = Math.random() * (b - a) + a;
         return int ? Math.floor(result) : result;
     };
 
-    ppo.randomKey = function (length) {
+    ppo.randomKey = function(length) {
         var key = "";
         var possible =
             "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
@@ -719,17 +751,17 @@
         return key;
     };
 
-    ppo.floor = function (n, m) {
+    ppo.floor = function(n, m) {
         m = m || 0;
         return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
     };
 
-    ppo.fill0 = function (num) {
+    ppo.fill0 = function(num) {
         num = parseFloat(num);
         return num < 10 ? "0" + num : num;
     };
 
-    ppo.currency = function (val) {
+    ppo.currency = function(val) {
         m = m || 0;
         return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
     };
@@ -740,10 +772,10 @@
     /**
      * lock touch in mobile phone
      */
-    ppo.lockTouch = function () {
+    ppo.lockTouch = function() {
         document.addEventListener(
             "touchmove",
-            function (e) {
+            function(e) {
                 e.preventDefault();
             }, !1
         );
@@ -776,7 +808,7 @@
      * 1. ppo.loadjs("//your_url/a.js",func);
      * 2. ppo.loadjs("//your_url/a.js","only_id",func);
      */
-    ppo.loadjs = function (url, b, c) {
+    ppo.loadjs = function(url, b, c) {
         var onlyId, callback;
 
         if (typeof b == "function") {
@@ -794,7 +826,7 @@
             callback && callback();
         } else {
             var func = typeof url == "string" ? _insertScript : _insertScripts;
-            func.call(this, url, function () {
+            func.call(this, url, function() {
                 ppo._cache.urls[onlyId] = true;
                 callback && callback();
             });
@@ -803,7 +835,7 @@
     /*
      * https://gist.github.com/pete-otaqui/3912307
      */
-    ppo.loadcss = function (url, callback) {
+    ppo.loadcss = function(url, callback) {
         var promise,
             resolutions = [],
             rejections = [],
@@ -817,12 +849,12 @@
         id = "load-css-" + count;
 
         promise = {
-            done: function (callback) {
+            done: function(callback) {
                 resolutions.push(callback);
                 if (resolved) callback();
                 return promise;
             },
-            fail: function (callback) {
+            fail: function(callback) {
                 rejections.push(callback);
                 if (rejected) callback();
                 return promise;
@@ -847,7 +879,7 @@
             link.addEventListener("load", resolve, false);
             link.addEventListener("error", reject, false);
         } else if (typeof link.attachEvent !== "undefined") {
-            link.attachEvent("onload", function () {
+            link.attachEvent("onload", function() {
                 // IE 8 gives us onload for both success and failure
                 // and also readyState is always "completed", even
                 // for failure.  The only way to see if a stylesheet
@@ -880,12 +912,12 @@
     /*数组方法 s */
     //除了es5 forEach, map, filter, every, some, indexOf, lastIndexOf 新增的方法外
     //isArray unique random 都是自己实现的
-    A = (function () {
+    A = (function() {
         var ret = {
-            isArray: function (obj) {
+            isArray: function(obj) {
                 return Object.prototype.toString.call(obj) === "[object Array]";
             },
-            unique: function (target) {
+            unique: function(target) {
                 //数组去重
                 var temp = [];
                 _that: for (var i = 0, len = target.length; i < len; i++) {
@@ -898,11 +930,11 @@
                 }
                 return temp;
             },
-            random: function (target) {
+            random: function(target) {
                 //在数组中随机取一个
                 return target[Math.floor(Math.random() * target.length)];
             },
-            shuffle: function (target) {
+            shuffle: function(target) {
                 //打乱数组返回新数组
                 if (!target.length == 0) {
                     var temp = target,
@@ -919,7 +951,7 @@
                 }
                 return;
             },
-            equal: function (arr1, arr2) {
+            equal: function(arr1, arr2) {
                 if (arr1 === arr2) return true;
                 if (arr1.length != arr2.length) return false;
                 for (var i = 0; i < arr1.length; ++i) {
@@ -927,33 +959,33 @@
                 };
                 return true;
             },
-            contains: function (target, item) {
+            contains: function(target, item) {
                 //是否包含指定元素
                 return target.indexOf(item) > -1;
             },
-            removeAt: function (target, index) {
+            removeAt: function(target, index) {
                 //在参数1中删除参数2指定位的元素返回布尔
                 return !!target.splice(index, 1).length;
             },
-            remove: function (target, item) {
+            remove: function(target, item) {
                 //在参数1中删除参数2返回布尔
                 var index = target.indexOf(item);
                 return index > -1 ? this.removeAt(target, index) : false;
             },
-            compact: function (target) {
+            compact: function(target) {
                 //去除数组中的undefined和Null
                 if (!type.isArray(target)) {
                     throw new Error("target error type");
                 }
-                return target.filter(function (item) {
+                return target.filter(function(item) {
                     return item != undefined;
                 });
             },
-            pluck: function (target, name) {
+            pluck: function(target, name) {
                 //获取数组对象中的属性值，组合成新数组
                 var result = [],
                     temp;
-                target.forEach(function (item) {
+                target.forEach(function(item) {
                     temp = item[name];
                     if (temp != null) {
                         result.push(temp);
@@ -961,17 +993,17 @@
                 });
                 return result;
             },
-            union: function (t1, t2) {
+            union: function(t1, t2) {
                 //2个数组的并集
                 return this.unique(t1.concat(t2));
             },
-            intersect: function (t1, t2) {
+            intersect: function(t1, t2) {
                 // 取2个数组的交集
-                return t1.filter(function (item) {
+                return t1.filter(function(item) {
                     return ~t2.indexOf(item);
                 });
             },
-            diff: function (t1, t2) {
+            diff: function(t1, t2) {
                 //取差集
                 var r = t1;
                 for (var i = 0; i < t1.length; i++) {
@@ -985,15 +1017,15 @@
                 }
                 return r;
             },
-            max: function (target) {
+            max: function(target) {
                 //max
                 return Math.max.apply(0, target);
             },
-            min: function (target) {
+            min: function(target) {
                 //min
                 return Math.min.apply(0, target);
             },
-            indexOf: function (array, elt, from) {
+            indexOf: function(array, elt, from) {
                 //以下es5新增
                 if (array.indexOf) {
                     return isNaN(from) ? array.indexOf(elt) : array.indexOf(elt, from);
@@ -1009,7 +1041,7 @@
                     return -1;
                 }
             },
-            lastIndexOf: function (array, elt, from) {
+            lastIndexOf: function(array, elt, from) {
                 if (array.lastIndexOf) {
                     return isNaN(from) ?
                         array.lastIndexOf(elt) :
@@ -1044,28 +1076,28 @@
         }
 
         each({
-                forEach: function (object, callback, thisp) {
-                    each(object, function () {
+                forEach: function(object, callback, thisp) {
+                    each(object, function() {
                         callback.apply(thisp, arguments);
                     });
                 },
-                map: function (object, callback, thisp) {
+                map: function(object, callback, thisp) {
                     var ret = [];
-                    each(object, function () {
+                    each(object, function() {
                         ret.push(callback.apply(thisp, arguments));
                     });
                     return ret;
                 },
-                filter: function (object, callback, thisp) {
+                filter: function(object, callback, thisp) {
                     var ret = [];
-                    each(object, function (item) {
+                    each(object, function(item) {
                         callback.apply(thisp, arguments) && ret.push(item);
                     });
                     return ret;
                 },
-                every: function (object, callback, thisp) {
+                every: function(object, callback, thisp) {
                     var ret = true;
-                    each(object, function () {
+                    each(object, function() {
                         if (!callback.apply(thisp, arguments)) {
                             ret = false;
                             return false;
@@ -1073,9 +1105,9 @@
                     });
                     return ret;
                 },
-                some: function (object, callback, thisp) {
+                some: function(object, callback, thisp) {
                     var ret = false;
-                    each(object, function () {
+                    each(object, function() {
                         if (callback.apply(thisp, arguments)) {
                             ret = true;
                             return false;
@@ -1084,8 +1116,8 @@
                     return ret;
                 }
             },
-            function (method, name) {
-                ret[name] = function (object, callback, thisp) {
+            function(method, name) {
+                ret[name] = function(object, callback, thisp) {
                     if (object[name]) {
                         return object[name](callback, thisp);
                     } else {
@@ -1102,7 +1134,7 @@
     /* 字符串s */
     S = {
         // 去空格
-        trim: function (str) {
+        trim: function(str) {
             str = str.replace(/^\s+/, "");
             for (var i = str.length - 1; i >= 0; i--) {
                 if (/\S/.test(str.charAt(i))) {
@@ -1112,11 +1144,11 @@
             }
             return str;
         },
-        print: function (str, object) {
+        print: function(str, object) {
             // 模仿C语言print方法
             var arr = [].slice.call(arguments, 1),
                 index;
-            return str.replace(/#{([^{}]+)}/gm, function (match, name) {
+            return str.replace(/#{([^{}]+)}/gm, function(match, name) {
                 index = Number(name);
                 if (index >= 0) {
                     return arr[index];
@@ -1128,7 +1160,7 @@
             });
         },
         //补零
-        fillZero: function (target, n) {
+        fillZero: function(target, n) {
             var z = new Array(n).join("0"),
                 str = z + target,
                 result = str.slice(-n);
@@ -1136,7 +1168,7 @@
             //return (Math.pow(10,n) + '' + target).slice(-n);
         },
         //字符串去重
-        longUnique: function (target) {
+        longUnique: function(target) {
 
             // var newStr = "";
             // for (var i = 0; i < target.length; i++) {
@@ -1170,14 +1202,14 @@
             return longString;
         },
         // 去掉script内部的html标签
-        stripTags: function (target) {
+        stripTags: function(target) {
             if (type.getType(target) === "String") {
                 return target
                     .replace(/<script[^>]*>(\S\s*?)<\/script>/gim, "")
                     .replace(/<[^>]+>/g, "");
             }
         },
-        capitalize: function (target) {
+        capitalize: function(target) {
             //首字母大写
             return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
         }, // camelize: function(s) { //驼峰转化（备用） 如margin-top转化为marginTop
@@ -1186,24 +1218,24 @@
         //  });
         // },
         //_ - 转驼峰命名
-        camelize: function (target) {
+        camelize: function(target) {
             if (target.indexOf("-") < 0 && target.indexOf("_") < 0) {
                 return target;
             }
-            return target.replace(/[-_][^-_]/g, function (match) {
+            return target.replace(/[-_][^-_]/g, function(match) {
                 //console.log(match) 匹配测试
                 return match.charAt(1).toUpperCase();
             });
         },
-        underscored: function (target) {
+        underscored: function(target) {
             // 把驼峰转换成_
             return target.replace(/([a-z0-9])([A-Z])/g, "$1_$2").toLowerCase();
         },
-        dasherize: function (target) {
+        dasherize: function(target) {
             //把字符串中的_转成-
             return this.underscored(target).replace(/_/g, "-");
         },
-        truncate: function (target, len, truncation) {
+        truncate: function(target, len, truncation) {
             //字符串截断方法 目标 长度默认30，截断后符号默认...
             len = len || 30;
             truncation = truncation ? truncation : "...";
@@ -1211,7 +1243,7 @@
                 target.slice(0, len - truncation.length) + truncation :
                 target.toString();
         },
-        byteLen: function (str, charset) {
+        byteLen: function(str, charset) {
             //获得字符串字节长度 参数2 utf-8 utf8 utf-16 utf16
             var target = 0,
                 charCode,
@@ -1243,7 +1275,7 @@
             }
             return target;
         },
-        repeat: function (item, times) {
+        repeat: function(item, times) {
             //重复item,times次
             var s = item,
                 target = "";
@@ -1260,21 +1292,21 @@
             return target;
             //retrun new Array(times).join(item)
         },
-        endsWith: function (target, item, ignorecase) {
+        endsWith: function(target, item, ignorecase) {
             //参2是参1的结尾么？参数3忽略大小写
             var str = target.slice(-item.length);
             return ignorecase ?
                 str.toLowerCase() === item.toLowerCase() :
                 str === item;
         },
-        startsWith: function (target, item, ignorecase) {
+        startsWith: function(target, item, ignorecase) {
             //参数2是参数1的开头么？参数3忽略大小写
             var str = target.slice(0, item.length);
             return ignorecase ?
                 str.toLowerCase() === item.toLowerCase() :
                 str === item;
         },
-        containsClass: function (target, item, separator) {
+        containsClass: function(target, item, separator) {
             // 类名中，参数1 是否包含参数2，类名中的分隔符
             return separator ?
                 (separator + target + separator).indexOf(
@@ -1282,7 +1314,7 @@
                 ) > -1 :
                 this.contains(target, item);
         },
-        contains: function (target, item) {
+        contains: function(target, item) {
             //判定一个字符串是否包含另一个字符串
             return target.indexOf(item) != -1;
             //return target.indexOf(item) > -1;
@@ -1291,7 +1323,7 @@
     ppo.String = S;
     /* 字符串e */
 
-    loadImage = (function () {
+    loadImage = (function() {
         function loadImages(options) {
             var len = 0, //资源总数
                 index = 0, //循环资源数组用
@@ -1301,8 +1333,8 @@
                 percentageValue = 0, //当前百分比
                 targetPercent = 0, //目标百分比
                 data = options.data || [],
-                step = options.step || function () {},
-                complete = options.complete || function () {},
+                step = options.step || function() {},
+                complete = options.complete || function() {},
                 needOneStep = options.needOneStep || false,
                 path = options.path || false;
 
@@ -1319,12 +1351,12 @@
                 }
             }
 
-            var processStep = function () {
+            var processStep = function() {
                 percentageValue++;
                 // console.info("processStep = ",percentageValue)
                 step(percentageValue);
                 if (percentageValue < targetPercent) {
-                    stepTimer = setTimeout(function () {
+                    stepTimer = setTimeout(function() {
                         processStep();
                     }, stepTimeValue);
                 } else if (targetPercent === 100 && percentageValue === targetPercent) {
@@ -1366,30 +1398,30 @@
             this.img = new Image();
 
             //readyState为complete和loaded则表明图片已经加载完毕。测试IE6-IE10支持该事件，其它浏览器不支持。
-            var onReadyStateChange = function () {
+            var onReadyStateChange = function() {
                 removeEventHandlers();
                 console.info("onReadyStateChange");
                 cb(this, "onReadyStateChange");
             };
 
-            var onError = function () {
+            var onError = function() {
                 console.info("onError");
                 removeEventHandlers();
                 cb(this, "onError");
             };
 
-            var onLoad = function () {
+            var onLoad = function() {
                 removeEventHandlers();
                 cb(this, "onload");
             };
 
-            var removeEventHandlers = function () {
+            var removeEventHandlers = function() {
                 self.unbind("load", onLoad);
                 self.unbind("readystatechange", onReadyStateChange);
                 self.unbind("error", onError);
             };
 
-            this.start = function () {
+            this.start = function() {
                 this.bind("load", onLoad);
                 this.bind("readystatechange", onReadyStateChange);
                 this.bind("error", onError);
@@ -1408,7 +1440,7 @@
          * @param  {string} eventName
          * @param  {function} eventHandler
          */
-        loadImageItem.prototype.bind = function (eventName, eventHandler) {
+        loadImageItem.prototype.bind = function(eventName, eventHandler) {
             if (this.img.addEventListener) {
                 this.img.addEventListener(eventName, eventHandler, false);
             } else if (this.img.attachEvent) {
@@ -1422,7 +1454,7 @@
          * @param  {string} eventName
          * @param  {function} eventHandler
          */
-        loadImageItem.prototype.unbind = function (eventName, eventHandler) {
+        loadImageItem.prototype.unbind = function(eventName, eventHandler) {
             if (this.img.removeEventListener) {
                 this.img.removeEventListener(eventName, eventHandler, false);
             } else if (this.img.detachEvent) {
@@ -1432,7 +1464,7 @@
 
         // AMD module support
         if (typeof define === "function" && define.amd) {
-            define("loadImages", [], function () {
+            define("loadImages", [], function() {
                 return loadImages;
             });
         }
@@ -1446,8 +1478,8 @@
      * generate uuid
      * From https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
      */
-    ppo.uuid = function () {
-        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    ppo.uuid = function() {
+        return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
             var r = (Math.random() * 16) | 0,
                 v = c == "x" ? r : (r & 0x3) | 0x8;
             return v.toString(16);
@@ -1458,7 +1490,7 @@
      * string hash map
      * From https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
      */
-    ppo.hash = function (str) {
+    ppo.hash = function(str) {
         str += "";
         var hash = 0,
             i,
@@ -1476,7 +1508,7 @@
     /**
      * map condition judge
      */
-    ppo.judge = ppo.judgment = function (v, vals, strict) {
+    ppo.judge = ppo.judgment = function(v, vals, strict) {
         if (!this.isTypeof(vals, "array")) return false;
 
         for (var key in vals) {
@@ -1493,7 +1525,7 @@
     /**
      * is typeof type
      */
-    ppo.isTypeof = function (val, type) {
+    ppo.isTypeof = function(val, type) {
         return (
             Object.prototype.toString
             .call(val)
@@ -1501,7 +1533,7 @@
             .toLowerCase() === type
         );
     };
-    ppo.getType = function (ele) {
+    ppo.getType = function(ele) {
         if (!ele) return undefined;
         if (window == document && document != window) {
             return 'window';
@@ -1522,7 +1554,7 @@
     /**
      * to json
      */
-    ppo.toJSON = ppo.tojson = ppo.toJson = function (res) {
+    ppo.toJSON = ppo.tojson = ppo.toJson = function(res) {
         if (!res) return null;
 
         if (typeof res == "string") {
@@ -1541,7 +1573,7 @@
     /**
      * arguments to array
      */
-    ppo.args = function ($arguments, first) {
+    ppo.args = function($arguments, first) {
         return Array.prototype.slice.call($arguments, first || 0);
     };
 
@@ -1549,12 +1581,12 @@
      * a trash object
      */
     ppo.trash = {
-        clear: function () {
+        clear: function() {
             for (var key in ppo.trash) {
                 if (key !== "log" && key !== "clear") delete ppo.trash[key];
             }
         },
-        log: function () {
+        log: function() {
             for (var key in ppo.trash) {
                 if (key !== "log" && key !== "clear")
                     console.log("ppo.trash:: ", key, ppo.trash[key]);
@@ -1562,7 +1594,7 @@
         }
     };
 
-    ppo.noop = function () {};
+    ppo.noop = function() {};
 
     /************************************************************************
      *
@@ -1574,7 +1606,7 @@
         logs: {}
     };
 
-    var _insertScripts = function (arr, callback) {
+    var _insertScripts = function(arr, callback) {
         for (var i = 0; i < arr.length; i++) {
             _insertScript(arr[i], loaded);
         }
@@ -1589,24 +1621,24 @@
         }
     };
 
-    var _insertScript = function (src, callback) {
+    var _insertScript = function(src, callback) {
         var script = document.createElement("script");
         script.setAttribute("type", "text/javascript");
         script.setAttribute("src", src);
         document.getElementsByTagName("head")[0].appendChild(script);
 
         if (/msie/.test(ppo.ua("l"))) {
-            script.onreadystatechange = function () {
+            script.onreadystatechange = function() {
                 if (this.readyState == "loaded" || this.readyState == "complete") {
                     callback();
                 }
             };
         } else if (/gecko/.test(ppo.ua("l"))) {
-            script.onload = function () {
+            script.onload = function() {
                 callback();
             };
         } else {
-            setTimeout(function () {
+            setTimeout(function() {
                 callback();
             }, 50);
         }
