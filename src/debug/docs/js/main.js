@@ -606,7 +606,7 @@ $(function() {
     example:
       '<a href="https://github.com/SmartDoubleXiao/multipleClick" target="_blank">a jQuery plugin for multiple click</a><span style="color:#000;"></span><div class="button">three click</div>',
     script: function(ele) {
-      ppo.loadjs("./docs/js/mclick.js", function() {
+      ppo.loadjs("debug/docs/js/mclick.js", function() {
         ele
           .find(".button")
           .prev()

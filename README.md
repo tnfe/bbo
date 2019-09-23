@@ -14,3 +14,13 @@ npm install ppo-cli --save
 ... 
 import ppo from 'ppo-cli';
 ```
+
+#### Include in html
+``` 
+<script type="text/javascript" src="js/ppo.min.js"></script> 
+```
+
+#### CDN
+``` 
+//mat1.gtimg.com/www/js/libs/ppo.1.3.20.min.js
+```

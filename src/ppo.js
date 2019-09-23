@@ -2,19 +2,18 @@
  * PPO
  * +++++++++ a utility-belt library for JavaScript +++++++++
  * (c) 2011-2018 halld add
- * https://github.com/jiayi2/ppo
- * version 1.3.19
- * add ppo.objectParam
+ * https://github.com/halldwang/ppo
+ * version 1.3.20
  */
-
 (function(global, factory) {
-  if (typeof define === 'function' && define.amd) {
-    define([], factory);
-  } else if (typeof module !== 'undefined' && module.exports) {
+  if (typeof module === 'object' && typeof module.exports === 'object') {
     module.exports = factory();
+  } else if (typeof define === 'function' && define.amd) {
+    define(factory);
   } else {
     global.ppo = factory();
   }
+// eslint-disable-next-line no-invalid-this
 })(this, function() {
   function ppo() {}
   /************************************************************************
@@ -32,6 +31,38 @@
 
   ppo.isiPhone = function() {
     return /iPhone/.test(ppo.ua());
+  };
+
+  ppo.isIphoneXmodel = function() {
+    // X XS, XS Max, XR
+    const xSeriesConfig = [
+      {
+        devicePixelRatio: 3,
+        width: 375,
+        height: 812
+      },
+      {
+        devicePixelRatio: 3,
+        width: 414,
+        height: 896
+      },
+      {
+        devicePixelRatio: 2,
+        width: 414,
+        height: 896
+      }
+    ];
+    if (typeof window !== 'undefined' && window) {
+      const { devicePixelRatio, screen } = window;
+      const { width, height } = screen;
+      return xSeriesConfig.some(
+        (item) =>
+          item.devicePixelRatio === devicePixelRatio &&
+          item.width === width &&
+          item.height === height
+      );
+    }
+    return false;
   };
 
   ppo.isIPad = function() {
@@ -139,7 +170,9 @@
 
     if (styles) {
       for (let style in styles) {
-        ele.style[style] = styles[style];
+        if (Object.prototype.hasOwnProperty.call(styles, style)) {
+          ele.style[style] = styles[style];
+        }
       }
     }
     ele.innerHTML = msg;
@@ -151,7 +184,7 @@
   ppo.logs = function() {
     if (window.console && window.console.log) {
       let onlyid = String(arguments[0]);
-      let times = parseInt(onlyid.split('&')[1]) || 10;
+      let times = parseInt(onlyid.split('&')[1], 10) || 10;
       let logsCache = ppo._cache.logs;
 
       if (!logsCache[onlyid]) logsCache[onlyid] = {};
@@ -192,11 +225,11 @@
   };
 
   ppo.stopPropagation = function(e) {
-    var e = e || window.event;
-    if (e.stopPropagation) {
-      e.stopPropagation(); // W3C
+    let _e = e || window.event;
+    if (_e.stopPropagation) {
+      _e.stopPropagation(); // W3C
     } else {
-      e.cancelBubble = true; // IE
+      _e.cancelBubble = true; // IE
     }
   };
 
@@ -236,7 +269,7 @@
       });
 
       function _checkRouter(__hash) {
-        if (_hash == __hash) {
+        if (_hash === __hash) {
           if (typeof callback === 'function') {
             callback();
           }
@@ -255,7 +288,7 @@
         });
       } else {
         setInterval(function() {
-          let ischanged = _this.hash != window.location.hash.substring(1);
+          let ischanged = _this.hash !== window.location.hash.substring(1);
           if (ischanged) {
             _this.hash = window.location.hash.substring(1);
             if (typeof callback === 'function') {
@@ -272,7 +305,8 @@
       } else if (el.attachEvent) {
         return el.attachEvent(eventType, callback);
       } else {
-        return (el['on' + eventType] = callback);
+        let event = (el['on' + eventType] = callback);
+        return event;
       }
     }
   };
@@ -287,10 +321,10 @@
    */
   ppo.trigger = function(element, event, eventType) {
     if (document.createEventObject) {
-      var e = document.createEventObject();
+      let e = document.createEventObject();
       return element.fireEvent('on' + event, e);
     } else {
-      var e = document.createEvent(eventType || 'HTMLEvents');
+      let e = document.createEvent(eventType || 'HTMLEvents');
       e.initEvent(event, true, true);
       element.dispatchEvent(e);
     }
@@ -303,7 +337,7 @@
   ppo.setTimesout = function() {
     let func = arguments[0];
     let delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
-    let times = arguments[2] === undefined ? 1 : parseInt(arguments[2]);
+    let times = arguments[2] === undefined ? 1 : parseInt(arguments[2], 10);
     let args = arguments.length > 3 ? ppo.args(arguments, 3) : null;
     let target = {
       index: 0,
@@ -311,12 +345,12 @@
       over: false
     };
 
-    var id = setInterval(function() {
+    let id = setInterval(function() {
       target.index++;
       if (target.index > times) {
         clearInterval(id);
       } else {
-        if (target.index == times) target.over = true;
+        if (target.index === times) target.over = true;
         func.apply(target, args);
       }
     }, delay);
@@ -368,10 +402,10 @@
     ms = ppo.fill0(ms);
     ss = ppo.fill0(ss);
 
-    d1 = d1 || '/';
-    d2 = d2 || ':';
+    let _d1 = d1 || '/';
+    let _d2 = d2 || ':';
 
-    return yyyy + d1 + mm + d1 + dd + ' ' + hh + d2 + ms + d2 + ss;
+    return yyyy + _d1 + mm + _d1 + dd + ' ' + hh + _d2 + ms + _d2 + ss;
   };
 
   /**
@@ -382,11 +416,11 @@
   ppo.formatPassTime = function(startTime) {
     let currentTime = Date.parse(new Date());
     let time = currentTime - startTime;
-    let day = parseInt(time / (1000 * 60 * 60 * 24));
-    let hour = parseInt(time / (1000 * 60 * 60));
-    let min = parseInt(time / (1000 * 60));
-    let month = parseInt(day / 30);
-    let year = parseInt(month / 12);
+    let day = parseInt(time / (1000 * 60 * 60 * 24), 10);
+    let hour = parseInt(time / (1000 * 60 * 60), 10);
+    let min = parseInt(time / (1000 * 60), 10);
+    let month = parseInt(day / 30, 10);
+    let year = parseInt(month / 12, 10);
     if (year) return year + '年前';
     if (month) return month + '个月前';
     if (day) return day + '天前';
@@ -427,10 +461,13 @@
    * From https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
    */
   ppo.getUrlParam = function(name, url) {
-    if (!url) url = window.location.href;
-    name = name.replace(/[\[\]]/g, '\\$&');
-    let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-    let results = regex.exec(url);
+    let _url = url;
+    if (!_url) {
+      _url = window.location.href;
+    }
+    let _name = name.replace(/[\[\]]/g, '\\$&');
+    let regex = new RegExp('[?&]' + _name + '(=([^&#]*)|&|#|$)');
+    let results = regex.exec(_url);
     if (!results) return null;
     if (!results[2]) return '';
 
@@ -442,26 +479,32 @@
    * From https://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
    */
   ppo.setUrlParam = function(key, value, url) {
-    if (!url) url = window.location.href;
+    let _url = url;
+    if (!_url) {
+      _url = window.location.href;
+    }
     let re = new RegExp('([?|&])' + key + '=.*?(&|#|$)', 'i');
 
-    if (url.match(re)) {
-      return url.replace(re, '$1' + key + '=' + encodeURIComponent(value) + '$2');
+    if (_url.match(re)) {
+      return _url.replace(re, '$1' + key + '=' + encodeURIComponent(value) + '$2');
     } else {
       let hash = '';
-      if (url.indexOf('#') !== -1) {
-        hash = url.replace(/.*#/, '#');
-        url = url.replace(/#.*/, '');
+      if (_url.indexOf('#') !== -1) {
+        hash = _url.replace(/.*#/, '#');
+        _url = _url.replace(/#.*/, '');
       }
-      let separator = url.indexOf('?') !== -1 ? '&' : '?';
-      return url + separator + key + '=' + encodeURIComponent(value) + hash;
+      let separator = _url.indexOf('?') !== -1 ? '&' : '?';
+      return _url + separator + key + '=' + encodeURIComponent(value) + hash;
     }
   };
 
   ppo.deleteUrlParam = ppo.delUrlParam = function(param, url) {
-    if (!url) url = window.location.href;
+    let _url = url;
+    if (!_url) {
+      _url = window.location.href;
+    }
     // prefer to use l.search if you have a location/link object
-    let urlparts = url.split('?');
+    let urlparts = _url.split('?');
     if (urlparts.length >= 2) {
       let prefix = encodeURIComponent(param) + '=';
       let pars = urlparts[1].split(/[&;]/g);
@@ -474,10 +517,10 @@
         }
       }
 
-      url = urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
-      return url;
+      _url = urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
+      return _url;
     } else {
-      return url;
+      return _url;
     }
   };
 
@@ -527,24 +570,24 @@
    */
   ppo.setCookie = function(name, value, option) {
     let longTime = 10;
-    let path = '; path=/';
+    // let path = '; path=/';
     let val = option && option.raw ? value : encodeURIComponent(value);
     let cookie = encodeURIComponent(name) + '=' + val;
 
     if (option) {
       if (option.days) {
-        var date = new Date();
-        var ms = option.days * 24 * 3600 * 1000;
+        let date = new Date();
+        let ms = option.days * 24 * 3600 * 1000;
         date.setTime(date.getTime() + ms);
         cookie += '; expires=' + date.toGMTString();
       } else if (option.hour) {
-        var date = new Date();
-        var ms = option.hour * 3600 * 1000;
+        let date = new Date();
+        let ms = option.hour * 3600 * 1000;
         date.setTime(date.getTime() + ms);
         cookie += '; expires=' + date.toGMTString();
       } else {
-        var date = new Date();
-        var ms = longTime * 365 * 24 * 3600 * 1000;
+        let date = new Date();
+        let ms = longTime * 365 * 24 * 3600 * 1000;
         date.setTime(date.getTime() + ms);
         cookie += '; expires=' + date.toGMTString();
       }
@@ -585,7 +628,9 @@
       for (; i < arguments.length; i++) {
         let attributes = arguments[i];
         for (let key in attributes) {
-          result[key] = attributes[key];
+          if (Object.prototype.hasOwnProperty.call(key, attributes)) {
+            result[key] = attributes[key];
+          }
         }
       }
       return result;
@@ -598,7 +643,7 @@
           return;
         }
         if (arguments.length > 1) {
-          attributes = _extend(
+          let _attributes = _extend(
             {
               path: '/'
             },
@@ -606,34 +651,33 @@
             attributes
           );
 
-          if (typeof attributes.expires === 'number') {
+          if (typeof _attributes.expires === 'number') {
             let expires = new Date();
-            expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e5);
-            attributes.expires = expires;
+            expires.setMilliseconds(expires.getMilliseconds() + _attributes.expires * 864e5);
+            _attributes.expires = expires;
           }
-
+          let _value = value;
           try {
-            result = JSON.stringify(value);
+            result = JSON.stringify(_value);
             if (/^[\{\[]/.test(result)) {
-              value = result;
+              _value = result;
             }
           } catch (e) {}
 
           if (!converter.write) {
-            value = encodeURIComponent(String(value)).replace(
+            _value = encodeURIComponent(String(_value)).replace(
               /%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,
               decodeURIComponent
             );
           } else {
-            value = converter.write(value, key);
+            _value = converter.write(_value, key);
           }
 
-          key = encodeURIComponent(String(key));
-          key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
-          key = key.replace(/[\(\)]/g, escape);
-
-          return (document.cookie = [
-            key,
+          let _key = encodeURIComponent(String(key));
+          let __key = _key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+          let ___key = __key.replace(/[\(\)]/g, escape);
+          let _cookie = (document.cookie = [
+            ___key,
             '=',
             value,
             attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '',
@@ -641,6 +685,8 @@
             attributes.domain ? '; domain=' + attributes.domain : '',
             attributes.secure ? '; secure' : ''
           ].join(''));
+
+          return _cookie;
         }
         if (!key) {
           result = {};
@@ -663,10 +709,10 @@
               ? converter.read(cookie, name)
               : converter(cookie, name) || cookie.replace(rdecode, decodeURIComponent);
 
-            if (this.json) {
-              try {
-                cookie = JSON.parse(cookie);
-              } catch (e) {}
+            try {
+              cookie = JSON.parse(cookie);
+            } catch (e) {
+              console.log(e);
             }
 
             if (key === name) {
@@ -733,26 +779,21 @@
   ppo.randomKey = function(length) {
     let key = '';
     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    length = length || 6;
+    let _length = length || 6;
 
-    for (let i = 0; i < length; i++)
-      key += possible.charAt(Math.floor(Math.random() * possible.length));
+    for (let i = 0; i < _length; i++)
+      key += possible.charAt(Math.floor(Math.random() * possible._length));
     return key;
   };
 
   ppo.floor = function(n, m) {
-    m = m || 0;
-    return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
+    let _m = m || 0;
+    return Math.floor(n * Math.pow(10, _m)) / Math.pow(10, _m);
   };
 
   ppo.fill0 = function(num) {
-    num = parseFloat(num);
-    return num < 10 ? '0' + num : num;
-  };
-
-  ppo.currency = function(val) {
-    m = m || 0;
-    return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
+    let _num = parseFloat(num);
+    return _num < 10 ? '0' + _num : _num;
   };
 
   /************************************************************************
@@ -773,7 +814,7 @@
     document.addEventListener('touchend', preventDefault, !1);
 
     function not(e, tag) {
-      return e.target.tagName != tag.toUpperCase() && e.target.tagName != tag.toLowerCase();
+      return e.target.tagName !== tag.toUpperCase() && e.target.tagName !== tag.toLowerCase();
     }
 
     function preventDefault(e) {
@@ -791,7 +832,8 @@
    * 2. ppo.loadjs("//your_url/a.js","only_id",func);
    */
   ppo.loadjs = function(url, b, c) {
-    let onlyId; let callback;
+    let onlyId;
+    let callback;
 
     if (typeof b === 'function') {
       onlyId = String(this.hash(String(url)));
@@ -868,14 +910,12 @@
         // load failed from an external domain is to try and
         // access its cssText, and then catch the error
         // ... sweet :/
-        let txt;
         let cur;
         let i = document.styleSheets.length;
         try {
           while (i--) {
             cur = document.styleSheets[i];
             if (cur.id === id) {
-              txt = cur.cssText;
               resolve();
               return;
             }
@@ -894,23 +934,21 @@
   /* 数组方法 s */
   // 除了es5 forEach, map, filter, every, some, indexOf, lastIndexOf 新增的方法外
   // isArray unique random 都是自己实现的
-  A = (function() {
+  let A = (function() {
     let ret = {
       isArray: function(obj) {
         return Object.prototype.toString.call(obj) === '[object Array]';
       },
       unique: function(target) {
         // 数组去重
-        let temp = [];
-        _that: for (let i = 0, len = target.length; i < len; i++) {
-          for (let j = i + 1; j < len; j++) {
-            if (target[i] === target[j]) {
-              continue _that;
-            }
+        let res = [];
+        for (let i = 0, len = target.length; i < len; i++) {
+          let current = target[i];
+          if (res.indexOf(current) === -1) {
+            res.push(current);
           }
-          temp.push(target[i]);
         }
-        return temp;
+        return res;
       },
       random: function(target) {
         // 在数组中随机取一个
@@ -918,24 +956,16 @@
       },
       shuffle: function(target) {
         // 打乱数组返回新数组
-        if (!target.length == 0) {
-          let temp = target;
-          let j;
-          let x;
-          let i = target.length;
-          for (
-            ;
-            i > 0;
-            j = parseInt(Math.random() * i), x = target[--i], target[i] = target[j], target[j] = x
-          ) {}
-          return temp;
-          // target.sort(function(){return 0.5 - Math.random()});
+        let m = target.length;
+        while (m > 1) {
+          let index = Math.floor(Math.random() * m--);
+          [target[m], target[index]] = [target[index], target[m]];
         }
-        return;
+        return target;
       },
       equal: function(arr1, arr2) {
         if (arr1 === arr2) return true;
-        if (arr1.length != arr2.length) return false;
+        if (arr1.length !== arr2.length) return false;
         for (let i = 0; i < arr1.length; ++i) {
           if (arr1[i] !== arr2[i]) return false;
         }
@@ -956,11 +986,8 @@
       },
       compact: function(target) {
         // 去除数组中的undefined和Null
-        if (!type.isArray(target)) {
-          throw new Error('target error type');
-        }
         return target.filter(function(item) {
-          return item != undefined;
+          return item !== undefined;
         });
       },
       pluck: function(target, name) {
@@ -969,7 +996,7 @@
         let temp;
         target.forEach(function(item) {
           temp = item[name];
-          if (temp != null) {
+          if (temp !== null) {
             result.push(temp);
           }
         });
@@ -982,7 +1009,7 @@
       intersect: function(t1, t2) {
         // 取2个数组的交集
         return t1.filter(function(item) {
-          return ~t2.indexOf(item);
+          return t2.indexOf(item) !== -1;
         });
       },
       diff: function(t1, t2) {
@@ -1006,124 +1033,24 @@
       min: function(target) {
         // min
         return Math.min.apply(0, target);
-      },
-      indexOf: function(array, elt, from) {
-        // 以下es5新增
-        if (array.indexOf) {
-          return isNaN(from) ? array.indexOf(elt) : array.indexOf(elt, from);
-        } else {
-          let len = array.length;
-          from = isNaN(from) ? 0 : from < 0 ? Math.ceil(from) + len : Math.floor(from);
-
-          for (; from < len; from++) {
-            if (array[from] === elt) return from;
-          }
-          return -1;
-        }
-      },
-      lastIndexOf: function(array, elt, from) {
-        if (array.lastIndexOf) {
-          return isNaN(from) ? array.lastIndexOf(elt) : array.lastIndexOf(elt, from);
-        } else {
-          let len = array.length;
-          from =
-            isNaN(from) || from >= len - 1
-              ? len - 1
-              : from < 0
-                ? Math.ceil(from) + len
-                : Math.floor(from);
-
-          for (; from > -1; from--) {
-            if (array[from] === elt) return from;
-          }
-          return -1;
-        }
       }
     };
-
-    function each(object, callback) {
-      if (undefined === object.length) {
-        for (let name in object) {
-          if (callback(object[name], name, object) === false) break;
-        }
-      } else {
-        for (let i = 0, len = object.length; i < len; i++) {
-          if (i in object) {
-            if (callback(object[i], i, object) === false) break;
-          }
-        }
-      }
-    }
-
-    each(
-      {
-        forEach: function(object, callback, thisp) {
-          each(object, function() {
-            callback.apply(thisp, arguments);
-          });
-        },
-        map: function(object, callback, thisp) {
-          let ret = [];
-          each(object, function() {
-            ret.push(callback.apply(thisp, arguments));
-          });
-          return ret;
-        },
-        filter: function(object, callback, thisp) {
-          let ret = [];
-          each(object, function(item) {
-            callback.apply(thisp, arguments) && ret.push(item);
-          });
-          return ret;
-        },
-        every: function(object, callback, thisp) {
-          let ret = true;
-          each(object, function() {
-            if (!callback.apply(thisp, arguments)) {
-              ret = false;
-              return false;
-            }
-          });
-          return ret;
-        },
-        some: function(object, callback, thisp) {
-          let ret = false;
-          each(object, function() {
-            if (callback.apply(thisp, arguments)) {
-              ret = true;
-              return false;
-            }
-          });
-          return ret;
-        }
-      },
-      function(method, name) {
-        ret[name] = function(object, callback, thisp) {
-          if (object[name]) {
-            return object[name](callback, thisp);
-          } else {
-            return method(object, callback, thisp);
-          }
-        };
-      }
-    );
-
     return ret;
   })();
   ppo.Array = A;
   /* 数组方法 e */
   /* 字符串s */
-  S = {
+  let S = {
     // 去空格
     trim: function(str) {
-      str = str.replace(/^\s+/, '');
+      let _str = str.replace(/^\s+/, '');
       for (let i = str.length - 1; i >= 0; i--) {
         if (/\S/.test(str.charAt(i))) {
-          str = str.slice(0, i + 1);
+          _str = str.slice(0, i + 1);
           break;
         }
       }
-      return str;
+      return _str;
     },
     print: function(str, object) {
       // 模仿C语言print方法
@@ -1146,33 +1073,18 @@
       let str = z + target;
       let result = str.slice(-n);
       return result;
-      // return (Math.pow(10,n) + '' + target).slice(-n);
     },
     // 字符串去重
     longUnique: function(target) {
-      // var newStr = "";
-      // for (var i = 0; i < target.length; i++) {
-      //     if (newStr.indexOf(target[i]) == -1) {
-      //         newStr += target[i];
-      //     }
-      // }
-      // return newStr;
-
-      // if (!_this.isTypeof(target, "string")) {
-      //     return;
-      // } else if (target.length == 1) {
-      //     return target;
-      // };
-
       let json = {};
-      for (var index = 0; index < target.length; index++) {
+      for (let index = 0; index < target.length; index++) {
         if (!json[target[index]]) {
           json[target[index]] = -1;
         }
       }
 
       let longString = '';
-      for (var index = 0; index < target.length; index++) {
+      for (let index = 0; index < target.length; index++) {
         if (json[target[index]]) {
           json[target[index]] = 0;
           longString = longString + target[index];
@@ -1183,20 +1095,15 @@
     },
     // 去掉script内部的html标签
     stripTags: function(target) {
-      if (type.getType(target) === 'String') {
-        return target.replace(/<script[^>]*>(\S\s*?)<\/script>/gim, '').replace(/<[^>]+>/g, '');
-      }
+      return target.replace(/<script[^>]*>(\S\s*?)<\/script>/gim, '').replace(/<[^>]+>/g, '');
     },
     capitalize: function(target) {
       // 首字母大写
       return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
-    }, // camelize: function(s) { //驼峰转化（备用） 如margin-top转化为marginTop
-    //  return s.replace(/-([a-z])/ig, function(all, letter) {
-    //      return letter.toUpperCase();
-    //  });
-    // },
-    // _ - 转驼峰命名
+    },
+
     camelize: function(target) {
+      // _ - 转驼峰命名
       if (target.indexOf('-') < 0 && target.indexOf('_') < 0) {
         return target;
       }
@@ -1215,10 +1122,10 @@
     },
     truncate: function(target, len, truncation) {
       // 字符串截断方法 目标 长度默认30，截断后符号默认...
-      len = len || 30;
-      truncation = truncation ? truncation : '...';
-      return target.length > len
-        ? target.slice(0, len - truncation.length) + truncation
+      let _len = len || 30;
+      let _truncation = truncation ? truncation : '...';
+      return target.length > _len
+        ? target.slice(0, len - _truncation.length) + _truncation
         : target.toString();
     },
     byteLen: function(str, charset) {
@@ -1227,8 +1134,8 @@
       let charCode;
       let i;
       let len;
-      charset = charset ? charset.toLowerCase() : '';
-      if (charset === 'utf-16' || charset === 'utf16') {
+      let _charset = charset ? charset.toLowerCase() : '';
+      if (_charset === 'utf-16' || _charset === 'utf16') {
         for (i = 0, len = str.length; i < len; i++) {
           charCode = str.charCodeAt(i);
           if (charCode <= 0xffff) {
@@ -1258,17 +1165,17 @@
       let s = item;
       let target = '';
       while (times > 0) {
-        if (times % 2 == 1) {
+        if (times % 2 === 1) {
           target += s;
         }
-        if (times == 1) {
+        if (times === 1) {
           break;
         }
         s += s;
+        // eslint-disable-next-line no-param-reassign
         times = times >> 1;
       }
       return target;
-      // retrun new Array(times).join(item)
     },
     endsWith: function(target, item, ignorecase) {
       // 参2是参1的结尾么？参数3忽略大小写
@@ -1288,14 +1195,14 @@
     },
     contains: function(target, item) {
       // 判定一个字符串是否包含另一个字符串
-      return target.indexOf(item) != -1;
+      return target.indexOf(item) !== -1;
       // return target.indexOf(item) > -1;
     }
   };
   ppo.String = S;
   /* 字符串e */
 
-  loadImage = (function() {
+  let loadImage = (function() {
     function loadImages(options) {
       let len = 0; // 资源总数
       let index = 0; // 循环资源数组用
@@ -1323,7 +1230,7 @@
         }
       }
 
-      var processStep = function() {
+      let processStep = function() {
         percentageValue++;
         // console.info("processStep = ",percentageValue)
         step(percentageValue);
@@ -1356,7 +1263,7 @@
 
       for (index; index < len; index++) {
         let strUrl = data[index];
-        new loadImageItem(strUrl, onload).start();
+        new LoadImageItem(strUrl, onload).start();
       }
     }
     /**
@@ -1364,30 +1271,30 @@
      * @param  {string} url - images full url
      * @callback cb - called when load image completed
      */
-    function loadImageItem(url, cb) {
+    function LoadImageItem(url, cb) {
       let self = this;
 
-      this.img = new Image();
+      self.img = new Image();
 
       // readyState为complete和loaded则表明图片已经加载完毕。测试IE6-IE10支持该事件，其它浏览器不支持。
       let onReadyStateChange = function() {
         removeEventHandlers();
         console.info('onReadyStateChange');
-        cb(this, 'onReadyStateChange');
+        cb(self, 'onReadyStateChange');
       };
 
       let onError = function() {
         console.info('onError');
         removeEventHandlers();
-        cb(this, 'onError');
+        cb(self, 'onError');
       };
 
       let onLoad = function() {
         removeEventHandlers();
-        cb(this, 'onload');
+        cb(self, 'onload');
       };
 
-      var removeEventHandlers = function() {
+      let removeEventHandlers = function() {
         self.unbind('load', onLoad);
         self.unbind('readystatechange', onReadyStateChange);
         self.unbind('error', onError);
@@ -1412,7 +1319,7 @@
      * @param  {string} eventName
      * @param  {function} eventHandler
      */
-    loadImageItem.prototype.bind = function(eventName, eventHandler) {
+    LoadImageItem.prototype.bind = function(eventName, eventHandler) {
       if (this.img.addEventListener) {
         this.img.addEventListener(eventName, eventHandler, false);
       } else if (this.img.attachEvent) {
@@ -1426,7 +1333,7 @@
      * @param  {string} eventName
      * @param  {function} eventHandler
      */
-    loadImageItem.prototype.unbind = function(eventName, eventHandler) {
+    LoadImageItem.prototype.unbind = function(eventName, eventHandler) {
       if (this.img.removeEventListener) {
         this.img.removeEventListener(eventName, eventHandler, false);
       } else if (this.img.detachEvent) {
@@ -1434,12 +1341,6 @@
       }
     };
 
-    // AMD module support
-    if (typeof define === 'function' && define.amd) {
-      define('loadImages', [], function() {
-        return loadImages;
-      });
-    }
     return loadImages;
   })();
   ppo.loadImage = loadImage;
@@ -1453,7 +1354,7 @@
   ppo.uuid = function() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       let r = (Math.random() * 16) | 0;
-      let v = c == 'x' ? r : (r & 0x3) | 0x8;
+      let v = c === 'x' ? r : (r & 0x3) | 0x8;
       return v.toString(16);
     });
   };
@@ -1463,13 +1364,13 @@
    * From https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
    */
   ppo.hash = function(str) {
-    str = String(str);
+    let _str = String(str);
     let hash = 0;
     let i;
     let chr;
-    if (str.length === 0) return hash;
-    for (i = 0; i < str.length; i++) {
-      chr = str.charCodeAt(i);
+    if (_str.length === 0) return hash;
+    for (i = 0; i < _str.length; i++) {
+      chr = _str.charCodeAt(i);
       hash = (hash << 5) - hash + chr;
       hash |= 0; // Convert to 32bit integer
     }
@@ -1487,7 +1388,7 @@
       if (strict) {
         if (v === vals[key]) return true;
       } else {
-        if (v == vals[key]) return true;
+        if (v === vals[key]) return true;
       }
     }
 
@@ -1507,7 +1408,7 @@
   };
   ppo.getType = function(ele) {
     if (!ele) return undefined;
-    if (window == document && document != window) {
+    if (window === document && document !== window) {
       return 'window';
     } else if (ele.nodeType === 9) {
       return 'document';
@@ -1533,6 +1434,7 @@
       try {
         return JSON.parse(res);
       } catch (e) {
+        // eslint-disable-next-line no-eval
         return eval('(' + res + ')');
       }
     } else if (this.isTypeof(res.json, 'function')) {
@@ -1577,7 +1479,7 @@
     logs: {}
   };
 
-  var _insertScripts = function(arr, callback) {
+  let _insertScripts = function(arr, callback) {
     for (let i = 0; i < arr.length; i++) {
       _insertScript(arr[i], loaded);
     }
@@ -1592,7 +1494,7 @@
     }
   };
 
-  var _insertScript = function(src, callback) {
+  let _insertScript = function(src, callback) {
     let script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute('src', src);
@@ -1600,7 +1502,7 @@
 
     if (/msie/.test(ppo.ua('l'))) {
       script.onreadystatechange = function() {
-        if (this.readyState == 'loaded' || this.readyState == 'complete') {
+        if (this.readyState === 'loaded' || this.readyState === 'complete') {
           callback();
         }
       };
