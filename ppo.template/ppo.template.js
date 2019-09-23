@@ -59,7 +59,7 @@ function anonymous(_output_, _encode_, helper) {
 
 void function(exports) {
 
-  var htmlDecodeDict = {
+  let htmlDecodeDict = {
     quot: "'",
     lt: '<', 
     gt: '>',
@@ -67,7 +67,7 @@ void function(exports) {
     nbsp: ' '
   };
 
-  var htmlEncodeDict = {
+  let htmlEncodeDict = {
     "'": 'quot',
     '<': 'lt',
     '>': 'gt',
@@ -80,7 +80,7 @@ void function(exports) {
    * @param {String|Element} id或者是DOM对象
    */
   function g(id) {
-    if (typeof id != 'string') {
+    if (typeof id !== 'string') {
       return id;
     }
     return document.getElementById(id);
@@ -96,7 +96,7 @@ void function(exports) {
     }).replace(/&#u([a-f\d]{4});/ig, function(all, hex) {
       return String.fromCharCode(parseInt('0x' + hex));
     }).replace(/&#(\d+);/ig, function(all, number) {
-      return String.fromCharCode(+number);
+      return String.fromCharCode(Number(number));
     });
   }
 
@@ -125,12 +125,12 @@ void function(exports) {
   /**
    * 解析器缓存
    */
-  var readerCaches = {};
+  let readerCaches = {};
   
   /**
    * 是否注册了所有模板
    */
-  var registerAll = false;
+  let registerAll = false;
 
   /**
    * 构造模板的处理函数
@@ -156,7 +156,7 @@ void function(exports) {
    * @param {String} template 模板字符
    */
   function build(template) {
-    var body = [];
+    let body = [];
     body.push('with(this){');
     body.push(template
       .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/g, function(all) {
@@ -172,7 +172,7 @@ void function(exports) {
             .replace(/\n/g, '\\n') // 处理回车转义符
             .replace(/(!?#)\{(.*?)\}/g, function (all, flag, template) { // 变量替换
               template = template.replace(/\\n/g, '\n').replace(/\\([\\"'])/g, '$1'); // 还原转义
-              var identifier = /^[a-z$][\w+$]+$/i.test(template) &&
+              let identifier = /^[a-z$][\w+$]+$/i.test(template) &&
                 !(/^(true|false|NaN|null|this)$/.test(template)); // 单纯变量，加一个未定义保护
               return ["',", 
                 identifier ? ['typeof ', template, "=='undefined'?'':"].join('') : '', 
@@ -190,9 +190,9 @@ void function(exports) {
       )
     );
     body.push('}');
-    var result = new Function('_output_', '_encode_', 'helper', body.join(''));
+    let result = new Function('_output_', '_encode_', 'helper', body.join(''));
     /* Debug Start */
-    if (typeof console != 'undefined') {
+    if (typeof console !== 'undefined') {
       console.log(result);
     }
     /* Debug End */
@@ -207,8 +207,8 @@ void function(exports) {
    */
   function format(id, data, helper) {
     if (!id) return '';
-    var reader, element;
-    if (typeof id == 'object' && id.tagName) { // 如果是Dom对象
+    let reader; let element;
+    if (typeof id === 'object' && id.tagName) { // 如果是Dom对象
       element = id;
       id = element.getAttribute('id');
     }
@@ -224,8 +224,8 @@ void function(exports) {
         reader = build(id);
       }
     }
-    var output = [];
-    reader.call(typeof data == 'undefined' ? '' : data, output, encodeHTML, helper);
+    let output = [];
+    reader.call(typeof data === 'undefined' ? '' : data, output, encodeHTML, helper);
     return output.join('');
   };
   
@@ -235,12 +235,12 @@ void function(exports) {
    * @param {Element|String} target 模板对象或者是模板字符串，如果没有则默认获取id对应的DOM对象
    */
   function register(id, target) {
-    if (typeof document != 'undefined' &&
+    if (typeof document !== 'undefined' &&
       !arguments.length && !registerAll) { // 无参数并且没有注册过
       registerAll = true;
-      var scripts = document.getElementsByTagName('script');
-      for (var i = 0; i < scripts.length; i++) {
-        var script = scripts[i];
+      let scripts = document.getElementsByTagName('script');
+      for (let i = 0; i < scripts.length; i++) {
+        let script = scripts[i];
         if (/^(text\/template)$/i.test(script.getAttribute('type'))) {
           var id = script.getAttribute('id');
           if (id) {
@@ -255,8 +255,8 @@ void function(exports) {
     if (readerCaches[id]) { // 如果已经注册
       return readerCaches[id];
     }
-    if (typeof target != 'string') {
-      if (typeof target == 'undefined') {
+    if (typeof target !== 'string') {
+      if (typeof target === 'undefined') {
         target = g(id);
       }
       target = elementText(target);

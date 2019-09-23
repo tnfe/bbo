@@ -1,4 +1,5 @@
-#### ppo
+#### ppo.js
+
 a utility-belt library for JavaScript
 
 #### Documentation

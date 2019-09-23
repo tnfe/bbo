@@ -1,6 +1,6 @@
-var define = ppo.modules.define;
+let define = ppo.modules.define;
 define(['./b.js'], function(b) {
-	b.b();
+  b.b();
 
-	console.log('a');
+  console.log('a');
 });

@@ -1,48 +1,48 @@
 (function( $ ){
-    $.fn.mClick = function( timeout, clickTimes, callback ) {  
+  $.fn.mClick = function( timeout, clickTimes, callback ) {  
 
-        return this.each(function() {
+    return this.each(function() {
 
-            var $this = $(this);
-            var times = 0;
-            var time = null;
+      let $this = $(this);
+      let times = 0;
+      let time = null;
 
-            $this.click(function(){
-                var d;
-                var now;
+      $this.click(function(){
+        let d;
+        let now;
             
-                if(time){
-                    now = (new Date()).getTime();
-                    d = now - time;
-                    time = now;
+        if(time){
+          now = (new Date()).getTime();
+          d = now - time;
+          time = now;
 
-                    if(d > timeout){
-                        time = now + d;
-                        times = 1;
-                    }else{
-                        addTimes(callback)
-                    }
+          if(d > timeout){
+            time = now + d;
+            times = 1;
+          }else{
+            addTimes(callback)
+          }
                     
-                    function addTimes(callback){
-                        if(times){
-                            times ++;
-                        }else{
-                            times = 1;
-                        }
+          function addTimes(callback){
+            if(times){
+              times ++;
+            }else{
+              times = 1;
+            }
 
-                        if(times >= clickTimes){
-                            times = 0;
-                            time = null;
-                            callback();
-                        }
-                    }
+            if(times >= clickTimes){
+              times = 0;
+              time = null;
+              callback();
+            }
+          }
 
-                } else {
-                    now = (new Date()).getTime();
-                    time = now;
-                    times = 1
-                }
-            });
-        });
-    };
+        } else {
+          now = (new Date()).getTime();
+          time = now;
+          times = 1
+        }
+      });
+    });
+  };
 })( jQuery );

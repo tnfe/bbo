@@ -1,25 +1,32 @@
 {
-    "name": "ppo-cli",
-    "version": "1.3.19",
-    "description": "a utility-belt library for JavaScript",
-    "main": "ppo.js",
-    "directories": {
-        "doc": "docs"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/jiayi2/ppo.git"
-    },
-    "keywords": [
-        "ppo-cli"
-    ],
-    "author": "halld",
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/jiayi2/ppo/issues"
-    },
-    "homepage": "https://github.com/jiayi2/ppo#readme"
+  "name": "ppo-cli",
+  "version": "1.3.19",
+  "description": "a utility-belt library for JavaScript",
+  "main": "ppo.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "eslint": "eslint --ext .js,.ts .",
+    "eslint:fix": "eslint --ext .js,.ts --fix ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/halldwang/ppo.git"
+  },
+  "keywords": [
+    "ppo-cli"
+  ],
+  "author": "halld",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/halldwang/ppo/issues"
+  },
+  "homepage": "https://github.com/halldwang/ppo#readme",
+  "devDependencies": {
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.4.0",
+    "eslint-config-alloy": "^3.0.0"
+  }
 }

@@ -1,5 +1,5 @@
 $(function() {
-  //------------------ LOGS -----------------
+  // ------------------ LOGS -----------------
   addChapter({
     name: "LOGS"
   });
@@ -15,14 +15,14 @@ $(function() {
     ],
     example: '<div class="button">open log</div>',
     script: function(ele) {
-      var style = { color: "#fff", background: "#ff0000" };
-      var id = 0;
+      let style = { color: "#fff", background: "#ff0000" };
+      let id = 0;
 
       ele.find(".button").click(function() {
         clearInterval(id);
         id = setInterval(function() {
-          var random = ppo.randomA2B(10000, 90000, "int");
-          var isMobile = ppo.isMobile();
+          let random = ppo.randomA2B(10000, 90000, "int");
+          let isMobile = ppo.isMobile();
           ppo.log("log :: isMobile-" + isMobile + " random-" + random, style);
         }, 1000 / 3);
       });
@@ -44,10 +44,10 @@ $(function() {
     example:
       '<div class="button">start log</div> Please press f12 to open the console panel',
     script: function(ele) {
-      var id = 0;
-      var myid;
+      let id = 0;
+      let myid;
       ele.find(".button").click(function() {
-        var index = 0;
+        let index = 0;
         myid = ppo.randomA2B(1, 9999, true);
         clearInterval(id);
 
@@ -84,7 +84,7 @@ $(function() {
     }
   });
 
-  //------------------ Bom and Dom -----------------
+  // ------------------ Bom and Dom -----------------
   addChapter({
     name: "Global"
   });
@@ -131,9 +131,9 @@ $(function() {
       '<div class="button">start</div>  num:: <span>0</span>'
     ],
     script: function(ele) {
-      var id = 0;
+      let id = 0;
       ele.find(".button").click(function() {
-        var times = ele.find("select").val();
+        let times = ele.find("select").val();
 
         if ($(this).text() == "stop") {
           $(this).text("start");
@@ -187,7 +187,7 @@ $(function() {
     ],
     script: function(ele) {
       function abc($use, $next, $name, $key) {}
-      //console.log(ppo.paramsName(abc));
+      // console.log(ppo.paramsName(abc));
     }
   });
 
@@ -200,7 +200,7 @@ $(function() {
     code: ["ppo.lockTouch()"]
   });
 
-  //------------------ Url Params -----------------
+  // ------------------ Url Params -----------------
   addChapter({
     name: "Detecting"
   });
@@ -294,7 +294,7 @@ $(function() {
     example: "<span style='font-size:12px'>" + ppo.ua() + "</span>"
   });
 
-  //------------------ Url Params -----------------
+  // ------------------ Url Params -----------------
   addChapter({
     name: "Url Params"
   });
@@ -334,7 +334,7 @@ $(function() {
     ]
   });
 
-  //------------------ Cookies -----------------
+  // ------------------ Cookies -----------------
   addChapter({
     name: "Cookie"
   });
@@ -355,7 +355,7 @@ $(function() {
       '<input placeholder="input a word!"></input><div class="button">set cookie</div> <span></span>',
     script: function(ele) {
       ele.find(".button").click(function() {
-        var val = $(this)
+        let val = $(this)
           .prev()
           .val();
         if (!val) return;
@@ -383,7 +383,7 @@ $(function() {
     code: ["ppo.getCookie('username');"],
     example: '<div class="button">get cookie</div> <span>ppo_cookie :: </span>',
     script: function(ele) {
-      var preText = ele
+      let preText = ele
         .find(".button")
         .next()
         .text();
@@ -447,7 +447,7 @@ $(function() {
     ]
   });
 
-  //------------------ Random And Math -----------------
+  // ------------------ Random And Math -----------------
   addChapter({
     name: "Random And Math"
   });
@@ -461,14 +461,14 @@ $(function() {
     example:
       '<div class="button">get random</div> <span>[1-1000](int) :: </span>',
     script: function(ele) {
-      var preText = ele
+      let preText = ele
         .find(".button")
         .next()
         .text();
       ele
         .find(".button")
         .click(function() {
-          var text = preText + ppo.randomA2B(1, 1000, true);
+          let text = preText + ppo.randomA2B(1, 1000, true);
           $(this)
             .next()
             .text(text);
@@ -486,14 +486,14 @@ $(function() {
     example:
       "<div class=\"button\">get random</div> <span>[1, 3, 9, 20, 'a', 'b'] :: </span>",
     script: function(ele) {
-      var preText = ele
+      let preText = ele
         .find(".button")
         .next()
         .text();
       ele
         .find(".button")
         .click(function() {
-          var text = preText + ppo.randomFromArray([1, 3, 9, 20, "a", "b"]);
+          let text = preText + ppo.randomFromArray([1, 3, 9, 20, "a", "b"]);
           $(this)
             .next()
             .text(text);
@@ -510,15 +510,15 @@ $(function() {
     code: ["ppo.randomColor() \n"],
     example: '<div class="button">get random</div> <span>color :: </span>',
     script: function(ele) {
-      var preText = ele
+      let preText = ele
         .find(".button")
         .next()
         .text();
       ele
         .find(".button")
         .click(function() {
-          var color = ppo.randomColor();
-          var text = preText + color;
+          let color = ppo.randomColor();
+          let text = preText + color;
           $(this)
             .next()
             .text(text);
@@ -537,7 +537,7 @@ $(function() {
     code: ["ppo.randomKey(12) \n"],
     example: '<div class="button">get random</div> <span>key :: </span>',
     script: function(ele) {
-      var preText = ele
+      let preText = ele
         .find(".button")
         .next()
         .text();
@@ -545,7 +545,7 @@ $(function() {
       ele
         .find(".button")
         .click(function() {
-          var text = preText + ppo.randomKey(12);
+          let text = preText + ppo.randomKey(12);
           $(this)
             .next()
             .text(text);
@@ -562,14 +562,14 @@ $(function() {
     code: ["ppo.floor(Math.random()*100, 5) \n"],
     example: '<div class="button">get result</div> <span>result :: </span>',
     script: function(ele) {
-      var preText = ele
+      let preText = ele
         .find(".button")
         .next()
         .text();
       ele
         .find(".button")
         .click(function() {
-          var text = preText + ppo.floor(Math.random() * 100, 5);
+          let text = preText + ppo.floor(Math.random() * 100, 5);
           $(this)
             .next()
             .text(text);
@@ -586,7 +586,7 @@ $(function() {
     code: ["ppo.fill0(5) // 05 \n"]
   });
 
-  //------------------ Assets and Data -----------------
+  // ------------------ Assets and Data -----------------
   addChapter({
     name: "Assets and Data"
   });
@@ -634,7 +634,7 @@ $(function() {
     ]
   });
 
-  //------------------ Date -----------------
+  // ------------------ Date -----------------
   addChapter({
     name: "Date"
   });
@@ -654,7 +654,7 @@ $(function() {
     }
   });
 
-  //------------------ Other -----------------
+  // ------------------ Other -----------------
   addChapter({
     name: "Other"
   });
@@ -686,7 +686,7 @@ $(function() {
     example:
       '<input placeholder="please input!"></input><div class="button">get hash code</div> <span>hash :: </span>',
     script: function(ele) {
-      var preText = ele
+      let preText = ele
         .find(".button")
         .next()
         .text();
@@ -695,8 +695,8 @@ $(function() {
       ele
         .find(".button")
         .click(function() {
-          var val = ele.find("input").val();
-          var hash = preText + ppo.hash(val);
+          let val = ele.find("input").val();
+          let hash = preText + ppo.hash(val);
           $(this)
             .next()
             .text(hash);
@@ -765,13 +765,13 @@ $(function() {
 // dom method --------------------
 // add chapter
 function addChapter(data) {
-  var chapter = [
+  let chapter = [
     '<h2 id="' + data.name.replace(/\s/gi, "") + '">' + data.name + "</h2>",
     "<hr>"
   ].join("");
 
-  var sideCon = $('<div class="side_con"></div>');
-  var side = [
+  let sideCon = $('<div class="side_con"></div>');
+  let side = [
     '<a class="toc_title" href="#' + data.name.replace(/\s/gi, "") + '">',
     "   <span>" + data.name + "</span>",
     "</a>",
@@ -786,8 +786,8 @@ function addChapter(data) {
 
 // add fragment
 function addFragment(data) {
-  var id = data.name.replace(/\s/gi, "");
-  var fragment = [
+  let id = data.name.replace(/\s/gi, "");
+  let fragment = [
     '<p id="' + id + '">',
     '   <b class="header"><span>✿</span> ' + data.name + "</b>",
     "   <code>" + data.api + "</code>",
@@ -795,7 +795,7 @@ function addFragment(data) {
     "   <span>" + data.introduce + "</span>",
     "</p>",
     "<pre>" +
-      (typeof data.code == "string" ? data.code : data.code.join("")) +
+      (typeof data.code === "string" ? data.code : data.code.join("")) +
       "</pre>"
   ].join("");
 
@@ -804,7 +804,7 @@ function addFragment(data) {
       '<b>example : </b><span style="color:#777;" class="' +
       id +
       '-example">' +
-      (typeof data.example == "string" ? data.example : data.example.join("")) +
+      (typeof data.example === "string" ? data.example : data.example.join("")) +
       "</span>";
   }
 
@@ -818,7 +818,7 @@ function addFragment(data) {
     );
   }
 
-  var side = [
+  let side = [
     '<li>- <a href="#' +
       data.name.replace(/\s/gi, "") +
       '">' +
