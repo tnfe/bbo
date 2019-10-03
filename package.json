@@ -1,8 +1,8 @@
 {
   "name": "ppo-cli",
-  "version": "1.3.21",
+  "version": "1.3.22",
   "description": "a utility-belt library for JavaScript",
-  "main": "ppo.js",
+  "main": "src/ppo.min.js",
   "directories": {
     "doc": "docs"
   },
