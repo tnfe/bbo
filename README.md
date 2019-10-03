@@ -22,5 +22,5 @@ import ppo from 'ppo-cli';
 
 #### CDN
 ``` 
-//mat1.gtimg.com/www/js/libs/ppo.1.3.21.min.js
+//mat1.gtimg.com/www/js/libs/ppo.1.3.22.min.js
 ```
