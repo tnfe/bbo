@@ -6,10 +6,10 @@
  * version 1.3.20
  */
 (function(global, factory) {
-  if (typeof module === 'object' && typeof module.exports === 'object') {
+  if (typeof define === 'function' && define.amd) {
+    define([], factory);
+  } else if (typeof module !== 'undefined' && module.exports) {
     module.exports = factory();
-  } else if (typeof define === 'function' && define.amd) {
-    define(factory);
   } else {
     global.ppo = factory();
   }
