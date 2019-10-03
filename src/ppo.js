@@ -3,7 +3,7 @@
  * +++++++++ a utility-belt library for JavaScript +++++++++
  * (c) 2011-2018 halld add
  * https://github.com/halldwang/ppo
- * version 1.3.20
+ * version 1.3.21
  */
 (function(global, factory) {
   if (typeof define === 'function' && define.amd) {
