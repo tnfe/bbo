@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * @description 扩展模板
  * @author halld
@@ -57,11 +58,10 @@ function anonymous(_output_, _encode_, helper) {
 }
 */
 
-void function(exports) {
-
+void (function(exports) {
   let htmlDecodeDict = {
     quot: "'",
-    lt: '<', 
+    lt: '<',
     gt: '>',
     amp: '&',
     nbsp: ' '
@@ -91,18 +91,21 @@ void function(exports) {
    * @param {String} html
    */
   function decodeHTML(html) {
-    return String(html).replace(/&(quot|lt|gt|amp|nbsp);/ig, function(all, key) {
-      return htmlDecodeDict[key];
-    }).replace(/&#u([a-f\d]{4});/ig, function(all, hex) {
-      return String.fromCharCode(parseInt('0x' + hex));
-    }).replace(/&#(\d+);/ig, function(all, number) {
-      return String.fromCharCode(Number(number));
-    });
+    return String(html)
+      .replace(/&(quot|lt|gt|amp|nbsp);/gi, function(all, key) {
+        return htmlDecodeDict[key];
+      })
+      .replace(/&#u([a-f\d]{4});/gi, function(all, hex) {
+        return String.fromCharCode(parseInt('0x' + hex));
+      })
+      .replace(/&#(\d+);/gi, function(all, number) {
+        return String.fromCharCode(Number(number));
+      });
   }
 
   /**
    * HTML编码
-   * @param {String} html 
+   * @param {String} html
    */
   function encodeHTML(html) {
     return String(html).replace(/['<>& ]/g, function(all) {
@@ -126,7 +129,7 @@ void function(exports) {
    * 解析器缓存
    */
   let readerCaches = {};
-  
+
   /**
    * 是否注册了所有模板
    */
@@ -158,36 +161,50 @@ void function(exports) {
   function build(template) {
     let body = [];
     body.push('with(this){');
-    body.push(template
-      .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/g, function(all) {
-        return ["!#{decodeURIComponent('", encodeURIComponent(all), "')}"].join('');
-      })
-      .replace(/[\r\n]+/g, '\n') // 去掉多余的换行，并且去掉IE中困扰人的\r
-      .replace(/^\n+|\s+$/mg, '') // 去掉空行，首部空行，尾部空白
-      .replace(/((^\s*[<>!#^&\u0000-\u0008\u007F-\uffff].*$|^.*[<>]\s*$|^(?!\s*(else|do|try|finally)\s*$)[^'":;{}()]+$|^(\s*(([\w-]+\s*=\s*'[^']*')|([\w-]+\s*=\s*'[^']*')))+\s*$|^\s*([.#][\w-.]+(:\w+)?(\s*|,))*(?!(else|do|while|try|return)\b)[.#]?[\w-.*]+(:\w+)?\s*\{.*$|^[^''\n]*(:\/\/|#\{|@).*$)\s?)+/mg,
-        function(expression) { // 输出原文
-          expression = ["'", expression
-            .replace(/&none;/g, '') // 空字符
-            .replace(/["'\\]/g, '\\$&') // 处理转义符
-            .replace(/\n/g, '\\n') // 处理回车转义符
-            .replace(/(!?#)\{(.*?)\}/g, function (all, flag, template) { // 变量替换
-              template = template.replace(/\\n/g, '\n').replace(/\\([\\"'])/g, '$1'); // 还原转义
-              let identifier = /^[a-z$][\w+$]+$/i.test(template) &&
-                !(/^(true|false|NaN|null|this)$/.test(template)); // 单纯变量，加一个未定义保护
-              return ["',", 
-                identifier ? ['typeof ', template, "=='undefined'?'':"].join('') : '', 
-                (flag == '#' ? '_encode_' : ''), 
-                '(', template, "),'"].join('');
-            }), "'"
-          ].join('').replace(/^'',|,''$/g, '');
+    body.push(
+      template
+        .replace(/<(script|style)[^>]*>[\s\S]*?<\/\1>/g, function(all) {
+          return ["!#{decodeURIComponent('", encodeURIComponent(all), "')}"].join('');
+        })
+        .replace(/[\r\n]+/g, '\n') // 去掉多余的换行，并且去掉IE中困扰人的\r
+        .replace(/^\n+|\s+$/gm, '') // 去掉空行，首部空行，尾部空白
+        .replace(
+          /((^\s*[<>!#^&\u0000-\u0008\u007F-\uffff].*$|^.*[<>]\s*$|^(?!\s*(else|do|try|finally)\s*$)[^'":;{}()]+$|^(\s*(([\w-]+\s*=\s*'[^']*')|([\w-]+\s*=\s*'[^']*')))+\s*$|^\s*([.#][\w-.]+(:\w+)?(\s*|,))*(?!(else|do|while|try|return)\b)[.#]?[\w-.*]+(:\w+)?\s*\{.*$|^[^''\n]*(:\/\/|#\{|@).*$)\s?)+/gm,
+          function(expression) {
+            // 输出原文
+            expression = [
+              "'",
+              expression
+                .replace(/&none;/g, '') // 空字符
+                .replace(/["'\\]/g, '\\$&') // 处理转义符
+                .replace(/\n/g, '\\n') // 处理回车转义符
+                .replace(/(!?#)\{(.*?)\}/g, function(all, flag, template) {
+                  // 变量替换
+                  template = template.replace(/\\n/g, '\n').replace(/\\([\\"'])/g, '$1'); // 还原转义
+                  let identifier =
+                    /^[a-z$][\w+$]+$/i.test(template) &&
+                    !/^(true|false|NaN|null|this)$/.test(template); // 单纯变量，加一个未定义保护
+                  return [
+                    "',",
+                    identifier ? ['typeof ', template, "=='undefined'?'':"].join('') : '',
+                    flag == '#' ? '_encode_' : '',
+                    '(',
+                    template,
+                    "),'"
+                  ].join('');
+                }),
+              "'"
+            ]
+              .join('')
+              .replace(/^'',|,''$/g, '');
 
-          if (expression) {
-            return ['_output_.push(', expression, ');'].join('');
+            if (expression) {
+              return ['_output_.push(', expression, ');'].join('');
+            }
+
+            return '';
           }
-
-          return '';
-        }
-      )
+        )
     );
     body.push('}');
     let result = new Function('_output_', '_encode_', 'helper', body.join(''));
@@ -207,15 +224,19 @@ void function(exports) {
    */
   function format(id, data, helper) {
     if (!id) return '';
-    let reader; let element;
-    if (typeof id === 'object' && id.tagName) { // 如果是Dom对象
+    let reader;
+    let element;
+    if (typeof id === 'object' && id.tagName) {
+      // 如果是Dom对象
       element = id;
       id = element.getAttribute('id');
     }
     helper = helper || exports; // 默认附加数据
     reader = readerCaches[id]; // 优先读取缓存
-    if (!reader) { // 缓存中未出现
-      if (!/[^\w-]/.test(id)) { // 合法的标识符按id读取
+    if (!reader) {
+      // 缓存中未出现
+      if (!/[^\w-]/.test(id)) {
+        // 合法的标识符按id读取
         if (!element) {
           element = g(id);
         }
@@ -227,16 +248,16 @@ void function(exports) {
     let output = [];
     reader.call(typeof data === 'undefined' ? '' : data, output, encodeHTML, helper);
     return output.join('');
-  };
-  
+  }
+
   /**
    * 注册模板，如果没有参数则是注册所有script标签模板
    * @param {String} id 模板ID
    * @param {Element|String} target 模板对象或者是模板字符串，如果没有则默认获取id对应的DOM对象
    */
   function register(id, target) {
-    if (typeof document !== 'undefined' &&
-      !arguments.length && !registerAll) { // 无参数并且没有注册过
+    if (typeof document !== 'undefined' && !arguments.length && !registerAll) {
+      // 无参数并且没有注册过
       registerAll = true;
       let scripts = document.getElementsByTagName('script');
       for (let i = 0; i < scripts.length; i++) {
@@ -252,7 +273,8 @@ void function(exports) {
     if (!id) {
       return;
     }
-    if (readerCaches[id]) { // 如果已经注册
+    if (readerCaches[id]) {
+      // 如果已经注册
       return readerCaches[id];
     }
     if (typeof target !== 'string') {
@@ -261,9 +283,9 @@ void function(exports) {
       }
       target = elementText(target);
     }
-    return readerCaches[id] = build(target);
+    return (readerCaches[id] = build(target));
   }
-  
+
   /**
    * 注销模板
    * @param {String} id 模板ID
@@ -276,5 +298,4 @@ void function(exports) {
   exports.register = register;
   exports.unregister = unregister;
   exports.format = format;
-  
-}(ppo.template);
+})(ppo.template);

@@ -1,11 +1,10 @@
+/* eslint-disable */
 /**
  * @description 模块依赖注入
  * @author halld
  * @demo        [demo]
  */
-void
-function (exports) {
-
+void (function(exports) {
   let MODULES = []; // 存放涉及到的所有模块的信息，包含每个模块的url、依赖和回调
   let STATUS = {}; // 模块的状态
   let RESULTS = {}; // 模块的回调返回的结果
@@ -18,21 +17,21 @@ function (exports) {
   let DEFINED = 3; // 已定义
 
   /*
-	 * 格式化地址，取绝对路径
-	 */
-  let formatURL = (function () {
+   * 格式化地址，取绝对路径
+   */
+  let formatURL = (function() {
     let a = document.createElement('a');
     a.style.display = 'none';
     document.body.appendChild(a);
 
     // 相对路径转绝对路径
-    let getAbsoluteURL = function (url) {
+    let getAbsoluteURL = function(url) {
       // 利用浏览器特性，通过使用a标签来获取绝对路径
       a.href = url;
       return a.href;
     };
 
-    return function (url, base) {
+    return function(url, base) {
       if (!url) return '';
 
       if (url.indexOf('://') > 0) return getAbsoluteURL(url); // 已经是绝对路径的情况
@@ -44,15 +43,15 @@ function (exports) {
   })();
 
   /**
-	 * 处理模块进入等待队列
-	 */
-  let runLoading = function (url, deps, callback) {
+   * 处理模块进入等待队列
+   */
+  let runLoading = function(url, deps, callback) {
     // 如果自身是内嵌脚本的话，则使用时间戳作为url
     if (typeof url !== 'string') {
       callback = deps;
       deps = url;
 
-      url = './' + (seed++) + '.js'
+      url = './' + seed++ + '.js';
     }
 
     url = formatURL(url);
@@ -61,7 +60,7 @@ function (exports) {
 
     // 加载依赖模块
     for (let i = 0, l = deps.length; i < l; i++) {
-      deps[i] = formatURL((deps[i] || ''), url); // 格式化依赖列表中的url
+      deps[i] = formatURL(deps[i] || '', url); // 格式化依赖列表中的url
       loadResource(deps[i]); // 加载资源
     }
 
@@ -79,11 +78,11 @@ function (exports) {
   };
 
   /*
-	 * 对等待中的模块进行定义
-	 */
-  var runWaiting = (function () {
+   * 对等待中的模块进行定义
+   */
+  var runWaiting = (function() {
     // 检查所有文件是否都载入
-    let isFinishLoaded = function () {
+    let isFinishLoaded = function() {
       for (let url in STATUS) {
         if (STATUS[url] === LOADING) return false;
       }
@@ -92,7 +91,7 @@ function (exports) {
     };
 
     // 检查依赖列表是否都载入完成
-    let isListLoaded = function (deps) {
+    let isListLoaded = function(deps) {
       for (let i = deps.length - 1; i >= 0; i--) {
         if (STATUS[deps[i]] !== DEFINED) return false;
       }
@@ -100,10 +99,10 @@ function (exports) {
       return true;
     };
 
-    return function () {
+    return function() {
       if (!MODULES.length) return;
 
-      for (let i = MODULES.length - 1; i >= 0;) {
+      for (let i = MODULES.length - 1; i >= 0; ) {
         var item = MODULES[i];
 
         if (STATUS[item.url] !== DEFINED) {
@@ -111,7 +110,6 @@ function (exports) {
             // 存在未定义的文件，且依赖列表中也存在未定义的文件，则跳过
             i--;
             continue;
-
           } else {
             // 依赖列表中的文件都已定义，则进行定义自己
             runDefining(item);
@@ -133,9 +131,9 @@ function (exports) {
   })();
 
   /**
-	 * 执行模块定义
-	 */
-  var runDefining = function (item) {
+   * 执行模块定义
+   */
+  var runDefining = function(item) {
     let args = [];
 
     // 遍历依赖列表
@@ -150,11 +148,10 @@ function (exports) {
       // 注入依赖并执行
       let result = item.callback.apply(window, args) || {};
 
-      // 合并依赖注入结果		
+      // 合并依赖注入结果
       let ret = RESULTS[item.url] || {};
       if (typeof result === 'object') {
-        for (let key in result)
-          ret[key] = result[key];
+        for (let key in result) ret[key] = result[key];
       } else {
         ret = result;
       }
@@ -166,14 +163,12 @@ function (exports) {
     STATUS[item.url] = DEFINED;
   };
 
-
   /*
-	 * 解析文件类型，并进行加载
-	 */
-  var loadResource = (function () {
-
+   * 解析文件类型，并进行加载
+   */
+  var loadResource = (function() {
     // 载入依赖文本
-    let loadText = function (url, callback) {
+    let loadText = function(url, callback) {
       if (!url) return;
       // 未加载过
       if (STATUS[url] != null) return;
@@ -181,7 +176,7 @@ function (exports) {
       STATUS[url] = LOADING; // 标记为加载中
       let xhr = new window.XMLHttpRequest();
 
-      xhr.onreadystatechange = function () {
+      xhr.onreadystatechange = function() {
         if (xhr.readyState == 4) {
           let text = xhr.responseText || '';
 
@@ -200,15 +195,15 @@ function (exports) {
     };
 
     // 载入依赖JSON
-    let loadJSON = function (url) {
-      loadText(url, function (text) {
+    let loadJSON = function(url) {
+      loadText(url, function(text) {
         // 解析JSON
         RESULTS[url] = JSON.parse(text);
       });
     };
 
     // 载入依赖脚本
-    let loadScript = function (url) {
+    let loadScript = function(url) {
       if (STATUS[url]) return; // 已加载则返回
 
       STATUS[url] = LOADING; // 标记当前模块为加载中
@@ -226,7 +221,7 @@ function (exports) {
       (document.getElementsByTagName('head')[0] || document.body).appendChild(script);
     };
 
-    return function (url) {
+    return function(url) {
       let arr = url.split('.');
       let type = arr.pop();
 
@@ -237,11 +232,11 @@ function (exports) {
   })();
 
   /*
-	 * 侦测脚本载入情况
-	 */
-  var addScriptListener = (function () {
+   * 侦测脚本载入情况
+   */
+  var addScriptListener = (function() {
     // 脚本载入完成回调
-    let onScriptLoad = function (script) {
+    let onScriptLoad = function(script) {
       let url = formatURL(script.src);
       if (!url) return;
 
@@ -267,19 +262,18 @@ function (exports) {
       runWaiting();
     };
 
-    return function (script) {
+    return function(script) {
       // 加载成功 或 失败
-      script.onload = script.onerror = function (e) {
+      script.onload = script.onerror = function(e) {
         onScriptLoad(e.target || e.srcElement || this);
       };
     };
   })();
 
-
   /**
-	 * 暴露出去的define接口
-	 */
-  let define = function (deps, callback) {
+   * 暴露出去的define接口
+   */
+  let define = function(deps, callback) {
     let args = [].slice.call(arguments, 0);
 
     STACK.push(args);
@@ -299,7 +293,6 @@ function (exports) {
             runLoading.apply(window, args);
             args = STACK.pop();
           }
-
         } else {
           // 外嵌模块定义语句脚本
           addScriptListener(list[i]);
@@ -309,4 +302,4 @@ function (exports) {
   };
 
   exports.define = define;
-}(ppo.modules);
+})(ppo.modules);
