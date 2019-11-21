@@ -13,7 +13,7 @@
   } else {
     global.ppo = factory();
   }
-// eslint-disable-next-line no-invalid-this
+  // eslint-disable-next-line no-invalid-this
 })(this, function() {
   function ppo() {}
   /************************************************************************
@@ -637,6 +637,7 @@
     }
 
     function init(converter) {
+      // #lizard forgives
       function api(key, value, attributes) {
         let result;
         if (typeof document === 'undefined') {
