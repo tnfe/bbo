@@ -1,7 +1,7 @@
 {
   "name": "ppo-cli",
   "version": "1.3.23",
-  "description": "a utility-belt library for JavaScript",
+  "description": "A utility belt library for modern JavaScript.",
   "main": "dist/ppo.min.js",
   "directories": {
     "doc": "docs"
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/halldwang/ppo.git"
+    "url": "git+https://github.com/halldwang/ppo-cli.git"
   },
   "keywords": [
     "ppo-cli"
@@ -26,7 +26,7 @@
   "author": "halldwang",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/halldwang/ppo/issues"
+    "url": "https://github.com/halldwang/ppo-cli/issues"
   },
   "homepage": "https://github.ahthw.com/ppo/",
   "husky": {

@@ -33,7 +33,7 @@ import ppo from 'ppo-cli';
 ### Include in html
 
 This function can only be used in previous version. (version <= 1.3.22)
-More Change [branch](https://github.com/halldwang/ppo-cli/tree/master)
+More Change [branch](https://github.com/halldwang/ppo-cli/tree/master) or Tags [1.3.19](https://github.com/halldwang/ppo-cli/tree/1.3.19) [1.3.20](https://github.com/halldwang/ppo-cli/tree/1.3.20) [1.3.22](https://github.com/halldwang/ppo-cli/tree/1.3.22)
 
 ```
 <script type="text/javascript" src="js/ppo.min.js"></script>
