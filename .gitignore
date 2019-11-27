@@ -17,3 +17,7 @@ Thumbs.db
 node_modules/
 _site/
 _ppo/
+.vscode/
+node_modules/
+npm-debug.log
+.npmrc

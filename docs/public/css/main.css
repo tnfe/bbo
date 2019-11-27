@@ -1,0 +1,271 @@
+body {
+	font-size: 14px;
+	line-height: 22px;
+	background: #fff;
+	color: #000;
+	font-family: Helvetica Neue, Helvetica, Arial;
+	background-image: url('../imgs/bg.png')
+}
+
+p {
+	margin: 20px 0;
+}
+
+a,
+    a:visited {
+	color: #444;
+}
+
+a:active,
+    a:hover {
+	color: #000;
+}
+
+h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+	padding-top: 20px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+b.header {
+	font-size: 16px;
+	line-height: 30px;
+}
+
+span.alias {
+	font-size: 14px;
+	font-style: italic;
+	margin-left: 20px;
+}
+
+table,
+    tr,
+    td {
+	margin: 0;
+	padding: 0;
+}
+
+td {
+	padding: 2px 12px 2px 0;
+}
+
+table .rule {
+	height: 1px;
+	background: #ccc;
+	margin: 5px 0;
+}
+
+ul {
+	list-style-type: circle;
+	padding: 0 0 0 20px;
+}
+
+li {
+	margin-bottom: 10px;
+}
+
+code,
+    pre,
+    tt {
+	font-family: Monaco, Consolas, "Lucida Console", monospace;
+	font-size: 12px;
+	line-height: 18px;
+	font-style: normal;
+}
+
+tt {
+	padding: 0px 3px;
+	background: #fff;
+	border: 1px solid #ddd;
+	zoom: 1;
+}
+
+code {
+	margin-left: 20px;
+	padding-bottom: 4px;
+    border-bottom: 1px dashed #666;
+}
+
+.code{
+	margin: 5px 0 10px;
+	padding: 6px 15px;
+	background: #eee;
+}
+
+pre {
+	font-size: 12px;
+	padding: 4px 0 3px 15px;
+	border-left: 5px solid #0366d6;
+	margin: 0px 0 12px;
+	background: #eee;
+}
+
+.button{
+	background-color: #0366d6;
+    border: none;
+    color: white;
+	cursor: pointer;
+    padding: 2px 12px;
+	border-radius: 2px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+	margin: 0 5px;
+	-moz-user-select:none;
+	-webkit-user-select:none;
+	-ms-user-select:none;
+	-khtml-user-select:none;
+	user-select:none;
+}
+
+.button:hover{
+	opacity: 0.6;
+}
+
+.installation{
+	padding: 0;
+}
+
+.installation li{
+	list-style: none;
+}
+
+.interface {
+	font-family: "Lucida Grande", "Lucida Sans Unicode", Helvetica, Arial, sans-serif !important;
+}
+
+#introduction{
+	margin: 8px 0;
+}
+
+div#sidebar {
+	background: #fff;
+	position: fixed;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	width: 200px;
+	overflow-y: auto;
+	overflow-x: hidden;
+	-webkit-overflow-scrolling: touch;
+	padding: 15px 0 30px 30px;
+	border-right: 1px solid #bbb;
+	box-shadow: 0 0 20px #ccc;
+	-webkit-box-shadow: 0 0 20px #ccc;
+	-moz-box-shadow: 0 0 20px #ccc;
+}
+
+a.toc_title,
+    a.toc_title:visited {
+	display: block;
+	color: black;
+	font-weight: bold;
+	margin-top: 12px;
+}
+
+a.toc_title:hover {
+	text-decoration: underline;
+}
+
+#sidebar .version {
+	font-size: 10px;
+	font-weight: normal;
+}
+
+ul.toc_section {
+	font-size: 14px;
+	line-height: 16px;
+	margin: 5px 0 0 0;
+	padding-left: 0px;
+	list-style-type: none;
+}
+
+.toc_section li {
+	cursor: pointer;
+	margin: 0 0 2px 0;
+	font-size: 13px;
+}
+
+.toc_section li a {
+	text-decoration: none;
+	color: black;
+}
+
+.toc_section li a:hover {
+	text-decoration: underline;
+}
+
+input#function_filter {
+	width: 80%;
+}
+
+div.container {
+	width: 650px;
+	margin: 20px 0 50px 260px;
+}
+
+img#logo {
+	height: 100px;
+}
+
+p.instxt{
+	margin: 0;
+}
+
+div.warning {
+	margin-top: 15px;
+	font: bold 11px Arial;
+	color: #770000;
+}
+
+.link{
+	color:#0366d6 !important;
+}
+
+@media only screen and (-webkit-min-device-pixel-ratio: 1.5) and (max-width: 800px),
+    only screen and (-o-min-device-pixel-ratio: 3/2) and (max-width: 800px),
+    only screen and (min-device-pixel-ratio: 1.5) and (max-width: 800px) {
+	img {
+		max-width: 100%;
+	}
+
+	div#sidebar {
+		-webkit-overflow-scrolling: initial;
+		position: relative;
+		width: 90%;
+		height: 120px;
+		left: 0;
+		top: -7px;
+		padding: 10px 0 10px 30px;
+		border: 0;
+		display: none;
+	}
+
+	img#logo {
+		width: auto;
+		height: auto;
+	}
+
+	div.container {
+		margin: 0;
+		width: 100%;
+	}
+
+	p,
+      div.container ul {
+		max-width: 98%;
+		overflow-x: scroll;
+	}
+
+	pre {
+		overflow: scroll;
+	}
+}
