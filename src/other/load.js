@@ -4,8 +4,8 @@ import { hash } from '../other/index';
 import { ua } from '../detecting/index';
 /**
  * load js
- * 1. ppo.loadjs("//your_url/a.js",func);
- * 2. ppo.loadjs("//your_url/a.js","only_id",func);
+ * 1. bbo.loadjs("//your_url/a.js",func);
+ * 2. bbo.loadjs("//your_url/a.js","only_id",func);
  */
 let _cache = {
   urls: {},

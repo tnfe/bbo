@@ -34,7 +34,7 @@ function hash(str) {
 
 /**
  * map condition judge
- *  ppo.judge = ppo.judgment
+ *  bbo.judge = bbo.judgment
  */
 function judge(v, vals, strict) {
   if (!isTypeof(vals, 'array')) return false;

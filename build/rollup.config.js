@@ -9,7 +9,7 @@ import { version } from '../package.json';
 let banner = `
 /*
  * bbo
- * +++++++++ a utility-belt library for JavaScript +++++++++
+ * +++++++++ A utility belt library for modern JavaScript. +++++++++
  * (c) 2011-2019 tnfe
  * https://github.com/tnfe/bbo.git
  * version ${version}

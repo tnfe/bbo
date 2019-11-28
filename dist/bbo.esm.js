@@ -1,7 +1,7 @@
 
 /*
  * bbo
- * +++++++++ a utility-belt library for JavaScript +++++++++
+ * +++++++++ A utility belt library for modern JavaScript. +++++++++
  * (c) 2011-2019 tnfe
  * https://github.com/tnfe/bbo.git
  * version 1.0.1
@@ -161,7 +161,7 @@ let trash = {
   },
   log: function () {
     for (let key in trash) {
-      if (key !== 'log' && key !== 'clear') console.log('ppo.trash:: ', key, trash[key]);
+      if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
     }
   }
 };
@@ -177,11 +177,11 @@ function noop() {}
  */
 
 function log(msg, styles) {
-  let ele = document.getElementById('_ppo_log');
+  let ele = document.getElementById('_bbo_log');
 
   if (ele === null) {
     ele = document.createElement('div');
-    ele.setAttribute('id', '_ppo_log');
+    ele.setAttribute('id', '_bbo_log');
     ele.setAttribute('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
     document.body.appendChild(ele);
   }
@@ -197,7 +197,7 @@ function log(msg, styles) {
   ele.innerHTML = msg;
 }
 /**
- * ppo.logs('onlyid&10', 1, 2);
+ * bbo.logs('onlyid&10', 1, 2);
  */
 
 
@@ -243,7 +243,7 @@ let _cache = {
  * open new url dont not blocked by browser
  */
 function open(href) {
-  let id = '_ppo_open_proxy';
+  let id = '_bbo_open_proxy';
   let a = document.getElementById(id) || document.createElement('a');
   a.setAttribute('id', id);
   a.setAttribute('href', href);
@@ -345,7 +345,7 @@ function hash(str) {
 }
 /**
  * map condition judge
- *  ppo.judge = ppo.judgment
+ *  bbo.judge = bbo.judgment
  */
 
 
@@ -407,8 +407,8 @@ function paramsName(fn) {
 /* eslint-disable no-invalid-this */
 /**
  * load js
- * 1. ppo.loadjs("//your_url/a.js",func);
- * 2. ppo.loadjs("//your_url/a.js","only_id",func);
+ * 1. bbo.loadjs("//your_url/a.js",func);
+ * 2. bbo.loadjs("//your_url/a.js","only_id",func);
  */
 
 let _cache$1 = {
@@ -725,7 +725,8 @@ function evil(fn) {
   let Fn = Function; // 一个变量指向Function，防止有些前端编译工具报错
 
   return new Fn('return ' + fn)();
-}
+} // bbo.toJSON = bbo.tojson = bbo.toJson
+
 
 function toJson(res) {
   if (!res) return null;
@@ -934,7 +935,7 @@ function getCookie(name) {
   }
 
   return null;
-} // ppo.deleteCookie = ppo.delCookie =
+} // bbo.deleteCookie = bbo.delCookie =
 
 
 function deleteCookie(name) {
@@ -994,7 +995,7 @@ function setUrlParam(key, value, url) {
     let separator = _url.indexOf('?') !== -1 ? '&' : '?';
     return _url + separator + key + '=' + encodeURIComponent(value) + hash;
   }
-} // ppo.deleteUrlParam = ppo.delUrlParam
+} // bbo.deleteUrlParam = bbo.delUrlParam
 
 
 function deleteUrlParam(param, url) {
@@ -1058,6 +1059,298 @@ function objectBigParam(obj) {
   });
   return arr;
 }
+
+/**
+ * 字符串
+ */
+let string = {
+  // 去空格
+  trim: function (str) {
+    let _str = str.replace(/^\s+/, '');
+
+    for (let i = str.length - 1; i >= 0; i--) {
+      if (/\S/.test(str.charAt(i))) {
+        _str = str.slice(0, i + 1);
+        break;
+      }
+    }
+
+    return _str;
+  },
+  print: function (str, object) {
+    // 模仿C语言print方法
+    let arr = [].slice.call(arguments, 1);
+    let index;
+    return str.replace(/#{([^{}]+)}/gm, function (match, name) {
+      index = Number(name);
+
+      if (index >= 0) {
+        return arr[index];
+      }
+
+      if (object && object[name] !== '') {
+        return object[name];
+      }
+
+      return '';
+    });
+  },
+  // 补零
+  fillZero: function (target, n) {
+    let z = new Array(n).join('0');
+    let str = z + target;
+    let result = str.slice(-n);
+    return result;
+  },
+  // 字符串去重
+  longUnique: function (target) {
+    let json = {};
+
+    for (let index = 0; index < target.length; index++) {
+      if (!json[target[index]]) {
+        json[target[index]] = -1;
+      }
+    }
+
+    let longString = '';
+
+    for (let index = 0; index < target.length; index++) {
+      if (json[target[index]]) {
+        json[target[index]] = 0;
+        longString = longString + target[index];
+      }
+    }
+
+    return longString;
+  },
+  // 去掉script内部的html标签
+  stripTags: function (target) {
+    return target.replace(/<script[^>]*>(\S\s*?)<\/script>/gim, '').replace(/<[^>]+>/g, '');
+  },
+  // 首字母大写
+  capitalize: function (target) {
+    return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
+  },
+  // _ - 转驼峰命名
+  camelize: function (target) {
+    if (target.indexOf('-') < 0 && target.indexOf('_') < 0) {
+      return target;
+    }
+
+    return target.replace(/[-_][^-_]/g, function (match) {
+      // console.log(match) 匹配测试
+      return match.charAt(1).toUpperCase();
+    });
+  },
+  // 把驼峰转换成_
+  underscored: function (target) {
+    return target.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
+  },
+  // 把字符串中的_转成-
+  dasherize: function (target) {
+    return this.underscored(target).replace(/_/g, '-');
+  },
+  // 字符串截断方法 目标 长度默认30，截断后符号默认...
+  truncate: function (target, len, truncation) {
+    let _len = len || 30;
+
+    let _truncation = truncation ? truncation : '...';
+
+    return target.length > _len ? target.slice(0, len - _truncation.length) + _truncation : target.toString();
+  },
+  // 获得字符串字节长度 参数2 utf-8 utf8 utf-16 utf16
+  byteLen: function (str, charset) {
+    let target = 0;
+    let charCode;
+    let i;
+    let len;
+
+    let _charset = charset ? charset.toLowerCase() : '';
+
+    if (_charset === 'utf-16' || _charset === 'utf16') {
+      for (i = 0, len = str.length; i < len; i++) {
+        charCode = str.charCodeAt(i);
+
+        if (charCode <= 0xffff) {
+          target += 2;
+        } else {
+          target += 4;
+        }
+      }
+    } else {
+      for (i = 0, len = str.length; i < len; i++) {
+        charCode = str.charCodeAt(i);
+
+        if (charCode <= 0x007f) {
+          target += 1;
+        } else if (charCode <= 0x07ff) {
+          target += 2;
+        } else if (charCode <= 0xffff) {
+          target += 3;
+        } else {
+          target += 4;
+        }
+      }
+    }
+
+    return target;
+  },
+  // 重复item,times次
+  repeat: function (item, times) {
+    let s = item;
+    let target = '';
+
+    while (times > 0) {
+      if (times % 2 === 1) {
+        target += s;
+      }
+
+      if (times === 1) {
+        break;
+      }
+
+      s += s; // eslint-disable-next-line no-param-reassign
+
+      times = times >> 1;
+    }
+
+    return target;
+  },
+  // 参2是参1的结尾么？参数3忽略大小写
+  endsWith: function (target, item, ignorecase) {
+    let str = target.slice(-item.length);
+    return ignorecase ? str.toLowerCase() === item.toLowerCase() : str === item;
+  },
+  // 参数2是参数1的开头么？参数3忽略大小写
+  startsWith: function (target, item, ignorecase) {
+    let str = target.slice(0, item.length);
+    return ignorecase ? str.toLowerCase() === item.toLowerCase() : str === item;
+  },
+  // 类名中，参数1 是否包含参数2，类名中的分隔符
+  containsClass: function (target, item, separator) {
+    return separator ? (separator + target + separator).indexOf(separator + item + separator) > -1 : this.contains(target, item);
+  },
+  // 判定一个字符串是否包含另一个字符串
+  contains: function (target, item) {
+    return target.indexOf(item) !== -1; // return target.indexOf(item) > -1;
+  },
+  // XSS 字符过滤
+  xssFilter: function (str) {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+  }
+};
+
+/**
+ * 数组方法
+ * 可根据lodash understand handlebars调整优化
+ *  */
+let array = {
+  // 数组去重
+  unique: function (target) {
+    let res = [];
+
+    for (let i = 0, len = target.length; i < len; i++) {
+      let current = target[i];
+
+      if (res.indexOf(current) === -1) {
+        res.push(current);
+      }
+    }
+
+    return res;
+  },
+  // 在数组中随机取一个
+  random: function (target) {
+    return target[Math.floor(Math.random() * target.length)];
+  },
+  // 打乱数组返回新数组
+  shuffle: function (target) {
+    let m = target.length;
+
+    while (m > 1) {
+      let index = Math.floor(Math.random() * m--);
+      [target[m], target[index]] = [target[index], target[m]];
+    }
+
+    return target;
+  },
+  equal: function (arr1, arr2) {
+    if (arr1 === arr2) return true;
+    if (arr1.length !== arr2.length) return false;
+
+    for (let i = 0; i < arr1.length; ++i) {
+      if (arr1[i] !== arr2[i]) return false;
+    }
+
+    return true;
+  },
+  // 是否包含指定元素
+  contains: function (target, item) {
+    return target.indexOf(item) > -1;
+  },
+  // 在参数1中删除参数2指定位的元素返回布尔
+  removeAt: function (target, index) {
+    return !!target.splice(index, 1).length;
+  },
+  // 在参数1中删除参数2返回布尔
+  remove: function (target, item) {
+    let index = target.indexOf(item);
+    return index > -1 ? this.removeAt(target, index) : false;
+  },
+  // 去除数组中的undefined和Null
+  compact: function (target) {
+    return target.filter(function (item) {
+      return item !== undefined;
+    });
+  },
+  // 获取数组对象中的属性值，组合成新数组
+  pluck: function (target, name) {
+    let result = [];
+    let temp;
+    target.forEach(function (item) {
+      temp = item[name];
+
+      if (temp !== null) {
+        result.push(temp);
+      }
+    });
+    return result;
+  },
+  // 2个数组的并集
+  union: function (t1, t2) {
+    return this.unique(t1.concat(t2));
+  },
+  // 取2个数组的交集
+  intersect: function (t1, t2) {
+    return t1.filter(function (item) {
+      return t2.indexOf(item) !== -1;
+    });
+  },
+  // 取差集
+  diff: function (t1, t2) {
+    let r = t1;
+
+    for (let i = 0; i < t1.length; i++) {
+      for (let j = 0; j < t2.length; j++) {
+        if (r[i] === t2[j]) {
+          r.splice(i, 1);
+          i--;
+          break;
+        }
+      }
+    }
+
+    return r;
+  },
+  // max
+  max: function (target) {
+    return Math.max.apply(0, target);
+  },
+  // min
+  min: function (target) {
+    return Math.min.apply(0, target);
+  }
+};
 
 function fill0(num) {
   let _num = parseFloat(num);
@@ -1184,12 +1477,12 @@ function formatRemainTime(endTime) {
  *************************************************************************/
 function randomColor() {
   return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
-} // ppo.randomFromArray = ppo.randomfArr
+} // bbo.randomFromArray = bbo.randomfArr
 
 
 function randomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
-} // ppo.randomFromA2B = ppo.randomA2B
+} // bbo.randomFromA2B = bbo.randomA2B
 
 
 function randomA2B(a, b, int) {
@@ -1910,6 +2203,7 @@ let bbo = {
   uuid,
   hash,
   judge,
+  judgment: judge,
   getType,
   isTypeof,
   construct,
@@ -1919,15 +2213,19 @@ let bbo = {
   loadjs,
   loadcss,
   toJson,
+  toJSON: toJson,
+  tojson: toJson,
   // cookie
   cookie,
   setCookie,
   getCookie,
   deleteCookie,
+  delCookie: deleteCookie,
   // url
   getUrlParam,
   setUrlParam,
   deleteUrlParam,
+  delUrlParam: deleteUrlParam,
   objectParam,
   // times
   setTimesout,
@@ -1940,7 +2238,9 @@ let bbo = {
   // random
   randomColor,
   randomFromArray,
+  randomfArr: randomFromArray,
   randomA2B,
+  randomFromA2B: randomA2B,
   randomKey,
   floor,
   // touch
@@ -1972,7 +2272,11 @@ let bbo = {
   debounce,
   throttle,
   pick,
-  omit
+  omit,
+  // string
+  string,
+  // array
+  array
 };
 
 export default bbo;

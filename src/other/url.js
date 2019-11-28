@@ -44,7 +44,7 @@ function setUrlParam(key, value, url) {
   }
 }
 
-// ppo.deleteUrlParam = ppo.delUrlParam
+// bbo.deleteUrlParam = bbo.delUrlParam
 function deleteUrlParam(param, url) {
   let _url = url;
   if (!_url) {

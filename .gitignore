@@ -15,8 +15,7 @@ Thumbs.db
 .project
 .settings/
 node_modules/
-_site/
-_ppo/
+site/
 .vscode/
 node_modules/
 npm-debug.log

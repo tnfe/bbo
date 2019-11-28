@@ -9,6 +9,7 @@ function evil(fn) {
   return new Fn('return ' + fn)();
 }
 
+// bbo.toJSON = bbo.tojson = bbo.toJson
 function toJson(res) {
   if (!res) return null;
 

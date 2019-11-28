@@ -5,12 +5,12 @@ function randomColor() {
   return '#' + ('00000' + ((Math.random() * 0x1000000) << 0).toString(16)).slice(-6);
 }
 
-// ppo.randomFromArray = ppo.randomfArr
+// bbo.randomFromArray = bbo.randomfArr
 function randomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
-// ppo.randomFromA2B = ppo.randomA2B
+// bbo.randomFromA2B = bbo.randomA2B
 function randomA2B(a, b, int) {
   let result = Math.random() * (b - a) + a;
   return int ? Math.floor(result) : result;

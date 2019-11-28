@@ -5,7 +5,7 @@
  * open new url dont not blocked by browser
  */
 function open(href) {
-  let id = '_ppo_open_proxy';
+  let id = '_bbo_open_proxy';
   let a = document.getElementById(id) || document.createElement('a');
   a.setAttribute('id', id);
   a.setAttribute('href', href);

@@ -194,7 +194,7 @@ function getCookie(name) {
   return null;
 }
 
-// ppo.deleteCookie = ppo.delCookie =
+// bbo.deleteCookie = bbo.delCookie =
 function deleteCookie(name) {
   setCookie(name, '', {
     hour: -1

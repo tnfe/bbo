@@ -8,10 +8,10 @@ import { args, noop } from '../arguments/index';
  */
 
 function log(msg, styles) {
-  let ele = document.getElementById('_ppo_log');
+  let ele = document.getElementById('_bbo_log');
   if (ele === null) {
     ele = document.createElement('div');
-    ele.setAttribute('id', '_ppo_log');
+    ele.setAttribute('id', '_bbo_log');
     ele.setAttribute('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
     document.body.appendChild(ele);
   }
@@ -27,7 +27,7 @@ function log(msg, styles) {
 }
 
 /**
- * ppo.logs('onlyid&10', 1, 2);
+ * bbo.logs('onlyid&10', 1, 2);
  */
 function logs() {
   if (window.console && window.console.log) {

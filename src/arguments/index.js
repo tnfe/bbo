@@ -16,7 +16,7 @@ let trash = {
   },
   log: function() {
     for (let key in trash) {
-      if (key !== 'log' && key !== 'clear') console.log('ppo.trash:: ', key, trash[key]);
+      if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
     }
   }
 };

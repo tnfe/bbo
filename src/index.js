@@ -30,6 +30,9 @@ import { toJson } from './other/json';
 import { cookie, setCookie, getCookie, deleteCookie } from './other/cookie';
 import { getUrlParam, setUrlParam, deleteUrlParam, objectParam } from './other/url';
 
+import { string } from './string/index';
+import { array } from './array/index';
+
 import {
   setTimesout,
   clearTimesout,
@@ -116,6 +119,7 @@ let bbo = {
   uuid,
   hash,
   judge,
+  judgment: judge,
   getType,
   isTypeof,
   construct,
@@ -125,15 +129,19 @@ let bbo = {
   loadjs,
   loadcss,
   toJson,
+  toJSON: toJson,
+  tojson: toJson,
   // cookie
   cookie,
   setCookie,
   getCookie,
   deleteCookie,
+  delCookie: deleteCookie,
   // url
   getUrlParam,
   setUrlParam,
   deleteUrlParam,
+  delUrlParam: deleteUrlParam,
   objectParam,
   // times
   setTimesout,
@@ -146,7 +154,9 @@ let bbo = {
   // random
   randomColor,
   randomFromArray,
+  randomfArr: randomFromArray,
   randomA2B,
+  randomFromA2B: randomA2B,
   randomKey,
   floor,
   // touch
@@ -178,7 +188,11 @@ let bbo = {
   debounce,
   throttle,
   pick,
-  omit
+  omit,
+  // string
+  string,
+  // array
+  array
 };
 
 export default bbo;

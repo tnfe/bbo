@@ -10,13 +10,13 @@ I sorted out the most frequently used function functions in everyday development
 
 Most of the code comes from the [stackoverflow](https://stackoverflow.com/) site in the high score answer, here to pay tribute to the original author.
 
-bbo little poor, gzip less than 6k, so a library you can use it anytime, anywhere without worrying about anything.
+bbo little poor, gzip less than 7k, so a library you can use it anytime, anywhere without worrying about anything.
 
 See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference.
 
 ## From:
 
-Project from：[https://github.com/a-jie/ppo](https://github.com/a-jie/ppo)
+Project from：[https://github.com/a-jie/ppo](https://github.com/a-jie/ppo) and [ppo-cli](https://github.com/halldwang/ppo-cli) [onavo](https://github.com/halldwang/onavo/tree/master)
 
 ## Installation
 
