@@ -1,24 +1,21 @@
-// #region rollup 插件
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
-// #endregion
 
 import { version } from '../package.json';
 
 let banner = `
 /*
- * PPO
+ * bbo
  * +++++++++ a utility-belt library for JavaScript +++++++++
- * (c) 2011-2019 halld add
- * https://github.com/halldwang/ppo
+ * (c) 2011-2019 tnfe
+ * https://github.com/tnfe/bbo.git
  * version ${version}
  */
 `;
 
-// #region 插件
 let plugins = [
   resolve(),
   commonjs(),
@@ -28,17 +25,16 @@ let plugins = [
     extensions: ['.js']
   })
 ];
-// #endregion
 
 export default [
   {
     input: 'src/index.js',
     output: {
       banner,
-      file: `dist/ppo.min.js`,
+      file: `dist/bbo.min.js`,
       exports: 'named',
       format: 'umd',
-      name: 'ppo',
+      name: 'bbo',
       sourcemap: true
     },
     plugins: plugins.concat([
@@ -46,7 +42,7 @@ export default [
         output: {
           comments(node, comment) {
             if (comment.type === 'comment2') {
-              return /ppo.+v/i.test(comment.value);
+              return /bbo.+v/i.test(comment.value);
             }
           }
         }
@@ -59,15 +55,15 @@ export default [
       {
         banner,
         exports: 'named',
-        file: 'dist/ppo.esm.js',
+        file: 'dist/bbo.esm.js',
         format: 'esm'
       },
       {
         banner,
-        file: `dist/ppo.js`,
+        file: `dist/bbo.js`,
         exports: 'named',
         format: 'umd',
-        name: 'ppo',
+        name: 'bbo',
         sourcemap: true
       }
     ],

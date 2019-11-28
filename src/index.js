@@ -77,7 +77,7 @@ import {
  * Main entry
  */
 
-let ppo = {
+let bbo = {
   // version
   version,
   // detecting
@@ -181,4 +181,4 @@ let ppo = {
   omit
 };
 
-export default ppo;
+export default bbo;

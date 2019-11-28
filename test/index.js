@@ -1,15 +1,15 @@
 /**
  * @file Demo
  */
-import ppo from '../dist/ppo.esm';
+import bbo from '../dist/bbo.esm';
 
-console.log(ppo.ua());
+console.log(bbo.ua());
 
-ppo.log('hello ppo', { color: '#fff', background: '#ff0000' });
+bbo.log('hello bbo', { color: '#fff', background: '#ff0000' });
 
-// ppo.open(window.location.href)
+// bbo.open(window.location.href)
 
-ppo.loadImages({
+bbo.loadImages({
   data: ['1.png', '2.png', '3.png'],
   step: function(num) {},
   compelte: function() {},
@@ -17,4 +17,4 @@ ppo.loadImages({
   path: '/images'
 });
 
-console.log(ppo.cookie().getJSON());
+console.log(bbo.cookie().getJSON());

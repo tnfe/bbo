@@ -1,8 +1,8 @@
 {
-  "name": "ppo-cli",
-  "version": "1.3.23",
+  "name": "bbo",
+  "version": "1.0.1",
   "description": "A utility belt library for modern JavaScript.",
-  "main": "dist/ppo.min.js",
+  "main": "dist/bbo.min.js",
   "directories": {
     "doc": "docs"
   },
@@ -18,17 +18,17 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/halldwang/ppo-cli.git"
+    "url": "git+https://github.com/tnfe/bbo.git"
   },
   "keywords": [
-    "ppo-cli"
+    "bbo"
   ],
   "author": "halldwang",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/halldwang/ppo-cli/issues"
+    "url": "https://github.com/tnfe/bbo/issues"
   },
-  "homepage": "https://github.ahthw.com/ppo/",
+  "homepage": "https://github.ahthw.com/bbo/",
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint",

@@ -1,19 +1,19 @@
 
 /*
- * PPO
+ * bbo
  * +++++++++ a utility-belt library for JavaScript +++++++++
- * (c) 2011-2019 halld add
- * https://github.com/halldwang/ppo
- * version 1.3.23
+ * (c) 2011-2019 tnfe
+ * https://github.com/tnfe/bbo.git
+ * version 1.0.1
  */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
   typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.ppo = {}));
+  (global = global || self, factory(global.bbo = {}));
 }(this, (function (exports) { 'use strict';
 
-  var version = "1.3.23";
+  var version = "1.0.1";
 
   function ua(lower) {
     return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
@@ -1877,7 +1877,7 @@
    * Main entry
    */
 
-  let ppo = {
+  let bbo = {
     // version
     version,
     // detecting
@@ -1981,9 +1981,9 @@
     omit
   };
 
-  exports.default = ppo;
+  exports.default = bbo;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
 })));
-//# sourceMappingURL=ppo.js.map
+//# sourceMappingURL=bbo.js.map

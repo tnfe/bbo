@@ -1,13 +1,13 @@
 
 /*
- * PPO
+ * bbo
  * +++++++++ a utility-belt library for JavaScript +++++++++
- * (c) 2011-2019 halld add
- * https://github.com/halldwang/ppo
- * version 1.3.23
+ * (c) 2011-2019 tnfe
+ * https://github.com/tnfe/bbo.git
+ * version 1.0.1
  */
 
-var version = "1.3.23";
+var version = "1.0.1";
 
 function ua(lower) {
   return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
@@ -1871,7 +1871,7 @@ function omit(object, ...paths) {
  * Main entry
  */
 
-let ppo = {
+let bbo = {
   // version
   version,
   // detecting
@@ -1975,4 +1975,4 @@ let ppo = {
   omit
 };
 
-export default ppo;
+export default bbo;
