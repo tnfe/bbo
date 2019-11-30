@@ -4,13 +4,13 @@
 
 > A utility belt library for modern JavaScript.
 
-Every frontend developer has written his own utils library, and we often write methods that are easily forgotten and highly used. [bbo](https://github.com/tnfe/bbo.git) is a super small and useful utils library for JavaScript. It and [lodash](https://github.com/lodash/lodash) [underscore](https://github.com/jashkenas/underscore) [lazy.js](https://github.com/dtao/lazy.js) almost no coupling.
+Every frontend developer has his own utils library, and we often write methods that are easily forgotten and highly used. [bbo](https://github.com/tnfe/bbo.git) is a super small and useful utils library for JavaScript. It isn't couping with [lodash](https://github.com/lodash/lodash) [underscore](https://github.com/jashkenas/underscore) [lazy.js](https://github.com/dtao/lazy.js).
 
-I sorted out the most frequently used function functions in everyday development. These functions are almost ubiquitous in your development, and they are not found in lodash underscore.
+I sorted out the most frequently used functions in daily development. These functions are almost ubiquitous in your development, and they cannot be found in lodash and underscore.
 
-Most of the code comes from the [stackoverflow](https://stackoverflow.com/) site in the high score answer, here to pay tribute to the original author.
+Most code comes from the [stackOverflow](https://stackoverflow.com/) site in the high-score answers, so we pay tribute to the original authors.
 
-bbo little poor, gzip less than 7k, so a library you can use it anytime, anywhere without worrying about anything.
+With easy code and less than 7k gzip, bbo can be used anytime and anywhere with no worries.
 
 See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference.
 
@@ -40,13 +40,23 @@ bbo.log('hello world!');
 var id = bbo.setTimesout(function(word){
     console.log(word);
     console.log(this);  // log {index: 3 ,times: 8, over: false}
-}, 1000/20, 8, 'helloworld')
+}, 1000/20, 8, 'helloWorld')
 ```
 
 ## Why?
 
-When you use react, vue, angular often need to write a lot of utils method. But lodash and underscore these libraries are not omnipotent. So you have to find a lot of tool library. Use bbo, you can solve the daily development of many small problems. Simple and compact!
+When you use react, vue, angular，you often need to write a lot of utils methods. But lodash and underscore libraries are not omnipotent. So you have to find a lot of tool libraries. By using bbo, you can solve many small problems in the daily development. It is simple and compact!
+
+## Maintainers
+
+[@halldwang](https://github.com/halldwang).
+
+## Contribution
+
+Thank you to all the people who already contributed to ppo!
+
+<a href="https://github.com/tnfe/bbo/graphs/contributors"><img src="https://opencollective.com/tnfe/bbo/contributors.svg?width=890" /></a>
 
 ## License
 
-Trine is ISC licensed. See the [LICENSE](https://github.com/halldwang/bbo/blob/beta/LICENSE) document for more information.
+Trine is ISC licensed. See the [LICENSE](https://github.com/tnfe/bbo/blob/master/LICENSE) document for more information.
