@@ -53,7 +53,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 
 ## Contribution
 
-Thank you to all the people who already contributed to ppo!
+Thank you all who already contributed to bbo!
 
 <a href="https://github.com/tnfe/bbo/graphs/contributors"><img src="https://opencollective.com/tnfe/bbo/contributors.svg?width=890" /></a>
 
