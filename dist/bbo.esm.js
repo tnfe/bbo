@@ -1064,8 +1064,11 @@ function objectBigParam(obj) {
  * 字符串
  */
 let string = {
-  // 去空格
-  trim: function (str) {
+  /**
+   * en:Remove spaces after removing previous string
+   * zh:去除前字符串后去空格
+   */
+  trim: str => {
     let _str = str.replace(/^\s+/, '');
 
     for (let i = str.length - 1; i >= 0; i--) {
@@ -1077,25 +1080,11 @@ let string = {
 
     return _str;
   },
-  print: function (str, object) {
-    // 模仿C语言print方法
-    let arr = [].slice.call(arguments, 1);
-    let index;
-    return str.replace(/#{([^{}]+)}/gm, function (match, name) {
-      index = Number(name);
 
-      if (index >= 0) {
-        return arr[index];
-      }
-
-      if (object && object[name] !== '') {
-        return object[name];
-      }
-
-      return '';
-    });
-  },
-  // 补零
+  /**
+   * en:Increase by 0 based on string length
+   * zh:字符串前补零
+   */
   fillZero: function (target, n) {
     let z = new Array(n).join('0');
     let str = z + target;
@@ -1127,11 +1116,50 @@ let string = {
   stripTags: function (target) {
     return target.replace(/<script[^>]*>(\S\s*?)<\/script>/gim, '').replace(/<[^>]+>/g, '');
   },
-  // 首字母大写
-  capitalize: function (target) {
+
+  /**
+   * en:Capitalizes the first letter of a string.
+   * zh:首字母大写
+   */
+  capitalize: target => {
     return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
   },
-  // _ - 转驼峰命名
+
+  /**
+   * en:Decapitalizes the first letter of a string.
+   * zh:首字母小写
+   */
+  decapitalize: ([first, ...rest], upperRest = false) => first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join('')),
+
+  /**
+   * en:Returns true if the given string is an absolute URL, false otherwise.
+   * zh:正则检测是否为网址URL
+   */
+  isAbsoluteURL: str => /^[a-z][a-z0-9+.-]*:/.test(str),
+
+  /**
+   * en:Creates a new string with the results of calling a provided function
+   * on every character in the calling string.
+   * zh:给字符串创建map函数
+   */
+  mapString: (str, fn) => str.split('').map((c, i) => fn(c, i, str)).join(''),
+
+  /**
+   * en:Replaces all but the last num of characters with the specified mask character.
+   * zh:给字符串增加掩码
+   */
+  mask: (cc, num = 4, mask = '*') => `${cc}`.slice(-num).padStart(`${cc}`.length, mask),
+
+  /**
+   * splitLines('This\nis a\nmultiline\nstring.\n') =>
+   * ['This', 'is a', 'multiline', 'string.' , '']
+   */
+  splitLines: str => str.split(/\r?\n/),
+
+  /**
+   * en:_ or - toCamelCase
+   * zh:_ - 转驼峰命名
+   */
   camelize: function (target) {
     if (target.indexOf('-') < 0 && target.indexOf('_') < 0) {
       return target;
@@ -1142,24 +1170,40 @@ let string = {
       return match.charAt(1).toUpperCase();
     });
   },
-  // 把驼峰转换成_
+
+  /**
+   * en:CamelCase to _
+   * zh:把驼峰转换成_
+   */
   underscored: function (target) {
     return target.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
   },
-  // 把字符串中的_转成-
+
+  /**
+   * en:Turn _ in a string into-
+   * zh:把字符串中的_转成-
+   */
   dasherize: function (target) {
     return this.underscored(target).replace(/_/g, '-');
   },
-  // 字符串截断方法 目标 长度默认30，截断后符号默认...
-  truncate: function (target, len, truncation) {
-    let _len = len || 30;
 
-    let _truncation = truncation ? truncation : '...';
+  /**
+   * en:Truncates a string up to a specified length.
+   * zh:字符串截断方法 目标 长度默认3，截断后符号默认...
+   */
+  truncate: (str, num) => str.length > num ? str.slice(0, num > 3 ? num - 3 : num) + '...' : str,
 
-    return target.length > _len ? target.slice(0, len - _truncation.length) + _truncation : target.toString();
-  },
-  // 获得字符串字节长度 参数2 utf-8 utf8 utf-16 utf16
-  byteLen: function (str, charset) {
+  /**
+   * en:Returns the length of a string in bytes.
+   * zh:返回字符串长度
+   */
+  byteSize: str => new Blob([str]).size,
+
+  /**
+   * en:Returns the length of a string in bytes by Unicode
+   * zh:获得字符串字节长度 参数2 utf-8 utf8 utf-16 utf16
+   */
+  byteLen: (str, charset) => {
     let target = 0;
     let charCode;
     let i;

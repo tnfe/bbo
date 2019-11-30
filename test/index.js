@@ -19,4 +19,4 @@ bbo.loadImages({
 // console.log(bbo.array.allEqual([1, 2, 3, 4, 5, 6])); // false
 // console.log(bbo.array.allEqual([1, 1, 1, 1])); // true
 
-console.log(bbo.array);
+console.log(bbo.array, bbo.string);
