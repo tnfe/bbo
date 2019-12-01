@@ -62,6 +62,7 @@ function getDate(d1, d2) {
 }
 
 /**
+ * @ zh_cn
  * @desc   格式化${startTime}距现在的已过时间
  * @param  {Date} startTime
  * @return {String}
@@ -83,7 +84,7 @@ function formatPassTime(startTime) {
 }
 
 /**
- *
+ * @ zh_cn
  * @desc   格式化现在距${endTime}的剩余时间
  * @param  {Date} endTime
  * @return {String}
@@ -105,4 +106,25 @@ function formatRemainTime(endTime) {
   return d + '天 ' + h + '小时 ' + m + '分钟 ' + s + '秒';
 }
 
-export { setTimesout, clearTimesout, getDate, formatPassTime, formatRemainTime };
+/**
+ * @ en
+ * bbo.formatDuration(1001); // '1 second, 1 millisecond'
+ * bbo.formatDuration(34325055574); // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
+ */
+const formatDuration = (ms) => {
+  // eslint-disable-next-line no-param-reassign
+  if (ms < 0) ms = -ms;
+  const time = {
+    day: Math.floor(ms / 86400000),
+    hour: Math.floor(ms / 3600000) % 24,
+    minute: Math.floor(ms / 60000) % 60,
+    second: Math.floor(ms / 1000) % 60,
+    millisecond: Math.floor(ms) % 1000
+  };
+  return Object.entries(time)
+    .filter((val) => val[1] !== 0)
+    .map(([key, val]) => `${val} ${key}${val !== 1 ? 's' : ''}`)
+    .join(', ');
+};
+
+export { setTimesout, clearTimesout, getDate, formatPassTime, formatRemainTime, formatDuration };

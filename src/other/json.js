@@ -3,9 +3,10 @@ import { isTypeof } from '../other/index';
  * to json
  */
 
-// 计算表达式的值 hack
+// eval hack
 function evil(fn) {
-  let Fn = Function; // 一个变量指向Function，防止有些前端编译工具报错
+  // A variable points to Function, preventing reporting errors
+  let Fn = Function;
   return new Fn('return ' + fn)();
 }
 

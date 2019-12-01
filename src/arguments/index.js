@@ -23,4 +23,14 @@ let trash = {
 
 function noop() {}
 
-export { args, trash, noop };
+const merge = (...objs) =>
+  [...objs].reduce(
+    (acc, obj) =>
+      Object.keys(obj).reduce((a, k) => {
+        acc[k] = acc.hasOwnProperty(k) ? [].concat(acc[k]).concat(obj[k]) : obj[k];
+        return acc;
+      }, {}),
+    {}
+  );
+
+export { args, trash, noop, merge };

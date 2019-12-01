@@ -34,17 +34,21 @@ function gc(cn) {
 }
 
 function c(t, cn, i, id) {
-  let el = document.createElement(t); // t就是创建的标签
+  let el = document.createElement(t);
   if (cn) {
-    el.setAttribute('class', cn); // 给t标签添加cn这个类
+    el.setAttribute('class', cn);
   }
   if (i) {
-    el.innerHTML = i; // 把新建的标签t的html文本赋值给i
+    el.innerHTML = i;
   }
   if (id) {
-    el.setAttribute('id', id); // 给标签添加一个id
+    el.setAttribute('id', id);
   }
   return el;
+}
+
+function query(i) {
+  return document.querySelector(i);
 }
 
 /**
@@ -62,4 +66,64 @@ function trigger(element, event, eventType) {
   }
 }
 
-export { open, trigger, stopPropagation, g, gc, c };
+const copyToClipboard = (str) => {
+  const el = document.createElement('textarea');
+  el.value = str;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  const selected =
+    document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+  if (selected) {
+    document.getSelection().removeAllRanges();
+    document.getSelection().addRange(selected);
+  }
+};
+
+const show = (...el) =>
+  [...el].forEach((e) => {
+    e.style.display = '';
+  });
+
+const hide = (...el) =>
+  [...el].forEach((e) => {
+    e.style.display = 'none';
+  });
+
+const elementContains = (parent, child) => parent !== child && parent.contains(child);
+
+const formToObject = (form) =>
+  Array.from(new FormData(form)).reduce(
+    (acc, [key, value]) => ({
+      ...acc,
+      [key]: value
+    }),
+    {}
+  );
+
+const getStyle = (el, ruleName) => getComputedStyle(el)[ruleName];
+
+const setStyle = (el, ruleName, val) => {
+  el.style[ruleName] = val;
+};
+
+export {
+  open,
+  trigger,
+  stopPropagation,
+  g,
+  gc,
+  c,
+  query,
+  show,
+  hide,
+  copyToClipboard,
+  elementContains,
+  formToObject,
+  getStyle,
+  setStyle
+};

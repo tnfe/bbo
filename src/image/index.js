@@ -1,15 +1,17 @@
 /**
- * 图片尺寸检查
- * @param {(Object|String)} image - 图片信息，支持 File 对象 或 Data URLs
- * @param {Object} [options={}] - 检查参数
- * @param {Number} [options.width] - 检查宽度
- * @param {Number} [options.height] - 检查高度
- * @param {Number} [deviation=0] - 允许的偏差量
+ * Check image size
+ * @param {(Object|String)} image - image information，allow File Object or Data URLs
+ * @param {Object} [options={}] - Check options
+ * @param {Number} [options.width] - Check width
+ * @param {Number} [options.height] - Check height
+ * @param {Number} [deviation=0] - Allowable deviation
  */
 
 function checkImageSize(image, options, deviation = 0) {
   return new Promise((resolve, reject) => {
-    /* #region 判断图片信息类型 */
+    /**
+     * Check type of image
+     */
     if (image instanceof File) {
       const reader = new FileReader();
       reader.onload = function() {
@@ -19,11 +21,10 @@ function checkImageSize(image, options, deviation = 0) {
     } else if (typeof image === 'string') {
       checkSize(image);
     }
-    /* #endregion */
 
     /**
-     * 检测图片尺寸
-     * @param {String} data - 图片数据：Data URL
+     * Check picture size
+     * @param {String} data：Data URL
      */
     function checkSize(data) {
       const virtualImage = new Image();
@@ -40,22 +41,24 @@ function checkImageSize(image, options, deviation = 0) {
         resolve(true);
       };
     }
-    /* #endregion */
   });
 }
 
 /**
- * 图片优化，暂不支持 gif 图片
- * @param {(Object|String)} image - 图片信息，支持 File 对象 或 Data URLs
- * @param {Number} [quality=0.9] - 输出图片质量，0 - 1 之间，仅 image/jpeg 与 image/webp 有效
- * @param {Object} [options={}] - 输出图片相关选项
- * @param {Number} [options.maxWidth=1920] - 输出图片的最大宽度，若图片原始宽度小于该宽度，则返回原始尺寸图片，若图片原始宽度大于该宽度，则返回等比缩放为该尺寸的图片
- * @param {String} [options.mimeType] - 输出图片格式，MIME 类型
- * @returns {Object} Promise 对象，resolve 函数参数为优化后的图片 Blob 对象，如果输出类型为 image/gif，则原样返回 image 参数内容
+ * Image optimization
+ * Gif images are not supported
+ * @param {(Object|String)} - image ,supported File Object or Data URLs
+ * @param {Number} [quality = 0.9] - Image quality, between 0 - 1, only image/jpeg or image/webp is accept.
+ * @param {Object} [options = {}] - Image options
+ * @param {Number} [options.maxWidth = 1920] - The maximum width of the output picture.
+ * If the original width of the picture is less than this width, the original size picture is returned.
+ * If the original width of the picture is greater than the width, the picture scaled to the size is returned.
+ * @param {String} [options.mimeType] - Output image type，Types of MIME.
+ * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
+ * If the output type is image/gif，Then return as is image Parameter content.
  */
 function imageOptimization(image, quality = 0.9, { maxWidth = 1920, mimeType } = {}) {
   return new Promise((resolve, reject) => {
-    /* #region 判断图片信息类型 */
     if (image instanceof File) {
       const reader = new FileReader();
       reader.onload = function() {
@@ -65,18 +68,16 @@ function imageOptimization(image, quality = 0.9, { maxWidth = 1920, mimeType } =
     } else if (typeof image === 'string') {
       toBlob(image);
     }
-    /* #endregion */
 
     /**
-     * 转换为 Blob 类型
-     * @param {String} data - 图片数据：Data URL
+     * To Blob
+     * @param {String} data - Image: Data URL
      */
     function toBlob(data) {
       const type = data.match(/data:([^;,]+)/);
       if (Array.isArray(type)) {
         const outputType = mimeType ? mimeType : type[1];
 
-        // 暂不支持 gif 图片，原样返回 image 参数内容
         if (outputType === 'image/gif') {
           return resolve(image);
         }
@@ -104,7 +105,7 @@ function imageOptimization(image, quality = 0.9, { maxWidth = 1920, mimeType } =
           );
         };
       } else {
-        reject(new Error('[Slug Function] 非图片类型的 Data URLs'));
+        reject(new Error('[Slug Function] Non-picture type Data URLs'));
       }
     }
   });

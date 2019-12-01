@@ -27,20 +27,20 @@ function log(msg, styles) {
 }
 
 /**
- * bbo.logs('onlyid&10', 1, 2);
+ * bbo.logs('only id&10', 1, 2);
  */
 function logs() {
   if (window.console && window.console.log) {
-    let onlyid = String(arguments[0]);
-    let times = parseInt(onlyid.split('&')[1], 10) || 10;
+    let onlyId = String(arguments[0]);
+    let times = parseInt(onlyId.split('&')[1], 10) || 10;
     let logsCache = _cache.logs;
 
-    if (!logsCache[onlyid]) logsCache[onlyid] = {};
-    if (!logsCache[onlyid].once) logsCache[onlyid].once = 1;
+    if (!logsCache[onlyId]) logsCache[onlyId] = {};
+    if (!logsCache[onlyId].once) logsCache[onlyId].once = 1;
 
-    if (logsCache[onlyid].once <= times) {
+    if (logsCache[onlyId].once <= times) {
       console.log.apply(console, args(arguments, 1));
-      logsCache[onlyid].once++;
+      logsCache[onlyId].once++;
     }
   }
 }
@@ -53,9 +53,7 @@ function removeConsole(clear) {
   } catch (e) {}
 }
 /************************************************************************
- *
  *   Private Method
- *
  *************************************************************************/
 let _cache = {
   urls: {},

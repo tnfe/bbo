@@ -168,6 +168,11 @@ let trash = {
 
 function noop() {}
 
+const merge = (...objs) => [...objs].reduce((acc, obj) => Object.keys(obj).reduce((a, k) => {
+  acc[k] = acc.hasOwnProperty(k) ? [].concat(acc[k]).concat(obj[k]) : obj[k];
+  return acc;
+}, {}), {});
+
 /************************************************************************
  * LOGS
  *************************************************************************/
@@ -197,21 +202,21 @@ function log(msg, styles) {
   ele.innerHTML = msg;
 }
 /**
- * bbo.logs('onlyid&10', 1, 2);
+ * bbo.logs('only id&10', 1, 2);
  */
 
 
 function logs() {
   if (window.console && window.console.log) {
-    let onlyid = String(arguments[0]);
-    let times = parseInt(onlyid.split('&')[1], 10) || 10;
+    let onlyId = String(arguments[0]);
+    let times = parseInt(onlyId.split('&')[1], 10) || 10;
     let logsCache = _cache.logs;
-    if (!logsCache[onlyid]) logsCache[onlyid] = {};
-    if (!logsCache[onlyid].once) logsCache[onlyid].once = 1;
+    if (!logsCache[onlyId]) logsCache[onlyId] = {};
+    if (!logsCache[onlyId].once) logsCache[onlyId].once = 1;
 
-    if (logsCache[onlyid].once <= times) {
+    if (logsCache[onlyId].once <= times) {
       console.log.apply(console, args(arguments, 1));
-      logsCache[onlyid].once++;
+      logsCache[onlyId].once++;
     }
   }
 }
@@ -224,9 +229,7 @@ function removeConsole(clear) {
   } catch (e) {}
 }
 /************************************************************************
- *
  *   Private Method
- *
  *************************************************************************/
 
 
@@ -273,21 +276,25 @@ function gc(cn) {
 }
 
 function c(t, cn, i, id) {
-  let el = document.createElement(t); // t就是创建的标签
+  let el = document.createElement(t);
 
   if (cn) {
-    el.setAttribute('class', cn); // 给t标签添加cn这个类
+    el.setAttribute('class', cn);
   }
 
   if (i) {
-    el.innerHTML = i; // 把新建的标签t的html文本赋值给i
+    el.innerHTML = i;
   }
 
   if (id) {
-    el.setAttribute('id', id); // 给标签添加一个id
+    el.setAttribute('id', id);
   }
 
   return el;
+}
+
+function query(i) {
+  return document.querySelector(i);
 }
 /**
  * trigger event
@@ -305,6 +312,44 @@ function trigger(element, event, eventType) {
     element.dispatchEvent(e);
   }
 }
+
+const copyToClipboard = str => {
+  const el = document.createElement('textarea');
+  el.value = str;
+  el.setAttribute('readonly', '');
+  el.style.position = 'absolute';
+  el.style.left = '-9999px';
+  document.body.appendChild(el);
+  const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+  el.select();
+  document.execCommand('copy');
+  document.body.removeChild(el);
+
+  if (selected) {
+    document.getSelection().removeAllRanges();
+    document.getSelection().addRange(selected);
+  }
+};
+
+const show = (...el) => [...el].forEach(e => {
+  e.style.display = '';
+});
+
+const hide = (...el) => [...el].forEach(e => {
+  e.style.display = 'none';
+});
+
+const elementContains = (parent, child) => parent !== child && parent.contains(child);
+
+const formToObject = form => Array.from(new FormData(form)).reduce((acc, [key, value]) => ({ ...acc,
+  [key]: value
+}), {});
+
+const getStyle = (el, ruleName) => getComputedStyle(el)[ruleName];
+
+const setStyle = (el, ruleName, val) => {
+  el.style[ruleName] = val;
+};
 
 /************************************************************************
  * Other
@@ -563,20 +608,13 @@ function loadcss(url, callback) {
 }
 
 function loadImages(options) {
-  let len = 0; // 资源总数
-
-  let index = 0; // 循环资源数组用
-
-  let curIndex = 0; // 记录当前加载完成资源个数
-
-  let stepTimer = null; // 记录当前setTimeout对象句柄
-
-  let stepTimeValue = 5; // 步进时间间隔
-
-  let percentageValue = 0; // 当前百分比
-
-  let targetPercent = 0; // 目标百分比
-
+  let len = 0;
+  let index = 0;
+  let curIndex = 0;
+  let stepTimer = null;
+  let stepTimeValue = 5;
+  let percentageValue = 0;
+  let targetPercent = 0;
   let data = options.data || [];
 
   let step = options.step || function () {};
@@ -648,7 +686,8 @@ function loadImages(options) {
 
 function LoadImageItem(url, cb) {
   let self = this;
-  self.img = new Image(); // readyState为complete和loaded则表明图片已经加载完毕。测试IE6-IE10支持该事件，其它浏览器不支持。
+  self.img = new Image(); // readyState:'complete' or 'loaded' => image has been loaded。
+  // for IE6-IE10。
 
   let onReadyStateChange = function () {
     removeEventHandlers();
@@ -719,11 +758,11 @@ LoadImageItem.prototype.unbind = function (eventName, eventHandler) {
 /**
  * to json
  */
-// 计算表达式的值 hack
+// eval hack
 
 function evil(fn) {
-  let Fn = Function; // 一个变量指向Function，防止有些前端编译工具报错
-
+  // A variable points to Function, preventing reporting errors
+  let Fn = Function;
   return new Fn('return ' + fn)();
 } // bbo.toJSON = bbo.tojson = bbo.toJson
 
@@ -818,7 +857,7 @@ function cookie() {
       }
 
       let cookies = document.cookie ? document.cookie.split('; ') : [];
-      let rdecode = /(%[0-9A-Z]{2})+/g;
+      let setDecode = /(%[0-9A-Z]{2})+/g;
       let i = 0;
 
       for (; i < cookies.length; i++) {
@@ -830,8 +869,8 @@ function cookie() {
         }
 
         try {
-          let name = parts[0].replace(rdecode, decodeURIComponent);
-          cookie = converter.read ? converter.read(cookie, name) : converter(cookie, name) || cookie.replace(rdecode, decodeURIComponent);
+          let name = parts[0].replace(setDecode, decodeURIComponent);
+          cookie = converter.read ? converter.read(cookie, name) : converter(cookie, name) || cookie.replace(setDecode, decodeURIComponent);
 
           try {
             cookie = JSON.parse(cookie);
@@ -944,6 +983,11 @@ function deleteCookie(name) {
   });
 }
 
+const parseCookie = str => str.split(';').map(v => v.split('=')).reduce((acc, v) => {
+  acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+  return acc;
+}, {});
+
 /************************************************************************
  * About Url Params
  *************************************************************************/
@@ -966,7 +1010,12 @@ function getUrlParam(name, url) {
   if (!results) return null;
   if (!results[2]) return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+} // const getURLParameters = (url) =>
+//   (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
+//     (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a),
+//     {}
+//   );
+
 /**
  * setUrlParam
  * From https://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
@@ -1060,13 +1109,35 @@ function objectBigParam(obj) {
   return arr;
 }
 
+const httpGet = (url, callback, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('GET', url, true);
+
+  request.onload = () => callback(request.responseText);
+
+  request.onerror = () => err(request);
+
+  request.send();
+};
+
+const httpPost = (url, data, callback, err = console.error) => {
+  const request = new XMLHttpRequest();
+  request.open('POST', url, true);
+  request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
+
+  request.onload = () => callback(request.responseText);
+
+  request.onerror = () => err(request);
+
+  request.send(data);
+};
+
 /**
- * 字符串
+ * String
  */
 let string = {
   /**
-   * en:Remove spaces after removing previous string
-   * zh:去除前字符串后去空格
+   * Remove spaces after removing previous string
    */
   trim: str => {
     let _str = str.replace(/^\s+/, '');
@@ -1082,17 +1153,19 @@ let string = {
   },
 
   /**
-   * en:Increase by 0 based on string length
-   * zh:字符串前补零
+   * Increase by 0 based on string length before string
    */
-  fillZero: function (target, n) {
+  fillZero: (target, n) => {
     let z = new Array(n).join('0');
     let str = z + target;
     let result = str.slice(-n);
     return result;
   },
-  // 字符串去重
-  longUnique: function (target) {
+
+  /**
+   * Long string unique
+   */
+  longUnique: target => {
     let json = {};
 
     for (let index = 0; index < target.length; index++) {
@@ -1112,41 +1185,39 @@ let string = {
 
     return longString;
   },
-  // 去掉script内部的html标签
-  stripTags: function (target) {
+
+  /**
+   * Remove the html tags inside the script
+   */
+  stripTags: target => {
     return target.replace(/<script[^>]*>(\S\s*?)<\/script>/gim, '').replace(/<[^>]+>/g, '');
   },
 
   /**
-   * en:Capitalizes the first letter of a string.
-   * zh:首字母大写
+   * Capitalizes the first letter of a string.
    */
   capitalize: target => {
     return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
   },
 
   /**
-   * en:Decapitalizes the first letter of a string.
-   * zh:首字母小写
+   * DeCapitalizes the first letter of a string.
    */
-  decapitalize: ([first, ...rest], upperRest = false) => first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join('')),
+  deCapitalize: ([first, ...rest], upperRest = false) => first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join('')),
 
   /**
    * en:Returns true if the given string is an absolute URL, false otherwise.
-   * zh:正则检测是否为网址URL
    */
   isAbsoluteURL: str => /^[a-z][a-z0-9+.-]*:/.test(str),
 
   /**
-   * en:Creates a new string with the results of calling a provided function
+   * Creates a new string with the results of calling a provided function
    * on every character in the calling string.
-   * zh:给字符串创建map函数
    */
   mapString: (str, fn) => str.split('').map((c, i) => fn(c, i, str)).join(''),
 
   /**
-   * en:Replaces all but the last num of characters with the specified mask character.
-   * zh:给字符串增加掩码
+   * Replaces all but the last num of characters with the specified mask character.
    */
   mask: (cc, num = 4, mask = '*') => `${cc}`.slice(-num).padStart(`${cc}`.length, mask),
 
@@ -1157,51 +1228,45 @@ let string = {
   splitLines: str => str.split(/\r?\n/),
 
   /**
-   * en:_ or - toCamelCase
-   * zh:_ - 转驼峰命名
+   * _ or - to CamelCase
    */
-  camelize: function (target) {
+  camelize: target => {
     if (target.indexOf('-') < 0 && target.indexOf('_') < 0) {
       return target;
     }
 
     return target.replace(/[-_][^-_]/g, function (match) {
-      // console.log(match) 匹配测试
       return match.charAt(1).toUpperCase();
     });
   },
 
   /**
-   * en:CamelCase to _
-   * zh:把驼峰转换成_
+   * Turn CamelCase to '_'
    */
-  underscored: function (target) {
+  underscored: target => {
     return target.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
   },
 
   /**
-   * en:Turn _ in a string into-
-   * zh:把字符串中的_转成-
+   * Turn '_' in a string into '-'
    */
   dasherize: function (target) {
     return this.underscored(target).replace(/_/g, '-');
   },
 
   /**
-   * en:Truncates a string up to a specified length.
-   * zh:字符串截断方法 目标 长度默认3，截断后符号默认...
+   * Truncates a string up to a specified length.
+   * The default length is 3, and the truncated symbol defaults '...'
    */
   truncate: (str, num) => str.length > num ? str.slice(0, num > 3 ? num - 3 : num) + '...' : str,
 
   /**
-   * en:Returns the length of a string in bytes.
-   * zh:返回字符串长度
+   * Returns the length of a string in bytes.
    */
   byteSize: str => new Blob([str]).size,
 
   /**
-   * en:Returns the length of a string in bytes by Unicode
-   * zh:获得字符串字节长度 参数2 utf-8 utf8 utf-16 utf16
+   * Returns the length of a string in bytes by Unicode (utf-8 utf8 utf-16 utf16)
    */
   byteLen: (str, charset) => {
     let target = 0;
@@ -1239,8 +1304,11 @@ let string = {
 
     return target;
   },
-  // 重复item,times次
-  repeat: function (item, times) {
+
+  /**
+   * Repeat item, times times
+   */
+  repeat: (item, times) => {
     let s = item;
     let target = '';
 
@@ -1260,37 +1328,44 @@ let string = {
 
     return target;
   },
-  // 参2是参1的结尾么？参数3忽略大小写
-  endsWith: function (target, item, ignorecase) {
+
+  /**
+   * Item is the end of the target
+   */
+  endsWith: (target, item, ignore) => {
     let str = target.slice(-item.length);
-    return ignorecase ? str.toLowerCase() === item.toLowerCase() : str === item;
+    return ignore ? str.toLowerCase() === item.toLowerCase() : str === item;
   },
-  // 参数2是参数1的开头么？参数3忽略大小写
-  startsWith: function (target, item, ignorecase) {
+
+  /**
+   *  Item is the beginning of the target
+   */
+  startsWith: (target, item, ignore) => {
     let str = target.slice(0, item.length);
-    return ignorecase ? str.toLowerCase() === item.toLowerCase() : str === item;
+    return ignore ? str.toLowerCase() === item.toLowerCase() : str === item;
   },
-  // 类名中，参数1 是否包含参数2，类名中的分隔符
-  containsClass: function (target, item, separator) {
-    return separator ? (separator + target + separator).indexOf(separator + item + separator) > -1 : this.contains(target, item);
-  },
-  // 判定一个字符串是否包含另一个字符串
-  contains: function (target, item) {
+
+  /**
+   * Whether a string contains another string
+   */
+  contains: (target, item) => {
     return target.indexOf(item) !== -1; // return target.indexOf(item) > -1;
   },
-  // XSS 字符过滤
-  xssFilter: function (str) {
+
+  /**
+   * XSS string filtering
+   */
+  xssFilter: str => {
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
   }
 };
 
 /**
- * 数组方法
+ * Array
  */
 let array = {
   /**
-   * en:Returns all unique values of an array.
-   * zh:数组去重
+   * Returns all unique values of an array.
    */
   unique: arr => [...new Set(arr)],
 
@@ -1303,14 +1378,12 @@ let array = {
   }, []),
 
   /**
-   * en:Returns a random element from an array.
-   * zh:在数组中随机取一个
+   * Returns a random element from an array.
    */
   random: arr => arr[Math.floor(Math.random() * arr.length)],
 
   /**
-   * en:Gets n random elements at unique keys from array up to the size of array.
-   * zh:在数组中随机n个,可以视为bbo.array.random的升级版
+   * Gets n random elements at unique keys from array up to the size of array.
    */
   randomSize: ([...arr], n = 1) => {
     let m = arr.length;
@@ -1324,8 +1397,7 @@ let array = {
   },
 
   /**
-   * en:Randomizes the order of the values of an array, returning a new array.
-   * zh:打乱数组返回新数组
+   * Randomizes the order of the values of an array, returning a new array.
    */
   shuffle: ([...arr]) => {
     let m = arr.length;
@@ -1339,36 +1411,31 @@ let array = {
   },
 
   /**
-   * en:Returns true if the element has the specified Array, false otherwise.
-   * zh:数组是否包含指定元素
+   * Returns true if the element has the specified Array, false otherwise.
    */
   contains: (target, item) => {
     return target.indexOf(item) > -1;
   },
 
   /**
-   * en:Returns true if all the elements values are included in arr, false otherwise.
-   * zh:数组是否包括另外一个数组的所有元素
+   * Returns true if all the elements values are included in arr, false otherwise.
    */
   includesAll: (arr, values) => values.every(v => arr.includes(v)),
 
   /**
-   * en:Returns true if at least one element of values is included in arr , false otherwise.
-   * zh:数组是否包括另外一个数组的任一元素
+   * Returns true if at least one element of values is included in arr , false otherwise.
    */
   includesAny: (arr, values) => values.some(v => arr.includes(v)),
 
   /**
-   * en:Remove the element specified by parameter 2 in parameter 1 and return Boolean
-   * 在参数1中删除参数2指定位的元素返回布尔
+   * Remove the element specified by parameter 2 in parameter 1 and return Boolean
    */
   removeAt: function (target, index) {
     return !!target.splice(index, 1).length;
   },
 
   /**
-   * en:Remove parameter 2 in parameter 1 and return boolean
-   * zh:在参数1中删除参数2返回布尔
+   * Remove parameter 2 in parameter 1 and return boolean
    */
   remove: function (target, item) {
     let index = target.indexOf(item);
@@ -1376,8 +1443,7 @@ let array = {
   },
 
   /**
-   * en:Removes undefined and Null from an array.
-   * zh:去除数组中的undefined和Null
+   * Removes undefined and Null from an array.
    */
   compact: target => {
     return target.filter(item => {
@@ -1387,14 +1453,12 @@ let array = {
 
   /**
    * Removes falsy values from an array.
-   * Use Array.prototype.filter() to filter out falsy values
    * (false, null, 0, "", undefined, and NaN).
    */
   compactAll: arr => arr.filter(Boolean),
 
   /**
-   * en:Get the attribute values in an array object and combine them into a new array
-   * zh:获取数组对象中的属性值，组合成新数组
+   * Get the attribute values in an array object and combine them into a new array
    */
   pluck: (target, name) => {
     let result = [];
@@ -1410,8 +1474,7 @@ let array = {
   },
 
   /**
-   * en:Returns every element that exists in any of the two arrays once.
-   * zh:取2个数组的并集
+   * Returns every element that exists in any of the two arrays once
    * Create a Set with all values of a and b and convert to an array.
    */
   union: (a, b) => Array.from(new Set([...a, ...b])),
@@ -1419,7 +1482,7 @@ let array = {
   /**
    * Returns every element that exists in any of the two arrays once,
    * after applying the provided function to each array element of both.
-   *  */
+   */
   unionBy: (a, b, fn) => {
     const s = new Set(a.map(fn));
     return Array.from(new Set([...a, ...b.filter(x => !s.has(fn(x)))]));
@@ -1434,8 +1497,7 @@ let array = {
   },
 
   /**
-   * en:Returns a list of elements that exist in both arrays.
-   * zh:取2个数组的交集
+   * Returns a list of elements that exist in both arrays.
    */
   intersect: (a, b) => {
     const s = new Set(b);
@@ -1452,9 +1514,9 @@ let array = {
   },
 
   /**
-   * en:Returns the difference between two arrays.
-   * zh:取两个数组的差集
-   * Create a Set from b, then use Array.prototype.filter() on a to only keep values not contained in b.
+   * Returns the difference between two arrays.
+   * Create a Set from b, then use Array.prototype.
+   * Filter() on a to only keep values not contained in b.
    */
   difference: (a, b) => {
     const s = new Set(b);
@@ -1471,24 +1533,21 @@ let array = {
   },
 
   /**
-   * en:Returns the largest element in an array
-   * zh:返回数组中最大值元素
+   * Returns the largest element in an array
    */
   max: target => {
     return Math.max.apply(0, target);
   },
 
   /**
-   * en:Returns the smallest element in an array
-   * zh:返回数组中最小值元素
+   * Returns the smallest element in an array
    */
   min: target => {
     return Math.min.apply(0, target);
   },
 
   /**
-   * en:Check two arrays are equal
-   * zh:判断两个数组是否相同
+   * Check two arrays are equal
    */
   equal: (arr1, arr2) => {
     if (arr1 === arr2) return true;
@@ -1502,9 +1561,8 @@ let array = {
   },
 
   /**
-   * en:Check if all elements in an array are equal.
-   * zh:判断一个数组中所有元素是否相同
-   * */
+   * Check if all elements in an array are equal.
+   */
   allEqual: arr => arr.every(val => val === arr[0]),
 
   /**
@@ -1515,7 +1573,8 @@ let array = {
   all: (arr, fn = Boolean) => arr.every(fn),
 
   /**
-   * Returns true if the provided predicate function returns true for at least one element in a collection, false otherwise.
+   * Returns true if the provided predicate function returns true for at least one element in a collection,
+   * false otherwise.
    * Use Array.prototype.some() to test if any elements in the collection return true based on fn.
    * Omit the second argument, fn, to use Boolean as a default.
    */
@@ -1554,21 +1613,18 @@ let array = {
   },
 
   /**
-   * en:Returns a new array with n elements removed from the left.
-   * zh:返回一个新数组，其中左侧删除了n个元素。
+   * Returns a new array with n elements removed from the left.
    */
   drop: (arr, n = 1) => arr.slice(n),
 
   /**
-   * en:Returns a new array with n elements removed from the right.
-   * zh:返回一个新数组，其中右侧删除了n个元素。
+   * Returns a new array with n elements removed from the right.
    */
   dropRight: (arr, n = 1) => arr.slice(0, -n),
 
   /**
-   * en:Removes elements in an array until the passed function returns true.
+   * Removes elements in an array until the passed function returns true.
    * Returns the remaining elements in the array.
-   * zh:删除数组中的元素，直到传递的函数返回true。 返回数组中剩余的元素。
    */
   dropWhile: (arr, func) => {
     let _arr = arr;
@@ -1579,9 +1635,8 @@ let array = {
   },
 
   /**
-   * en:Removes elements from the end of an array until the passed function returns true,
+   * Removes elements from the end of an array until the passed function returns true,
    * Returns the remaining elements in the array.
-   * zh:从数组末尾删除元素，直到传递的函数返回true。 返回数组中剩余的元素。
    */
   dropRightWhile: (arr, func) => {
     let rightIndex = arr.length;
@@ -1597,6 +1652,18 @@ function fill0(num) {
 
   return _num < 10 ? '0' + _num : _num;
 }
+
+const chainAsync = fns => {
+  let curr = 0;
+  const last = fns[fns.length - 1];
+
+  const next = () => {
+    const fn = fns[curr++];
+    fn === last ? fn() : fn(next);
+  };
+
+  next();
+};
 
 /**
  * setInterval func fix times
@@ -1662,6 +1729,7 @@ function getDate(d1, d2) {
   return yyyy + _d1 + mm + _d1 + dd + ' ' + hh + _d2 + ms + _d2 + ss;
 }
 /**
+ * @ zh_cn
  * @desc   格式化${startTime}距现在的已过时间
  * @param  {Date} startTime
  * @return {String}
@@ -1683,7 +1751,7 @@ function formatPassTime(startTime) {
   if (min) return min + '分钟前';else return '刚刚';
 }
 /**
- *
+ * @ zh_cn
  * @desc   格式化现在距${endTime}的剩余时间
  * @param  {Date} endTime
  * @return {String}
@@ -1711,6 +1779,25 @@ function formatRemainTime(endTime) {
 
   return d + '天 ' + h + '小时 ' + m + '分钟 ' + s + '秒';
 }
+/**
+ * @ en
+ * bbo.formatDuration(1001); // '1 second, 1 millisecond'
+ * bbo.formatDuration(34325055574); // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
+ */
+
+
+const formatDuration = ms => {
+  // eslint-disable-next-line no-param-reassign
+  if (ms < 0) ms = -ms;
+  const time = {
+    day: Math.floor(ms / 86400000),
+    hour: Math.floor(ms / 3600000) % 24,
+    minute: Math.floor(ms / 60000) % 60,
+    second: Math.floor(ms / 1000) % 60,
+    millisecond: Math.floor(ms) % 1000
+  };
+  return Object.entries(time).filter(val => val[1] !== 0).map(([key, val]) => `${val} ${key}${val !== 1 ? 's' : ''}`).join(', ');
+};
 
 /************************************************************************
  * Random And Math
@@ -1771,16 +1858,18 @@ function lockTouch() {
 }
 
 /**
- * 图片尺寸检查
- * @param {(Object|String)} image - 图片信息，支持 File 对象 或 Data URLs
- * @param {Object} [options={}] - 检查参数
- * @param {Number} [options.width] - 检查宽度
- * @param {Number} [options.height] - 检查高度
- * @param {Number} [deviation=0] - 允许的偏差量
+ * Check image size
+ * @param {(Object|String)} image - image information，allow File Object or Data URLs
+ * @param {Object} [options={}] - Check options
+ * @param {Number} [options.width] - Check width
+ * @param {Number} [options.height] - Check height
+ * @param {Number} [deviation=0] - Allowable deviation
  */
 function checkImageSize(image, options, deviation = 0) {
   return new Promise((resolve, reject) => {
-    /* #region 判断图片信息类型 */
+    /**
+     * Check type of image
+     */
     if (image instanceof File) {
       const reader = new FileReader();
 
@@ -1792,11 +1881,9 @@ function checkImageSize(image, options, deviation = 0) {
     } else if (typeof image === 'string') {
       checkSize(image);
     }
-    /* #endregion */
-
     /**
-     * 检测图片尺寸
-     * @param {String} data - 图片数据：Data URL
+     * Check picture size
+     * @param {String} data：Data URL
      */
 
 
@@ -1819,18 +1906,20 @@ function checkImageSize(image, options, deviation = 0) {
         resolve(true);
       };
     }
-    /* #endregion */
-
   });
 }
 /**
- * 图片优化，暂不支持 gif 图片
- * @param {(Object|String)} image - 图片信息，支持 File 对象 或 Data URLs
- * @param {Number} [quality=0.9] - 输出图片质量，0 - 1 之间，仅 image/jpeg 与 image/webp 有效
- * @param {Object} [options={}] - 输出图片相关选项
- * @param {Number} [options.maxWidth=1920] - 输出图片的最大宽度，若图片原始宽度小于该宽度，则返回原始尺寸图片，若图片原始宽度大于该宽度，则返回等比缩放为该尺寸的图片
- * @param {String} [options.mimeType] - 输出图片格式，MIME 类型
- * @returns {Object} Promise 对象，resolve 函数参数为优化后的图片 Blob 对象，如果输出类型为 image/gif，则原样返回 image 参数内容
+ * Image optimization
+ * Gif images are not supported
+ * @param {(Object|String)} - image ,supported File Object or Data URLs
+ * @param {Number} [quality = 0.9] - Image quality, between 0 - 1, only image/jpeg or image/webp is accept.
+ * @param {Object} [options = {}] - Image options
+ * @param {Number} [options.maxWidth = 1920] - The maximum width of the output picture.
+ * If the original width of the picture is less than this width, the original size picture is returned.
+ * If the original width of the picture is greater than the width, the picture scaled to the size is returned.
+ * @param {String} [options.mimeType] - Output image type，Types of MIME.
+ * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
+ * If the output type is image/gif，Then return as is image Parameter content.
  */
 
 
@@ -1839,7 +1928,6 @@ function imageOptimization(image, quality = 0.9, {
   mimeType
 } = {}) {
   return new Promise((resolve, reject) => {
-    /* #region 判断图片信息类型 */
     if (image instanceof File) {
       const reader = new FileReader();
 
@@ -1851,11 +1939,9 @@ function imageOptimization(image, quality = 0.9, {
     } else if (typeof image === 'string') {
       toBlob(image);
     }
-    /* #endregion */
-
     /**
-     * 转换为 Blob 类型
-     * @param {String} data - 图片数据：Data URL
+     * To Blob
+     * @param {String} data - Image: Data URL
      */
 
 
@@ -1863,7 +1949,7 @@ function imageOptimization(image, quality = 0.9, {
       const type = data.match(/data:([^;,]+)/);
 
       if (Array.isArray(type)) {
-        const outputType = mimeType ? mimeType : type[1]; // 暂不支持 gif 图片，原样返回 image 参数内容
+        const outputType = mimeType ? mimeType : type[1];
 
         if (outputType === 'image/gif') {
           return resolve(image);
@@ -1891,7 +1977,7 @@ function imageOptimization(image, quality = 0.9, {
           }, mimeType ? mimeType : type[1], quality);
         };
       } else {
-        reject(new Error('[Slug Function] 非图片类型的 Data URLs'));
+        reject(new Error('[Slug Function] Non-picture type Data URLs'));
       }
     }
   });
@@ -1900,8 +1986,9 @@ function imageOptimization(image, quality = 0.9, {
 /* eslint-disable */
 
 /**
- *  lodash简易实现，与lodash接口保持一致。
- *  为精简代码体积，函数参数只实现基础校验，稳定性低于lodash
+ *  Lodash is easy to implement, consistent with the lodash class name.
+ *  Function parameters only implement basic verification.
+ *  Which is less stable than lodash
  *
  */
 function getTag(src) {
@@ -1962,10 +2049,11 @@ function isEmpty(value) {
   }
 
   return true;
-}
+} // const isEmpty = (val) => val == null || !(Object.keys(val) || val).length;
+
 
 function is(x, y) {
-  // inlined Object.is polyfill to avoid requiring consumers ship their own
+  // inlined Object.is polyFill to avoid requiring consumers ship their own
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
   if (x === y) {
     // Steps 1-5, 7-10
@@ -2133,20 +2221,7 @@ function find(src, func) {
 }
 
 const charCodeOfDot = '.'.charCodeAt(0);
-const reEscapeChar = /\\(\\)?/g; // const rePropName = RegExp(
-//   // Match anything that isn't a dot or bracket.
-//   '[^.[\\]]+' + '|' +
-//   // Or match property names within brackets.
-//   '\\[(?:' +
-//     // Match a non-string expression.
-//     '([^"\'][^[]*)' + '|' +
-//     // Or match strings (supports escaping characters).
-//     '(["\'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2' +
-//   ')\\]'+ '|' +
-//   // Or match "" as the space between consecutive dots or empty brackets.
-//   '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))'
-// , 'g')
-
+const reEscapeChar = /\\(\\)?/g;
 const rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
 
 function stringToPath(string) {
@@ -2217,7 +2292,15 @@ function get(object, path, defaultValue) {
   } else {
     return defaultValue;
   }
-}
+} // const get = (from, ...selectors) =>
+//   [...selectors].map((s) =>
+//     s
+//       .replace(/\[([^\[\]]*)\]/g, '.$1.')
+//       .split('.')
+//       .filter((t) => t !== '')
+//       .reduce((prev, cur) => prev && prev[cur], from)
+//   );
+
 
 function debounce(func, wait, options) {
   let lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
@@ -2297,7 +2380,7 @@ function debounce(func, wait, options) {
 
   function trailingEdge(time) {
     timerId = undefined; // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once.
+    // deBounced at least once.
 
     if (trailing && lastArgs) {
       return invokeFunc(time);
@@ -2354,8 +2437,7 @@ function throttle(func, wait, options) {
     trailing,
     maxWait: wait
   });
-} // 只能pick第一级key且浅拷贝object
-
+}
 
 function pick(object, ...paths) {
   if (object === null || object === undefined) {
@@ -2377,7 +2459,9 @@ function pick(object, ...paths) {
 
     return rst;
   }, {});
-} // 只能omit第一级key且浅拷贝object
+} // const pick = (obj, arr) =>
+//   arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
+// Only omit the first-level key, shallow copy object
 
 
 function omit(object, ...paths) {
@@ -2398,7 +2482,7 @@ function omit(object, ...paths) {
     }
   });
   return rst;
-}
+} // const omit = (obj, arr) =>
 
 /**
  * Main entry
@@ -2432,6 +2516,7 @@ let bbo = {
   args,
   trash,
   noop,
+  merge,
   // bom
   open,
   trigger,
@@ -2439,6 +2524,14 @@ let bbo = {
   g,
   gc,
   c,
+  query,
+  show,
+  hide,
+  copyToClipboard,
+  elementContains,
+  formToObject,
+  getStyle,
+  setStyle,
   // other
   uuid,
   hash,
@@ -2461,20 +2554,25 @@ let bbo = {
   getCookie,
   deleteCookie,
   delCookie: deleteCookie,
+  parseCookie,
   // url
   getUrlParam,
   setUrlParam,
   deleteUrlParam,
   delUrlParam: deleteUrlParam,
   objectParam,
+  httpGet,
+  httpPost,
   // times
   setTimesout,
   clearTimesout,
   getDate,
   formatPassTime,
   formatRemainTime,
+  formatDuration,
   // fill
   fill0,
+  chainAsync,
   // random
   randomColor,
   randomFromArray,

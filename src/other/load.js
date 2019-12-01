@@ -151,13 +151,13 @@ function loadcss(url, callback) {
 }
 
 function loadImages(options) {
-  let len = 0; // 资源总数
-  let index = 0; // 循环资源数组用
-  let curIndex = 0; // 记录当前加载完成资源个数
-  let stepTimer = null; // 记录当前setTimeout对象句柄
-  let stepTimeValue = 5; // 步进时间间隔
-  let percentageValue = 0; // 当前百分比
-  let targetPercent = 0; // 目标百分比
+  let len = 0;
+  let index = 0;
+  let curIndex = 0;
+  let stepTimer = null;
+  let stepTimeValue = 5;
+  let percentageValue = 0;
+  let targetPercent = 0;
   let data = options.data || [];
   let step = options.step || function() {};
   let complete = options.complete || function() {};
@@ -224,7 +224,8 @@ function LoadImageItem(url, cb) {
 
   self.img = new Image();
 
-  // readyState为complete和loaded则表明图片已经加载完毕。测试IE6-IE10支持该事件，其它浏览器不支持。
+  // readyState:'complete' or 'loaded' => image has been loaded。
+  // for IE6-IE10。
   let onReadyStateChange = function() {
     removeEventHandlers();
     console.info('onReadyStateChange');

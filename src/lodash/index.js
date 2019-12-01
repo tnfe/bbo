@@ -1,7 +1,8 @@
 /* eslint-disable */
 /**
- *  lodash简易实现，与lodash接口保持一致。
- *  为精简代码体积，函数参数只实现基础校验，稳定性低于lodash
+ *  Lodash is easy to implement, consistent with the lodash class name.
+ *  Function parameters only implement basic verification.
+ *  Which is less stable than lodash
  *
  */
 function getTag(src) {
@@ -59,9 +60,10 @@ function isEmpty(value) {
   }
   return true;
 }
+// const isEmpty = (val) => val == null || !(Object.keys(val) || val).length;
 
 function is(x, y) {
-  // inlined Object.is polyfill to avoid requiring consumers ship their own
+  // inlined Object.is polyFill to avoid requiring consumers ship their own
   // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
   if (x === y) {
     // Steps 1-5, 7-10
@@ -207,19 +209,6 @@ function find(src, func) {
 
 const charCodeOfDot = '.'.charCodeAt(0);
 const reEscapeChar = /\\(\\)?/g;
-// const rePropName = RegExp(
-//   // Match anything that isn't a dot or bracket.
-//   '[^.[\\]]+' + '|' +
-//   // Or match property names within brackets.
-//   '\\[(?:' +
-//     // Match a non-string expression.
-//     '([^"\'][^[]*)' + '|' +
-//     // Or match strings (supports escaping characters).
-//     '(["\'])((?:(?!\\2)[^\\\\]|\\\\.)*?)\\2' +
-//   ')\\]'+ '|' +
-//   // Or match "" as the space between consecutive dots or empty brackets.
-//   '(?=(?:\\.|\\[\\])(?:\\.|\\[\\]|$))'
-// , 'g')
 
 const rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
 
@@ -283,6 +272,15 @@ function get(object, path, defaultValue) {
     return defaultValue;
   }
 }
+
+// const get = (from, ...selectors) =>
+//   [...selectors].map((s) =>
+//     s
+//       .replace(/\[([^\[\]]*)\]/g, '.$1.')
+//       .split('.')
+//       .filter((t) => t !== '')
+//       .reduce((prev, cur) => prev && prev[cur], from)
+//   );
 
 function debounce(func, wait, options) {
   let lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
@@ -376,7 +374,7 @@ function debounce(func, wait, options) {
     timerId = undefined;
 
     // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once.
+    // deBounced at least once.
     if (trailing && lastArgs) {
       return invokeFunc(time);
     }
@@ -428,7 +426,6 @@ function throttle(func, wait, options) {
   });
 }
 
-// 只能pick第一级key且浅拷贝object
 function pick(object, ...paths) {
   if (object === null || object === undefined) {
     return {};
@@ -452,8 +449,10 @@ function pick(object, ...paths) {
     {}
   );
 }
+// const pick = (obj, arr) =>
+//   arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
 
-// 只能omit第一级key且浅拷贝object
+// Only omit the first-level key, shallow copy object
 function omit(object, ...paths) {
   if (object === null || object === undefined) {
     return {};
@@ -472,6 +471,10 @@ function omit(object, ...paths) {
   });
   return rst;
 }
+// const omit = (obj, arr) =>
+//   Object.keys(obj)
+//     .filter((k) => !arr.includes(k))
+//     .reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
 
 export {
   getTag,

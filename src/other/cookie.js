@@ -74,7 +74,7 @@ function cookie() {
         result = {};
       }
       let cookies = document.cookie ? document.cookie.split('; ') : [];
-      let rdecode = /(%[0-9A-Z]{2})+/g;
+      let setDecode = /(%[0-9A-Z]{2})+/g;
       let i = 0;
 
       for (; i < cookies.length; i++) {
@@ -86,10 +86,10 @@ function cookie() {
         }
 
         try {
-          let name = parts[0].replace(rdecode, decodeURIComponent);
+          let name = parts[0].replace(setDecode, decodeURIComponent);
           cookie = converter.read
             ? converter.read(cookie, name)
-            : converter(cookie, name) || cookie.replace(rdecode, decodeURIComponent);
+            : converter(cookie, name) || cookie.replace(setDecode, decodeURIComponent);
 
           try {
             cookie = JSON.parse(cookie);
@@ -201,4 +201,13 @@ function deleteCookie(name) {
   });
 }
 
-export { cookie, setCookie, getCookie, deleteCookie };
+const parseCookie = (str) =>
+  str
+    .split(';')
+    .map((v) => v.split('='))
+    .reduce((acc, v) => {
+      acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
+      return acc;
+    }, {});
+
+export { cookie, setCookie, getCookie, deleteCookie, parseCookie };
