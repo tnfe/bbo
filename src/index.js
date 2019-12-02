@@ -65,6 +65,7 @@ import {
 } from './other/times';
 
 import { fill0, chainAsync } from './fill/index';
+import { math } from './fill/math';
 
 import { randomColor, randomFromArray, randomA2B, randomKey, floor } from './random/index';
 
@@ -188,6 +189,8 @@ let bbo = {
   // fill
   fill0,
   chainAsync,
+  // math
+  math,
   // random
   randomColor,
   randomFromArray,
