@@ -14,17 +14,17 @@ With easy code and less than 7k gzip, bbo can be used anytime and anywhere with 
 
 See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference.
 
-## From:
+## From
 
 Project from：[https://github.com/a-jie/ppo](https://github.com/a-jie/ppo) and [ppo-cli](https://github.com/halldwang/ppo-cli) [onavo](https://github.com/halldwang/onavo/tree/master)
 
 ## Installation
 
-#### Install using npm
+Install using npm
 
 [![anix](https://nodei.co/npm/bbo.png)](https://npmjs.org/package/bbo)
 
-```
+```JavaScript
 npm install bbo --save
 ...
 import bbo from 'bbo';
@@ -32,7 +32,7 @@ import bbo from 'bbo';
 
 ## Usage
 
-```
+```JavaScript
 var username = bbo.getCookie('username');
 
 bbo.log('hello world!');
@@ -43,9 +43,29 @@ var id = bbo.setTimesout(function(word){
 }, 1000/20, 8, 'helloWorld')
 ```
 
-## Why?
+## Why
 
 When you use react, vue, angular，you often need to write a lot of utils methods. But lodash and underscore libraries are not omnipotent. So you have to find a lot of tool libraries. By using bbo, you can solve many small problems in the daily development. It is simple and compact!
+
+## Building
+
+### node is a dependency, use terminal to install it with:
+
+```JavaScript
+git clone git://github.com/tnfe/bbo.git
+
+...
+npm install
+npm run lint
+npm run build
+```
+
+And run example
+
+```JavaScript
+npm run start
+//visit http://localhost:8080
+```
 
 ## Maintainers
 
@@ -56,6 +76,10 @@ When you use react, vue, angular，you often need to write a lot of utils method
 Thank you all who already contributed to bbo!
 
 <a href="https://github.com/tnfe/bbo/graphs/contributors"><img src="https://opencollective.com/tnfe/bbo/contributors.svg?width=890" /></a>
+
+## Changelog
+
+Detailed changes for each release are documented in the [release notes](https://github.com/tnfe/bbo/releases).
 
 ## License
 
