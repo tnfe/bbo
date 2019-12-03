@@ -192,8 +192,11 @@ let string = {
    * Whether a string contains another string
    */
   contains: (target, item) => {
-    return target.indexOf(item) !== -1;
-    // return target.indexOf(item) > -1;
+    // discuss at: https://locutus.io/golang/strings/Contains
+    // original by: Kevin van Zonneveld (https://kvz.io)
+    // example 1: Contains('Kevin', 'K')
+    // returns 1: true
+    return String(target).indexOf(item) !== -1;
   },
 
   /**
@@ -206,6 +209,28 @@ let string = {
       .replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;')
       .replace(/'/g, '&#x27;');
+  },
+
+  index: (s, sep) => {
+    //  discuss at: https://locutus.io/golang/strings/Index
+    // original by: Kevin van Zonneveld (https://kvz.io)
+    //   example 1: Index('Kevin', 'K')
+    //   returns 1: 0
+    //   example 2: Index('Kevin', 'Z')
+    //   returns 2: -1
+    return String(s).indexOf(sep);
+  },
+
+  capwords: (str) => {
+    //   example 1: capwords('kevin van  zonneveld')
+    //   returns 1: 'Kevin Van  Zonneveld'
+    //   example 2: capwords('HELLO WORLD')
+    //   returns 2: 'HELLO WORLD'
+
+    let pattern = /^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g;
+    return String(str).replace(pattern, function($1) {
+      return $1.toUpperCase();
+    });
   }
 };
 

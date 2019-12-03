@@ -272,6 +272,84 @@ let array = {
     let rightIndex = arr.length;
     while (rightIndex-- && !func(arr[rightIndex]));
     return arr.slice(0, rightIndex + 1);
+  },
+
+  /**
+   * discuss at: https://locutus.io/php/array_column/
+   */
+  column: (input, ColumnKey, IndexKey = null) => {
+    let _input = input;
+    if (_input !== null && (typeof _input === 'object' || Array.isArray(_input))) {
+      let newArray = [];
+      if (typeof _input === 'object') {
+        let tempArray = [];
+        for (let key of Object.keys(_input)) {
+          tempArray.push(_input[key]);
+        }
+        _input = tempArray;
+      }
+      if (Array.isArray(_input)) {
+        for (let key of _input.keys()) {
+          if (IndexKey && _input[key][IndexKey]) {
+            if (ColumnKey) {
+              newArray[_input[key][IndexKey]] = _input[key][ColumnKey];
+            } else {
+              newArray[_input[key][IndexKey]] = _input[key];
+            }
+          } else {
+            if (ColumnKey) {
+              newArray.push(_input[key][ColumnKey]);
+            } else {
+              newArray.push(_input[key]);
+            }
+          }
+        }
+      }
+      return { ...newArray };
+    }
+  },
+
+  search: (needle, haystack, argStrict) => {
+    // discuss at: https://locutus.io/php/array_search/'
+    // example 1: bbo.array.search('3', {a: 3, b: 5, c: 7})
+    // returns 1: 'a'
+
+    let strict = !!argStrict;
+    let key = '';
+    let _needle = needle;
+
+    if (typeof _needle === 'object' && _needle.exec) {
+      // Duck-type for RegExp
+      if (!strict) {
+        // Let's consider case sensitive searches as strict
+        let flags =
+          'i' +
+          (_needle.global ? 'g' : '') +
+          (_needle.multiline ? 'm' : '') +
+          // sticky is FF only
+          (_needle.sticky ? 'y' : '');
+        _needle = new RegExp(_needle.source, flags);
+      }
+      for (key in haystack) {
+        if (haystack.hasOwnProperty(key)) {
+          if (_needle.test(haystack[key])) {
+            return key;
+          }
+        }
+      }
+      return false;
+    }
+
+    for (key in haystack) {
+      if (haystack.hasOwnProperty(key)) {
+        // eslint-disable-next-line eqeqeq
+        if ((strict && haystack[key] === needle) || (!strict && haystack[key] == needle)) {
+          return key;
+        }
+      }
+    }
+
+    return false;
   }
 };
 

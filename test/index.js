@@ -6,8 +6,8 @@ bbo.log('hello bbo', { color: '#fff', background: '#ff0000' });
 
 bbo.loadImages({
   data: ['1.png', '2.png', '3.png'],
-  step: function(num) {},
-  complete: function() {},
+  step: (num) => {},
+  complete: () => {},
   needOneStep: true,
   path: '/images'
 });
@@ -20,3 +20,23 @@ bbo.loadImages({
 // console.log(bbo.array.allEqual([1, 1, 1, 1])); // true
 
 console.log(bbo.array, bbo.string);
+
+console.log(
+  bbo.math.numberFormat(1000),
+  bbo.math.numberFormat(1234.5678, 2, '.', ''),
+  bbo.math.numberFormat(67000, 5, ',', '.'),
+  bbo.math.numberFormat(1e-8, 8, '.', '')
+);
+
+console.log(bbo.math.floor(8723321.4));
+
+console.log(
+  bbo.array.column(
+    [{ name: 'Alex', value: 1 }, { name: 'Elvis', value: 2 }, { name: 'Michael', value: 3 }],
+    'name'
+  )
+);
+
+console.log(
+  bbo.array.search('zonneveld', { firstname: 'kevin', middle: 'van', surname: 'zonneveld' })
+);
