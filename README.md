@@ -49,7 +49,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 
 ## Building
 
-### node is a dependency, use terminal to install it with
+**node is a dependency, use terminal to install it with**
 
 ```JavaScript
 git clone git://github.com/tnfe/bbo.git
