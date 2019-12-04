@@ -12,7 +12,7 @@ Most code comes from the [stackOverflow](https://stackoverflow.com/) site in the
 
 With easy code and less than 7k gzip, bbo can be used anytime and anywhere with no worries.
 
-See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference.
+See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference or [bbo-docs](https://github.com/halldwang/bbo-docs.git).
 
 ## From
 
@@ -49,7 +49,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 
 ## Building
 
-### node is a dependency, use terminal to install it with:
+### node is a dependency, use terminal to install it with
 
 ```JavaScript
 git clone git://github.com/tnfe/bbo.git
@@ -75,7 +75,7 @@ npm run start
 
 Thank you all who already contributed to bbo!
 
-<a href="https://github.com/tnfe/bbo/graphs/contributors"><img src="https://opencollective.com/tnfe/bbo/contributors.svg?width=890" /></a>
+[contributors](https://github.com/tnfe/bbo/graphs/contributors)
 
 ## Changelog
 
