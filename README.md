@@ -18,7 +18,10 @@ See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full AP
 
 ## From
 
-Project from：[https://github.com/a-jie/ppo](https://github.com/a-jie/ppo) and [ppo-cli](https://github.com/halldwang/ppo-cli) [onavo](https://github.com/halldwang/onavo/tree/master)
+Project from：[https://github.com/a-jie/ppo](https://github.com/a-jie/ppo) [ppo-cli](https://github.com/halldwang/ppo-cli) [onavo](https://github.com/halldwang/onavo/tree/master)
+
+- [30-seconds](https://github.com/30-seconds)
+- [locutus](https://locutus.io/)
 
 ## Installation
 
