@@ -58,4 +58,4 @@ const res = {
 
 console.log(bbo.get(res, 'response'));
 
-console.log(bbo.objectParam({a:1,b:2}));
+console.log(bbo.objectParam({ a: 1, b: 2 }));
