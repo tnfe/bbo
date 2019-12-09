@@ -20,7 +20,7 @@ import {
 
 import { log, logs, removeConsole } from './log/index';
 
-import { args, trash, noop, merge } from './arguments/index';
+import { args, trash, noop, merge, over, call } from './arguments/index';
 
 import {
   open,
@@ -133,6 +133,8 @@ let bbo = {
   trash,
   noop,
   merge,
+  over,
+  call,
   // bom
   open,
   trigger,

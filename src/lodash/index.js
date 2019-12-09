@@ -236,51 +236,14 @@ function toPath(value) {
   return stringToPath(value);
 }
 
-function get(object, path, defaultValue) {
-  if (object == null) {
-    return defaultValue;
-  }
-  if (!Array.isArray(path)) {
-    const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-    const reIsPlainProp = /^\w*$/;
-    const isKey = function(value, object) {
-      const type = typeof value;
-      if (type == 'number' || type == 'boolean' || value == null) {
-        return true;
-      }
-      return (
-        reIsPlainProp.test(value) ||
-        !reIsDeepProp.test(value) ||
-        (object != null && value in Object(object))
-      );
-    };
-    if (isKey(path, object)) {
-      path = [path];
-    } else {
-      path = stringToPath(path);
-    }
-  }
-  let index = 0;
-  const length = path.length;
-  while (object != null && index < length) {
-    object = object[path[index]];
-    index += 1;
-  }
-  if (index && index === length) {
-    return object === undefined ? defaultValue : object;
-  } else {
-    return defaultValue;
-  }
-}
-
-// const get = (from, ...selectors) =>
-//   [...selectors].map((s) =>
-//     s
-//       .replace(/\[([^\[\]]*)\]/g, '.$1.')
-//       .split('.')
-//       .filter((t) => t !== '')
-//       .reduce((prev, cur) => prev && prev[cur], from)
-//   );
+const get = (from, ...selectors) =>
+  [...selectors].map((s) =>
+    s
+      .replace(/\[([^\[\]]*)\]/g, '.$1.')
+      .split('.')
+      .filter((t) => t !== '')
+      .reduce((prev, cur) => prev && prev[cur], from)
+  );
 
 function debounce(func, wait, options) {
   let lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
@@ -452,29 +415,11 @@ function pick(object, ...paths) {
 // const pick = (obj, arr) =>
 //   arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
 
-// Only omit the first-level key, shallow copy object
-function omit(object, ...paths) {
-  if (object === null || object === undefined) {
-    return {};
-  }
-  const rst = Object.assign({}, object);
-  const set = forEach(paths, (path) => {
-    if (isArray(path)) {
-      forEach(path, (item) => {
-        if (isString(item) || isNumber(item)) {
-          delete rst[item];
-        }
-      });
-    } else if (isString(path) || isNumber(path)) {
-      delete rst[path];
-    }
-  });
-  return rst;
-}
-// const omit = (obj, arr) =>
-//   Object.keys(obj)
-//     .filter((k) => !arr.includes(k))
-//     .reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
+// Only omit the first-level key, shallow copy objec
+const omit = (obj, arr) =>
+  Object.keys(obj)
+    .filter((k) => !arr.includes(k))
+    .reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
 
 export {
   getTag,

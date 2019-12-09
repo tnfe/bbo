@@ -21,7 +21,7 @@ let trash = {
   }
 };
 
-function noop() {}
+const noop = () => {};
 
 const merge = (...objs) =>
   [...objs].reduce(
@@ -33,4 +33,8 @@ const merge = (...objs) =>
     {}
   );
 
-export { args, trash, noop, merge };
+const over = (...fns) => (...args) => fns.map((fn) => fn.apply(null, args));
+
+const call = (key, ...args) => (context) => context[key](...args);
+
+export { args, trash, noop, merge, over, call };

@@ -350,7 +350,9 @@ let array = {
     }
 
     return false;
-  }
+  },
+
+  unary: (fn) => (val) => fn(val)
 };
 
 export { array };

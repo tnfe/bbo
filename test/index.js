@@ -40,3 +40,22 @@ console.log(
 console.log(
   bbo.array.search('zonneveld', { firstname: 'kevin', middle: 'van', surname: 'zonneveld' })
 );
+
+const res = {
+  data: {
+    article: [
+      {
+        articleId: 0,
+        title: 'title'
+      }
+    ]
+  },
+  response: {
+    code: '0',
+    msg: 'success'
+  }
+};
+
+console.log(bbo.get(res, 'response'));
+
+console.log(bbo.objectParam({a:1,b:2}));

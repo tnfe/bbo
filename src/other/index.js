@@ -62,23 +62,8 @@ function isTypeof(val, type) {
   );
 }
 
-function getType(ele) {
-  if (!ele) return undefined;
-  if (window === document && document !== window) {
-    return 'window';
-  } else if (ele.nodeType === 9) {
-    return 'document';
-  } else if (ele.callee) {
-    return 'arguments';
-  } else if (isFinite(ele.length) && ele.item) {
-    return 'nodeList';
-  } else {
-    let temp = Object.prototype.toString.call(ele);
-    let reg = /\[object (.*)\]/;
-    let arr = reg.exec(temp);
-    return arr[1].toLowerCase();
-  }
-}
+const getType = (v) =>
+  v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name.toLowerCase();
 
 function construct() {
   let classs = arguments[0];
