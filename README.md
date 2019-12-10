@@ -90,4 +90,6 @@ Detailed changes for each release are documented in the [release notes](https://
 
 ## License
 
-Trine is ISC licensed. See the [LICENSE](https://github.com/tnfe/bbo/blob/master/LICENSE) document for more information.
+Distributed by Win-Vector LLC 2012 under Apache 2.0 [License](https://github.com/tnfe/bbo/blob/master/LICENSE).
+
+Contributions to this project are governed by the CONTRIBUTING file and the Apache Licens.
