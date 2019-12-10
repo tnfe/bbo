@@ -16,13 +16,10 @@ With easy code and less than 7k gzip, bbo can be used anytime and anywhere with 
 
 See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference or [bbo-docs](https://github.com/halldwang/bbo-docs.git).
 
-## From
+## Documentation
 
-- [ppo](https://github.com/a-jie/ppo)
-- [ppo-cli](https://github.com/halldwang/ppo-cli)
-- [onavo](https://github.com/halldwang/onavo/tree/master)
-- [30-seconds](https://github.com/30-seconds)
-- [locutus](https://locutus.io/)
+- [Full api documentation on Line ](https://github.ahthw.com/bbo)
+- [Github docs](https://github.com/halldwang/bbo-docs.git)
 
 ## Installation
 
@@ -82,6 +79,10 @@ npm run start
 Thank you all who already contributed to bbo!
 
 [contributors](https://github.com/tnfe/bbo/graphs/contributors)
+
+## refer
+
+[ppo](https://github.com/a-jie/ppo) , [ppo-cli](https://github.com/halldwang/ppo-cli) , [onavo](https://github.com/halldwang/onavo/tree/master) , [30-seconds](https://github.com/30-seconds) ,[locutus](https://locutus.io/)
 
 ## Changelog
 
