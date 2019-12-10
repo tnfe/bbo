@@ -18,8 +18,9 @@ See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full AP
 
 ## From
 
-Project from：[https://github.com/a-jie/ppo](https://github.com/a-jie/ppo) [ppo-cli](https://github.com/halldwang/ppo-cli) [onavo](https://github.com/halldwang/onavo/tree/master)
-
+- [ppo](https://github.com/a-jie/ppo)
+- [ppo-cli](https://github.com/halldwang/ppo-cli)
+- [onavo](https://github.com/halldwang/onavo/tree/master)
 - [30-seconds](https://github.com/30-seconds)
 - [locutus](https://locutus.io/)
 
@@ -38,11 +39,11 @@ import bbo from 'bbo';
 ## Usage
 
 ```JavaScript
-var username = bbo.getCookie('username');
+let username = bbo.getCookie('username');
 
 bbo.log('hello world!');
 
-var id = bbo.setTimesout(function(word){
+let id = bbo.setTimesout(function(word){
     console.log(word);
     console.log(this);  // log {index: 3 ,times: 8, over: false}
 }, 1000/20, 8, 'helloWorld')
