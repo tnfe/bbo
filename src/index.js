@@ -43,6 +43,7 @@ import { uuid, hash, judge, getType, isTypeof, construct, paramsName } from './o
 import { loadImages, loadjs, loadcss } from './other/load';
 import { toJson } from './other/json';
 import { cookie, setCookie, getCookie, deleteCookie, parseCookie } from './other/cookie';
+import { storage } from './other/storage';
 import {
   getUrlParam,
   setUrlParam,
@@ -173,6 +174,8 @@ let bbo = {
   deleteCookie,
   delCookie: deleteCookie,
   parseCookie,
+  // storage
+  storage,
   // url
   getUrlParam,
   setUrlParam,

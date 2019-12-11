@@ -59,3 +59,11 @@ const res = {
 console.log(bbo.get(res, 'response'));
 
 console.log(bbo.objectParam({ a: 1, b: 2 }));
+
+console.log(
+  bbo.storage('local').setItem('bbx', {
+    a: 1,
+    b: 2,
+    c: 3
+  })
+);
