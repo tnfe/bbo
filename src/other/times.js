@@ -39,7 +39,7 @@ function clearTimesout(id) {
  * getDate
  * https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
  */
-function getDate(d1, d2) {
+const getDate = (d1, d2) => {
   let today = new Date();
 
   let dd = today.getDate();
@@ -59,7 +59,7 @@ function getDate(d1, d2) {
   let _d2 = d2 || ':';
 
   return yyyy + _d1 + mm + _d1 + dd + ' ' + hh + _d2 + ms + _d2 + ss;
-}
+};
 
 /**
  * @ zh_cn
@@ -67,7 +67,7 @@ function getDate(d1, d2) {
  * @param  {Date} startTime
  * @return {String}
  */
-function formatPassTime(startTime) {
+const formatPassTime = (startTime) => {
   let currentTime = Date.parse(new Date());
   let time = currentTime - startTime;
   let day = parseInt(time / (1000 * 60 * 60 * 24), 10);
@@ -81,7 +81,7 @@ function formatPassTime(startTime) {
   if (hour) return hour + '小时前';
   if (min) return min + '分钟前';
   else return '刚刚';
-}
+};
 
 /**
  * @ zh_cn
@@ -89,7 +89,7 @@ function formatPassTime(startTime) {
  * @param  {Date} endTime
  * @return {String}
  */
-function formatRemainTime(endTime) {
+const formatRemainTime = (endTime) => {
   let startDate = new Date(); // 开始时间
   let endDate = new Date(endTime); // 结束时间
   let t = endDate.getTime() - startDate.getTime(); // 时间差
@@ -104,7 +104,7 @@ function formatRemainTime(endTime) {
     s = Math.floor((t / 1000) % 60);
   }
   return d + '天 ' + h + '小时 ' + m + '分钟 ' + s + '秒';
-}
+};
 
 /**
  * @ en

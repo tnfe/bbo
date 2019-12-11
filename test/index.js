@@ -67,3 +67,20 @@ console.log(
     c: 3
   })
 );
+
+console.log(bbo.randomColor());
+
+console.log(bbo.randomKey(20));
+
+console.log(bbo.floor(Math.random() * 100, 5));
+
+console.log(bbo.uuid());
+
+let arr = true;
+console.log(bbo.isTypeof(arr, 'boolean'));
+
+let resdata = "{ code: 0 , msg: 'xxx' }";
+
+console.log(bbo.toJson(resdata));
+
+console.log(bbo.deleteUrlParam('a'));

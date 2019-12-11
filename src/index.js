@@ -68,7 +68,7 @@ import {
 import { fill0, chainAsync } from './fill/index';
 import { math } from './fill/math';
 
-import { randomColor, randomFromArray, randomA2B, randomKey, floor } from './random/index';
+import { randomColor, randomA2B, randomKey, floor } from './random/index';
 
 import { lockTouch } from './touch/index';
 
@@ -198,8 +198,6 @@ let bbo = {
   math,
   // random
   randomColor,
-  randomFromArray,
-  randomfArr: randomFromArray,
   randomA2B,
   randomFromA2B: randomA2B,
   randomKey,

@@ -5,19 +5,19 @@
  * generate uuid
  * From https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
  */
-function uuid() {
+const uuid = () => {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     let r = (Math.random() * 16) | 0;
     let v = c === 'x' ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
-}
+};
 
 /**
  * string hash map
  * From https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
  */
-function hash(str) {
+const hash = (str) => {
   let _str = String(str);
   let hash = 0;
   let i;
@@ -30,13 +30,13 @@ function hash(str) {
   }
 
   return hash;
-}
+};
 
 /**
  * map condition judge
  *  bbo.judge = bbo.judgment
  */
-function judge(v, vals, strict) {
+const judge = (v, vals, strict) => {
   if (!isTypeof(vals, 'array')) return false;
 
   for (let key in vals) {
@@ -48,19 +48,19 @@ function judge(v, vals, strict) {
   }
 
   return false;
-}
+};
 
 /**
  * is typeof type
  */
-function isTypeof(val, type) {
+const isTypeof = (val, type) => {
   return (
     Object.prototype.toString
       .call(val)
       .slice(8, -1)
       .toLowerCase() === type
   );
-}
+};
 
 const getType = (v) =>
   v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name.toLowerCase();

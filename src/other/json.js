@@ -4,14 +4,14 @@ import { isTypeof } from '../other/index';
  */
 
 // eval hack
-function evil(fn) {
+const evil = (fn) => {
   // A variable points to Function, preventing reporting errors
   let Fn = Function;
   return new Fn('return ' + fn)();
-}
+};
 
 // bbo.toJSON = bbo.tojson = bbo.toJson
-function toJson(res) {
+const toJson = (res) => {
   if (!res) return null;
 
   if (typeof res === 'string') {
@@ -25,6 +25,6 @@ function toJson(res) {
   } else {
     return res;
   }
-}
+};
 
 export { toJson };

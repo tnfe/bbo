@@ -6,19 +6,15 @@
  * getUrlParam / deleteUrlParam
  * From https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
  */
-function getUrlParam(name, url) {
-  let _url = url;
-  if (!_url) {
-    _url = window.location.href;
-  }
-  let _name = name.replace(/[\[\]]/g, '\\$&');
-  let regex = new RegExp('[?&]' + _name + '(=([^&#]*)|&|#|$)');
-  let results = regex.exec(_url);
+const getUrlParam = (name, url = window.location.href) => {
+  name.replace(/[\[\]]/g, '\\$&');
+  let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+  let results = regex.exec(url);
   if (!results) return null;
   if (!results[2]) return '';
 
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
-}
+};
 
 // const getURLParameters = (url) =>
 //   (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
@@ -30,34 +26,26 @@ function getUrlParam(name, url) {
  * setUrlParam
  * From https://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
  */
-function setUrlParam(key, value, url) {
-  let _url = url;
-  if (!_url) {
-    _url = window.location.href;
-  }
+const setUrlParam = (key, value, url = window.location.href) => {
   let re = new RegExp('([?|&])' + key + '=.*?(&|#|$)', 'i');
 
-  if (_url.match(re)) {
-    return _url.replace(re, '$1' + key + '=' + encodeURIComponent(value) + '$2');
+  if (url.match(re)) {
+    return url.replace(re, '$1' + key + '=' + encodeURIComponent(value) + '$2');
   } else {
     let hash = '';
-    if (_url.indexOf('#') !== -1) {
-      hash = _url.replace(/.*#/, '#');
-      _url = _url.replace(/#.*/, '');
+    if (url.indexOf('#') !== -1) {
+      hash = url.replace(/.*#/, '#');
+      url.replace(/#.*/, '');
     }
-    let separator = _url.indexOf('?') !== -1 ? '&' : '?';
-    return _url + separator + key + '=' + encodeURIComponent(value) + hash;
+    let separator = url.indexOf('?') !== -1 ? '&' : '?';
+    return url + separator + key + '=' + encodeURIComponent(value) + hash;
   }
-}
+};
 
 // bbo.deleteUrlParam = bbo.delUrlParam
-function deleteUrlParam(param, url) {
-  let _url = url;
-  if (!_url) {
-    _url = window.location.href;
-  }
+const deleteUrlParam = (param, url = window.location.href) => {
   // prefer to use l.search if you have a location/link object
-  let urlparts = _url.split('?');
+  let urlparts = url.split('?');
   if (urlparts.length >= 2) {
     let prefix = encodeURIComponent(param) + '=';
     let pars = urlparts[1].split(/[&;]/g);
@@ -69,15 +57,13 @@ function deleteUrlParam(param, url) {
         pars.splice(i, 1);
       }
     }
-
-    _url = urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
-    return _url;
+    return urlparts[0] + (pars.length > 0 ? '?' + pars.join('&') : '');
   } else {
-    return _url;
+    return url;
   }
-}
+};
 
-function objectParam(arr) {
+const objectParam = (arr) => {
   let str = '';
   if (Array.isArray(arr)) {
     str = arr
@@ -89,9 +75,9 @@ function objectParam(arr) {
     str = objectParam(objectBigParam(arr));
   }
   return str;
-}
+};
 
-function objectBigParam(obj) {
+const objectBigParam = (obj) => {
   let arr = [];
   Object.keys(obj).forEach(function(k) {
     if (Array.isArray(obj[k])) {
@@ -111,7 +97,7 @@ function objectBigParam(obj) {
     }
   });
   return arr;
-}
+};
 
 const httpGet = (url, callback, err = console.error) => {
   const request = new XMLHttpRequest();
