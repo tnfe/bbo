@@ -80,7 +80,7 @@ Thank you all who already contributed to bbo!
 
 [contributors](https://github.com/tnfe/bbo/graphs/contributors)
 
-## refer
+## Refer
 
 [ppo](https://github.com/a-jie/ppo) , [ppo-cli](https://github.com/halldwang/ppo-cli) , [onavo](https://github.com/halldwang/onavo/tree/master) , [30-seconds](https://github.com/30-seconds) , [locutus](https://locutus.io/)
 
