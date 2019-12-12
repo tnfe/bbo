@@ -1,6 +1,6 @@
 /* eslint-disable */
 /**
- *  Lodash is easy to implement, consistent with the lodash class name.
+ *  Mini lodash is easy to implement, consistent with the lodash class name.
  *  Function parameters only implement basic verification.
  *  Which is less stable than lodash
  *
@@ -45,22 +45,7 @@ function isFunction(func) {
   return getTag(func) === '[object Function]';
 }
 
-function isEmpty(value) {
-  if (value == null) {
-    return true;
-  }
-  if (isArray(value) || isString(value)) {
-    return value.length === 0;
-  }
-  if (isObject(value)) {
-    return Object.keys(value).length === 0;
-  }
-  if (isMap(value) || isSet(value)) {
-    return value.size === 0;
-  }
-  return true;
-}
-// const isEmpty = (val) => val == null || !(Object.keys(val) || val).length;
+const isEmpty = (val) => val == null || !(Object.keys(val) || val).length;
 
 function is(x, y) {
   // inlined Object.is polyFill to avoid requiring consumers ship their own
@@ -389,31 +374,8 @@ function throttle(func, wait, options) {
   });
 }
 
-function pick(object, ...paths) {
-  if (object === null || object === undefined) {
-    return {};
-  }
-  return reduce(
-    paths,
-    (rst, path) => {
-      if (isArray(path)) {
-        forEach(path, (item) => {
-          if (has(object, item)) {
-            rst[item] = object[item];
-          }
-        });
-      } else {
-        if (has(object, path)) {
-          rst[path] = object[path];
-        }
-      }
-      return rst;
-    },
-    {}
-  );
-}
-// const pick = (obj, arr) =>
-//   arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
+const pick = (obj, arr) =>
+  arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
 
 // Only omit the first-level key, shallow copy objec
 const omit = (obj, arr) =>

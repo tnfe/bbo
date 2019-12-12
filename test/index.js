@@ -1,5 +1,4 @@
 import bbo from '../dist/bbo.esm';
-
 // console.log(bbo.ua());
 
 bbo.log('hello bbo', { color: '#fff', background: '#ff0000' });
@@ -59,14 +58,6 @@ const res = {
 console.log(bbo.get(res, 'response'));
 
 console.log(bbo.objectParam({ a: 1, b: 2 }));
-
-console.log(
-  bbo.storage('local').setItem('bbx', {
-    a: 1,
-    b: 2,
-    c: 3
-  })
-);
 
 console.log(bbo.randomColor());
 

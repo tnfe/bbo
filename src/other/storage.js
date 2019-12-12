@@ -1,14 +1,16 @@
+/************************************************************************
+ * localStorage && sessionStorage
+ * Method for safely supporting localStorage sessionStorage 'setItem' 'getItem' 'removeItem' 'removeAll',
+ * Some extension method 'has' 'get' adn Store prefix
+ *************************************************************************/
+import { string } from '../string/index';
+
 const ulocalStorage = window.localStorage;
 const ussesionStorage = window.sessionStorage;
-/**
- * How to check whether a Storage item is set?
- * 如何判断是否存在某个item?
- * https://stackoverflow.com/questions/3262605/how-to-check-whether-a-storage-item-is-set
- */
 class Storage {
   constructor(options) {
     const {
-      type,
+      type = 'local',
       prefix = 'bbo.storage',
       message = {
         setItem: 'write in',
@@ -26,6 +28,7 @@ class Storage {
       this._storage = ussesionStorage;
     }
   }
+
   doItem(func, action) {
     try {
       if (typeof func === 'function') {
@@ -37,10 +40,7 @@ class Storage {
     }
     return true;
   }
-  _warn(action) {
-    const { message } = this;
-    console.warn(`Unable to ${message[action] || ''} ${this.type} Storage`);
-  }
+
   setItem(key, value) {
     if (typeof key === 'object') {
       Object.keys(key).forEach((k, index) => {
@@ -56,9 +56,11 @@ class Storage {
       );
     }
   }
+
   has(...keys) {
     return keys.every((key, index) => this._storage.getItem(`${this.prefix}.${key}`));
   }
+
   get(...keys) {
     const result = {};
     keys.forEach((key, index) => {
@@ -72,18 +74,36 @@ class Storage {
     });
     return result;
   }
+
   getItem(key) {
     return this.doItem(() => JSON.parse(this._storage.getItem(`${this.prefix}.${key}`)), 'getItem');
   }
+
   removeAll() {
-    this.doItem(() => this._storage.removeAll(), 'removeAll');
+    Object.keys(this._storage).forEach((k) => {
+      if (string.contains(k, this.prefix)) {
+        this._remove(`${k}`);
+      }
+    });
   }
+
   removeItem(...keys) {
+    console.log(keys);
     keys.forEach((key, index) =>
-      this.doItem(() => this._storage.removeItem(`${this.prefix}${key}`), 'removeItem')
+      this.doItem(() => this._storage.removeItem(`${this.prefix}.${key}`), 'removeItem')
     );
   }
+
+  _warn(action) {
+    const { message } = this;
+    console.warn(`Unable to ${message[action] || ''} ${this.type} Storage`);
+  }
+
+  _remove(keys) {
+    this.doItem(() => this._storage.removeItem(`${keys}`), 'removeItem');
+  }
 }
+
 const storage = ({ type, prefix }) =>
   new Storage({
     type,
