@@ -21,7 +21,7 @@ I sorted out the most frequently used functions in daily development. These func
 
 Most code comes from the [stackOverflow](https://stackoverflow.com/) site in the high-score answers, so we pay tribute to the original authors.
 
-With easy code and less than 7k gzip, bbo can be used anytime and anywhere with no worries.
+With easy code and less than 9k gzip, bbo can be used anytime and anywhere with no worries.
 
 See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference or [bbo-docs](https://github.com/halldwang/bbo-docs.git).
 
