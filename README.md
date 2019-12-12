@@ -1,17 +1,22 @@
-<div align=center style="margin-bottom:20px;">
-  <img src="https://raw.githubusercontent.com/Tnfe/bbo/master/docs/bbo.png"/>
-</div>
+<div align="center"><img src="https://raw.githubusercontent.com/Tnfe/bbo/master/docs/bbo.png"/></div>
 
-<div align="center" style="margin-bottom:30px;">
+---
+
+<div align="center">
   <a href='https://www.npmjs.com/package/bbo'>
     <img src='https://img.shields.io/npm/v/bbo.svg' alt='npm version' height='18'>
   </a>
+
   <img src='https://img.shields.io/bundlephobia/minzip/bbo.svg?label=gzip%20size' alt='gzip size' height='18'>
+
   <img src='https://img.shields.io/npm/dm/bbo.svg?label=npm%20downloads' alt='monthly npm installs' height='18'>
+
   <img src='https://img.shields.io/badge/license-Apache2.0-blue.svg' alt='license' height='18'>
 </div>
 
-> A utility belt library for modern JavaScript.
+🐝🐜
+
+> BBO is a small useful modern JavaScript utility library.
 
 ## Overview
 
