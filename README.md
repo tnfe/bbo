@@ -104,6 +104,4 @@ Detailed changes for each release are documented in the [release notes](https://
 
 ## License
 
-Distributed by Win-Vector LLC 2012 under Apache 2.0 [License](https://github.com/tnfe/bbo/blob/master/LICENSE).
-
-Contributions to this project are governed by the CONTRIBUTING file and the Apache Licens.
+Proton is released under the MIT License. http://www.opensource.org/licenses/mit-license
