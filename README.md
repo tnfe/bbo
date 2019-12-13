@@ -11,7 +11,7 @@
 
   <img src='https://img.shields.io/npm/dm/bbo.svg?label=npm%20downloads' alt='monthly npm installs' height='18'>
 
-  <img src='https://img.shields.io/badge/license-Apache2.0-blue.svg' alt='license' height='18'>
+  <img src='https://img.shields.io/badge/license-MIT-blue.svg' alt='license' height='18'>
 </div>
 
 🐝🐜
