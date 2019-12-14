@@ -1,7 +1,7 @@
 /**
  * String
  */
-let string = {
+const string = {
   /**
    * Remove spaces after removing previous string
    */

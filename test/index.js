@@ -75,3 +75,7 @@ let resdata = "{ code: 0 , msg: 'xxx' }";
 console.log(bbo.toJson(resdata));
 
 console.log(bbo.deleteUrlParam('a'));
+
+import { cookie } from '../src/other/cookie';
+
+console.log(cookie().getJSON());

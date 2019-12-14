@@ -69,9 +69,6 @@ let math = {
     }
 
     return s.join(dec);
-  },
-  floor: (value) => {
-    return Math.floor(value);
   }
 };
 

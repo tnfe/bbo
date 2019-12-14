@@ -2,7 +2,7 @@
  * cookie
  * https://github.com/jiayi2/onavo/blob/master/onavo.js#L209
  */
-function cookie() {
+const cookie = () => {
   function _extend() {
     let i = 0;
     let result = {};
@@ -140,7 +140,7 @@ function cookie() {
     return api;
   }
   return init(function() {});
-}
+};
 
 /************************************************************************
  * Cookies
@@ -150,7 +150,7 @@ function cookie() {
  * From https://stackoverflow.com/questions/1458724/how-do-i-set-unset-cookie-with-jquery/1458728#1458728
  * change by a-jie
  */
-function setCookie(name, value, option) {
+const setCookie = (name, value, option) => {
   let longTime = 10;
   // let path = '; path=/';
   let val = option && option.raw ? value : encodeURIComponent(value);
@@ -180,9 +180,9 @@ function setCookie(name, value, option) {
   }
 
   document.cookie = cookie;
-}
+};
 
-function getCookie(name) {
+const getCookie = (name) => {
   let nameEQ = encodeURIComponent(name) + '=';
   let ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
@@ -192,14 +192,14 @@ function getCookie(name) {
   }
 
   return null;
-}
+};
 
 // bbo.deleteCookie = bbo.delCookie =
-function deleteCookie(name) {
+const deleteCookie = (name) => {
   setCookie(name, '', {
     hour: -1
   });
-}
+};
 
 const parseCookie = (str) =>
   str

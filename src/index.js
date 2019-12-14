@@ -36,7 +36,8 @@ import {
   elementContains,
   formToObject,
   getStyle,
-  setStyle
+  setStyle,
+  attr
 } from './bom/index';
 
 import { uuid, hash, judge, getType, isTypeof, construct, paramsName } from './other/index';
@@ -151,6 +152,7 @@ let bbo = {
   formToObject,
   getStyle,
   setStyle,
+  attr,
   // other
   uuid,
   hash,

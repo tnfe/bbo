@@ -1,63 +1,63 @@
-function ua(lower) {
+const ua = (lower) => {
   return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
-}
+};
 /**
  * detect IOS
  * From https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
  * more see:
  * https://github.com/madrobby/zepto/blob/master/src/detect.js#files
  */
-function isIOS() {
+const isIOS = () => {
   return /iPad|iPhone|iPod/.test(ua());
-}
+};
 
-function isiPhone() {
+const isiPhone = () => {
   return /iPhone/.test(ua());
-}
+};
 
-function isIPad() {
+const isIPad = () => {
   return /iPad/.test(ua());
-}
+};
 /**
  * detect Android
  * From https://stackoverflow.com/questions/6031412/detect-android-phone-via-javascript-jquery
  */
-function isAndroid() {
+const isAndroid = () => {
   return ua('l').indexOf('android') > -1;
-}
+};
 
 /**
  * detect PC / Mobile
  * From https://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery
  */
-function isMobile() {
+const isMobile = () => {
   return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua('l'));
-}
-function isPC() {
+};
+const isPC = () => {
   return !isMobile();
-}
+};
 
-function isWeixin() {
+const isWeixin = () => {
   return /MicroMessenger/i.test(ua('l')); // 微信
-}
+};
 
-function isNewsApp(e) {
+const isNewsApp = () => {
   return /qqnews/.test(ua()); // 腾讯新闻app
-}
+};
 
-function mqqbrowser() {
+const mqqbrowser = () => {
   return /mqqbrowser\//.test(ua()); // QQ浏览器
-}
+};
 
-function isQQ() {
+const isQQ = () => {
   return /qq\//.test(ua()); // 手机QQ
-}
+};
 
-function isTenvideo() {
+const isTenvideo = () => {
   return /qqlivebrowser/.test(ua()); // 腾讯视频
-}
+};
 
-function isIphoneXmodel() {
+const isIphoneXmodel = () => {
   // X XS, XS Max, XR
   const xSeriesConfig = [
     {
@@ -85,11 +85,11 @@ function isIphoneXmodel() {
     );
   }
   return false;
-}
+};
 
-function isIE() {
+const isIE = () => {
   return ieVersion() > 0;
-}
+};
 
 /**
  * ie version
@@ -99,7 +99,7 @@ function isIE() {
  * Edge 12 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.71 Safari/537.36 Edge/12.0';
  * Edge 13 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
  */
-function ieVersion() {
+const ieVersion = () => {
   let uakit = ua();
   let msie = uakit.indexOf('MSIE ');
   if (msie > 0) {
@@ -118,7 +118,7 @@ function ieVersion() {
   }
 
   return '';
-}
+};
 
 export {
   ua,

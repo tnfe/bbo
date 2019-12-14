@@ -7,7 +7,7 @@
  * @param {Number} [deviation=0] - Allowable deviation
  */
 
-function checkImageSize(image, options, deviation = 0) {
+const checkImageSize = (image, options, deviation = 0) => {
   return new Promise((resolve, reject) => {
     /**
      * Check type of image
@@ -42,7 +42,7 @@ function checkImageSize(image, options, deviation = 0) {
       };
     }
   });
-}
+};
 
 /**
  * Image optimization
@@ -57,7 +57,7 @@ function checkImageSize(image, options, deviation = 0) {
  * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
  * If the output type is image/gif，Then return as is image Parameter content.
  */
-function imageOptimization(image, quality = 0.9, { maxWidth = 1920, mimeType } = {}) {
+const imageOptimization = (image, quality = 0.9, { maxWidth = 1920, mimeType } = {}) => {
   return new Promise((resolve, reject) => {
     if (image instanceof File) {
       const reader = new FileReader();
@@ -109,6 +109,6 @@ function imageOptimization(image, quality = 0.9, { maxWidth = 1920, mimeType } =
       }
     }
   });
-}
+};
 
 export { checkImageSize, imageOptimization };

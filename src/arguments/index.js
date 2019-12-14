@@ -8,7 +8,7 @@ function args($arguments, first) {
 /**
  * a trash object
  */
-let trash = {
+const trash = {
   clear: function() {
     for (let key in trash) {
       if (key !== 'log' && key !== 'clear') delete trash[key];

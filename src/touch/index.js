@@ -4,7 +4,7 @@
 /**
  * lock touch in mobile phone
  */
-function lockTouch() {
+const lockTouch = () => {
   document.addEventListener(
     'touchmove',
     function(e) {
@@ -23,6 +23,6 @@ function lockTouch() {
     if (not(e, 'input') && not(e, 'textarea') && not(e, 'select') && not(e, 'menus'))
       e.preventDefault();
   }
-}
+};
 
 export { lockTouch };

@@ -199,24 +199,17 @@ let array = {
 
   /**
    * Returns true if the provided predicate function returns true for all elements in a collection, false otherwise.
-   * Use Array.prototype.every() to test if all elements in the collection return true based on fn.
-   * Omit the second argument, fn, to use Boolean as a default.
    */
   all: (arr, fn = Boolean) => arr.every(fn),
 
   /**
    * Returns true if the provided predicate function returns true for at least one element in a collection,
    * false otherwise.
-   * Use Array.prototype.some() to test if any elements in the collection return true based on fn.
-   * Omit the second argument, fn, to use Boolean as a default.
    */
   any: (arr, fn = Boolean) => arr.some(fn),
 
   /**
    * Chunks an array into smaller arrays of a specified size.
-   * Use Array.from() to create a new array, that fits the number of chunks that will be produced.
-   * Use Array.prototype.slice() to map each element of the new array to a chunk the length of size.
-   * If the original array can't be split evenly, the final chunk will contain the remaining elements.
    */
   chunk: (arr, size) => {
     Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
@@ -226,8 +219,6 @@ let array = {
 
   /**
    * Groups the elements of an array based on the given function and returns the count of elements in each group.
-   * Use Array.prototype.map() to map the values of an array to a function or property name.
-   * Use Array.prototype.reduce() to create an object, where the keys are produced from the mapped results.
    */
   countBy: (arr, fn) => {
     arr.map(typeof fn === 'function' ? fn : (val) => val[fn]).reduce((acc, val) => {
@@ -238,7 +229,6 @@ let array = {
 
   /**
    * Counts the occurrences of a value in an array.
-   * Use Array.prototype.reduce() to increment a counter each time you encounter the specific value inside the array.
    */
   countOccurrences: (arr, val) => {
     arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
