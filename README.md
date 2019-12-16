@@ -32,7 +32,7 @@
 
 项目在gzip压缩下只有9K, 所以你可以随时随地使用。
 
-请参阅最新的文档[documentation](https://github.ahthw.com/bbo/) 以获取完整的API参考，或者在github上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
+请参阅最新的文档 [Documentation](https://github.ahthw.com/bbo/) 以获取完整的API参考，或者在github上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
 
 ## 文档
 
@@ -83,7 +83,7 @@ npm run lint
 npm run build
 ```
 
-运行项目示例
+运行项目
 
 ```JavaScript
 npm run start
