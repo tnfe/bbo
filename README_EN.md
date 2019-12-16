@@ -1,3 +1,5 @@
+<p align="right"><a href="https://github.com/Tnfe/bbo">中文</a> / <a href="https://github.com/tnfe/bbo/blob/master/README_EN.md">English</a></p>
+
 <div align="center"><img src="https://raw.githubusercontent.com/Tnfe/bbo/master/docs/bbo.png"/></div>
 
 ---
@@ -54,7 +56,9 @@ import bbo from 'bbo';
 ## Usage
 
 ```JavaScript
-let username = bbo.getCookie('username');
+let username = bbo.getCookie('username'); // 'bbo'
+let json =  cookie().getJson(); // {a: 1, b: 2}
+let isiPhone = bbo.isiPhone(); //true or false
 
 bbo.log('hello world!');
 
@@ -62,6 +66,8 @@ let id = bbo.setTimesout(function(word){
     console.log(word);
     console.log(this);  // log {index: 3 ,times: 8, over: false}
 }, 1000/20, 8, 'helloWorld')
+
+bbo.math.numberFormat(1234.56, 2, ',', ' ') // '1 234,56'
 ```
 
 ## Building
