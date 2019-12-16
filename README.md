@@ -72,7 +72,7 @@ bbo.math.numberFormat(1234.56, 2, ',', ' ') // '1 234,56'
 
 ## 开发
 
-**依赖nodejs, 请使用terminal/iTrem安装环境**
+**依赖nodejs, 请使用terminal/iTerm安装环境**
 
 构建项目
 
