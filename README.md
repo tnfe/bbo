@@ -1,5 +1,3 @@
-![bbo-banner](./docs/bbo-banner.png)
-
 <p align="right"><a href="https://github.com/Tnfe/bbo">中文</a> / <a href="https://github.com/tnfe/bbo/blob/master/README_EN.md">English</a></p>
 
 <div align="center"><img src="https://raw.githubusercontent.com/Tnfe/bbo/master/docs/bbo.png"/></div>
@@ -21,6 +19,8 @@
 🐝🐜
 
 > BBO 是一款非常实用的JavaScript函数工具库。
+
+![bbo-banner](./docs/bbo-banner.png)
 
 ## 背景
 
