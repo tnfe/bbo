@@ -27,8 +27,6 @@ console.log(
   bbo.math.numberFormat(1e-8, 8, '.', '')
 );
 
-console.log(bbo.math.floor(8723321.4));
-
 console.log(
   bbo.array.column(
     [{ name: 'Alex', value: 1 }, { name: 'Elvis', value: 2 }, { name: 'Michael', value: 3 }],
@@ -79,3 +77,5 @@ console.log(bbo.deleteUrlParam('a'));
 import { cookie } from '../src/other/cookie';
 
 console.log(cookie().getJSON());
+
+console.log(bbo);

@@ -1,3 +1,5 @@
+![bbo-banner](./docs/bbo-banner.png)
+
 <p align="right"><a href="https://github.com/Tnfe/bbo">中文</a> / <a href="https://github.com/tnfe/bbo/blob/master/README_EN.md">English</a></p>
 
 <div align="center"><img src="https://raw.githubusercontent.com/Tnfe/bbo/master/docs/bbo.png"/></div>
@@ -59,6 +61,7 @@ import bbo from 'bbo';
 let username = bbo.getCookie('username'); // 'bbo'
 let json =  cookie().getJson(); // {a: 1, b: 2}
 let isiPhone = bbo.isiPhone(); //true or false
+let isIphoneXmodel = bbo.isIphoneXmodel() // X XS, XSMax, XR
 
 bbo.log('hello world!');
 

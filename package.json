@@ -1,6 +1,6 @@
 {
   "name": "bbo",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "A utility belt library for modern JavaScript.",
   "main": "dist/bbo.min.js",
   "directories": {
