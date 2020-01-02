@@ -4,10 +4,10 @@
  * +++++++++ A utility belt library for modern JavaScript. +++++++++
  * (c) 2011-2019 tnfe
  * https://github.com/tnfe/bbo.git
- * version 1.0.8
+ * version 1.0.9
  */
 
-var version = "1.0.8";
+var version = "1.0.9";
 
 const ua = lower => {
   return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
@@ -2667,7 +2667,7 @@ const omit = (obj, arr) => Object.keys(obj).filter(k => !arr.includes(k)).reduce
  * Main entry
  */
 
-let bbo = {
+var index = {
   // version
   version,
   // detecting
@@ -2801,4 +2801,4 @@ let bbo = {
   array
 };
 
-export default bbo;
+export default index;

@@ -106,7 +106,7 @@ import {
  * Main entry
  */
 
-let bbo = {
+export default {
   // version
   version,
   // detecting
@@ -239,5 +239,3 @@ let bbo = {
   // array
   array
 };
-
-export default bbo;

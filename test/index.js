@@ -1,4 +1,4 @@
-import bbo from '../dist/bbo.esm';
+import bbo from '../dist/bbo.min';
 // console.log(bbo.ua());
 
 bbo.log('hello bbo', { color: '#fff', background: '#ff0000' });

@@ -4,7 +4,7 @@
  * +++++++++ A utility belt library for modern JavaScript. +++++++++
  * (c) 2011-2019 tnfe
  * https://github.com/tnfe/bbo.git
- * version 1.0.8
+ * version 1.0.9
  */
 
 (function (global, factory) {
@@ -13,7 +13,7 @@
   (global = global || self, factory(global.bbo = {}));
 }(this, (function (exports) { 'use strict';
 
-  var version = "1.0.8";
+  var version = "1.0.9";
 
   const ua = lower => {
     return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
@@ -2673,7 +2673,7 @@
    * Main entry
    */
 
-  let bbo = {
+  var index = {
     // version
     version,
     // detecting
@@ -2807,7 +2807,7 @@
     array
   };
 
-  exports.default = bbo;
+  exports.default = index;
 
   Object.defineProperty(exports, '__esModule', { value: true });
 
