@@ -79,3 +79,14 @@ import { cookie } from '../src/other/cookie';
 console.log(cookie().getJSON());
 
 console.log(bbo);
+
+// 数组根据对象中的元素值去重
+let testArray = [
+  { name: 'n1', id: '1' },
+  { name: 'n2', id: '11' },
+  { name: 'n3', id: '12' },
+  { name: 'n4', id: '13' },
+  { name: 'n2', id: '1' },
+  { name: 'n6', id: '12' }
+];
+console.log(bbo.array.uniqueFrom(testArray, 'name'));

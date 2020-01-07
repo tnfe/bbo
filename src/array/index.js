@@ -17,6 +17,14 @@ let array = {
     }, []),
 
   /**
+   * 数组根据对象中的元素值去重
+   * https://stackoverflow.com/questions/2218999/remove-duplicates-from-an-array-of-objects-in-javascript
+   */
+  uniqueFrom: (arr, target) => {
+    return Object.values(arr.reduce((acc, cur) => Object.assign(acc, { [cur[target]]: cur }), {}));
+  },
+
+  /**
    * Returns a random element from an array.
    */
   random: (arr) => arr[Math.floor(Math.random() * arr.length)],
