@@ -17,7 +17,7 @@ let array = {
     }, []),
 
   /**
-   * 数组根据对象中的元素值去重
+   * Remove duplicates from an array of objects
    * https://stackoverflow.com/questions/2218999/remove-duplicates-from-an-array-of-objects-in-javascript
    */
   uniqueFrom: (arr, target) => {
