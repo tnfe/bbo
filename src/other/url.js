@@ -107,6 +107,7 @@ const httpGet = (url, callback, err = console.error) => {
   request.send();
 };
 
+// eslint-disable-next-line max-params
 const httpPost = (url, data, callback, err = console.error) => {
   const request = new XMLHttpRequest();
   request.open('POST', url, true);

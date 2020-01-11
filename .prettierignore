@@ -1,4 +1,5 @@
 /dist
+/dist_mod
 /node_modules
 /docs
 /.vscode

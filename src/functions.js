@@ -1,4 +1,5 @@
-import { version } from '../package.json';
+import version from './util/version';
+import noConflict from './util/no_conflict';
 
 import {
   ua,
@@ -109,6 +110,7 @@ import {
 export default {
   // version
   version,
+  noConflict,
   // detecting
   ua,
   isIOS,

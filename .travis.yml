@@ -1,0 +1,17 @@
+language: node_js
+branches:
+  only:
+    - master
+notifications:
+  email: false
+matrix:
+  include:
+    - node_js: '10'
+before_script:
+  - npm prune
+script:
+  - npm run coverage
+  - npm run eslint
+  - npm run build
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

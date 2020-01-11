@@ -1,21 +1,140 @@
-
 /*
  * bbo
  * +++++++++ A utility belt library for modern JavaScript. +++++++++
  * (c) 2011-2019 tnfe
  * https://github.com/tnfe/bbo.git
- * version 1.0.9
+ * version 1.1.10
  */
 
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (global = global || self, factory(global.bbo = {}));
-}(this, (function (exports) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global = global || self, global.bbo = factory());
+}(this, (function () { 'use strict';
 
-  var version = "1.0.9";
+  function _extends() {
+    _extends = Object.assign || function (target) {
+      for (var i = 1; i < arguments.length; i++) {
+        var source = arguments[i];
 
-  const ua = lower => {
+        for (var key in source) {
+          if (Object.prototype.hasOwnProperty.call(source, key)) {
+            target[key] = source[key];
+          }
+        }
+      }
+
+      return target;
+    };
+
+    return _extends.apply(this, arguments);
+  }
+
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+  }
+
+  function _toArray(arr) {
+    return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest();
+  }
+
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) {
+      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+      return arr2;
+    }
+  }
+
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArray(iter) {
+    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
+      return;
+    }
+
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance");
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance");
+  }
+
+  var version = '1.1.10';
+
+  var globalObject = null;
+
+  function getGlobalObject() {
+    if (globalObject !== null) {
+      return globalObject;
+    }
+    /* istanbul ignore next */
+    // It's hard to mock the global variables. This code surely works fine. I hope :)
+
+
+    if (typeof global === 'object' && global.Object === Object) {
+      // NodeJS global object
+      globalObject = global;
+    } else if (typeof self === 'object' && self.Object === Object) {
+      // self property from Window object
+      globalObject = self;
+    } else {
+      // Other cases. Function constructor always has the context as global object
+      // eslint-disable-next-line no-new-func
+      globalObject = new Function('return this')();
+    }
+
+    return globalObject;
+  }
+
+  /* eslint-disable no-invalid-this */
+  var globalObject$1 = getGlobalObject();
+  var previousV = globalObject$1.v;
+  function noConflict() {
+    if (this === globalObject$1.v) {
+      globalObject$1.v = previousV;
+    }
+
+    return this;
+  }
+
+  var ua = lower => {
     return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
   };
   /**
@@ -26,15 +145,15 @@
    */
 
 
-  const isIOS = () => {
+  var isIOS = () => {
     return /iPad|iPhone|iPod/.test(ua());
   };
 
-  const isiPhone = () => {
+  var isiPhone = () => {
     return /iPhone/.test(ua());
   };
 
-  const isIPad = () => {
+  var isIPad = () => {
     return /iPad/.test(ua());
   };
   /**
@@ -43,7 +162,7 @@
    */
 
 
-  const isAndroid = () => {
+  var isAndroid = () => {
     return ua('l').indexOf('android') > -1;
   };
   /**
@@ -52,37 +171,37 @@
    */
 
 
-  const isMobile = () => {
+  var isMobile = () => {
     return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua('l'));
   };
 
-  const isPC = () => {
+  var isPC = () => {
     return !isMobile();
   };
 
-  const isWeixin = () => {
+  var isWeixin = () => {
     return /MicroMessenger/i.test(ua('l')); // 微信
   };
 
-  const isNewsApp = () => {
+  var isNewsApp = () => {
     return /qqnews/.test(ua()); // 腾讯新闻app
   };
 
-  const mqqbrowser = () => {
+  var mqqbrowser = () => {
     return /mqqbrowser\//.test(ua()); // QQ浏览器
   };
 
-  const isQQ = () => {
+  var isQQ = () => {
     return /qq\//.test(ua()); // 手机QQ
   };
 
-  const isTenvideo = () => {
+  var isTenvideo = () => {
     return /qqlivebrowser/.test(ua()); // 腾讯视频
   };
 
-  const isIphoneXmodel = () => {
+  var isIphoneXmodel = () => {
     // X XS, XS Max, XR
-    const xSeriesConfig = [{
+    var xSeriesConfig = [{
       devicePixelRatio: 3,
       width: 375,
       height: 812
@@ -97,21 +216,18 @@
     }];
 
     if (typeof window !== 'undefined' && window) {
-      const {
-        devicePixelRatio,
-        screen
-      } = window;
-      const {
-        width,
-        height
-      } = screen;
+      var _window = window,
+          devicePixelRatio = _window.devicePixelRatio,
+          screen = _window.screen;
+      var width = screen.width,
+          height = screen.height;
       return xSeriesConfig.some(item => item.devicePixelRatio === devicePixelRatio && item.width === width && item.height === height);
     }
 
     return false;
   };
 
-  const isIE = () => {
+  var isIE = () => {
     return ieVersion() > 0;
   };
   /**
@@ -124,22 +240,22 @@
    */
 
 
-  const ieVersion = () => {
-    let uakit = ua();
-    let msie = uakit.indexOf('MSIE ');
+  var ieVersion = () => {
+    var uakit = ua();
+    var msie = uakit.indexOf('MSIE ');
 
     if (msie > 0) {
       return parseInt(uakit.substring(msie + 5, uakit.indexOf('.', msie)), 10);
     }
 
-    let trident = uakit.indexOf('Trident/');
+    var trident = uakit.indexOf('Trident/');
 
     if (trident > 0) {
-      let rv = uakit.indexOf('rv:');
+      var rv = uakit.indexOf('rv:');
       return parseInt(uakit.substring(rv + 3, uakit.indexOf('.', rv)), 10);
     }
 
-    let edge = uakit.indexOf('Edge/');
+    var edge = uakit.indexOf('Edge/');
 
     if (edge > 0) {
       return parseInt(ua.substring(edge + 5, uakit.indexOf('.', edge)), 10);
@@ -159,29 +275,53 @@
    */
 
 
-  const trash = {
+  var trash = {
     clear: function () {
-      for (let key in trash) {
+      for (var key in trash) {
         if (key !== 'log' && key !== 'clear') delete trash[key];
       }
     },
     log: function () {
-      for (let key in trash) {
+      for (var key in trash) {
         if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
       }
     }
   };
 
-  const noop = () => {};
+  var noop = () => {};
 
-  const merge = (...objs) => [...objs].reduce((acc, obj) => Object.keys(obj).reduce((a, k) => {
-    acc[k] = acc.hasOwnProperty(k) ? [].concat(acc[k]).concat(obj[k]) : obj[k];
-    return acc;
-  }, {}), {});
+  var merge = function () {
+    for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
+      objs[_key] = arguments[_key];
+    }
 
-  const over = (...fns) => (...args) => fns.map(fn => fn.apply(null, args));
+    return [].concat(objs).reduce((acc, obj) => Object.keys(obj).reduce((a, k) => {
+      acc[k] = acc.hasOwnProperty(k) ? [].concat(acc[k]).concat(obj[k]) : obj[k];
+      return acc;
+    }, {}), {});
+  };
 
-  const call = (key, ...args) => context => context[key](...args);
+  var over = function () {
+    for (var _len2 = arguments.length, fns = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      fns[_key2] = arguments[_key2];
+    }
+
+    return function () {
+      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        args[_key3] = arguments[_key3];
+      }
+
+      return fns.map(fn => fn.apply(null, args));
+    };
+  };
+
+  var call = function (key) {
+    for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
+      args[_key4 - 1] = arguments[_key4];
+    }
+
+    return context => context[key].apply(context, args);
+  };
 
   /************************************************************************
    * LOGS
@@ -192,7 +332,7 @@
    */
 
   function log(msg, styles) {
-    let ele = document.getElementById('_bbo_log');
+    var ele = document.getElementById('_bbo_log');
 
     if (ele === null) {
       ele = document.createElement('div');
@@ -202,7 +342,7 @@
     }
 
     if (styles) {
-      for (let style in styles) {
+      for (var style in styles) {
         if (Object.prototype.hasOwnProperty.call(styles, style)) {
           ele.style[style] = styles[style];
         }
@@ -218,9 +358,9 @@
 
   function logs() {
     if (window.console && window.console.log) {
-      let onlyId = String(arguments[0]);
-      let times = parseInt(onlyId.split('&')[1], 10) || 10;
-      let logsCache = _cache.logs;
+      var onlyId = String(arguments[0]);
+      var times = parseInt(onlyId.split('&')[1], 10) || 10;
+      var logsCache = _cache.logs;
       if (!logsCache[onlyId]) logsCache[onlyId] = {};
       if (!logsCache[onlyId].once) logsCache[onlyId].once = 1;
 
@@ -243,7 +383,7 @@
    *************************************************************************/
 
 
-  let _cache = {
+  var _cache = {
     urls: {},
     logs: {}
   };
@@ -255,9 +395,9 @@
   /**
    * open new url dont not blocked by browser
    */
-  const open = href => {
-    let id = '_bbo_open_proxy';
-    let a = g(id) || c('a', id, '', id);
+  var open = href => {
+    var id = '_bbo_open_proxy';
+    var a = g(id) || c('a', id, '', id);
     setStyle(a, 'display', 'none');
     attr(a, 'href', href);
     attr(a, 'target', '_blank');
@@ -270,19 +410,21 @@
    */
 
 
-  const trigger = (element, event, eventType) => {
+  var trigger = (element, event, eventType) => {
     if (document.createEventObject) {
-      let e = document.createEventObject();
+      var e = document.createEventObject();
       return element.fireEvent('on' + event, e);
     } else {
-      let e = document.createEvent(eventType || 'HTMLEvents');
-      e.initEvent(event, true, true);
-      element.dispatchEvent(e);
+      var _e2 = document.createEvent(eventType || 'HTMLEvents');
+
+      _e2.initEvent(event, true, true);
+
+      element.dispatchEvent(_e2);
     }
   };
 
-  const stopPropagation = e => {
-    let _e = e || window.event;
+  var stopPropagation = e => {
+    var _e = e || window.event;
 
     if (_e.stopPropagation) {
       _e.stopPropagation(); // W3C
@@ -292,16 +434,17 @@
     }
   };
 
-  const g = i => {
+  var g = i => {
     return document.getElementById(i);
   };
 
-  const gc = cn => {
+  var gc = cn => {
     return document.getElementsByClassName(cn);
-  };
+  }; // eslint-disable-next-line max-params
 
-  const c = (t, cn, i, id) => {
-    let el = document.createElement(t);
+
+  var c = (t, cn, i, id) => {
+    var el = document.createElement(t);
 
     if (cn) {
       attr(el, 'class', cn);
@@ -318,18 +461,18 @@
     return el;
   };
 
-  const query = i => {
+  var query = i => {
     return document.querySelector(i);
   };
 
-  const copyToClipboard = str => {
-    const el = document.createElement('textarea');
+  var copyToClipboard = str => {
+    var el = document.createElement('textarea');
     el.value = str;
     attr(el, 'readonly', '');
     setStyle(el, 'position', 'absolute');
     setStyle(el, 'left', '-9999px');
     document.body.appendChild(el);
-    const selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+    var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
     el.select();
     document.execCommand('copy');
     document.body.removeChild(el);
@@ -340,27 +483,45 @@
     }
   };
 
-  const show = (...el) => [...el].forEach(e => {
-    e.style.display = '';
-  });
+  var show = function () {
+    for (var _len = arguments.length, el = new Array(_len), _key = 0; _key < _len; _key++) {
+      el[_key] = arguments[_key];
+    }
 
-  const hide = (...el) => [...el].forEach(e => {
-    e.style.display = 'none';
-  });
+    return [].concat(el).forEach(e => {
+      e.style.display = '';
+    });
+  };
 
-  const elementContains = (parent, child) => parent !== child && parent.contains(child);
+  var hide = function () {
+    for (var _len2 = arguments.length, el = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      el[_key2] = arguments[_key2];
+    }
 
-  const formToObject = form => Array.from(new FormData(form)).reduce((acc, [key, value]) => ({ ...acc,
-    [key]: value
-  }), {});
+    return [].concat(el).forEach(e => {
+      e.style.display = 'none';
+    });
+  };
 
-  const getStyle = (el, ruleName) => getComputedStyle(el)[ruleName];
+  var elementContains = (parent, child) => parent !== child && parent.contains(child);
 
-  const setStyle = (el, ruleName, val) => {
+  var formToObject = form => Array.from(new FormData(form)).reduce((acc, _ref) => {
+    var _ref2 = _slicedToArray(_ref, 2),
+        key = _ref2[0],
+        value = _ref2[1];
+
+    return { ...acc,
+      [key]: value
+    };
+  }, {});
+
+  var getStyle = (el, ruleName) => getComputedStyle(el)[ruleName];
+
+  var setStyle = (el, ruleName, val) => {
     el.style[ruleName] = val;
   };
 
-  const attr = (el, ruleName, val) => {
+  var attr = (el, ruleName, val) => {
     el.setAttribute(ruleName, val);
   };
 
@@ -372,10 +533,10 @@
    * generate uuid
    * From https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
    */
-  const uuid = () => {
+  var uuid = () => {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-      let r = Math.random() * 16 | 0;
-      let v = c === 'x' ? r : r & 0x3 | 0x8;
+      var r = Math.random() * 16 | 0;
+      var v = c === 'x' ? r : r & 0x3 | 0x8;
       return v.toString(16);
     });
   };
@@ -385,12 +546,12 @@
    */
 
 
-  const hash = str => {
-    let _str = String(str);
+  var hash = str => {
+    var _str = String(str);
 
-    let hash = 0;
-    let i;
-    let chr;
+    var hash = 0;
+    var i;
+    var chr;
     if (_str.length === 0) return hash;
 
     for (i = 0; i < _str.length; i++) {
@@ -407,10 +568,10 @@
    */
 
 
-  const judge = (v, vals, strict) => {
+  var judge = (v, vals, strict) => {
     if (!isTypeof(vals, 'array')) return false;
 
-    for (let key in vals) {
+    for (var key in vals) {
       if (strict) {
         if (v === vals[key]) return true;
       } else {
@@ -425,14 +586,14 @@
    */
 
 
-  const isTypeof = (val, type) => {
+  var isTypeof = (val, type) => {
     return Object.prototype.toString.call(val).slice(8, -1).toLowerCase() === type;
   };
 
-  const getType = v => v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name.toLowerCase();
+  var getType = v => v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name.toLowerCase();
 
   function construct() {
-    let classs = arguments[0];
+    var classs = arguments[0];
     return new (Function.prototype.bind.apply(classs, arguments))();
   }
   /**
@@ -452,17 +613,17 @@
    * 2. bbo.loadjs("//your_url/a.js","only_id",func);
    */
 
-  let _cache$1 = {
+  var _cache$1 = {
     urls: {},
     logs: {}
   };
 
-  let _insertScripts = function (arr, callback) {
-    for (let i = 0; i < arr.length; i++) {
+  var _insertScripts = function (arr, callback) {
+    for (var i = 0; i < arr.length; i++) {
       _insertScript(arr[i], loaded);
     }
 
-    let _index = 0;
+    var _index = 0;
 
     function loaded() {
       _index++;
@@ -473,8 +634,8 @@
     }
   };
 
-  let _insertScript = function (src, callback) {
-    let script = document.createElement('script');
+  var _insertScript = function (src, callback) {
+    var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute('src', src);
     document.getElementsByTagName('head')[0].appendChild(script);
@@ -497,8 +658,8 @@
   };
 
   function loadjs(url, b, c) {
-    let onlyId;
-    let callback;
+    var onlyId;
+    var callback;
 
     if (typeof b === 'function') {
       onlyId = String(hash(String(url)));
@@ -514,7 +675,7 @@
     if (_cache$1.urls[onlyId]) {
       callback && callback();
     } else {
-      let func = typeof url === 'string' ? _insertScript : _insertScripts;
+      var func = typeof url === 'string' ? _insertScript : _insertScripts;
       func.call(this, url, function () {
         _cache$1.urls[onlyId] = true;
         callback && callback();
@@ -527,13 +688,13 @@
 
 
   function loadcss(url, callback) {
-    let promise;
-    let resolutions = [];
-    let rejections = [];
-    let resolved = false;
-    let rejected = false;
-    let count;
-    let id;
+    var promise;
+    var resolutions = [];
+    var rejections = [];
+    var resolved = false;
+    var rejected = false;
+    var count;
+    var id;
     this.count = this.count ? ++this.count : 1;
     count = this.count;
     id = 'load-css-' + count;
@@ -553,16 +714,20 @@
     function resolve() {
       resolved = true;
 
-      for (let i = 0, len = resolutions.length; i < len; i++) resolutions[i]();
+      for (var i = 0, len = resolutions.length; i < len; i++) {
+        resolutions[i]();
+      }
     }
 
     function reject() {
       rejected = true;
 
-      for (let i = 0, len = rejections.length; i < len; i++) rejections[i]();
+      for (var i = 0, len = rejections.length; i < len; i++) {
+        rejections[i]();
+      }
     }
 
-    let link = document.createElement('link');
+    var link = document.createElement('link');
     link.setAttribute('id', id);
     link.setAttribute('rel', 'stylesheet');
     link.setAttribute('type', 'text/css');
@@ -578,8 +743,8 @@
         // load failed from an external domain is to try and
         // access its cssText, and then catch the error
         // ... sweet :/
-        let cur;
-        let i = document.styleSheets.length;
+        var cur;
+        var i = document.styleSheets.length;
 
         try {
           while (i--) {
@@ -604,21 +769,21 @@
   }
 
   function loadImages(options) {
-    let len = 0;
-    let index = 0;
-    let curIndex = 0;
-    let stepTimer = null;
-    let stepTimeValue = 5;
-    let percentageValue = 0;
-    let targetPercent = 0;
-    let data = options.data || [];
+    var len = 0;
+    var index = 0;
+    var curIndex = 0;
+    var stepTimer = null;
+    var stepTimeValue = 5;
+    var percentageValue = 0;
+    var targetPercent = 0;
+    var data = options.data || [];
 
-    let step = options.step || function () {};
+    var step = options.step || function () {};
 
-    let complete = options.complete || function () {};
+    var complete = options.complete || function () {};
 
-    let needOneStep = options.needOneStep || false;
-    let path = options.path || false;
+    var needOneStep = options.needOneStep || false;
+    var path = options.path || false;
 
     if (typeof data !== 'object' || data.length === 0) {
       step(100);
@@ -628,12 +793,12 @@
     len = data.length;
 
     if (path) {
-      for (let i = len - 1; i > -1; i--) {
+      for (var i = len - 1; i > -1; i--) {
         data[i] = path + data[i]; // console.info(data[i]);
       }
     }
 
-    let processStep = function () {
+    var processStep = function () {
       percentageValue++; // console.info("processStep = ",percentageValue)
 
       step(percentageValue);
@@ -669,7 +834,7 @@
     }
 
     for (index; index < len; index++) {
-      let strUrl = data[index];
+      var strUrl = data[index];
       new LoadImageItem(strUrl, onload).start();
     }
   }
@@ -681,28 +846,28 @@
 
 
   function LoadImageItem(url, cb) {
-    let self = this;
+    var self = this;
     self.img = new Image(); // readyState:'complete' or 'loaded' => image has been loaded。
     // for IE6-IE10。
 
-    let onReadyStateChange = function () {
+    var onReadyStateChange = function () {
       removeEventHandlers();
       console.info('onReadyStateChange');
       cb(self, 'onReadyStateChange');
     };
 
-    let onError = function () {
+    var onError = function () {
       console.info('onError');
       removeEventHandlers();
       cb(self, 'onError');
     };
 
-    let onLoad = function () {
+    var onLoad = function () {
       removeEventHandlers();
       cb(self, 'onload');
     };
 
-    let removeEventHandlers = function () {
+    var removeEventHandlers = function () {
       self.unbind('load', onLoad);
       self.unbind('readystatechange', onReadyStateChange);
       self.unbind('error', onError);
@@ -756,14 +921,14 @@
    */
   // eval hack
 
-  const evil = fn => {
+  var evil = fn => {
     // A variable points to Function, preventing reporting errors
-    let Fn = Function;
+    var Fn = Function;
     return new Fn('return ' + fn)();
   }; // bbo.toJSON = bbo.tojson = bbo.toJson
 
 
-  const toJson = res => {
+  var toJson = res => {
     if (!res) return null;
 
     if (typeof res === 'string') {
@@ -783,15 +948,15 @@
    * cookie
    * https://github.com/jiayi2/onavo/blob/master/onavo.js#L209
    */
-  const cookie = () => {
+  var cookie = () => {
     function _extend() {
-      let i = 0;
-      let result = {};
+      var i = 0;
+      var result = {};
 
       for (; i < arguments.length; i++) {
-        let attributes = arguments[i];
+        var attributes = arguments[i];
 
-        for (let key in attributes) {
+        for (var key in attributes) {
           if (Object.prototype.hasOwnProperty.call(key, attributes)) {
             result[key] = attributes[key];
           }
@@ -804,24 +969,24 @@
     function init(converter) {
       // #lizard forgives
       function api(key, value, attributes) {
-        let result;
+        var result;
 
         if (typeof document === 'undefined') {
           return;
         }
 
         if (arguments.length > 1) {
-          let _attributes = _extend({
+          var _attributes = _extend({
             path: '/'
           }, api.defaults, attributes);
 
           if (typeof _attributes.expires === 'number') {
-            let expires = new Date();
+            var expires = new Date();
             expires.setMilliseconds(expires.getMilliseconds() + _attributes.expires * 864e5);
             _attributes.expires = expires;
           }
 
-          let _value = value;
+          var _value = value;
 
           try {
             result = JSON.stringify(_value);
@@ -837,13 +1002,13 @@
             _value = converter.write(_value, key);
           }
 
-          let _key = encodeURIComponent(String(key));
+          var _key = encodeURIComponent(String(key));
 
-          let __key = _key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+          var __key = _key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
 
-          let ___key = __key.replace(/[\(\)]/g, escape);
+          var ___key = __key.replace(/[\(\)]/g, escape);
 
-          let _cookie = document.cookie = [___key, '=', value, attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '', attributes.path ? '; path=' + attributes.path : '', attributes.domain ? '; domain=' + attributes.domain : '', attributes.secure ? '; secure' : ''].join('');
+          var _cookie = document.cookie = [___key, '=', value, attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '', attributes.path ? '; path=' + attributes.path : '', attributes.domain ? '; domain=' + attributes.domain : '', attributes.secure ? '; secure' : ''].join('');
 
           return _cookie;
         }
@@ -852,35 +1017,36 @@
           result = {};
         }
 
-        let cookies = document.cookie ? document.cookie.split('; ') : [];
-        let setDecode = /(%[0-9A-Z]{2})+/g;
-        let i = 0;
+        var cookies = document.cookie ? document.cookie.split('; ') : [];
+        var setDecode = /(%[0-9A-Z]{2})+/g;
+        var i = 0;
 
         for (; i < cookies.length; i++) {
-          let parts = cookies[i].split('=');
-          let cookie = parts.slice(1).join('=');
+          var parts = cookies[i].split('=');
 
-          if (cookie.charAt(0) === '"') {
-            cookie = cookie.slice(1, -1);
+          var _cookie2 = parts.slice(1).join('=');
+
+          if (_cookie2.charAt(0) === '"') {
+            _cookie2 = _cookie2.slice(1, -1);
           }
 
           try {
-            let name = parts[0].replace(setDecode, decodeURIComponent);
-            cookie = converter.read ? converter.read(cookie, name) : converter(cookie, name) || cookie.replace(setDecode, decodeURIComponent);
+            var name = parts[0].replace(setDecode, decodeURIComponent);
+            _cookie2 = converter.read ? converter.read(_cookie2, name) : converter(_cookie2, name) || _cookie2.replace(setDecode, decodeURIComponent);
 
             try {
-              cookie = JSON.parse(cookie);
+              _cookie2 = JSON.parse(_cookie2);
             } catch (e) {
               console.log(e);
             }
 
             if (key === name) {
-              result = cookie;
+              result = _cookie2;
               break;
             }
 
             if (!key) {
-              result[name] = cookie;
+              result[name] = _cookie2;
             }
           } catch (e) {}
         }
@@ -925,28 +1091,34 @@
    */
 
 
-  const setCookie = (name, value, option) => {
-    let longTime = 10; // let path = '; path=/';
+  var setCookie = (name, value, option) => {
+    var longTime = 10; // let path = '; path=/';
 
-    let val = option && option.raw ? value : encodeURIComponent(value);
-    let cookie = encodeURIComponent(name) + '=' + val;
+    var val = option && option.raw ? value : encodeURIComponent(value);
+    var cookie = encodeURIComponent(name) + '=' + val;
 
     if (option) {
       if (option.days) {
-        let date = new Date();
-        let ms = option.days * 24 * 3600 * 1000;
+        var date = new Date();
+        var ms = option.days * 24 * 3600 * 1000;
         date.setTime(date.getTime() + ms);
         cookie += '; expires=' + date.toGMTString();
       } else if (option.hour) {
-        let date = new Date();
-        let ms = option.hour * 3600 * 1000;
-        date.setTime(date.getTime() + ms);
-        cookie += '; expires=' + date.toGMTString();
+        var _date = new Date();
+
+        var _ms = option.hour * 3600 * 1000;
+
+        _date.setTime(_date.getTime() + _ms);
+
+        cookie += '; expires=' + _date.toGMTString();
       } else {
-        let date = new Date();
-        let ms = longTime * 365 * 24 * 3600 * 1000;
-        date.setTime(date.getTime() + ms);
-        cookie += '; expires=' + date.toGMTString();
+        var _date2 = new Date();
+
+        var _ms2 = longTime * 365 * 24 * 3600 * 1000;
+
+        _date2.setTime(_date2.getTime() + _ms2);
+
+        cookie += '; expires=' + _date2.toGMTString();
       }
 
       if (option.path) cookie += '; path=' + option.path;
@@ -957,14 +1129,16 @@
     document.cookie = cookie;
   };
 
-  const getCookie = name => {
-    let nameEQ = encodeURIComponent(name) + '=';
-    let ca = document.cookie.split(';');
+  var getCookie = name => {
+    var nameEQ = encodeURIComponent(name) + '=';
+    var ca = document.cookie.split(';');
 
-    for (let i = 0; i < ca.length; i++) {
-      let c = ca[i];
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i];
 
-      while (c.charAt(0) === ' ') c = c.substring(1, c.length);
+      while (c.charAt(0) === ' ') {
+        c = c.substring(1, c.length);
+      }
 
       if (c.indexOf(nameEQ) === 0) return decodeURIComponent(c.substring(nameEQ.length, c.length));
     }
@@ -973,13 +1147,13 @@
   }; // bbo.deleteCookie = bbo.delCookie =
 
 
-  const deleteCookie = name => {
+  var deleteCookie = name => {
     setCookie(name, '', {
       hour: -1
     });
   };
 
-  const parseCookie = str => str.split(';').map(v => v.split('=')).reduce((acc, v) => {
+  var parseCookie = str => str.split(';').map(v => v.split('=')).reduce((acc, v) => {
     acc[decodeURIComponent(v[0].trim())] = decodeURIComponent(v[1].trim());
     return acc;
   }, {});
@@ -987,14 +1161,14 @@
   /**
    * String
    */
-  const string = {
+  var string = {
     /**
      * Remove spaces after removing previous string
      */
     trim: str => {
-      let _str = str.replace(/^\s+/, '');
+      var _str = str.replace(/^\s+/, '');
 
-      for (let i = str.length - 1; i >= 0; i--) {
+      for (var i = str.length - 1; i >= 0; i--) {
         if (/\S/.test(str.charAt(i))) {
           _str = str.slice(0, i + 1);
           break;
@@ -1008,9 +1182,9 @@
      * Increase by 0 based on string length before string
      */
     fillZero: (target, n) => {
-      let z = new Array(n).join('0');
-      let str = z + target;
-      let result = str.slice(-n);
+      var z = new Array(n).join('0');
+      var str = z + target;
+      var result = str.slice(-n);
       return result;
     },
 
@@ -1018,20 +1192,20 @@
      * Long string unique
      */
     longUnique: target => {
-      let json = {};
+      var json = {};
 
-      for (let index = 0; index < target.length; index++) {
+      for (var index = 0; index < target.length; index++) {
         if (!json[target[index]]) {
           json[target[index]] = -1;
         }
       }
 
-      let longString = '';
+      var longString = '';
 
-      for (let index = 0; index < target.length; index++) {
-        if (json[target[index]]) {
-          json[target[index]] = 0;
-          longString = longString + target[index];
+      for (var _index = 0; _index < target.length; _index++) {
+        if (json[target[_index]]) {
+          json[target[_index]] = 0;
+          longString = longString + target[_index];
         }
       }
 
@@ -1055,7 +1229,14 @@
     /**
      * DeCapitalizes the first letter of a string.
      */
-    deCapitalize: ([first, ...rest], upperRest = false) => first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join('')),
+    deCapitalize: function (_ref) {
+      var _ref2 = _toArray(_ref),
+          first = _ref2[0],
+          rest = _ref2.slice(1);
+
+      var upperRest = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+      return first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join(''));
+    },
 
     /**
      * en:Returns true if the given string is an absolute URL, false otherwise.
@@ -1071,7 +1252,11 @@
     /**
      * Replaces all but the last num of characters with the specified mask character.
      */
-    mask: (cc, num = 4, mask = '*') => `${cc}`.slice(-num).padStart(`${cc}`.length, mask),
+    mask: function (cc) {
+      var num = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+      var mask = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '*';
+      return `${cc}`.slice(-num).padStart(`${cc}`.length, mask);
+    },
 
     /**
      * splitLines('This\nis a\nmultiline\nstring.\n') =>
@@ -1121,12 +1306,12 @@
      * Returns the length of a string in bytes by Unicode (utf-8 utf8 utf-16 utf16)
      */
     byteLen: (str, charset) => {
-      let target = 0;
-      let charCode;
-      let i;
-      let len;
+      var target = 0;
+      var charCode;
+      var i;
+      var len;
 
-      let _charset = charset ? charset.toLowerCase() : '';
+      var _charset = charset ? charset.toLowerCase() : '';
 
       if (_charset === 'utf-16' || _charset === 'utf16') {
         for (i = 0, len = str.length; i < len; i++) {
@@ -1161,8 +1346,8 @@
      * Repeat item, times times
      */
     repeat: (item, times) => {
-      let s = item;
-      let target = '';
+      var s = item;
+      var target = '';
 
       while (times > 0) {
         if (times % 2 === 1) {
@@ -1185,7 +1370,7 @@
      * Item is the end of the target
      */
     endsWith: (target, item, ignore) => {
-      let str = target.slice(-item.length);
+      var str = target.slice(-item.length);
       return ignore ? str.toLowerCase() === item.toLowerCase() : str === item;
     },
 
@@ -1193,7 +1378,7 @@
      *  Item is the beginning of the target
      */
     startsWith: (target, item, ignore) => {
-      let str = target.slice(0, item.length);
+      var str = target.slice(0, item.length);
       return ignore ? str.toLowerCase() === item.toLowerCase() : str === item;
     },
 
@@ -1228,7 +1413,7 @@
       //   returns 1: 'Kevin Van  Zonneveld'
       //   example 2: capwords('HELLO WORLD')
       //   returns 2: 'HELLO WORLD'
-      let pattern = /^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g;
+      var pattern = /^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g;
       return String(str).replace(pattern, function ($1) {
         return $1.toUpperCase();
       });
@@ -1240,21 +1425,22 @@
    * Method for safely supporting localStorage sessionStorage 'setItem' 'getItem' 'removeItem' 'removeAll',
    * Some extension method 'has' 'get' adn Store prefix
    *************************************************************************/
-  const ulocalStorage = window.localStorage;
-  const ussesionStorage = window.sessionStorage;
+  var ulocalStorage = window.localStorage;
+  var ussesionStorage = window.sessionStorage;
 
   class Storage {
     constructor(options) {
-      const {
-        type = 'local',
-        prefix = 'bbo.storage',
-        message = {
-          setItem: 'write in',
-          getItem: 'read',
-          removeAll: 'remove all',
-          removeItem: 'remove item'
-        }
-      } = options;
+      var _options$type = options.type,
+          type = _options$type === void 0 ? 'local' : _options$type,
+          _options$prefix = options.prefix,
+          prefix = _options$prefix === void 0 ? 'bbo.storage' : _options$prefix,
+          _options$message = options.message,
+          message = _options$message === void 0 ? {
+        setItem: 'write in',
+        getItem: 'read',
+        removeAll: 'remove all',
+        removeItem: 'remove item'
+      } : _options$message;
       this.prefix = prefix;
       this.type = type;
       this.message = message;
@@ -1290,12 +1476,21 @@
       }
     }
 
-    has(...keys) {
+    has() {
+      for (var _len = arguments.length, keys = new Array(_len), _key = 0; _key < _len; _key++) {
+        keys[_key] = arguments[_key];
+      }
+
       return keys.every((key, index) => this._storage.getItem(`${this.prefix}.${key}`));
     }
 
-    get(...keys) {
-      const result = {};
+    get() {
+      var result = {};
+
+      for (var _len2 = arguments.length, keys = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        keys[_key2] = arguments[_key2];
+      }
+
       keys.forEach((key, index) => {
         if (`${this._storage.getItem(`${this.prefix}.${key}`)}` !== 'null') {
           try {
@@ -1320,15 +1515,17 @@
       });
     }
 
-    removeItem(...keys) {
+    removeItem() {
+      for (var _len3 = arguments.length, keys = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+        keys[_key3] = arguments[_key3];
+      }
+
       console.log(keys);
       keys.forEach((key, index) => this.doItem(() => this._storage.removeItem(`${this.prefix}.${key}`), 'removeItem'));
     }
 
     _warn(action) {
-      const {
-        message
-      } = this;
+      var message = this.message;
       console.warn(`Unable to ${message[action] || ''} ${this.type} Storage`);
     }
 
@@ -1338,13 +1535,14 @@
 
   }
 
-  const storage = ({
-    type,
-    prefix
-  }) => new Storage({
-    type,
-    prefix
-  });
+  var storage = (_ref) => {
+    var type = _ref.type,
+        prefix = _ref.prefix;
+    return new Storage({
+      type: type,
+      prefix: prefix
+    });
+  };
 
   /************************************************************************
    * About Url Params
@@ -1354,10 +1552,11 @@
    * getUrlParam / deleteUrlParam
    * From https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
    */
-  const getUrlParam = (name, url = window.location.href) => {
+  var getUrlParam = function (name) {
+    var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window.location.href;
     name.replace(/[\[\]]/g, '\\$&');
-    let regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
-    let results = regex.exec(url);
+    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    var results = regex.exec(url);
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
@@ -1373,34 +1572,36 @@
    */
 
 
-  const setUrlParam = (key, value, url = window.location.href) => {
-    let re = new RegExp('([?|&])' + key + '=.*?(&|#|$)', 'i');
+  var setUrlParam = function (key, value) {
+    var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window.location.href;
+    var re = new RegExp('([?|&])' + key + '=.*?(&|#|$)', 'i');
 
     if (url.match(re)) {
       return url.replace(re, '$1' + key + '=' + encodeURIComponent(value) + '$2');
     } else {
-      let hash = '';
+      var hash = '';
 
       if (url.indexOf('#') !== -1) {
         hash = url.replace(/.*#/, '#');
         url.replace(/#.*/, '');
       }
 
-      let separator = url.indexOf('?') !== -1 ? '&' : '?';
+      var separator = url.indexOf('?') !== -1 ? '&' : '?';
       return url + separator + key + '=' + encodeURIComponent(value) + hash;
     }
   }; // bbo.deleteUrlParam = bbo.delUrlParam
 
 
-  const deleteUrlParam = (param, url = window.location.href) => {
+  var deleteUrlParam = function (param) {
+    var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window.location.href;
     // prefer to use l.search if you have a location/link object
-    let urlparts = url.split('?');
+    var urlparts = url.split('?');
 
     if (urlparts.length >= 2) {
-      let prefix = encodeURIComponent(param) + '=';
-      let pars = urlparts[1].split(/[&;]/g); // reverse iteration as may be destructive
+      var prefix = encodeURIComponent(param) + '=';
+      var pars = urlparts[1].split(/[&;]/g); // reverse iteration as may be destructive
 
-      for (let i = pars.length; i-- > 0;) {
+      for (var i = pars.length; i-- > 0;) {
         // idiom for string.startsWith
         if (pars[i].lastIndexOf(prefix, 0) !== -1) {
           pars.splice(i, 1);
@@ -1413,8 +1614,8 @@
     }
   };
 
-  const objectParam = arr => {
-    let str = '';
+  var objectParam = arr => {
+    var str = '';
 
     if (Array.isArray(arr)) {
       str = arr.map(function (item) {
@@ -1427,8 +1628,8 @@
     return str;
   };
 
-  const objectBigParam = obj => {
-    let arr = [];
+  var objectBigParam = obj => {
+    var arr = [];
     Object.keys(obj).forEach(function (k) {
       if (Array.isArray(obj[k])) {
         arr = arr.concat(obj[k].map(function (v) {
@@ -1447,8 +1648,9 @@
     return arr;
   };
 
-  const httpGet = (url, callback, err = console.error) => {
-    const request = new XMLHttpRequest();
+  var httpGet = function (url, callback) {
+    var err = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : console.error;
+    var request = new XMLHttpRequest();
     request.open('GET', url, true);
 
     request.onload = () => callback(request.responseText);
@@ -1456,10 +1658,12 @@
     request.onerror = () => err(request);
 
     request.send();
-  };
+  }; // eslint-disable-next-line max-params
 
-  const httpPost = (url, data, callback, err = console.error) => {
-    const request = new XMLHttpRequest();
+
+  var httpPost = function (url, data, callback) {
+    var err = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : console.error;
+    var request = new XMLHttpRequest();
     request.open('POST', url, true);
     request.setRequestHeader('Content-type', 'application/json; charset=utf-8');
 
@@ -1473,11 +1677,11 @@
   /**
    * Array
    */
-  let array = {
+  var array = {
     /**
      * Returns all unique values of an array.
      */
-    unique: arr => [...new Set(arr)],
+    unique: arr => _toConsumableArray(new Set(arr)),
 
     /**
      * Returns all unique values of an array, based on a provided comparator function.
@@ -1488,11 +1692,11 @@
     }, []),
 
     /**
-     * 数组根据对象中的元素值去重
+     * Remove duplicates from an array of objects
      * https://stackoverflow.com/questions/2218999/remove-duplicates-from-an-array-of-objects-in-javascript
      */
     uniqueFrom: (arr, target) => {
-      return Object.values(arr.reduce((acc, cur) => Object.assign(acc, {
+      return Object.values(arr.reduce((acc, cur) => _extends(acc, {
         [cur[target]]: cur
       }), {}));
     },
@@ -1505,12 +1709,18 @@
     /**
      * Gets n random elements at unique keys from array up to the size of array.
      */
-    randomSize: ([...arr], n = 1) => {
-      let m = arr.length;
+    randomSize: function (_ref) {
+      var _ref2 = _toArray(_ref),
+          arr = _ref2.slice(0);
+
+      var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      var m = arr.length;
 
       while (m) {
-        const i = Math.floor(Math.random() * m--);
-        [arr[m], arr[i]] = [arr[i], arr[m]];
+        var i = Math.floor(Math.random() * m--);
+        var _ref3 = [arr[i], arr[m]];
+        arr[m] = _ref3[0];
+        arr[i] = _ref3[1];
       }
 
       return arr.slice(0, n);
@@ -1519,12 +1729,17 @@
     /**
      * Randomizes the order of the values of an array, returning a new array.
      */
-    shuffle: ([...arr]) => {
-      let m = arr.length;
+    shuffle: (_ref4) => {
+      var _ref5 = _toArray(_ref4),
+          arr = _ref5.slice(0);
+
+      var m = arr.length;
 
       while (m) {
-        const i = Math.floor(Math.random() * m--);
-        [arr[m], arr[i]] = [arr[i], arr[m]];
+        var i = Math.floor(Math.random() * m--);
+        var _ref6 = [arr[i], arr[m]];
+        arr[m] = _ref6[0];
+        arr[i] = _ref6[1];
       }
 
       return arr;
@@ -1558,7 +1773,7 @@
      * Remove parameter 2 in parameter 1 and return boolean
      */
     remove: function (target, item) {
-      let index = target.indexOf(item);
+      var index = target.indexOf(item);
       return index > -1 ? this.removeAt(target, index) : false;
     },
 
@@ -1581,8 +1796,8 @@
      * Get the attribute values in an array object and combine them into a new array
      */
     pluck: (target, name) => {
-      let result = [];
-      let temp;
+      var result = [];
+      var temp;
       target.forEach(function (item) {
         temp = item[name];
 
@@ -1597,15 +1812,15 @@
      * Returns every element that exists in any of the two arrays once
      * Create a Set with all values of a and b and convert to an array.
      */
-    union: (a, b) => Array.from(new Set([...a, ...b])),
+    union: (a, b) => Array.from(new Set([].concat(_toConsumableArray(a), _toConsumableArray(b)))),
 
     /**
      * Returns every element that exists in any of the two arrays once,
      * after applying the provided function to each array element of both.
      */
     unionBy: (a, b, fn) => {
-      const s = new Set(a.map(fn));
-      return Array.from(new Set([...a, ...b.filter(x => !s.has(fn(x)))]));
+      var s = new Set(a.map(fn));
+      return Array.from(new Set([].concat(_toConsumableArray(a), _toConsumableArray(b.filter(x => !s.has(fn(x)))))));
     },
 
     /**
@@ -1613,14 +1828,14 @@
      * using a provided comparator function.
      */
     unionWith: (a, b, comp) => {
-      Array.from(new Set([...a, ...b.filter(x => a.findIndex(y => comp(x, y)) === -1)]));
+      Array.from(new Set([].concat(_toConsumableArray(a), _toConsumableArray(b.filter(x => a.findIndex(y => comp(x, y)) === -1)))));
     },
 
     /**
      * Returns a list of elements that exist in both arrays.
      */
     intersect: (a, b) => {
-      const s = new Set(b);
+      var s = new Set(b);
       return a.filter(x => s.has(x));
     },
 
@@ -1629,7 +1844,7 @@
      * after applying the provided function to each array element of both.
      */
     intersectBy: (a, b, fn) => {
-      const s = new Set(b.map(fn));
+      var s = new Set(b.map(fn));
       return a.filter(x => s.has(fn(x)));
     },
 
@@ -1639,7 +1854,7 @@
      * Filter() on a to only keep values not contained in b.
      */
     difference: (a, b) => {
-      const s = new Set(b);
+      var s = new Set(b);
       return a.filter(x => !s.has(x));
     },
 
@@ -1648,7 +1863,7 @@
      * after applying the provided function to each array element of both.
      */
     differenceBy: (a, b, fn) => {
-      const s = new Set(b.map(fn));
+      var s = new Set(b.map(fn));
       return a.map(fn).filter(el => !s.has(el));
     },
 
@@ -1673,7 +1888,7 @@
       if (arr1 === arr2) return true;
       if (arr1.length !== arr2.length) return false;
 
-      for (let i = 0; i < arr1.length; ++i) {
+      for (var i = 0; i < arr1.length; ++i) {
         if (arr1[i] !== arr2[i]) return false;
       }
 
@@ -1688,13 +1903,19 @@
     /**
      * Returns true if the provided predicate function returns true for all elements in a collection, false otherwise.
      */
-    all: (arr, fn = Boolean) => arr.every(fn),
+    all: function (arr) {
+      var fn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Boolean;
+      return arr.every(fn);
+    },
 
     /**
      * Returns true if the provided predicate function returns true for at least one element in a collection,
      * false otherwise.
      */
-    any: (arr, fn = Boolean) => arr.some(fn),
+    any: function (arr) {
+      var fn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Boolean;
+      return arr.some(fn);
+    },
 
     /**
      * Chunks an array into smaller arrays of a specified size.
@@ -1725,21 +1946,29 @@
     /**
      * Returns a new array with n elements removed from the left.
      */
-    drop: (arr, n = 1) => arr.slice(n),
+    drop: function (arr) {
+      var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      return arr.slice(n);
+    },
 
     /**
      * Returns a new array with n elements removed from the right.
      */
-    dropRight: (arr, n = 1) => arr.slice(0, -n),
+    dropRight: function (arr) {
+      var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
+      return arr.slice(0, -n);
+    },
 
     /**
      * Removes elements in an array until the passed function returns true.
      * Returns the remaining elements in the array.
      */
     dropWhile: (arr, func) => {
-      let _arr = arr;
+      var _arr = arr;
 
-      while (_arr.length > 0 && !func(_arr[0])) _arr = _arr.slice(1);
+      while (_arr.length > 0 && !func(_arr[0])) {
+        _arr = _arr.slice(1);
+      }
 
       return _arr;
     },
@@ -1749,9 +1978,10 @@
      * Returns the remaining elements in the array.
      */
     dropRightWhile: (arr, func) => {
-      let rightIndex = arr.length;
+      var rightIndex = arr.length;
 
-      while (rightIndex-- && !func(arr[rightIndex]));
+      while (rightIndex-- && !func(arr[rightIndex])) {
+      }
 
       return arr.slice(0, rightIndex + 1);
     },
@@ -1759,16 +1989,17 @@
     /**
      * discuss at: https://locutus.io/php/array_column/
      */
-    column: (input, ColumnKey, IndexKey = null) => {
-      let _input = input;
+    column: function (input, ColumnKey) {
+      var IndexKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+      var _input = input;
 
       if (_input !== null && (typeof _input === 'object' || Array.isArray(_input))) {
-        let newArray = [];
+        var newArray = [];
 
         if (typeof _input === 'object') {
-          let tempArray = [];
+          var tempArray = [];
 
-          for (let key of Object.keys(_input)) {
+          for (var key of Object.keys(_input)) {
             tempArray.push(_input[key]);
           }
 
@@ -1776,18 +2007,18 @@
         }
 
         if (Array.isArray(_input)) {
-          for (let key of _input.keys()) {
-            if (IndexKey && _input[key][IndexKey]) {
+          for (var _key of _input.keys()) {
+            if (IndexKey && _input[_key][IndexKey]) {
               if (ColumnKey) {
-                newArray[_input[key][IndexKey]] = _input[key][ColumnKey];
+                newArray[_input[_key][IndexKey]] = _input[_key][ColumnKey];
               } else {
-                newArray[_input[key][IndexKey]] = _input[key];
+                newArray[_input[_key][IndexKey]] = _input[_key];
               }
             } else {
               if (ColumnKey) {
-                newArray.push(_input[key][ColumnKey]);
+                newArray.push(_input[_key][ColumnKey]);
               } else {
-                newArray.push(_input[key]);
+                newArray.push(_input[_key]);
               }
             }
           }
@@ -1801,15 +2032,15 @@
       // discuss at: https://locutus.io/php/array_search/'
       // example 1: bbo.array.search('3', {a: 3, b: 5, c: 7})
       // returns 1: 'a'
-      let strict = !!argStrict;
-      let key = '';
-      let _needle = needle;
+      var strict = !!argStrict;
+      var key = '';
+      var _needle = needle;
 
       if (typeof _needle === 'object' && _needle.exec) {
         // Duck-type for RegExp
         if (!strict) {
           // Let's consider case sensitive searches as strict
-          let flags = 'i' + (_needle.global ? 'g' : '') + (_needle.multiline ? 'm' : '') + ( // sticky is FF only
+          var flags = 'i' + (_needle.global ? 'g' : '') + (_needle.multiline ? 'm' : '') + ( // sticky is FF only
           _needle.sticky ? 'y' : '');
           _needle = new RegExp(_needle.source, flags);
         }
@@ -1839,18 +2070,18 @@
     unary: fn => val => fn(val)
   };
 
-  const fill0 = num => {
-    let _num = parseFloat(num);
+  var fill0 = num => {
+    var _num = parseFloat(num);
 
     return _num < 10 ? '0' + _num : _num;
   };
 
-  const chainAsync = fns => {
-    let curr = 0;
-    const last = fns[fns.length - 1];
+  var chainAsync = fns => {
+    var curr = 0;
+    var last = fns[fns.length - 1];
 
-    const next = () => {
-      const fn = fns[curr++];
+    var next = () => {
+      var fn = fns[curr++];
       fn === last ? fn() : fn(next);
     };
 
@@ -1863,18 +2094,18 @@
    */
 
   function setTimesout() {
-    let func = arguments[0];
-    let delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
-    let times = arguments[2] === undefined ? 1 : parseInt(arguments[2], 10);
+    var func = arguments[0];
+    var delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
+    var times = arguments[2] === undefined ? 1 : parseInt(arguments[2], 10);
 
-    let _args = arguments.length > 3 ? args(arguments, 3) : null;
+    var _args = arguments.length > 3 ? args(arguments, 3) : null;
 
-    let target = {
+    var target = {
       index: 0,
       times: times,
       over: false
     };
-    let id = setInterval(function () {
+    var id = setInterval(function () {
       target.index++;
 
       if (target.index > times) {
@@ -1900,23 +2131,23 @@
    */
 
 
-  const getDate = (d1, d2) => {
-    let today = new Date();
-    let dd = today.getDate();
-    let mm = today.getMonth() + 1;
-    let yyyy = today.getFullYear();
-    let hh = today.getHours();
-    let ms = today.getMinutes();
-    let ss = today.getSeconds();
+  var getDate = (d1, d2) => {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    var hh = today.getHours();
+    var ms = today.getMinutes();
+    var ss = today.getSeconds();
     dd = fill0(dd);
     mm = fill0(mm);
     hh = fill0(hh);
     ms = fill0(ms);
     ss = fill0(ss);
 
-    let _d1 = d1 || '/';
+    var _d1 = d1 || '/';
 
-    let _d2 = d2 || ':';
+    var _d2 = d2 || ':';
 
     return yyyy + _d1 + mm + _d1 + dd + ' ' + hh + _d2 + ms + _d2 + ss;
   };
@@ -1928,14 +2159,14 @@
    */
 
 
-  const formatPassTime = startTime => {
-    let currentTime = Date.parse(new Date());
-    let time = currentTime - startTime;
-    let day = parseInt(time / (1000 * 60 * 60 * 24), 10);
-    let hour = parseInt(time / (1000 * 60 * 60), 10);
-    let min = parseInt(time / (1000 * 60), 10);
-    let month = parseInt(day / 30, 10);
-    let year = parseInt(month / 12, 10);
+  var formatPassTime = startTime => {
+    var currentTime = Date.parse(new Date());
+    var time = currentTime - startTime;
+    var day = parseInt(time / (1000 * 60 * 60 * 24), 10);
+    var hour = parseInt(time / (1000 * 60 * 60), 10);
+    var min = parseInt(time / (1000 * 60), 10);
+    var month = parseInt(day / 30, 10);
+    var year = parseInt(month / 12, 10);
     if (year) return year + '年前';
     if (month) return month + '个月前';
     if (day) return day + '天前';
@@ -1950,17 +2181,17 @@
    */
 
 
-  const formatRemainTime = endTime => {
-    let startDate = new Date(); // 开始时间
+  var formatRemainTime = endTime => {
+    var startDate = new Date(); // 开始时间
 
-    let endDate = new Date(endTime); // 结束时间
+    var endDate = new Date(endTime); // 结束时间
 
-    let t = endDate.getTime() - startDate.getTime(); // 时间差
+    var t = endDate.getTime() - startDate.getTime(); // 时间差
 
-    let d = 0;
-    let h = 0;
-    let m = 0;
-    let s = 0;
+    var d = 0;
+    var h = 0;
+    var m = 0;
+    var s = 0;
 
     if (t >= 0) {
       d = Math.floor(t / 1000 / 3600 / 24);
@@ -1978,26 +2209,33 @@
    */
 
 
-  const formatDuration = ms => {
+  var formatDuration = ms => {
     // eslint-disable-next-line no-param-reassign
     if (ms < 0) ms = -ms;
-    const time = {
+    var time = {
       day: Math.floor(ms / 86400000),
       hour: Math.floor(ms / 3600000) % 24,
       minute: Math.floor(ms / 60000) % 60,
       second: Math.floor(ms / 1000) % 60,
       millisecond: Math.floor(ms) % 1000
     };
-    return Object.entries(time).filter(val => val[1] !== 0).map(([key, val]) => `${val} ${key}${val !== 1 ? 's' : ''}`).join(', ');
+    return Object.entries(time).filter(val => val[1] !== 0).map((_ref) => {
+      var _ref2 = _slicedToArray(_ref, 2),
+          key = _ref2[0],
+          val = _ref2[1];
+
+      return `${val} ${key}${val !== 1 ? 's' : ''}`;
+    }).join(', ');
   };
 
   /**
    * Math
    */
-  let math = {
+  var math = {
     /**
      * https://locutus.io/php/
      */
+    // eslint-disable-next-line max-params
     numberFormat: (number, decimals, decPoint, thousandsSep) => {
       //   example 1: bbo.math.numberFormat(1234.56)
       //   returns 1: '1,235'
@@ -2027,21 +2265,21 @@
       //  returns 13: '100 050.00'
       //  example 14: bbo.math.numberFormat(1e-8, 8, '.', '')
       //  returns 14: '0.00000001'
-      let _number = String(number).replace(/[^0-9+\-Ee.]/g, '');
+      var _number = String(number).replace(/[^0-9+\-Ee.]/g, '');
 
-      let _decimals = decimals;
-      let n = !isFinite(Number(_number)) ? 0 : Number(_number);
-      let prec = !isFinite(Number(_decimals)) ? 0 : Math.abs(_decimals);
-      let sep = typeof thousandsSep === 'undefined' ? ',' : thousandsSep;
-      let dec = typeof decPoint === 'undefined' ? '.' : decPoint;
-      let s = '';
+      var _decimals = decimals;
+      var n = !isFinite(Number(_number)) ? 0 : Number(_number);
+      var prec = !isFinite(Number(_decimals)) ? 0 : Math.abs(_decimals);
+      var sep = typeof thousandsSep === 'undefined' ? ',' : thousandsSep;
+      var dec = typeof decPoint === 'undefined' ? '.' : decPoint;
+      var s = '';
 
-      let toFixedFix = function (n, prec) {
+      var toFixedFix = function (n, prec) {
         if (String(n).indexOf('e') === -1) {
           return Number(Math.round(n + 'e+' + prec) + 'e-' + prec);
         } else {
-          let arr = String(n).split('e');
-          let sig = '';
+          var arr = String(n).split('e');
+          var sig = '';
 
           if (Number(arr[1]) + prec > 0) {
             sig = '+';
@@ -2070,29 +2308,32 @@
   /************************************************************************
    * Random And Math
    *************************************************************************/
-  const randomColor = () => {
+  var randomColor = () => {
     return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
   }; // bbo.randomFromA2B = bbo.randomA2B
 
 
-  const randomA2B = (a, b, int) => {
-    let result = Math.random() * (b - a) + a;
+  var randomA2B = (a, b, int) => {
+    var result = Math.random() * (b - a) + a;
     return int ? Math.floor(result) : result;
   };
 
-  const randomKey = (len = 32) => {
-    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
-    let possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
-    let key = '';
+  var randomKey = function () {
+    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 32;
 
-    for (let i = 0; i < len; i++) {
+    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
+    var possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+    var key = '';
+
+    for (var i = 0; i < len; i++) {
       key += possible.charAt(Math.floor(Math.random() * possible.length));
     }
 
     return key;
   };
 
-  const floor = (n, m = 0) => {
+  var floor = function (n) {
+    var m = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
   };
 
@@ -2103,7 +2344,7 @@
   /**
    * lock touch in mobile phone
    */
-  const lockTouch = () => {
+  var lockTouch = () => {
     document.addEventListener('touchmove', function (e) {
       e.preventDefault();
     }, !1);
@@ -2127,13 +2368,14 @@
    * @param {Number} [options.height] - Check height
    * @param {Number} [deviation=0] - Allowable deviation
    */
-  const checkImageSize = (image, options, deviation = 0) => {
+  var checkImageSize = function (image, options) {
+    var deviation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
     return new Promise((resolve, reject) => {
       /**
        * Check type of image
        */
       if (image instanceof File) {
-        const reader = new FileReader();
+        var reader = new FileReader();
 
         reader.onload = function () {
           checkSize(this.result);
@@ -2150,12 +2392,12 @@
 
 
       function checkSize(data) {
-        const virtualImage = new Image();
+        var virtualImage = new Image();
         virtualImage.src = data;
 
         virtualImage.onload = function () {
-          let width = this.naturalWidth;
-          let height = this.naturalHeight;
+          var width = this.naturalWidth;
+          var height = this.naturalHeight;
 
           if (options.width && Math.abs(options.width - width) > deviation) {
             resolve(false);
@@ -2185,13 +2427,17 @@
    */
 
 
-  const imageOptimization = (image, quality = 0.9, {
-    maxWidth = 1920,
-    mimeType
-  } = {}) => {
+  var imageOptimization = function (image) {
+    var quality = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.9;
+
+    var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        _ref$maxWidth = _ref.maxWidth,
+        maxWidth = _ref$maxWidth === void 0 ? 1920 : _ref$maxWidth,
+        mimeType = _ref.mimeType;
+
     return new Promise((resolve, reject) => {
       if (image instanceof File) {
-        const reader = new FileReader();
+        var reader = new FileReader();
 
         reader.onload = function () {
           toBlob(this.result);
@@ -2208,31 +2454,31 @@
 
 
       function toBlob(data) {
-        const type = data.match(/data:([^;,]+)/);
+        var type = data.match(/data:([^;,]+)/);
 
         if (Array.isArray(type)) {
-          const outputType = mimeType ? mimeType : type[1];
+          var outputType = mimeType ? mimeType : type[1];
 
           if (outputType === 'image/gif') {
             return resolve(image);
           }
 
-          const virtualImage = new Image();
+          var virtualImage = new Image();
           virtualImage.src = data;
 
           virtualImage.onload = function () {
-            let width = this.naturalWidth;
-            let height = this.naturalHeight;
+            var width = this.naturalWidth;
+            var height = this.naturalHeight;
 
             if (width > maxWidth) {
               height = Math.round(maxWidth * height / width);
               width = maxWidth;
             }
 
-            const canvas = document.createElement('canvas');
+            var canvas = document.createElement('canvas');
             canvas.width = width;
             canvas.height = height;
-            const context = canvas.getContext('2d');
+            var context = canvas.getContext('2d');
             context.drawImage(this, 0, 0, width, height);
             canvas.toBlob(blob => {
               resolve(blob);
@@ -2293,7 +2539,7 @@
     return getTag(func) === '[object Function]';
   }
 
-  const isEmpty = val => val == null || !(Object.keys(val) || val).length;
+  var isEmpty = val => val == null || !(Object.keys(val) || val).length;
 
   function is(x, y) {
     // inlined Object.is polyFill to avoid requiring consumers ship their own
@@ -2318,14 +2564,14 @@
       return false;
     }
 
-    const keysA = Object.keys(objA);
-    const keysB = Object.keys(objB);
+    var keysA = Object.keys(objA);
+    var keysB = Object.keys(objB);
 
     if (keysA.length !== keysB.length) {
       return false;
     }
 
-    let i = 0;
+    var i = 0;
 
     while (i < keysA.length) {
       if (!hasOwnProperty(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
@@ -2343,8 +2589,8 @@
   }
 
   function reduce(src, func) {
-    let i = 0;
-    let acc = arguments[2];
+    var i = 0;
+    var acc = arguments[2];
 
     if (isArray(src)) {
       if (arguments.length !== 3) {
@@ -2358,14 +2604,14 @@
 
       return acc;
     } else if (isObject(src)) {
-      const keys = Object.keys(src);
+      var keys = Object.keys(src);
 
       if (arguments.length !== 3) {
         acc = src[keys[0]];
       }
 
       while (i < keys.length) {
-        const key = keys[i];
+        var key = keys[i];
         acc = func(acc, src[key], key, src);
         i += 1;
       }
@@ -2377,11 +2623,11 @@
   }
 
   function forEach(src, func) {
-    let i = 0;
+    var i = 0;
 
     if (isArray(src)) {
       while (i < src.length) {
-        const rst = func(src[i], i, src);
+        var rst = func(src[i], i, src);
 
         if (rst === false) {
           break;
@@ -2390,13 +2636,14 @@
         i += 1;
       }
     } else if (isObject(src)) {
-      const keys = Object.keys(src);
+      var keys = Object.keys(src);
 
       while (i < keys.length) {
-        const key = keys[i];
-        const rst = func(src[key], key, src);
+        var key = keys[i];
 
-        if (rst === false) {
+        var _rst = func(src[key], key, src);
+
+        if (_rst === false) {
           break;
         }
 
@@ -2406,8 +2653,8 @@
   }
 
   function map(src, func) {
-    const rst = [];
-    let i = 0;
+    var rst = [];
+    var i = 0;
 
     if (isArray(src)) {
       while (i < src.length) {
@@ -2415,10 +2662,10 @@
         i += 1;
       }
     } else if (isObject(src)) {
-      const keys = Object.keys(src);
+      var keys = Object.keys(src);
 
       while (i < keys.length) {
-        const key = keys[i];
+        var key = keys[i];
         rst.push(func(src[key], key, src));
         i += 1;
       }
@@ -2428,7 +2675,7 @@
   }
 
   function findIndex(src, func) {
-    let rst = -1;
+    var rst = -1;
     forEach(src, (item, index, obj) => {
       if (isFunction(func)) {
         if (func(item, index, obj) === true) {
@@ -2446,7 +2693,7 @@
   }
 
   function find(src, func) {
-    let rst = undefined;
+    var rst = undefined;
     forEach(src, (item, key, obj) => {
       if (isFunction(func)) {
         if (func(item, key, obj) === true) {
@@ -2463,19 +2710,19 @@
     return rst;
   }
 
-  const charCodeOfDot = '.'.charCodeAt(0);
-  const reEscapeChar = /\\(\\)?/g;
-  const rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
+  var charCodeOfDot = '.'.charCodeAt(0);
+  var reEscapeChar = /\\(\\)?/g;
+  var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
 
   function stringToPath(string) {
-    const result = [];
+    var result = [];
 
     if (string.charCodeAt(0) === charCodeOfDot) {
       result.push('');
     }
 
     string.replace(rePropName, (match, expression, quote, subString) => {
-      let key = match;
+      var key = match;
 
       if (quote) {
         key = subString.replace(reEscapeChar, '$1');
@@ -2502,11 +2749,11 @@
     }
 
     if (!Array.isArray(path)) {
-      const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-      const reIsPlainProp = /^\w*$/;
+      var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+      var reIsPlainProp = /^\w*$/;
 
-      const isKey = function (value, object) {
-        const type = typeof value;
+      var isKey = function (value, object) {
+        var type = typeof value;
 
         if (type == 'number' || type == 'boolean' || value == null) {
           return true;
@@ -2522,8 +2769,8 @@
       }
     }
 
-    let index = 0;
-    const length = path.length;
+    var index = 0;
+    var length = path.length;
 
     while (object != null && index < length) {
       object = object[path[index]];
@@ -2538,13 +2785,13 @@
   }
 
   function debounce(func, wait, options) {
-    let lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
-    let lastInvokeTime = 0;
-    let leading = false;
-    let maxing = false;
-    let trailing = true; // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
+    var lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
+    var lastInvokeTime = 0;
+    var leading = false;
+    var maxing = false;
+    var trailing = true; // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
 
-    const useRAF = !wait && wait !== 0 && typeof requestAnimationFrame === 'function';
+    var useRAF = !wait && wait !== 0 && typeof requestAnimationFrame === 'function';
 
     if (typeof func !== 'function') {
       throw new TypeError('Expected a function');
@@ -2560,8 +2807,8 @@
     }
 
     function invokeFunc(time) {
-      const args = lastArgs;
-      const thisArg = lastThis;
+      var args = lastArgs;
+      var thisArg = lastThis;
       lastArgs = lastThis = undefined;
       lastInvokeTime = time;
       result = func.apply(thisArg, args);
@@ -2587,15 +2834,15 @@
     }
 
     function remainingWait(time) {
-      const timeSinceLastCall = time - lastCallTime;
-      const timeSinceLastInvoke = time - lastInvokeTime;
-      const timeWaiting = wait - timeSinceLastCall;
+      var timeSinceLastCall = time - lastCallTime;
+      var timeSinceLastInvoke = time - lastInvokeTime;
+      var timeWaiting = wait - timeSinceLastCall;
       return maxing ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke) : timeWaiting;
     }
 
     function shouldInvoke(time) {
-      const timeSinceLastCall = time - lastCallTime;
-      const timeSinceLastInvoke = time - lastInvokeTime; // Either this is the first call, activity has stopped and we're at the
+      var timeSinceLastCall = time - lastCallTime;
+      var timeSinceLastInvoke = time - lastInvokeTime; // Either this is the first call, activity has stopped and we're at the
       // trailing edge, the system time has gone backwards and we're treating
       // it as the trailing edge, or we've hit the `maxWait` limit.
 
@@ -2603,7 +2850,7 @@
     }
 
     function timerExpired() {
-      const time = Date.now();
+      var time = Date.now();
 
       if (shouldInvoke(time)) {
         return trailingEdge(time);
@@ -2625,9 +2872,14 @@
       return result;
     }
 
-    function debounced(...args) {
-      const time = Date.now();
-      const isInvoking = shouldInvoke(time);
+    function debounced() {
+      var time = Date.now();
+      var isInvoking = shouldInvoke(time);
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
       lastArgs = args;
       lastThis = this;
       lastCallTime = time;
@@ -2655,8 +2907,8 @@
   }
 
   function throttle(func, wait, options) {
-    let leading = true;
-    let trailing = true;
+    var leading = true;
+    var trailing = true;
 
     if (typeof func !== 'function') {
       throw new TypeError('Expected a function');
@@ -2668,158 +2920,225 @@
     }
 
     return debounce(func, wait, {
-      leading,
-      trailing,
+      leading: leading,
+      trailing: trailing,
       maxWait: wait
     });
   }
 
-  const pick = (obj, arr) => arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {}); // Only omit the first-level key, shallow copy objec
+  var pick = (obj, arr) => arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {}); // Only omit the first-level key, shallow copy objec
 
 
-  const omit = (obj, arr) => Object.keys(obj).filter(k => !arr.includes(k)).reduce((acc, key) => (acc[key] = obj[key], acc), {});
+  var omit = (obj, arr) => Object.keys(obj).filter(k => !arr.includes(k)).reduce((acc, key) => (acc[key] = obj[key], acc), {});
 
   /**
    * Main entry
    */
 
-  var index = {
+  var functions = {
     // version
-    version,
+    version: version,
+    noConflict: noConflict,
     // detecting
-    ua,
-    isIOS,
+    ua: ua,
+    isIOS: isIOS,
     isIos: isIOS,
-    isiPhone,
-    isIPad,
-    isAndroid,
-    isMobile,
-    isPC,
-    isWeixin,
-    isNewsApp,
-    isQQ,
-    isTenvideo,
-    isIphoneXmodel,
-    ieVersion,
-    isIE,
-    mqqbrowser,
+    isiPhone: isiPhone,
+    isIPad: isIPad,
+    isAndroid: isAndroid,
+    isMobile: isMobile,
+    isPC: isPC,
+    isWeixin: isWeixin,
+    isNewsApp: isNewsApp,
+    isQQ: isQQ,
+    isTenvideo: isTenvideo,
+    isIphoneXmodel: isIphoneXmodel,
+    ieVersion: ieVersion,
+    isIE: isIE,
+    mqqbrowser: mqqbrowser,
     // log
-    log,
-    logs,
-    removeConsole,
+    log: log,
+    logs: logs,
+    removeConsole: removeConsole,
     // arguments
-    args,
-    trash,
-    noop,
-    merge,
-    over,
-    call,
+    args: args,
+    trash: trash,
+    noop: noop,
+    merge: merge,
+    over: over,
+    call: call,
     // bom
-    open,
-    trigger,
-    stopPropagation,
-    g,
-    gc,
-    c,
-    query,
-    show,
-    hide,
-    copyToClipboard,
-    elementContains,
-    formToObject,
-    getStyle,
-    setStyle,
-    attr,
+    open: open,
+    trigger: trigger,
+    stopPropagation: stopPropagation,
+    g: g,
+    gc: gc,
+    c: c,
+    query: query,
+    show: show,
+    hide: hide,
+    copyToClipboard: copyToClipboard,
+    elementContains: elementContains,
+    formToObject: formToObject,
+    getStyle: getStyle,
+    setStyle: setStyle,
+    attr: attr,
     // other
-    uuid,
-    hash,
-    judge,
+    uuid: uuid,
+    hash: hash,
+    judge: judge,
     judgment: judge,
-    getType,
-    isTypeof,
-    construct,
-    paramsName,
+    getType: getType,
+    isTypeof: isTypeof,
+    construct: construct,
+    paramsName: paramsName,
     // other function
-    loadImages,
-    loadjs,
-    loadcss,
-    toJson,
+    loadImages: loadImages,
+    loadjs: loadjs,
+    loadcss: loadcss,
+    toJson: toJson,
     toJSON: toJson,
     tojson: toJson,
     // cookie
-    cookie,
-    setCookie,
-    getCookie,
-    deleteCookie,
+    cookie: cookie,
+    setCookie: setCookie,
+    getCookie: getCookie,
+    deleteCookie: deleteCookie,
     delCookie: deleteCookie,
-    parseCookie,
+    parseCookie: parseCookie,
     // storage
-    storage,
+    storage: storage,
     // url
-    getUrlParam,
-    setUrlParam,
-    deleteUrlParam,
+    getUrlParam: getUrlParam,
+    setUrlParam: setUrlParam,
+    deleteUrlParam: deleteUrlParam,
     delUrlParam: deleteUrlParam,
-    objectParam,
-    httpGet,
-    httpPost,
+    objectParam: objectParam,
+    httpGet: httpGet,
+    httpPost: httpPost,
     // times
-    setTimesout,
-    clearTimesout,
-    getDate,
-    formatPassTime,
-    formatRemainTime,
-    formatDuration,
+    setTimesout: setTimesout,
+    clearTimesout: clearTimesout,
+    getDate: getDate,
+    formatPassTime: formatPassTime,
+    formatRemainTime: formatRemainTime,
+    formatDuration: formatDuration,
     // fill
-    fill0,
-    chainAsync,
+    fill0: fill0,
+    chainAsync: chainAsync,
     // math
-    math,
+    math: math,
     // random
-    randomColor,
-    randomA2B,
+    randomColor: randomColor,
+    randomA2B: randomA2B,
     randomFromA2B: randomA2B,
-    randomKey,
-    floor,
+    randomKey: randomKey,
+    floor: floor,
     // touch
-    lockTouch,
+    lockTouch: lockTouch,
     // image
-    checkImageSize,
-    imageOptimization,
+    checkImageSize: checkImageSize,
+    imageOptimization: imageOptimization,
     // lodash
-    getTag,
-    hasOwnProperty,
-    isObject,
-    isArray,
-    isString,
-    isBoolean,
-    isNumber,
-    isMap,
-    isSet,
-    isFunction,
-    isEmpty,
-    isShallowEqual,
-    has,
-    reduce,
-    forEach,
-    map,
-    findIndex,
-    find,
-    toPath,
-    get,
-    debounce,
-    throttle,
-    pick,
-    omit,
+    getTag: getTag,
+    hasOwnProperty: hasOwnProperty,
+    isObject: isObject,
+    isArray: isArray,
+    isString: isString,
+    isBoolean: isBoolean,
+    isNumber: isNumber,
+    isMap: isMap,
+    isSet: isSet,
+    isFunction: isFunction,
+    isEmpty: isEmpty,
+    isShallowEqual: isShallowEqual,
+    has: has,
+    reduce: reduce,
+    forEach: forEach,
+    map: map,
+    findIndex: findIndex,
+    find: find,
+    toPath: toPath,
+    get: get,
+    debounce: debounce,
+    throttle: throttle,
+    pick: pick,
+    omit: omit,
     // string
-    string,
+    string: string,
     // array
-    array
+    array: array
   };
 
-  exports.default = index;
+  /* eslint-disable no-invalid-this */
 
-  Object.defineProperty(exports, '__esModule', { value: true });
+  function ChainWrapper(subject, explicitChain) {
+    this._wrappedValue = subject;
+    this._explicitChain = explicitChain;
+  }
+
+  ChainWrapper.prototype.value = function () {
+    return this._wrappedValue;
+  };
+
+  ChainWrapper.prototype.valueOf = function () {
+    return this.value();
+  };
+
+  ChainWrapper.prototype.toJSON = function () {
+    return this.value();
+  };
+
+  ChainWrapper.prototype.toString = function () {
+    return String(this.value());
+  };
+
+  ChainWrapper.prototype.chain = function () {
+    return new ChainWrapper(this._wrappedValue, true);
+  };
+
+  ChainWrapper.prototype.thru = function (changer) {
+    if (typeof changer === 'function') {
+      return new ChainWrapper(changer(this._wrappedValue), this._explicitChain);
+    }
+
+    return this;
+  };
+
+  ChainWrapper.prototype._explicitChain = true;
+
+  function makeFunctionChainable(functionInstance) {
+    return function () {
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      var result = functionInstance.apply(void 0, [this._wrappedValue].concat(args));
+
+      if (this._explicitChain || typeof result === 'string') {
+        return new ChainWrapper(result, this._explicitChain);
+      } else {
+        return result;
+      }
+    };
+  }
+
+  Object.keys(functions).forEach(function (name) {
+    ChainWrapper.prototype[name] = makeFunctionChainable(functions[name]);
+  });
+
+  function chain(subject) {
+    return new ChainWrapper(subject, true);
+  }
+
+  function bbo(subject) {
+    return new ChainWrapper(subject, false);
+  }
+
+  _extends(bbo, functions, {
+    chain: chain
+  });
+
+  return bbo;
 
 })));
-//# sourceMappingURL=bbo.js.map

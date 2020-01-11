@@ -1,9 +1,9 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   mode: 'development',
   entry: {
-    index: './test/index'
+    index: './dev/index'
   },
   module: {
     rules: [
@@ -17,11 +17,11 @@ module.exports = {
       }
     ]
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './test/index.html'
-    })
-  ],
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: './dev/index.html'
+  //   })
+  // ],
   devtool: 'source-map',
   devServer: {
     host: '0.0.0.0',

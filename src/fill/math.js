@@ -5,6 +5,7 @@ let math = {
   /**
    * https://locutus.io/php/
    */
+  // eslint-disable-next-line max-params
   numberFormat: (number, decimals, decPoint, thousandsSep) => {
     //   example 1: bbo.math.numberFormat(1234.56)
     //   returns 1: '1,235'
