@@ -1,6 +1,6 @@
 <p align="right"><a href="https://github.com/Tnfe/bbo">中文</a> / <a href="https://github.com/tnfe/bbo/blob/master/README_EN.md">English</a></p>
 
-<div align="center"><img src="https://raw.githubusercontent.com/Tnfe/bbo/master/docs/bbo.png"/></div>
+<div align="center"><img src="https://raw.githubusercontent.com/tnfe/bbo/master/dev/image/bbo.png"/></div>
 
 ---
 
@@ -20,7 +20,7 @@
 
 > BBO 是一款非常实用的JavaScript函数工具库。
 
-![bbo-banner](./docs/bbo-banner.png)
+![bbo-banner](./dev/image/bbo-banner.jpg)
 
 ## 背景
 
@@ -47,7 +47,7 @@
 
 使用npm
 
-[![anix](https://nodei.co/npm/bbo.png)](https://npmjs.org/package/bbo)
+[![bbo](https://nodei.co/npm/bbo.png)](https://npmjs.org/package/bbo)
 
 ```JavaScript
 npm install bbo --save
