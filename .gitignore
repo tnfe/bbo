@@ -26,7 +26,6 @@ node_modules
 coverage
 npm-debug.log
 docs
-index.js
 .tern-project
 dist_mod/
 test_runner/test_bundle.js
