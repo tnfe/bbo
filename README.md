@@ -18,7 +18,7 @@
 
 🐝🐜
 
-> BBO 是一款非常实用的JavaScript函数工具库。
+> bbo 是一款实用的JavaScript函数工具库。
 
 ![bbo-banner](./dev/image/bbo-banner.jpg)
 
@@ -43,19 +43,60 @@
 - [在线阅读](https://github.ahthw.com/bbo)
 - [文档仓库](https://github.com/halldwang/bbo-docs.git)
 
-## 安装
-
-使用npm
+## 使用
 
 [![bbo](https://nodei.co/npm/bbo.png)](https://npmjs.org/package/bbo)
 
+##### bbo可以在Node.js, Rollup, Webpack, Browserify等环境中使用。
+
+#### 使用npm将库安装到本地模块目录中：
+
 ```JavaScript
-npm install bbo --save
-...
+npm install bbo
+```
+
+#### CommonJS
+
+使用整个库
+
+```js
+const bbo = require('bbo');
+bbo.isiPhone(); // => 'true'
+```
+
+个别功能：
+
+```js
+const cookie = require('bbo/cookie');
+const storage = require('bbo/storage');
+```
+
+#### ES2015
+
+```js
 import bbo from 'bbo';
 ```
 
-## 用法
+或导入单个功能：
+
+```js
+import touch from 'bbo/touch';
+```
+
+#### 浏览器
+
+![browsers](./dev/image/browsers.png)
+
+直接将js引入到浏览器中
+
+- [dist/bbo.min.js](https://github.com/Tnfe/bbo/blob/master/dist/bbo.min.js) 混淆压缩, [source map](https://github.com/Tnfe/bbo/blob/master/dist/bbo.min.js.map)
+- [dist/bbo.js](https://github.com/Tnfe/bbo/blob/master/dist/bbo.js) 未压缩
+
+```js
+<script src="bbo.min.js" type="text/javascript"></script>
+```
+
+#### 使用示例
 
 ```JavaScript
 let username = bbo.getCookie('username'); // 'bbo'
