@@ -27,6 +27,7 @@
   "scripts": {
     "start": "webpack-dev-server --progress --config ./config/webpack.config.js",
     "lint": "npm run eslint && npm run prettier",
+    "fix": "npm run eslint:fix && npm run prettier:fix",
     "eslint": "eslint ./src --ext .js",
     "eslint:fix": "eslint ./src --ext .js --fix",
     "prettier": "prettier -l \"./**/*.{js,json}\"",
@@ -62,7 +63,6 @@
     "prettier": "1.19.1",
     "rollup": "1.27.14",
     "rollup-plugin-babel": "4.3.3",
-    "rollup-plugin-uglify": "6.0.4",
     "rollup-plugin-terser": "5.2.0",
     "source-map-support": "0.5.16",
     "eslint-config-alloy": "^3.0.0",

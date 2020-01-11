@@ -1,5 +1,6 @@
-import bbo from '../dist/bbo.min';
-// console.log(bbo.ua());
+import bbo from '../dist/bbo';
+
+console.log(bbo.ua(), 222);
 
 bbo.log('hello bbo', { color: '#fff', background: '#ff0000' });
 

@@ -134,9 +134,12 @@
     return this;
   }
 
-  var ua = lower => {
+  // const ua = (lower) => {
+  //   return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
+  // };
+  function ua(lower) {
     return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
-  };
+  }
   /**
    * detect IOS
    * From https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
