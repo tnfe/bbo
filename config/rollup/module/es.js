@@ -9,7 +9,7 @@ export default {
   output: {
     file: `${DIST_MODULE_ES}/index.js`,
     format: 'es',
-    name: 'v',
+    name: 'bbo',
     sourcemap: false,
     banner: banner
   }

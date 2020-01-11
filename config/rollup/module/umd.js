@@ -9,7 +9,7 @@ export default {
   output: {
     file: `${DIST_MODULE_CJS}/index.js`,
     format: 'umd',
-    name: 'v',
+    name: 'bbo',
     sourcemap: false,
     banner: banner
   }

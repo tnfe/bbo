@@ -1,6 +1,6 @@
 <p align="right"><a href="https://github.com/Tnfe/bbo">中文</a> / <a href="https://github.com/tnfe/bbo/blob/master/README_EN.md">English</a></p>
 
-<div align="center"><img src="https://raw.githubusercontent.com/Tnfe/bbo/master/docs/bbo.png"/></div>
+<div align="center"><img src="https://raw.githubusercontent.com/Tnfe/bbo/master/dev/image/bbo-logo.png"/></div>
 
 ---
 
