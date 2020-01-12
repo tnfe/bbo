@@ -135,8 +135,8 @@ import throttle from './lodash/throttle';
 import pick from './lodash/pick';
 import omit from './lodash/omit';
 
-import { string } from './string/index';
-import { array } from './array/index';
+import { string } from './string/string';
+import { array } from './array/array';
 
 export default {
   // version
