@@ -29,10 +29,11 @@
 
 #### 范例
 
-```JavaScript
+```js
 let username = bbo.getCookie('username'); // => 'bbo'
 let json =  cookie().getJson(); //  => {a: 1, b: 2}
 let isiPhone = bbo.isiPhone(); // => true
+
 // X XS, XSMax, XR
 let isIphoneXmodel = bbo.isIphoneXmodel() // => false
 
@@ -56,7 +57,7 @@ bbo.math.numberFormat(1234.56, 2, ',', ' ') // => '1 234,56'
 
 #### 使用npm安装
 
-```JavaScript
+```js
 npm install bbo --save
 ```
 
@@ -114,8 +115,8 @@ import storage from 'bbo/storage';
 
 构建项目
 
-```JavaScript
-git clone git://github.com/tnfe/bbo.git
+```js
+git clone https://github.com/tnfe/bbo.git
 
 ...
 npm install
@@ -125,14 +126,14 @@ npm run build
 
 运行项目
 
-```JavaScript
+```js
 npm run start
 // 访问 http://localhost:8080
 ```
 
 ### 贡献内容
 
-如果你想参与这个项目的共同创作，修改或添加内容，可以先 [Fork](https://github.com/tnfe/bbo) 这本书的仓库，然后将修改的内容提交 [Pull requests](https://github.com/tnfe/bbo/pulls) ；或者创建 [Issues](https://github.com/tnfe/bbo/issues)。
+如果你想参与这个项目的共同创作，修改或添加内容，可以先 [Fork](https://github.com/tnfe/bbo) 这个文档的仓库，然后将修改的内容提交 [Pull requests](https://github.com/tnfe/bbo/pulls) ；或者创建 [Issues](https://github.com/tnfe/bbo/issues)。
 
 Fork 后的仓库如何同步本仓库？
 
