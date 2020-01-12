@@ -1,9 +1,7 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', { value: true });
-
 require('./internal/_rollupPluginBabelHelpers.js');
-var index = require('./index10.js');
+var index = require('./index2.js');
 
 /************************************************************************
  * localStorage && sessionStorage
@@ -129,4 +127,4 @@ var storage = (_ref) => {
   });
 };
 
-exports.storage = storage;
+module.exports = storage;

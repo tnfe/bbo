@@ -1,120 +1,150 @@
 import version from './util/version';
 import noConflict from './util/no_conflict';
 
-import {
-  ua,
-  isIOS,
-  isiPhone,
-  isIPad,
-  isAndroid,
-  isMobile,
-  isPC,
-  isWeixin,
-  isNewsApp,
-  isQQ,
-  isTenvideo,
-  isIphoneXmodel,
-  ieVersion,
-  isIE,
-  mqqbrowser
-} from './detecting/index';
+// device
+import ua from './device/ua';
+import isIos from './device/is_ios';
+import isiPhone from './device/is_iphone';
+import isIPad from './device/is_ipad';
+import isAndroid from './device/is_android';
+import isMobile from './device/is_mobile';
+import isPC from './device/is_pc';
+import isWeixin from './device/is_weixin';
+import isNewsApp from './device/is_news_app';
+import isQQ from './device/is_qq';
+import mqqbrowser from './device/mqqbrowser';
+import isTenvideo from './device/is_tenvideo';
+import isIphoneXmodel from './device/is_iphonex_model';
+import isIE from './device/is_ie';
+import ieVersion from './device/ie_version';
 
-import { log, logs, removeConsole } from './log/index';
+// log
+import log from './log/log';
+import logs from './log/logs';
+import removeConsole from './log/remove_console';
 
-import { args, trash, noop, merge, over, call } from './arguments/index';
+// args
+import args from './args/args';
+import trash from './args/trash';
+import noop from './args/noop';
+import merge from './args/merge';
+import over from './args/over';
+import call from './args/call';
 
-import {
-  open,
-  trigger,
-  stopPropagation,
-  g,
-  gc,
-  c,
-  query,
-  show,
-  hide,
-  copyToClipboard,
-  elementContains,
-  formToObject,
-  getStyle,
-  setStyle,
-  attr
-} from './bom/index';
+// bom
+import open from './bom/open';
+import trigger from './bom/trigger';
+import stopPropagation from './bom/stop_propagation';
+import g from './bom/g';
+import gc from './bom/gc';
+import c from './bom/c';
+import query from './bom/query';
+import show from './bom/show';
+import hide from './bom/hide';
+import copyToClipboard from './bom/copy_to_clipboard';
+import elementContains from './bom/element_contains';
+import formToObject from './bom/form_to_object';
+import getStyle from './bom/get_style';
+import setStyle from './bom/set_style';
+import attr from './bom/attr';
 
-import { uuid, hash, judge, getType, isTypeof, construct, paramsName } from './other/index';
-import { loadImages, loadjs, loadcss } from './other/load';
-import { toJson } from './other/json';
-import { cookie, setCookie, getCookie, deleteCookie, parseCookie } from './other/cookie';
-import { storage } from './other/storage';
-import {
-  getUrlParam,
-  setUrlParam,
-  deleteUrlParam,
-  objectParam,
-  httpGet,
-  httpPost
-} from './other/url';
+// other
+import uuid from './other/uuid';
+import hash from './other/hash';
+import judge from './other/judge';
+import getType from './other/get_type';
+import isTypeof from './other/is_typeof';
+import construct from './other/construct';
+import paramsName from './other/params_name';
+
+// load
+import loadImages from './load/load_images';
+import loadjs from './load/loadjs';
+import loadcss from './load/loadcss';
+
+// json
+import toJson from './json/to_json';
+
+// cookie
+import cookie from './cookie/cookie';
+import setCookie from './cookie/set_cookie';
+import getCookie from './cookie/get_cookie';
+import deleteCookie from './cookie/delete_cookie';
+import parseCookie from './cookie/parse_cookie';
+
+// storage
+import storage from './storage/storage';
+
+// http
+import getUrlParam from './http/get_url_param';
+import setUrlParam from './http/set_url_param';
+import deleteUrlParam from './http/delete_url_param';
+import objectParam from './http/object_param';
+import httpGet from './http/http_get';
+import httpPost from './http/http_post';
+
+// times
+import setTimesout from './times/set_timesout';
+import clearTimesout from './times/clear_timesout';
+import getDate from './times/get_date';
+import formatPassTime from './times/format_pass_time';
+import formatRemainTime from './times/format_remain_time';
+import formatDuration from './times/format_duration';
+
+// fill
+import fill0 from './fill/fill0';
+import floor from './fill/floor';
+import chainAsync from './fill/chain_async';
+import numberFormat from './fill/number_format';
+
+// random
+import randomColor from './random/random_color';
+import randomA2B from './random/random_a2b';
+import randomKey from './random/random_key';
+
+// behavior
+import lockTouch from './behavior/lock_touch';
+
+// image
+import checkImageSize from './image/check_image_size';
+import imageOptimization from './image/image_optimization';
+
+// lodash
+import getTag from './lodash/get_tag';
+import hasOwnProperty from './lodash/has_own_property';
+import isObject from './lodash/is_object';
+import isArray from './lodash/is_array';
+import isString from './lodash/is_string';
+import isBoolean from './lodash/is_boolean';
+import isNumber from './lodash/is_number';
+import isMap from './lodash/is_map';
+import isSet from './lodash/is_set';
+import isFunction from './lodash/is_function';
+import isEmpty from './lodash/is_empty';
+import isShallowEqual from './lodash/is_shallow_equal';
+import has from './lodash/has';
+import toPath from './lodash/to_path';
+import reduce from './lodash/reduce';
+import forEach from './lodash/for_each';
+import map from './lodash/map';
+import find from './lodash/find';
+import findIndex from './lodash/find_index';
+import get from './lodash/get';
+import debounce from './lodash/debounce';
+import throttle from './lodash/throttle';
+import pick from './lodash/pick';
+import omit from './lodash/omit';
 
 import { string } from './string/index';
 import { array } from './array/index';
-
-import {
-  setTimesout,
-  clearTimesout,
-  getDate,
-  formatPassTime,
-  formatRemainTime,
-  formatDuration
-} from './other/times';
-
-import { fill0, chainAsync } from './fill/index';
-import { math } from './fill/math';
-
-import { randomColor, randomA2B, randomKey, floor } from './random/index';
-
-import { lockTouch } from './touch/index';
-
-import { checkImageSize, imageOptimization } from './image/index';
-
-import {
-  getTag,
-  hasOwnProperty,
-  isObject,
-  isArray,
-  isString,
-  isBoolean,
-  isNumber,
-  isMap,
-  isSet,
-  isFunction,
-  isEmpty,
-  isShallowEqual,
-  has,
-  reduce,
-  forEach,
-  map,
-  findIndex,
-  find,
-  toPath,
-  get,
-  debounce,
-  throttle,
-  pick,
-  omit
-} from './lodash/index';
-
-/**
- * Main entry
- */
 
 export default {
   // version
   version,
   noConflict,
-  // detecting
+  // device
   ua,
-  isIOS,
-  isIos: isIOS,
+  isIos,
   isiPhone,
   isIPad,
   isAndroid,
@@ -123,11 +153,11 @@ export default {
   isWeixin,
   isNewsApp,
   isQQ,
+  mqqbrowser,
   isTenvideo,
   isIphoneXmodel,
   ieVersion,
   isIE,
-  mqqbrowser,
   // log
   log,
   logs,
@@ -198,8 +228,7 @@ export default {
   // fill
   fill0,
   chainAsync,
-  // math
-  math,
+  numberFormat,
   // random
   randomColor,
   randomA2B,

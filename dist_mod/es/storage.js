@@ -1,5 +1,5 @@
 import './internal/_rollupPluginBabelHelpers.js';
-import { string } from './index10.js';
+import { string } from './index2.js';
 
 /************************************************************************
  * localStorage && sessionStorage
@@ -125,4 +125,4 @@ var storage = (_ref) => {
   });
 };
 
-export { storage };
+export default storage;

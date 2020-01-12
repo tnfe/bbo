@@ -5,399 +5,265 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var _rollupPluginBabelHelpers = require('./internal/_rollupPluginBabelHelpers.js');
 
 /**
- * Array
+ * String
  */
-var array = {
+var string = {
   /**
-   * Returns all unique values of an array.
+   * Remove spaces after removing previous string
    */
-  unique: arr => _rollupPluginBabelHelpers._toConsumableArray(new Set(arr)),
+  trim: str => {
+    var _str = str.replace(/^\s+/, '');
 
-  /**
-   * Returns all unique values of an array, based on a provided comparator function.
-   */
-  uniqueBy: (arr, fn) => arr.reduce((acc, v) => {
-    if (!acc.some(x => fn(v, x))) acc.push(v);
-    return acc;
-  }, []),
-
-  /**
-   * Remove duplicates from an array of objects
-   * https://stackoverflow.com/questions/2218999/remove-duplicates-from-an-array-of-objects-in-javascript
-   */
-  uniqueFrom: (arr, target) => {
-    return Object.values(arr.reduce((acc, cur) => _rollupPluginBabelHelpers._extends(acc, {
-      [cur[target]]: cur
-    }), {}));
-  },
-
-  /**
-   * Returns a random element from an array.
-   */
-  random: arr => arr[Math.floor(Math.random() * arr.length)],
-
-  /**
-   * Gets n random elements at unique keys from array up to the size of array.
-   */
-  randomSize: function (_ref) {
-    var _ref2 = _rollupPluginBabelHelpers._toArray(_ref),
-        arr = _ref2.slice(0);
-
-    var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-    var m = arr.length;
-
-    while (m) {
-      var i = Math.floor(Math.random() * m--);
-      var _ref3 = [arr[i], arr[m]];
-      arr[m] = _ref3[0];
-      arr[i] = _ref3[1];
-    }
-
-    return arr.slice(0, n);
-  },
-
-  /**
-   * Randomizes the order of the values of an array, returning a new array.
-   */
-  shuffle: (_ref4) => {
-    var _ref5 = _rollupPluginBabelHelpers._toArray(_ref4),
-        arr = _ref5.slice(0);
-
-    var m = arr.length;
-
-    while (m) {
-      var i = Math.floor(Math.random() * m--);
-      var _ref6 = [arr[i], arr[m]];
-      arr[m] = _ref6[0];
-      arr[i] = _ref6[1];
-    }
-
-    return arr;
-  },
-
-  /**
-   * Returns true if the element has the specified Array, false otherwise.
-   */
-  contains: (target, item) => {
-    return target.indexOf(item) > -1;
-  },
-
-  /**
-   * Returns true if all the elements values are included in arr, false otherwise.
-   */
-  includesAll: (arr, values) => values.every(v => arr.includes(v)),
-
-  /**
-   * Returns true if at least one element of values is included in arr , false otherwise.
-   */
-  includesAny: (arr, values) => values.some(v => arr.includes(v)),
-
-  /**
-   * Remove the element specified by parameter 2 in parameter 1 and return Boolean
-   */
-  removeAt: function (target, index) {
-    return !!target.splice(index, 1).length;
-  },
-
-  /**
-   * Remove parameter 2 in parameter 1 and return boolean
-   */
-  remove: function (target, item) {
-    var index = target.indexOf(item);
-    return index > -1 ? this.removeAt(target, index) : false;
-  },
-
-  /**
-   * Removes undefined and Null from an array.
-   */
-  compact: target => {
-    return target.filter(item => {
-      return item !== undefined;
-    });
-  },
-
-  /**
-   * Removes falsy values from an array.
-   * (false, null, 0, "", undefined, and NaN).
-   */
-  compactAll: arr => arr.filter(Boolean),
-
-  /**
-   * Get the attribute values in an array object and combine them into a new array
-   */
-  pluck: (target, name) => {
-    var result = [];
-    var temp;
-    target.forEach(function (item) {
-      temp = item[name];
-
-      if (temp !== null) {
-        result.push(temp);
+    for (var i = str.length - 1; i >= 0; i--) {
+      if (/\S/.test(str.charAt(i))) {
+        _str = str.slice(0, i + 1);
+        break;
       }
-    });
+    }
+
+    return _str;
+  },
+
+  /**
+   * Increase by 0 based on string length before string
+   */
+  fillZero: (target, n) => {
+    var z = new Array(n).join('0');
+    var str = z + target;
+    var result = str.slice(-n);
     return result;
   },
 
   /**
-   * Returns every element that exists in any of the two arrays once
-   * Create a Set with all values of a and b and convert to an array.
+   * Long string unique
    */
-  union: (a, b) => Array.from(new Set([].concat(_rollupPluginBabelHelpers._toConsumableArray(a), _rollupPluginBabelHelpers._toConsumableArray(b)))),
+  longUnique: target => {
+    var json = {};
 
-  /**
-   * Returns every element that exists in any of the two arrays once,
-   * after applying the provided function to each array element of both.
-   */
-  unionBy: (a, b, fn) => {
-    var s = new Set(a.map(fn));
-    return Array.from(new Set([].concat(_rollupPluginBabelHelpers._toConsumableArray(a), _rollupPluginBabelHelpers._toConsumableArray(b.filter(x => !s.has(fn(x)))))));
-  },
-
-  /**
-   * Returns every element that exists in any of the two arrays once,
-   * using a provided comparator function.
-   */
-  unionWith: (a, b, comp) => {
-    Array.from(new Set([].concat(_rollupPluginBabelHelpers._toConsumableArray(a), _rollupPluginBabelHelpers._toConsumableArray(b.filter(x => a.findIndex(y => comp(x, y)) === -1)))));
-  },
-
-  /**
-   * Returns a list of elements that exist in both arrays.
-   */
-  intersect: (a, b) => {
-    var s = new Set(b);
-    return a.filter(x => s.has(x));
-  },
-
-  /**
-   * Returns a list of elements that exist in both arrays,
-   * after applying the provided function to each array element of both.
-   */
-  intersectBy: (a, b, fn) => {
-    var s = new Set(b.map(fn));
-    return a.filter(x => s.has(fn(x)));
-  },
-
-  /**
-   * Returns the difference between two arrays.
-   * Create a Set from b, then use Array.prototype.
-   * Filter() on a to only keep values not contained in b.
-   */
-  difference: (a, b) => {
-    var s = new Set(b);
-    return a.filter(x => !s.has(x));
-  },
-
-  /**
-   * Returns the difference between two arrays,
-   * after applying the provided function to each array element of both.
-   */
-  differenceBy: (a, b, fn) => {
-    var s = new Set(b.map(fn));
-    return a.map(fn).filter(el => !s.has(el));
-  },
-
-  /**
-   * Returns the largest element in an array
-   */
-  max: target => {
-    return Math.max.apply(0, target);
-  },
-
-  /**
-   * Returns the smallest element in an array
-   */
-  min: target => {
-    return Math.min.apply(0, target);
-  },
-
-  /**
-   * Check two arrays are equal
-   */
-  equal: (arr1, arr2) => {
-    if (arr1 === arr2) return true;
-    if (arr1.length !== arr2.length) return false;
-
-    for (var i = 0; i < arr1.length; ++i) {
-      if (arr1[i] !== arr2[i]) return false;
-    }
-
-    return true;
-  },
-
-  /**
-   * Check if all elements in an array are equal.
-   */
-  allEqual: arr => arr.every(val => val === arr[0]),
-
-  /**
-   * Returns true if the provided predicate function returns true for all elements in a collection, false otherwise.
-   */
-  all: function (arr) {
-    var fn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Boolean;
-    return arr.every(fn);
-  },
-
-  /**
-   * Returns true if the provided predicate function returns true for at least one element in a collection,
-   * false otherwise.
-   */
-  any: function (arr) {
-    var fn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Boolean;
-    return arr.some(fn);
-  },
-
-  /**
-   * Chunks an array into smaller arrays of a specified size.
-   */
-  chunk: (arr, size) => {
-    Array.from({
-      length: Math.ceil(arr.length / size)
-    }, (v, i) => arr.slice(i * size, i * size + size));
-  },
-
-  /**
-   * Groups the elements of an array based on the given function and returns the count of elements in each group.
-   */
-  countBy: (arr, fn) => {
-    arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => {
-      acc[val] = (acc[val] || 0) + 1;
-      return acc;
-    }, {});
-  },
-
-  /**
-   * Counts the occurrences of a value in an array.
-   */
-  countOccurrences: (arr, val) => {
-    arr.reduce((a, v) => v === val ? a + 1 : a, 0);
-  },
-
-  /**
-   * Returns a new array with n elements removed from the left.
-   */
-  drop: function (arr) {
-    var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-    return arr.slice(n);
-  },
-
-  /**
-   * Returns a new array with n elements removed from the right.
-   */
-  dropRight: function (arr) {
-    var n = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 1;
-    return arr.slice(0, -n);
-  },
-
-  /**
-   * Removes elements in an array until the passed function returns true.
-   * Returns the remaining elements in the array.
-   */
-  dropWhile: (arr, func) => {
-    var _arr = arr;
-
-    while (_arr.length > 0 && !func(_arr[0])) {
-      _arr = _arr.slice(1);
-    }
-
-    return _arr;
-  },
-
-  /**
-   * Removes elements from the end of an array until the passed function returns true,
-   * Returns the remaining elements in the array.
-   */
-  dropRightWhile: (arr, func) => {
-    var rightIndex = arr.length;
-
-    while (rightIndex-- && !func(arr[rightIndex])) {
-    }
-
-    return arr.slice(0, rightIndex + 1);
-  },
-
-  /**
-   * discuss at: https://locutus.io/php/array_column/
-   */
-  column: function (input, ColumnKey) {
-    var IndexKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-    var _input = input;
-
-    if (_input !== null && (typeof _input === 'object' || Array.isArray(_input))) {
-      var newArray = [];
-
-      if (typeof _input === 'object') {
-        var tempArray = [];
-
-        for (var key of Object.keys(_input)) {
-          tempArray.push(_input[key]);
-        }
-
-        _input = tempArray;
+    for (var index = 0; index < target.length; index++) {
+      if (!json[target[index]]) {
+        json[target[index]] = -1;
       }
+    }
 
-      if (Array.isArray(_input)) {
-        for (var _key of _input.keys()) {
-          if (IndexKey && _input[_key][IndexKey]) {
-            if (ColumnKey) {
-              newArray[_input[_key][IndexKey]] = _input[_key][ColumnKey];
-            } else {
-              newArray[_input[_key][IndexKey]] = _input[_key];
-            }
-          } else {
-            if (ColumnKey) {
-              newArray.push(_input[_key][ColumnKey]);
-            } else {
-              newArray.push(_input[_key]);
-            }
-          }
+    var longString = '';
+
+    for (var _index = 0; _index < target.length; _index++) {
+      if (json[target[_index]]) {
+        json[target[_index]] = 0;
+        longString = longString + target[_index];
+      }
+    }
+
+    return longString;
+  },
+
+  /**
+   * Remove the html tags inside the script
+   */
+  stripTags: target => {
+    return target.replace(/<script[^>]*>(\S\s*?)<\/script>/gim, '').replace(/<[^>]+>/g, '');
+  },
+
+  /**
+   * Capitalizes the first letter of a string.
+   */
+  capitalize: target => {
+    return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
+  },
+
+  /**
+   * DeCapitalizes the first letter of a string.
+   */
+  deCapitalize: function (_ref) {
+    var _ref2 = _rollupPluginBabelHelpers._toArray(_ref),
+        first = _ref2[0],
+        rest = _ref2.slice(1);
+
+    var upperRest = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    return first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join(''));
+  },
+
+  /**
+   * en:Returns true if the given string is an absolute URL, false otherwise.
+   */
+  isAbsoluteURL: str => /^[a-z][a-z0-9+.-]*:/.test(str),
+
+  /**
+   * Creates a new string with the results of calling a provided function
+   * on every character in the calling string.
+   */
+  mapString: (str, fn) => str.split('').map((c, i) => fn(c, i, str)).join(''),
+
+  /**
+   * Replaces all but the last num of characters with the specified mask character.
+   */
+  mask: function (cc) {
+    var num = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 4;
+    var mask = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : '*';
+    return `${cc}`.slice(-num).padStart(`${cc}`.length, mask);
+  },
+
+  /**
+   * splitLines('This\nis a\nmultiline\nstring.\n') =>
+   * ['This', 'is a', 'multiline', 'string.' , '']
+   */
+  splitLines: str => str.split(/\r?\n/),
+
+  /**
+   * _ or - to CamelCase
+   */
+  camelize: target => {
+    if (target.indexOf('-') < 0 && target.indexOf('_') < 0) {
+      return target;
+    }
+
+    return target.replace(/[-_][^-_]/g, function (match) {
+      return match.charAt(1).toUpperCase();
+    });
+  },
+
+  /**
+   * Turn CamelCase to '_'
+   */
+  underscored: target => {
+    return target.replace(/([a-z0-9])([A-Z])/g, '$1_$2').toLowerCase();
+  },
+
+  /**
+   * Turn '_' in a string into '-'
+   */
+  dasherize: function (target) {
+    return this.underscored(target).replace(/_/g, '-');
+  },
+
+  /**
+   * Truncates a string up to a specified length.
+   * The default length is 3, and the truncated symbol defaults '...'
+   */
+  truncate: (str, num) => str.length > num ? str.slice(0, num > 3 ? num - 3 : num) + '...' : str,
+
+  /**
+   * Returns the length of a string in bytes.
+   */
+  byteSize: str => new Blob([str]).size,
+
+  /**
+   * Returns the length of a string in bytes by Unicode (utf-8 utf8 utf-16 utf16)
+   */
+  byteLen: (str, charset) => {
+    var target = 0;
+    var charCode;
+    var i;
+    var len;
+
+    var _charset = charset ? charset.toLowerCase() : '';
+
+    if (_charset === 'utf-16' || _charset === 'utf16') {
+      for (i = 0, len = str.length; i < len; i++) {
+        charCode = str.charCodeAt(i);
+
+        if (charCode <= 0xffff) {
+          target += 2;
+        } else {
+          target += 4;
         }
       }
+    } else {
+      for (i = 0, len = str.length; i < len; i++) {
+        charCode = str.charCodeAt(i);
 
-      return { ...newArray
-      };
-    }
-  },
-  search: (needle, haystack, argStrict) => {
-    // discuss at: https://locutus.io/php/array_search/'
-    // example 1: bbo.array.search('3', {a: 3, b: 5, c: 7})
-    // returns 1: 'a'
-    var strict = !!argStrict;
-    var key = '';
-    var _needle = needle;
-
-    if (typeof _needle === 'object' && _needle.exec) {
-      // Duck-type for RegExp
-      if (!strict) {
-        // Let's consider case sensitive searches as strict
-        var flags = 'i' + (_needle.global ? 'g' : '') + (_needle.multiline ? 'm' : '') + ( // sticky is FF only
-        _needle.sticky ? 'y' : '');
-        _needle = new RegExp(_needle.source, flags);
-      }
-
-      for (key in haystack) {
-        if (haystack.hasOwnProperty(key)) {
-          if (_needle.test(haystack[key])) {
-            return key;
-          }
-        }
-      }
-
-      return false;
-    }
-
-    for (key in haystack) {
-      if (haystack.hasOwnProperty(key)) {
-        // eslint-disable-next-line eqeqeq
-        if (strict && haystack[key] === needle || !strict && haystack[key] == needle) {
-          return key;
+        if (charCode <= 0x007f) {
+          target += 1;
+        } else if (charCode <= 0x07ff) {
+          target += 2;
+        } else if (charCode <= 0xffff) {
+          target += 3;
+        } else {
+          target += 4;
         }
       }
     }
 
-    return false;
+    return target;
   },
-  unary: fn => val => fn(val)
+
+  /**
+   * Repeat item, times times
+   */
+  repeat: (item, times) => {
+    var s = item;
+    var target = '';
+
+    while (times > 0) {
+      if (times % 2 === 1) {
+        target += s;
+      }
+
+      if (times === 1) {
+        break;
+      }
+
+      s += s; // eslint-disable-next-line no-param-reassign
+
+      times = times >> 1;
+    }
+
+    return target;
+  },
+
+  /**
+   * Item is the end of the target
+   */
+  endsWith: (target, item, ignore) => {
+    var str = target.slice(-item.length);
+    return ignore ? str.toLowerCase() === item.toLowerCase() : str === item;
+  },
+
+  /**
+   *  Item is the beginning of the target
+   */
+  startsWith: (target, item, ignore) => {
+    var str = target.slice(0, item.length);
+    return ignore ? str.toLowerCase() === item.toLowerCase() : str === item;
+  },
+
+  /**
+   * Whether a string contains another string
+   */
+  contains: (target, item) => {
+    // discuss at: https://locutus.io/golang/strings/Contains
+    // original by: Kevin van Zonneveld (https://kvz.io)
+    // example 1: bbo.string.contains('Kevin', 'K')
+    // returns 1: true
+    return String(target).indexOf(item) !== -1;
+  },
+
+  /**
+   * XSS string filtering
+   */
+  xssFilter: str => {
+    return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
+  },
+  index: (s, sep) => {
+    //  discuss at: https://locutus.io/golang/strings/Index
+    // original by: Kevin van Zonneveld (https://kvz.io)
+    //   example 1: Index('Kevin', 'K')
+    //   returns 1: 0
+    //   example 2: Index('Kevin', 'Z')
+    //   returns 2: -1
+    return String(s).indexOf(sep);
+  },
+  capwords: str => {
+    //   example 1: capwords('kevin van  zonneveld')
+    //   returns 1: 'Kevin Van  Zonneveld'
+    //   example 2: capwords('HELLO WORLD')
+    //   returns 2: 'HELLO WORLD'
+    var pattern = /^([a-z\u00E0-\u00FC])|\s+([a-z\u00E0-\u00FC])/g;
+    return String(str).replace(pattern, function ($1) {
+      return $1.toUpperCase();
+    });
+  }
 };
 
-exports.array = array;
+exports.string = string;

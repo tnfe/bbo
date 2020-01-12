@@ -134,12 +134,10 @@
     return this;
   }
 
-  // const ua = (lower) => {
-  //   return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
-  // };
   function ua(lower) {
     return lower ? window.navigator.userAgent.toLowerCase() : window.navigator.userAgent;
   }
+
   /**
    * detect IOS
    * From https://stackoverflow.com/questions/9038625/detect-if-device-is-ios
@@ -147,62 +145,66 @@
    * https://github.com/madrobby/zepto/blob/master/src/detect.js#files
    */
 
-
-  var isIOS = () => {
+  function isIOS() {
     return /iPad|iPhone|iPod/.test(ua());
-  };
+  }
 
-  var isiPhone = () => {
+  function iPhone() {
     return /iPhone/.test(ua());
-  };
+  }
 
-  var isIPad = () => {
+  function isIPad() {
     return /iPad/.test(ua());
-  };
+  }
+
   /**
    * detect Android
    * From https://stackoverflow.com/questions/6031412/detect-android-phone-via-javascript-jquery
    */
 
-
-  var isAndroid = () => {
+  function isAndroid() {
     return ua('l').indexOf('android') > -1;
-  };
+  }
+
   /**
    * detect PC / Mobile
    * From https://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery
    */
 
-
-  var isMobile = () => {
+  function isMobile() {
     return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i.test(ua('l'));
-  };
+  }
 
-  var isPC = () => {
+  /**
+   * detect PC / Mobile
+   * From https://stackoverflow.com/questions/3514784/what-is-the-best-way-to-detect-a-mobile-device-in-jquery
+   */
+
+  function isPC() {
     return !isMobile();
-  };
+  }
 
-  var isWeixin = () => {
+  function isWeixin() {
     return /MicroMessenger/i.test(ua('l')); // 微信
-  };
+  }
 
-  var isNewsApp = () => {
+  function isNewsApp() {
     return /qqnews/.test(ua()); // 腾讯新闻app
-  };
+  }
 
-  var mqqbrowser = () => {
-    return /mqqbrowser\//.test(ua()); // QQ浏览器
-  };
-
-  var isQQ = () => {
+  function isQQ() {
     return /qq\//.test(ua()); // 手机QQ
-  };
+  }
 
-  var isTenvideo = () => {
+  function mqqbrowser() {
+    return /mqqbrowser\//.test(ua()); // QQ浏览器
+  }
+
+  function isTenvideo() {
     return /qqlivebrowser/.test(ua()); // 腾讯视频
-  };
+  }
 
-  var isIphoneXmodel = () => {
+  function isIphoneXmodel() {
     // X XS, XS Max, XR
     var xSeriesConfig = [{
       devicePixelRatio: 3,
@@ -228,11 +230,8 @@
     }
 
     return false;
-  };
+  }
 
-  var isIE = () => {
-    return ieVersion() > 0;
-  };
   /**
    * ie version
    * From https://codepen.io/gapcode/pen/vEJNZN
@@ -242,8 +241,7 @@
    * Edge 13 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2486.0 Safari/537.36 Edge/13.10586';
    */
 
-
-  var ieVersion = () => {
+  function ieVersion() {
     var uakit = ua();
     var msie = uakit.indexOf('MSIE ');
 
@@ -265,66 +263,11 @@
     }
 
     return '';
-  };
-
-  /**
-   * arguments to array
-   */
-  function args($arguments, first) {
-    return Array.prototype.slice.call($arguments, first || 0);
   }
-  /**
-   * a trash object
-   */
 
-
-  var trash = {
-    clear: function () {
-      for (var key in trash) {
-        if (key !== 'log' && key !== 'clear') delete trash[key];
-      }
-    },
-    log: function () {
-      for (var key in trash) {
-        if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
-      }
-    }
-  };
-
-  var noop = () => {};
-
-  var merge = function () {
-    for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
-      objs[_key] = arguments[_key];
-    }
-
-    return [].concat(objs).reduce((acc, obj) => Object.keys(obj).reduce((a, k) => {
-      acc[k] = acc.hasOwnProperty(k) ? [].concat(acc[k]).concat(obj[k]) : obj[k];
-      return acc;
-    }, {}), {});
-  };
-
-  var over = function () {
-    for (var _len2 = arguments.length, fns = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      fns[_key2] = arguments[_key2];
-    }
-
-    return function () {
-      for (var _len3 = arguments.length, args = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        args[_key3] = arguments[_key3];
-      }
-
-      return fns.map(fn => fn.apply(null, args));
-    };
-  };
-
-  var call = function (key) {
-    for (var _len4 = arguments.length, args = new Array(_len4 > 1 ? _len4 - 1 : 0), _key4 = 1; _key4 < _len4; _key4++) {
-      args[_key4 - 1] = arguments[_key4];
-    }
-
-    return context => context[key].apply(context, args);
-  };
+  function isIE() {
+    return ieVersion() > 0;
+  }
 
   /************************************************************************
    * LOGS
@@ -333,7 +276,6 @@
   /**
    * log on mobile html body
    */
-
   function log(msg, styles) {
     var ele = document.getElementById('_bbo_log');
 
@@ -354,10 +296,25 @@
 
     ele.innerHTML = msg;
   }
+
+  /**
+   * arguments to array
+   */
+  function args($arguments, first) {
+    return Array.prototype.slice.call($arguments, first || 0);
+  }
+
+  /************************************************************************
+   *   Private Method
+   *************************************************************************/
+
+  var _cache = {
+    urls: {},
+    logs: {}
+  };
   /**
    * bbo.logs('only id&10', 1, 2);
    */
-
 
   function logs() {
     if (window.console && window.console.log) {
@@ -381,49 +338,117 @@
       if (clear === 'clear' && window.console.clear) window.console.clear();
     } catch (e) {}
   }
-  /************************************************************************
-   *   Private Method
-   *************************************************************************/
-
-
-  var _cache = {
-    urls: {},
-    logs: {}
-  };
-
-  /************************************************************************
-   * Bom and Dom
-   *************************************************************************/
 
   /**
-   * open new url dont not blocked by browser
+   * a trash object
    */
-  var open = href => {
-    var id = '_bbo_open_proxy';
-    var a = g(id) || c('a', id, '', id);
-    setStyle(a, 'display', 'none');
-    attr(a, 'href', href);
-    attr(a, 'target', '_blank');
-    if (!a.parentNode) document.body.appendChild(a);
-    trigger(a, 'click', 'MouseEvents');
+  var trash = {
+    clear: function () {
+      for (var key in trash) {
+        if (key !== 'log' && key !== 'clear') delete trash[key];
+      }
+    },
+    log: function () {
+      for (var key in trash) {
+        if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
+      }
+    }
   };
+
+  var noop$1 = () => {};
+
+  var merge = function () {
+    for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
+      objs[_key] = arguments[_key];
+    }
+
+    return [].concat(objs).reduce((acc, obj) => Object.keys(obj).reduce((a, k) => {
+      acc[k] = acc.hasOwnProperty(k) ? [].concat(acc[k]).concat(obj[k]) : obj[k];
+      return acc;
+    }, {}), {});
+  };
+
+  var over = function () {
+    for (var _len = arguments.length, fns = new Array(_len), _key = 0; _key < _len; _key++) {
+      fns[_key] = arguments[_key];
+    }
+
+    return function () {
+      for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+        args[_key2] = arguments[_key2];
+      }
+
+      return fns.map(fn => fn.apply(null, args));
+    };
+  };
+
+  var call = function (key) {
+    for (var _len = arguments.length, args = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      args[_key - 1] = arguments[_key];
+    }
+
+    return context => context[key].apply(context, args);
+  };
+
+  function setStyle(el, ruleName, val) {
+    el.style[ruleName] = val;
+  }
+
+  function att(el, ruleName, val) {
+    el.setAttribute(ruleName, val);
+  }
+
   /**
    * trigger event
    * https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
    */
-
-
   var trigger = (element, event, eventType) => {
     if (document.createEventObject) {
       var e = document.createEventObject();
       return element.fireEvent('on' + event, e);
     } else {
-      var _e2 = document.createEvent(eventType || 'HTMLEvents');
+      var _e = document.createEvent(eventType || 'HTMLEvents');
 
-      _e2.initEvent(event, true, true);
+      _e.initEvent(event, true, true);
 
-      element.dispatchEvent(_e2);
+      element.dispatchEvent(_e);
     }
+  };
+
+  function g(i) {
+    return document.getElementById(i);
+  }
+
+  function c(t, cn, i, id) {
+    var el = document.createElement(t);
+
+    if (cn) {
+      att(el, 'class', cn);
+    }
+
+    if (i) {
+      el.innerHTML = i;
+    }
+
+    if (id) {
+      att(el, 'id', id);
+    }
+
+    return el;
+  }
+
+  /**
+   * open new url dont not blocked by browser
+   */
+
+  var open = href => {
+    var id = '_bbo_open_proxy';
+    var a = g(id) || c('a', id, '', id);
+    setStyle(a, 'display', 'none');
+    att(a, 'href', href);
+    att(a, 'target', '_blank');
+    if (!a.parentNode) document.body.appendChild(a);
+    trigger(a, 'click', 'MouseEvents');
   };
 
   var stopPropagation = e => {
@@ -437,54 +462,13 @@
     }
   };
 
-  var g = i => {
-    return document.getElementById(i);
-  };
-
-  var gc = cn => {
+  function gc(cn) {
     return document.getElementsByClassName(cn);
-  }; // eslint-disable-next-line max-params
+  }
 
-
-  var c = (t, cn, i, id) => {
-    var el = document.createElement(t);
-
-    if (cn) {
-      attr(el, 'class', cn);
-    }
-
-    if (i) {
-      el.innerHTML = i;
-    }
-
-    if (id) {
-      attr(el, 'id', id);
-    }
-
-    return el;
-  };
-
-  var query = i => {
+  function query(i) {
     return document.querySelector(i);
-  };
-
-  var copyToClipboard = str => {
-    var el = document.createElement('textarea');
-    el.value = str;
-    attr(el, 'readonly', '');
-    setStyle(el, 'position', 'absolute');
-    setStyle(el, 'left', '-9999px');
-    document.body.appendChild(el);
-    var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-
-    if (selected) {
-      document.getSelection().removeAllRanges();
-      document.getSelection().addRange(selected);
-    }
-  };
+  }
 
   var show = function () {
     for (var _len = arguments.length, el = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -497,14 +481,32 @@
   };
 
   var hide = function () {
-    for (var _len2 = arguments.length, el = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-      el[_key2] = arguments[_key2];
+    for (var _len = arguments.length, el = new Array(_len), _key = 0; _key < _len; _key++) {
+      el[_key] = arguments[_key];
     }
 
     return [].concat(el).forEach(e => {
       e.style.display = 'none';
     });
   };
+
+  function copyToClipboard(str) {
+    var el = document.createElement('textarea');
+    el.value = str;
+    att(el, 'readonly', '');
+    setStyle(el, 'position', 'absolute');
+    setStyle(el, 'left', '-9999px');
+    document.body.appendChild(el);
+    var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
+    if (selected) {
+      document.getSelection().removeAllRanges();
+      document.getSelection().addRange(selected);
+    }
+  }
 
   var elementContains = (parent, child) => parent !== child && parent.contains(child);
 
@@ -520,36 +522,23 @@
 
   var getStyle = (el, ruleName) => getComputedStyle(el)[ruleName];
 
-  var setStyle = (el, ruleName, val) => {
-    el.style[ruleName] = val;
-  };
-
-  var attr = (el, ruleName, val) => {
-    el.setAttribute(ruleName, val);
-  };
-
-  /************************************************************************
-   * Other
-   *************************************************************************/
-
   /**
    * generate uuid
    * From https://stackoverflow.com/questions/105034/create-guid-uuid-in-javascript
    */
-  var uuid = () => {
+  function uuid() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0;
       var v = c === 'x' ? r : r & 0x3 | 0x8;
       return v.toString(16);
     });
-  };
+  }
+
   /**
    * string hash map
    * From https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
    */
-
-
-  var hash = str => {
+  function hash(str) {
     var _str = String(str);
 
     var hash = 0;
@@ -564,14 +553,21 @@
     }
 
     return hash;
+  }
+
+  /**
+   * is typeof type
+   */
+  var isTypeof = (val, type) => {
+    return Object.prototype.toString.call(val).slice(8, -1).toLowerCase() === type;
   };
+
   /**
    * map condition judge
    *  bbo.judge = bbo.judgment
    */
 
-
-  var judge = (v, vals, strict) => {
+  function judge(v, vals, strict) {
     if (!isTypeof(vals, 'array')) return false;
 
     for (var key in vals) {
@@ -583,15 +579,7 @@
     }
 
     return false;
-  };
-  /**
-   * is typeof type
-   */
-
-
-  var isTypeof = (val, type) => {
-    return Object.prototype.toString.call(val).slice(8, -1).toLowerCase() === type;
-  };
+  }
 
   var getType = v => v === undefined ? 'undefined' : v === null ? 'null' : v.constructor.name.toLowerCase();
 
@@ -599,15 +587,161 @@
     var classs = arguments[0];
     return new (Function.prototype.bind.apply(classs, arguments))();
   }
+
   /**
    * Gets all the formal parameter names of a function
    * https://www.zhihu.com/question/28912825
    */
-
-
   function paramsName(fn) {
     return /\(\s*([\s\S]*?)\s*\)/.exec(fn.toString())[1].split(/\s*,\s*/);
   }
+
+  function loadImages(options) {
+    var len = 0;
+    var index = 0;
+    var curIndex = 0;
+    var stepTimer = null;
+    var stepTimeValue = 5;
+    var percentageValue = 0;
+    var targetPercent = 0;
+    var data = options.data || [];
+
+    var step = options.step || function () {};
+
+    var complete = options.complete || function () {};
+
+    var needOneStep = options.needOneStep || false;
+    var path = options.path || false;
+
+    if (typeof data !== 'object' || data.length === 0) {
+      step(100);
+      return false;
+    }
+
+    len = data.length;
+
+    if (path) {
+      for (var i = len - 1; i > -1; i--) {
+        data[i] = path + data[i]; // console.info(data[i]);
+      }
+    }
+
+    var processStep = function () {
+      percentageValue++; // console.info("processStep = ",percentageValue)
+
+      step(percentageValue);
+
+      if (percentageValue < targetPercent) {
+        stepTimer = setTimeout(function () {
+          processStep();
+        }, stepTimeValue);
+      } else if (targetPercent === 100 && percentageValue === targetPercent) {
+        if (complete && typeof complete === 'function') {
+          complete();
+        }
+      }
+    };
+
+    function onload() {
+      curIndex++;
+      targetPercent = Math.floor(curIndex / len * 100);
+
+      if (needOneStep) {
+        if (stepTimer) {
+          clearTimeout(stepTimer);
+        }
+
+        processStep();
+      } else {
+        step(targetPercent);
+
+        if (targetPercent === 100) {
+          complete();
+        }
+      }
+    }
+
+    for (index; index < len; index++) {
+      var strUrl = data[index];
+      new LoadImageItem(strUrl, onload).start();
+    }
+  }
+  /**
+   * @name loadImageItem
+   * @param  {string} url - images full url
+   * @callback cb - called when load image completed
+   */
+
+  function LoadImageItem(url, cb) {
+    var self = this;
+    self.img = new Image(); // readyState:'complete' or 'loaded' => image has been loaded。
+    // for IE6-IE10。
+
+    var onReadyStateChange = function () {
+      removeEventHandlers();
+      console.info('onReadyStateChange');
+      cb(self, 'onReadyStateChange');
+    };
+
+    var onError = function () {
+      console.info('onError');
+      removeEventHandlers();
+      cb(self, 'onError');
+    };
+
+    var onLoad = function () {
+      removeEventHandlers();
+      cb(self, 'onload');
+    };
+
+    var removeEventHandlers = function () {
+      self.unbind('load', onLoad);
+      self.unbind('readystatechange', onReadyStateChange);
+      self.unbind('error', onError);
+    };
+
+    this.start = function () {
+      this.bind('load', onLoad);
+      this.bind('readystatechange', onReadyStateChange);
+      this.bind('error', onError);
+      this.img.src = url;
+
+      if (self.img.complete) {
+        removeEventHandlers();
+        cb(this, 'onload');
+      }
+    };
+  }
+  /**
+   * @name bind
+   * @description cross-browser event binding
+   * @param  {string} eventName
+   * @param  {function} eventHandler
+   */
+
+
+  LoadImageItem.prototype.bind = function (eventName, eventHandler) {
+    if (this.img.addEventListener) {
+      this.img.addEventListener(eventName, eventHandler, false);
+    } else if (this.img.attachEvent) {
+      this.img.attachEvent('on' + eventName, eventHandler);
+    }
+  };
+  /**
+   * @name unbind
+   * @description cross-browser event un-binding
+   * @param  {string} eventName
+   * @param  {function} eventHandler
+   */
+
+
+  LoadImageItem.prototype.unbind = function (eventName, eventHandler) {
+    if (this.img.removeEventListener) {
+      this.img.removeEventListener(eventName, eventHandler, false);
+    } else if (this.img.detachEvent) {
+      this.img.detachEvent('on' + eventName, eventHandler);
+    }
+  };
 
   /* eslint-disable no-invalid-this */
   /**
@@ -685,11 +819,12 @@
       });
     }
   }
+
+  /* eslint-disable no-invalid-this */
+
   /*
    * https://gist.github.com/pete-otaqui/3912307
    */
-
-
   function loadcss(url, callback) {
     var promise;
     var resolutions = [];
@@ -770,154 +905,6 @@
     link.setAttribute('href', url);
     return promise;
   }
-
-  function loadImages(options) {
-    var len = 0;
-    var index = 0;
-    var curIndex = 0;
-    var stepTimer = null;
-    var stepTimeValue = 5;
-    var percentageValue = 0;
-    var targetPercent = 0;
-    var data = options.data || [];
-
-    var step = options.step || function () {};
-
-    var complete = options.complete || function () {};
-
-    var needOneStep = options.needOneStep || false;
-    var path = options.path || false;
-
-    if (typeof data !== 'object' || data.length === 0) {
-      step(100);
-      return false;
-    }
-
-    len = data.length;
-
-    if (path) {
-      for (var i = len - 1; i > -1; i--) {
-        data[i] = path + data[i]; // console.info(data[i]);
-      }
-    }
-
-    var processStep = function () {
-      percentageValue++; // console.info("processStep = ",percentageValue)
-
-      step(percentageValue);
-
-      if (percentageValue < targetPercent) {
-        stepTimer = setTimeout(function () {
-          processStep();
-        }, stepTimeValue);
-      } else if (targetPercent === 100 && percentageValue === targetPercent) {
-        if (complete && typeof complete === 'function') {
-          complete();
-        }
-      }
-    };
-
-    function onload() {
-      curIndex++;
-      targetPercent = Math.floor(curIndex / len * 100);
-
-      if (needOneStep) {
-        if (stepTimer) {
-          clearTimeout(stepTimer);
-        }
-
-        processStep();
-      } else {
-        step(targetPercent);
-
-        if (targetPercent === 100) {
-          complete();
-        }
-      }
-    }
-
-    for (index; index < len; index++) {
-      var strUrl = data[index];
-      new LoadImageItem(strUrl, onload).start();
-    }
-  }
-  /**
-   * @name loadImageItem
-   * @param  {string} url - images full url
-   * @callback cb - called when load image completed
-   */
-
-
-  function LoadImageItem(url, cb) {
-    var self = this;
-    self.img = new Image(); // readyState:'complete' or 'loaded' => image has been loaded。
-    // for IE6-IE10。
-
-    var onReadyStateChange = function () {
-      removeEventHandlers();
-      console.info('onReadyStateChange');
-      cb(self, 'onReadyStateChange');
-    };
-
-    var onError = function () {
-      console.info('onError');
-      removeEventHandlers();
-      cb(self, 'onError');
-    };
-
-    var onLoad = function () {
-      removeEventHandlers();
-      cb(self, 'onload');
-    };
-
-    var removeEventHandlers = function () {
-      self.unbind('load', onLoad);
-      self.unbind('readystatechange', onReadyStateChange);
-      self.unbind('error', onError);
-    };
-
-    this.start = function () {
-      this.bind('load', onLoad);
-      this.bind('readystatechange', onReadyStateChange);
-      this.bind('error', onError);
-      this.img.src = url;
-
-      if (self.img.complete) {
-        removeEventHandlers();
-        cb(this, 'onload');
-      }
-    };
-  }
-  /**
-   * @name bind
-   * @description cross-browser event binding
-   * @param  {string} eventName
-   * @param  {function} eventHandler
-   */
-
-
-  LoadImageItem.prototype.bind = function (eventName, eventHandler) {
-    if (this.img.addEventListener) {
-      this.img.addEventListener(eventName, eventHandler, false);
-    } else if (this.img.attachEvent) {
-      this.img.attachEvent('on' + eventName, eventHandler);
-    }
-  };
-  /**
-   * @name unbind
-   * @description cross-browser event un-binding
-   * @param  {string} eventName
-   * @param  {function} eventHandler
-   */
-
-
-  LoadImageItem.prototype.unbind = function (eventName, eventHandler) {
-    if (this.img.removeEventListener) {
-      this.img.removeEventListener(eventName, eventHandler, false);
-    } else if (this.img.detachEvent) {
-      this.img.detachEvent('on' + eventName, eventHandler);
-    }
-  };
 
   /**
    * to json
@@ -1083,17 +1070,11 @@
 
     return init(function () {});
   };
-  /************************************************************************
-   * Cookies
-   *************************************************************************/
 
   /**
    * setCookie / getCookie / deleteCookie
    * From https://stackoverflow.com/questions/1458724/how-do-i-set-unset-cookie-with-jquery/1458728#1458728
-   * change by a-jie
    */
-
-
   var setCookie = (name, value, option) => {
     var longTime = 10; // let path = '; path=/';
 
@@ -1147,8 +1128,7 @@
     }
 
     return null;
-  }; // bbo.deleteCookie = bbo.delCookie =
-
+  };
 
   var deleteCookie = name => {
     setCookie(name, '', {
@@ -1547,10 +1527,6 @@
     });
   };
 
-  /************************************************************************
-   * About Url Params
-   *************************************************************************/
-
   /**
    * getUrlParam / deleteUrlParam
    * From https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
@@ -1563,18 +1539,12 @@
     if (!results) return null;
     if (!results[2]) return '';
     return decodeURIComponent(results[2].replace(/\+/g, ' '));
-  }; // const getURLParameters = (url) =>
-  //   (url.match(/([^?=&]+)(=([^&]*))/g) || []).reduce(
-  //     (a, v) => ((a[v.slice(0, v.indexOf('='))] = v.slice(v.indexOf('=') + 1)), a),
-  //     {}
-  //   );
+  };
 
   /**
    * setUrlParam
    * From https://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
    */
-
-
   var setUrlParam = function (key, value) {
     var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window.location.href;
     var re = new RegExp('([?|&])' + key + '=.*?(&|#|$)', 'i');
@@ -1592,9 +1562,12 @@
       var separator = url.indexOf('?') !== -1 ? '&' : '?';
       return url + separator + key + '=' + encodeURIComponent(value) + hash;
     }
-  }; // bbo.deleteUrlParam = bbo.delUrlParam
+  };
 
-
+  /**
+   * getUrlParam / deleteUrlParam
+   * From https://stackoverflow.com/questions/901115/how-can-i-get-query-string-values-in-javascript
+   */
   var deleteUrlParam = function (param) {
     var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : window.location.href;
     // prefer to use l.search if you have a location/link object
@@ -1661,9 +1634,9 @@
     request.onerror = () => err(request);
 
     request.send();
-  }; // eslint-disable-next-line max-params
+  };
 
-
+  // eslint-disable-next-line max-params
   var httpPost = function (url, data, callback) {
     var err = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : console.error;
     var request = new XMLHttpRequest();
@@ -1676,6 +1649,924 @@
 
     request.send(data);
   };
+
+  /**
+   * setInterval func fix times
+   * https://stackoverflow.com/questions/2956966/javascript-telling-setinterval-to-only-fire-x-amount-of-times
+   */
+
+  function setTimesout() {
+    var func = arguments[0];
+    var delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
+    var times = arguments[2] === undefined ? 1 : parseInt(arguments[2], 10);
+
+    var _args = arguments.length > 3 ? args(arguments, 3) : null;
+
+    var target = {
+      index: 0,
+      times: times,
+      over: false
+    };
+    var id = setInterval(function () {
+      target.index++;
+
+      if (target.index > times) {
+        clearInterval(id);
+      } else {
+        if (target.index === times) target.over = true;
+        func.apply(target, _args);
+      }
+    }, delay);
+    return id;
+  }
+
+  function clearTimesout(id) {
+    clearInterval(id);
+  }
+
+  function fill0(num) {
+    var _num = parseFloat(num);
+
+    return _num < 10 ? '0' + _num : _num;
+  }
+
+  /**
+   * getDate
+   * https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
+   */
+
+  var getDate = (d1, d2) => {
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth() + 1;
+    var yyyy = today.getFullYear();
+    var hh = today.getHours();
+    var ms = today.getMinutes();
+    var ss = today.getSeconds();
+    dd = fill0(dd);
+    mm = fill0(mm);
+    hh = fill0(hh);
+    ms = fill0(ms);
+    ss = fill0(ss);
+
+    var _d1 = d1 || '/';
+
+    var _d2 = d2 || ':';
+
+    return yyyy + _d1 + mm + _d1 + dd + ' ' + hh + _d2 + ms + _d2 + ss;
+  };
+
+  /**
+   * @ zh_cn
+   * @desc   格式化${startTime}距现在的已过时间
+   * @param  {Date} startTime
+   * @return {String}
+   */
+  var formatPassTime = startTime => {
+    var currentTime = Date.parse(new Date());
+    var time = currentTime - startTime;
+    var day = parseInt(time / (1000 * 60 * 60 * 24), 10);
+    var hour = parseInt(time / (1000 * 60 * 60), 10);
+    var min = parseInt(time / (1000 * 60), 10);
+    var month = parseInt(day / 30, 10);
+    var year = parseInt(month / 12, 10);
+    if (year) return year + '年前';
+    if (month) return month + '个月前';
+    if (day) return day + '天前';
+    if (hour) return hour + '小时前';
+    if (min) return min + '分钟前';else return '刚刚';
+  };
+
+  /**
+   * @ zh_cn
+   * @desc   格式化现在距${endTime}的剩余时间
+   * @param  {Date} endTime
+   * @return {String}
+   */
+  var formatRemainTime = endTime => {
+    var startDate = new Date(); // 开始时间
+
+    var endDate = new Date(endTime); // 结束时间
+
+    var t = endDate.getTime() - startDate.getTime(); // 时间差
+
+    var d = 0;
+    var h = 0;
+    var m = 0;
+    var s = 0;
+
+    if (t >= 0) {
+      d = Math.floor(t / 1000 / 3600 / 24);
+      h = Math.floor(t / 1000 / 60 / 60 % 24);
+      m = Math.floor(t / 1000 / 60 % 60);
+      s = Math.floor(t / 1000 % 60);
+    }
+
+    return d + '天 ' + h + '小时 ' + m + '分钟 ' + s + '秒';
+  };
+
+  /**
+   * @ en
+   * bbo.formatDuration(1001); // '1 second, 1 millisecond'
+   * bbo.formatDuration(34325055574); // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
+   */
+  var formatDuration = ms => {
+    // eslint-disable-next-line no-param-reassign
+    if (ms < 0) ms = -ms;
+    var time = {
+      day: Math.floor(ms / 86400000),
+      hour: Math.floor(ms / 3600000) % 24,
+      minute: Math.floor(ms / 60000) % 60,
+      second: Math.floor(ms / 1000) % 60,
+      millisecond: Math.floor(ms) % 1000
+    };
+    return Object.entries(time).filter(val => val[1] !== 0).map((_ref) => {
+      var _ref2 = _slicedToArray(_ref, 2),
+          key = _ref2[0],
+          val = _ref2[1];
+
+      return `${val} ${key}${val !== 1 ? 's' : ''}`;
+    }).join(', ');
+  };
+
+  var floor = function (n) {
+    var m = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+    return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
+  };
+
+  var chainAsync = fns => {
+    var curr = 0;
+    var last = fns[fns.length - 1];
+
+    var next = () => {
+      var fn = fns[curr++];
+      fn === last ? fn() : fn(next);
+    };
+
+    next();
+  };
+
+  /**
+   * https://locutus.io/php/
+   */
+  // eslint-disable-next-line max-params
+  var numberFormat = (number, decimals, decPoint, thousandsSep) => {
+    //   example 1: bbo.math.numberFormat(1234.56)
+    //   returns 1: '1,235'
+    //   example 2: bbo.math.numberFormat(1234.56, 2, ',', ' ')
+    //   returns 2: '1 234,56'
+    //   example 3: bbo.math.numberFormat(1234.5678, 2, '.', '')
+    //   returns 3: '1234.57'
+    //   example 4: bbo.math.numberFormat(67, 2, ',', '.')
+    //   returns 4: '67,00'
+    //   example 5: bbo.math.numberFormat(1000)
+    //   returns 5: '1,000'
+    //   example 6: bbo.math.numberFormat(67.311, 2)
+    //   returns 6: '67.31'
+    //   example 7: bbo.math.numberFormat(1000.55, 1)
+    //   returns 7: '1,000.6'
+    //   example 8: bbo.math.numberFormat(67000, 5, ',', '.')
+    //   returns 8: '67.000,00000'
+    //   example 9: bbo.math.numberFormat(0.9, 0)
+    //   returns 9: '1'
+    //  example 10: bbo.math.numberFormat('1.20', 2)
+    //  returns 10: '1.20'
+    //  example 11: bbo.math.numberFormat('1.20', 4)
+    //  returns 11: '1.2000'
+    //  example 12: bbo.math.numberFormat('1.2000', 3)
+    //  returns 12: '1.200'
+    //  example 13: bbo.math.numberFormat('1 000,50', 2, '.', ' ')
+    //  returns 13: '100 050.00'
+    //  example 14: bbo.math.numberFormat(1e-8, 8, '.', '')
+    //  returns 14: '0.00000001'
+    var _number = String(number).replace(/[^0-9+\-Ee.]/g, '');
+
+    var _decimals = decimals;
+    var n = !isFinite(Number(_number)) ? 0 : Number(_number);
+    var prec = !isFinite(Number(_decimals)) ? 0 : Math.abs(_decimals);
+    var sep = typeof thousandsSep === 'undefined' ? ',' : thousandsSep;
+    var dec = typeof decPoint === 'undefined' ? '.' : decPoint;
+    var s = '';
+
+    var toFixedFix = function (n, prec) {
+      if (String(n).indexOf('e') === -1) {
+        return Number(Math.round(n + 'e+' + prec) + 'e-' + prec);
+      } else {
+        var arr = String(n).split('e');
+        var sig = '';
+
+        if (Number(arr[1]) + prec > 0) {
+          sig = '+';
+        }
+
+        return Number(Math.round(Number(arr[0]) + 'e' + sig + (Number(arr[1]) + prec)) + 'e-' + prec).toFixed(prec);
+      }
+    }; // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
+
+
+    s = (prec ? toFixedFix(n, prec).toString() : String(Math.round(n))).split('.');
+
+    if (s[0].length > 3) {
+      s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+    }
+
+    if ((s[1] || '').length < prec) {
+      s[1] = s[1] || '';
+      s[1] += new Array(prec - s[1].length + 1).join('0');
+    }
+
+    return s.join(dec);
+  };
+
+  function randomColor() {
+    return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
+  }
+
+  // bbo.randomFromA2B = bbo.randomA2B
+  var randomA2B = (a, b, int) => {
+    var result = Math.random() * (b - a) + a;
+    return int ? Math.floor(result) : result;
+  };
+
+  var randomKey = function () {
+    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 32;
+
+    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
+    var possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+    var key = '';
+
+    for (var i = 0; i < len; i++) {
+      key += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return key;
+  };
+
+  /**
+   * lock touch in mobile phone
+   */
+  var lockTouch = () => {
+    document.addEventListener('touchmove', function (e) {
+      e.preventDefault();
+    }, !1);
+    document.addEventListener('touchstart', preventDefault, !1);
+    document.addEventListener('touchend', preventDefault, !1);
+
+    function not(e, tag) {
+      return e.target.tagName !== tag.toUpperCase() && e.target.tagName !== tag.toLowerCase();
+    }
+
+    function preventDefault(e) {
+      if (not(e, 'input') && not(e, 'textarea') && not(e, 'select') && not(e, 'menus')) e.preventDefault();
+    }
+  };
+
+  /**
+   * Check image size
+   * @param {(Object|String)} image - image information，allow File Object or Data URLs
+   * @param {Object} [options={}] - Check options
+   * @param {Number} [options.width] - Check width
+   * @param {Number} [options.height] - Check height
+   * @param {Number} [deviation=0] - Allowable deviation
+   */
+  var checkImageSize = function (image, options) {
+    var deviation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    return new Promise((resolve, reject) => {
+      /**
+       * Check type of image
+       */
+      if (image instanceof File) {
+        var reader = new FileReader();
+
+        reader.onload = function () {
+          checkSize(this.result);
+        };
+
+        reader.readAsDataURL(image);
+      } else if (typeof image === 'string') {
+        checkSize(image);
+      }
+      /**
+       * Check picture size
+       * @param {String} data：Data URL
+       */
+
+
+      function checkSize(data) {
+        var virtualImage = new Image();
+        virtualImage.src = data;
+
+        virtualImage.onload = function () {
+          var width = this.naturalWidth;
+          var height = this.naturalHeight;
+
+          if (options.width && Math.abs(options.width - width) > deviation) {
+            resolve(false);
+          }
+
+          if (options.height && Math.abs(options.height - height) > deviation) {
+            resolve(false);
+          }
+
+          resolve(true);
+        };
+      }
+    });
+  };
+
+  /**
+   * Image optimization
+   * Gif images are not supported
+   * @param {(Object|String)} - image ,supported File Object or Data URLs
+   * @param {Number} [quality = 0.9] - Image quality, between 0 - 1, only image/jpeg or image/webp is accept.
+   * @param {Object} [options = {}] - Image options
+   * @param {Number} [options.maxWidth = 1920] - The maximum width of the output picture.
+   * If the original width of the picture is less than this width, the original size picture is returned.
+   * If the original width of the picture is greater than the width, the picture scaled to the size is returned.
+   * @param {String} [options.mimeType] - Output image type，Types of MIME.
+   * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
+   * If the output type is image/gif，Then return as is image Parameter content.
+   */
+  var imageOptimization = function (image) {
+    var quality = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.9;
+
+    var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
+        _ref$maxWidth = _ref.maxWidth,
+        maxWidth = _ref$maxWidth === void 0 ? 1920 : _ref$maxWidth,
+        mimeType = _ref.mimeType;
+
+    return new Promise((resolve, reject) => {
+      if (image instanceof File) {
+        var reader = new FileReader();
+
+        reader.onload = function () {
+          toBlob(this.result);
+        };
+
+        reader.readAsDataURL(image);
+      } else if (typeof image === 'string') {
+        toBlob(image);
+      }
+      /**
+       * To Blob
+       * @param {String} data - Image: Data URL
+       */
+
+
+      function toBlob(data) {
+        var type = data.match(/data:([^;,]+)/);
+
+        if (Array.isArray(type)) {
+          var outputType = mimeType ? mimeType : type[1];
+
+          if (outputType === 'image/gif') {
+            return resolve(image);
+          }
+
+          var virtualImage = new Image();
+          virtualImage.src = data;
+
+          virtualImage.onload = function () {
+            var width = this.naturalWidth;
+            var height = this.naturalHeight;
+
+            if (width > maxWidth) {
+              height = Math.round(maxWidth * height / width);
+              width = maxWidth;
+            }
+
+            var canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            var context = canvas.getContext('2d');
+            context.drawImage(this, 0, 0, width, height);
+            canvas.toBlob(blob => {
+              resolve(blob);
+            }, mimeType ? mimeType : type[1], quality);
+          };
+        } else {
+          reject(new Error('Non-picture type Data URLs'));
+        }
+      }
+    });
+  };
+
+  function getTag(src) {
+    return Object.prototype.toString.call(src);
+  }
+
+  function hasOwnProperty$1(obj, keyName) {
+    return Object.prototype.hasOwnProperty.call(obj, keyName);
+  }
+
+  function isObject(obj) {
+    return getTag(obj) === '[object Object]';
+  }
+
+  function isArray(arr) {
+    return getTag(arr) === '[object Array]';
+  }
+
+  function isString(str) {
+    return getTag(str) === '[object String]';
+  }
+
+  function isBoolean(bool) {
+    return getTag(bool) === '[object Boolean]';
+  }
+
+  function isNumber(number) {
+    return getTag(number) === '[object Number]';
+  }
+
+  function isMap(map) {
+    return getTag(map) === '[object Map]';
+  }
+
+  function isSet(set) {
+    return getTag(set) === '[object Set]';
+  }
+
+  function isFunction(func) {
+    return getTag(func) === '[object Function]';
+  }
+
+  var isEmpty = val => val == null || !(Object.keys(val) || val).length;
+
+  /* eslint-disable no-self-compare */
+  function is(x, y) {
+    // inlined Object.is polyfill to avoid requiring consumers ship their own
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      // Added the nonzero y check to make Flow happy, but it is redundant
+      return x !== 0 || y !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+
+  function isShallowEqual(objA, objB) {
+    if (is(objA, objB)) {
+      return true;
+    }
+
+    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+      return false;
+    }
+
+    var keysA = Object.keys(objA);
+    var keysB = Object.keys(objB);
+
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+
+    var i = 0;
+
+    while (i < keysA.length) {
+      if (!hasOwnProperty(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+        return false;
+      }
+
+      i += 1;
+    }
+
+    return true;
+  }
+
+  /* eslint-disable max-params */
+  var charCodeOfDot = '.'.charCodeAt(0);
+  var reEscapeChar = /\\(\\)?/g;
+  var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
+  function stringToPath(string) {
+    var result = [];
+
+    if (string.charCodeAt(0) === charCodeOfDot) {
+      result.push('');
+    }
+
+    string.replace(rePropName, (match, expression, quote, subString) => {
+      var key = match;
+
+      if (quote) {
+        key = subString.replace(reEscapeChar, '$1');
+      } else if (expression) {
+        key = expression.trim();
+      }
+
+      result.push(key);
+    });
+    return result;
+  }
+
+  function toPath(value) {
+    if (!isString(value)) {
+      return [];
+    }
+
+    return stringToPath(value);
+  }
+
+  /* eslint-disable eqeqeq */
+  function has(object, path) {
+    if (!isObject(object)) {
+      return false;
+    }
+
+    if (!isArray(path)) {
+      path = toPath(path);
+    }
+
+    var index = -1;
+    var length = path.length;
+    var result = false;
+
+    while (++index < length) {
+      var key = String(path[index]);
+
+      if (!(result = object != null && hasOwnProperty(object, key))) {
+        break;
+      }
+
+      object = object[key];
+    } // eslint-disable-next-line eqeqeq
+
+
+    if (result || ++index != length) {
+      return result;
+    }
+
+    return false;
+  }
+
+  function reduce(src, func) {
+    var i = 0;
+    var acc = arguments[2];
+
+    if (isArray(src)) {
+      if (arguments.length !== 3) {
+        acc = src[0];
+      }
+
+      while (i < src.length) {
+        acc = func(acc, src[i], i, src);
+        i += 1;
+      }
+
+      return acc;
+    } else if (isObject(src)) {
+      var keys = Object.keys(src);
+
+      if (arguments.length !== 3) {
+        acc = src[keys[0]];
+      }
+
+      while (i < keys.length) {
+        var key = keys[i];
+        acc = func(acc, src[key], key, src);
+        i += 1;
+      }
+
+      return acc;
+    }
+
+    return acc;
+  }
+
+  function forEach(src, func) {
+    var i = 0;
+
+    if (isArray(src)) {
+      while (i < src.length) {
+        var rst = func(src[i], i, src);
+
+        if (rst === false) {
+          break;
+        }
+
+        i += 1;
+      }
+    } else if (isObject(src)) {
+      var keys = Object.keys(src);
+
+      while (i < keys.length) {
+        var key = keys[i];
+
+        var _rst = func(src[key], key, src);
+
+        if (_rst === false) {
+          break;
+        }
+
+        i += 1;
+      }
+    }
+  }
+
+  function map(src, func) {
+    var rst = [];
+    var i = 0;
+
+    if (isArray(src)) {
+      while (i < src.length) {
+        rst.push(func(src[i], i, src));
+        i += 1;
+      }
+    } else if (isObject(src)) {
+      var keys = Object.keys(src);
+
+      while (i < keys.length) {
+        var key = keys[i];
+        rst.push(func(src[key], key, src));
+        i += 1;
+      }
+    }
+
+    return rst;
+  }
+
+  function find(src, func) {
+    // eslint-disable-next-line no-undef-init
+    var rst = undefined;
+    forEach(src, (item, key, obj) => {
+      if (isFunction(func)) {
+        if (func(item, key, obj) === true) {
+          rst = item;
+          return false;
+        }
+      } else if (is(item, func)) {
+        rst = item;
+        return false;
+      } else if (isObject(item) && isObject(func)) {
+        var subEqual = true;
+        forEach(func, (v, k) => {
+          subEqual = isShallowEqual(item[k], v);
+          return subEqual;
+        });
+
+        if (subEqual) {
+          rst = item;
+          return false;
+        }
+      }
+    });
+    return rst;
+  }
+
+  function findIndex(src, func) {
+    var rst = -1;
+    forEach(src, (item, index, obj) => {
+      if (isFunction(func)) {
+        if (func(item, index, obj) === true) {
+          rst = index;
+          return false;
+        }
+      } else if (is(item, func)) {
+        rst = index;
+        return false;
+      } else if (isObject(item) && isObject(func)) {
+        var subEqual = true;
+        forEach(func, (v, k) => {
+          subEqual = isShallowEqual(item[k], v);
+          return subEqual;
+        });
+
+        if (subEqual) {
+          rst = index;
+          return false;
+        }
+      }
+    });
+    return rst;
+  }
+
+  /* eslint-disable no-param-reassign */
+  function get(object, path, defaultValue) {
+    if (object == null) {
+      return defaultValue;
+    }
+
+    if (!Array.isArray(path)) {
+      var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
+      var reIsPlainProp = /^\w*$/;
+
+      var isKey = function (value, object) {
+        var type = typeof value;
+
+        if (type == 'number' || type == 'boolean' || value == null) {
+          return true;
+        }
+
+        return reIsPlainProp.test(value) || !reIsDeepProp.test(value) || object != null && value in Object(object);
+      };
+
+      if (isKey(path, object)) {
+        path = [path];
+      } else {
+        path = stringToPath(path);
+      }
+    }
+
+    var index = 0;
+    var length = path.length;
+
+    while (object != null && index < length) {
+      object = object[path[index]];
+      index += 1;
+    }
+
+    if (index && index === length) {
+      return object === undefined ? defaultValue : object;
+    } else {
+      return defaultValue;
+    }
+  }
+
+  /* eslint-disable no-implicit-coercion */
+  function debounce(func, wait, options) {
+    var lastArgs;
+    var lastThis;
+    var maxWait;
+    var result;
+    var timerId;
+    var lastCallTime;
+    var lastInvokeTime = 0;
+    var leading = false;
+    var maxing = false;
+    var trailing = true; // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
+
+    var useRAF = !wait && wait !== 0 && typeof requestAnimationFrame === 'function';
+
+    if (typeof func !== 'function') {
+      throw new TypeError('Expected a function');
+    }
+
+    wait = +wait || 0;
+
+    if (isObject(options)) {
+      leading = !!options.leading;
+      maxing = 'maxWait' in options;
+      maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait;
+      trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+
+    function invokeFunc(time) {
+      var args = lastArgs;
+      var thisArg = lastThis;
+      lastArgs = lastThis = undefined;
+      lastInvokeTime = time;
+      result = func.apply(thisArg, args);
+      return result;
+    }
+
+    function startTimer(pendingFunc, wait) {
+      if (useRAF) {
+        cancelAnimationFrame(timerId);
+        return requestAnimationFrame(pendingFunc);
+      }
+
+      return setTimeout(pendingFunc, wait);
+    } // eslint-disable-next-line no-unused-vars
+
+    function leadingEdge(time) {
+      // Reset any `maxWait` timer.
+      lastInvokeTime = time; // Start the timer for the trailing edge.
+
+      timerId = startTimer(timerExpired, wait); // Invoke the leading edge.
+
+      return leading ? invokeFunc(time) : result;
+    }
+
+    function remainingWait(time) {
+      var timeSinceLastCall = time - lastCallTime;
+      var timeSinceLastInvoke = time - lastInvokeTime;
+      var timeWaiting = wait - timeSinceLastCall;
+      return maxing ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke) : timeWaiting;
+    }
+
+    function shouldInvoke(time) {
+      var timeSinceLastCall = time - lastCallTime;
+      var timeSinceLastInvoke = time - lastInvokeTime; // Either this is the first call, activity has stopped and we're at the
+      // trailing edge, the system time has gone backwards and we're treating
+      // it as the trailing edge, or we've hit the `maxWait` limit.
+
+      return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
+    }
+
+    function timerExpired() {
+      var time = Date.now();
+
+      if (shouldInvoke(time)) {
+        return trailingEdge(time);
+      } // Restart the timer.
+
+
+      timerId = startTimer(timerExpired, remainingWait(time));
+    }
+
+    function trailingEdge(time) {
+      timerId = undefined; // Only invoke if we have `lastArgs` which means `func` has been
+      // debounced at least once.
+
+      if (trailing && lastArgs) {
+        return invokeFunc(time);
+      }
+
+      lastArgs = lastThis = undefined;
+      return result;
+    }
+
+    function debounced() {
+      var time = Date.now();
+      var isInvoking = shouldInvoke(time);
+
+      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+        args[_key] = arguments[_key];
+      }
+
+      lastArgs = args; // eslint-disable-next-line no-invalid-this
+
+      lastThis = this;
+      lastCallTime = time;
+
+      if (isInvoking) {
+        if (timerId === undefined) {
+          return leadingEdge(lastCallTime);
+        }
+
+        if (maxing) {
+          // Handle invocations in a tight loop.
+          timerId = startTimer(timerExpired, wait);
+          return invokeFunc(lastCallTime);
+        }
+      }
+
+      if (timerId === undefined) {
+        timerId = startTimer(timerExpired, wait);
+      }
+
+      return result;
+    }
+
+    return debounced;
+  }
+
+  function throttle(func, wait, options) {
+    var leading = true;
+    var trailing = true;
+
+    if (typeof func !== 'function') {
+      throw new TypeError('Expected a function');
+    }
+
+    if (isObject(options)) {
+      leading = 'leading' in options ? !!options.leading : leading;
+      trailing = 'trailing' in options ? !!options.trailing : trailing;
+    }
+
+    return debounce(func, wait, {
+      leading: leading,
+      trailing: trailing,
+      maxWait: wait
+    });
+  }
+
+  //   arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
+  // Only pick the first-level key,
+
+  function pick(object) {
+    if (object === null || object === undefined) {
+      return {};
+    }
+
+    for (var _len = arguments.length, paths = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
+      paths[_key - 1] = arguments[_key];
+    }
+
+    return reduce(paths, (rst, path) => {
+      if (isArray(path)) {
+        forEach(path, item => {
+          if (has(object, item)) {
+            rst[item] = object[item];
+          }
+        });
+      } else {
+        if (has(object, path)) {
+          rst[path] = object[path];
+        }
+      }
+
+      return rst;
+    }, {});
+  }
+
+  /* eslint-disable no-return-assign */
+
+  /* eslint-disable no-sequences */
+  var omit = (obj, arr) => Object.keys(obj).filter(k => !arr.includes(k)).reduce((acc, key) => (acc[key] = obj[key], acc), {});
 
   /**
    * Array
@@ -2073,880 +2964,14 @@
     unary: fn => val => fn(val)
   };
 
-  var fill0 = num => {
-    var _num = parseFloat(num);
-
-    return _num < 10 ? '0' + _num : _num;
-  };
-
-  var chainAsync = fns => {
-    var curr = 0;
-    var last = fns[fns.length - 1];
-
-    var next = () => {
-      var fn = fns[curr++];
-      fn === last ? fn() : fn(next);
-    };
-
-    next();
-  };
-
-  /**
-   * setInterval func fix times
-   * https://stackoverflow.com/questions/2956966/javascript-telling-setinterval-to-only-fire-x-amount-of-times
-   */
-
-  function setTimesout() {
-    var func = arguments[0];
-    var delay = arguments[1] === undefined ? 0 : parseFloat(arguments[1]);
-    var times = arguments[2] === undefined ? 1 : parseInt(arguments[2], 10);
-
-    var _args = arguments.length > 3 ? args(arguments, 3) : null;
-
-    var target = {
-      index: 0,
-      times: times,
-      over: false
-    };
-    var id = setInterval(function () {
-      target.index++;
-
-      if (target.index > times) {
-        clearInterval(id);
-      } else {
-        if (target.index === times) target.over = true;
-        func.apply(target, _args);
-      }
-    }, delay);
-    return id;
-  }
-
-  function clearTimesout(id) {
-    clearInterval(id);
-  }
-  /************************************************************************
-   * Date
-   *************************************************************************/
-
-  /**
-   * getDate
-   * https://stackoverflow.com/questions/1531093/how-do-i-get-the-current-date-in-javascript
-   */
-
-
-  var getDate = (d1, d2) => {
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth() + 1;
-    var yyyy = today.getFullYear();
-    var hh = today.getHours();
-    var ms = today.getMinutes();
-    var ss = today.getSeconds();
-    dd = fill0(dd);
-    mm = fill0(mm);
-    hh = fill0(hh);
-    ms = fill0(ms);
-    ss = fill0(ss);
-
-    var _d1 = d1 || '/';
-
-    var _d2 = d2 || ':';
-
-    return yyyy + _d1 + mm + _d1 + dd + ' ' + hh + _d2 + ms + _d2 + ss;
-  };
-  /**
-   * @ zh_cn
-   * @desc   格式化${startTime}距现在的已过时间
-   * @param  {Date} startTime
-   * @return {String}
-   */
-
-
-  var formatPassTime = startTime => {
-    var currentTime = Date.parse(new Date());
-    var time = currentTime - startTime;
-    var day = parseInt(time / (1000 * 60 * 60 * 24), 10);
-    var hour = parseInt(time / (1000 * 60 * 60), 10);
-    var min = parseInt(time / (1000 * 60), 10);
-    var month = parseInt(day / 30, 10);
-    var year = parseInt(month / 12, 10);
-    if (year) return year + '年前';
-    if (month) return month + '个月前';
-    if (day) return day + '天前';
-    if (hour) return hour + '小时前';
-    if (min) return min + '分钟前';else return '刚刚';
-  };
-  /**
-   * @ zh_cn
-   * @desc   格式化现在距${endTime}的剩余时间
-   * @param  {Date} endTime
-   * @return {String}
-   */
-
-
-  var formatRemainTime = endTime => {
-    var startDate = new Date(); // 开始时间
-
-    var endDate = new Date(endTime); // 结束时间
-
-    var t = endDate.getTime() - startDate.getTime(); // 时间差
-
-    var d = 0;
-    var h = 0;
-    var m = 0;
-    var s = 0;
-
-    if (t >= 0) {
-      d = Math.floor(t / 1000 / 3600 / 24);
-      h = Math.floor(t / 1000 / 60 / 60 % 24);
-      m = Math.floor(t / 1000 / 60 % 60);
-      s = Math.floor(t / 1000 % 60);
-    }
-
-    return d + '天 ' + h + '小时 ' + m + '分钟 ' + s + '秒';
-  };
-  /**
-   * @ en
-   * bbo.formatDuration(1001); // '1 second, 1 millisecond'
-   * bbo.formatDuration(34325055574); // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
-   */
-
-
-  var formatDuration = ms => {
-    // eslint-disable-next-line no-param-reassign
-    if (ms < 0) ms = -ms;
-    var time = {
-      day: Math.floor(ms / 86400000),
-      hour: Math.floor(ms / 3600000) % 24,
-      minute: Math.floor(ms / 60000) % 60,
-      second: Math.floor(ms / 1000) % 60,
-      millisecond: Math.floor(ms) % 1000
-    };
-    return Object.entries(time).filter(val => val[1] !== 0).map((_ref) => {
-      var _ref2 = _slicedToArray(_ref, 2),
-          key = _ref2[0],
-          val = _ref2[1];
-
-      return `${val} ${key}${val !== 1 ? 's' : ''}`;
-    }).join(', ');
-  };
-
-  /**
-   * Math
-   */
-  var math = {
-    /**
-     * https://locutus.io/php/
-     */
-    // eslint-disable-next-line max-params
-    numberFormat: (number, decimals, decPoint, thousandsSep) => {
-      //   example 1: bbo.math.numberFormat(1234.56)
-      //   returns 1: '1,235'
-      //   example 2: bbo.math.numberFormat(1234.56, 2, ',', ' ')
-      //   returns 2: '1 234,56'
-      //   example 3: bbo.math.numberFormat(1234.5678, 2, '.', '')
-      //   returns 3: '1234.57'
-      //   example 4: bbo.math.numberFormat(67, 2, ',', '.')
-      //   returns 4: '67,00'
-      //   example 5: bbo.math.numberFormat(1000)
-      //   returns 5: '1,000'
-      //   example 6: bbo.math.numberFormat(67.311, 2)
-      //   returns 6: '67.31'
-      //   example 7: bbo.math.numberFormat(1000.55, 1)
-      //   returns 7: '1,000.6'
-      //   example 8: bbo.math.numberFormat(67000, 5, ',', '.')
-      //   returns 8: '67.000,00000'
-      //   example 9: bbo.math.numberFormat(0.9, 0)
-      //   returns 9: '1'
-      //  example 10: bbo.math.numberFormat('1.20', 2)
-      //  returns 10: '1.20'
-      //  example 11: bbo.math.numberFormat('1.20', 4)
-      //  returns 11: '1.2000'
-      //  example 12: bbo.math.numberFormat('1.2000', 3)
-      //  returns 12: '1.200'
-      //  example 13: bbo.math.numberFormat('1 000,50', 2, '.', ' ')
-      //  returns 13: '100 050.00'
-      //  example 14: bbo.math.numberFormat(1e-8, 8, '.', '')
-      //  returns 14: '0.00000001'
-      var _number = String(number).replace(/[^0-9+\-Ee.]/g, '');
-
-      var _decimals = decimals;
-      var n = !isFinite(Number(_number)) ? 0 : Number(_number);
-      var prec = !isFinite(Number(_decimals)) ? 0 : Math.abs(_decimals);
-      var sep = typeof thousandsSep === 'undefined' ? ',' : thousandsSep;
-      var dec = typeof decPoint === 'undefined' ? '.' : decPoint;
-      var s = '';
-
-      var toFixedFix = function (n, prec) {
-        if (String(n).indexOf('e') === -1) {
-          return Number(Math.round(n + 'e+' + prec) + 'e-' + prec);
-        } else {
-          var arr = String(n).split('e');
-          var sig = '';
-
-          if (Number(arr[1]) + prec > 0) {
-            sig = '+';
-          }
-
-          return Number(Math.round(Number(arr[0]) + 'e' + sig + (Number(arr[1]) + prec)) + 'e-' + prec).toFixed(prec);
-        }
-      }; // @todo: for IE parseFloat(0.55).toFixed(0) = 0;
-
-
-      s = (prec ? toFixedFix(n, prec).toString() : String(Math.round(n))).split('.');
-
-      if (s[0].length > 3) {
-        s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-      }
-
-      if ((s[1] || '').length < prec) {
-        s[1] = s[1] || '';
-        s[1] += new Array(prec - s[1].length + 1).join('0');
-      }
-
-      return s.join(dec);
-    }
-  };
-
-  /************************************************************************
-   * Random And Math
-   *************************************************************************/
-  var randomColor = () => {
-    return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
-  }; // bbo.randomFromA2B = bbo.randomA2B
-
-
-  var randomA2B = (a, b, int) => {
-    var result = Math.random() * (b - a) + a;
-    return int ? Math.floor(result) : result;
-  };
-
-  var randomKey = function () {
-    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 32;
-
-    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
-    var possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
-    var key = '';
-
-    for (var i = 0; i < len; i++) {
-      key += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return key;
-  };
-
-  var floor = function (n) {
-    var m = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-    return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
-  };
-
-  /************************************************************************
-   * Mobile
-   *************************************************************************/
-
-  /**
-   * lock touch in mobile phone
-   */
-  var lockTouch = () => {
-    document.addEventListener('touchmove', function (e) {
-      e.preventDefault();
-    }, !1);
-    document.addEventListener('touchstart', preventDefault, !1);
-    document.addEventListener('touchend', preventDefault, !1);
-
-    function not(e, tag) {
-      return e.target.tagName !== tag.toUpperCase() && e.target.tagName !== tag.toLowerCase();
-    }
-
-    function preventDefault(e) {
-      if (not(e, 'input') && not(e, 'textarea') && not(e, 'select') && not(e, 'menus')) e.preventDefault();
-    }
-  };
-
-  /**
-   * Check image size
-   * @param {(Object|String)} image - image information，allow File Object or Data URLs
-   * @param {Object} [options={}] - Check options
-   * @param {Number} [options.width] - Check width
-   * @param {Number} [options.height] - Check height
-   * @param {Number} [deviation=0] - Allowable deviation
-   */
-  var checkImageSize = function (image, options) {
-    var deviation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
-    return new Promise((resolve, reject) => {
-      /**
-       * Check type of image
-       */
-      if (image instanceof File) {
-        var reader = new FileReader();
-
-        reader.onload = function () {
-          checkSize(this.result);
-        };
-
-        reader.readAsDataURL(image);
-      } else if (typeof image === 'string') {
-        checkSize(image);
-      }
-      /**
-       * Check picture size
-       * @param {String} data：Data URL
-       */
-
-
-      function checkSize(data) {
-        var virtualImage = new Image();
-        virtualImage.src = data;
-
-        virtualImage.onload = function () {
-          var width = this.naturalWidth;
-          var height = this.naturalHeight;
-
-          if (options.width && Math.abs(options.width - width) > deviation) {
-            resolve(false);
-          }
-
-          if (options.height && Math.abs(options.height - height) > deviation) {
-            resolve(false);
-          }
-
-          resolve(true);
-        };
-      }
-    });
-  };
-  /**
-   * Image optimization
-   * Gif images are not supported
-   * @param {(Object|String)} - image ,supported File Object or Data URLs
-   * @param {Number} [quality = 0.9] - Image quality, between 0 - 1, only image/jpeg or image/webp is accept.
-   * @param {Object} [options = {}] - Image options
-   * @param {Number} [options.maxWidth = 1920] - The maximum width of the output picture.
-   * If the original width of the picture is less than this width, the original size picture is returned.
-   * If the original width of the picture is greater than the width, the picture scaled to the size is returned.
-   * @param {String} [options.mimeType] - Output image type，Types of MIME.
-   * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
-   * If the output type is image/gif，Then return as is image Parameter content.
-   */
-
-
-  var imageOptimization = function (image) {
-    var quality = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.9;
-
-    var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        _ref$maxWidth = _ref.maxWidth,
-        maxWidth = _ref$maxWidth === void 0 ? 1920 : _ref$maxWidth,
-        mimeType = _ref.mimeType;
-
-    return new Promise((resolve, reject) => {
-      if (image instanceof File) {
-        var reader = new FileReader();
-
-        reader.onload = function () {
-          toBlob(this.result);
-        };
-
-        reader.readAsDataURL(image);
-      } else if (typeof image === 'string') {
-        toBlob(image);
-      }
-      /**
-       * To Blob
-       * @param {String} data - Image: Data URL
-       */
-
-
-      function toBlob(data) {
-        var type = data.match(/data:([^;,]+)/);
-
-        if (Array.isArray(type)) {
-          var outputType = mimeType ? mimeType : type[1];
-
-          if (outputType === 'image/gif') {
-            return resolve(image);
-          }
-
-          var virtualImage = new Image();
-          virtualImage.src = data;
-
-          virtualImage.onload = function () {
-            var width = this.naturalWidth;
-            var height = this.naturalHeight;
-
-            if (width > maxWidth) {
-              height = Math.round(maxWidth * height / width);
-              width = maxWidth;
-            }
-
-            var canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            var context = canvas.getContext('2d');
-            context.drawImage(this, 0, 0, width, height);
-            canvas.toBlob(blob => {
-              resolve(blob);
-            }, mimeType ? mimeType : type[1], quality);
-          };
-        } else {
-          reject(new Error('[Slug Function] Non-picture type Data URLs'));
-        }
-      }
-    });
-  };
-
-  /* eslint-disable */
-
-  /**
-   *  Mini lodash is easy to implement, consistent with the lodash class name.
-   *  Function parameters only implement basic verification.
-   *  Which is less stable than lodash
-   *
-   */
-  function getTag(src) {
-    return Object.prototype.toString.call(src);
-  }
-
-  function hasOwnProperty(obj, keyName) {
-    return Object.prototype.hasOwnProperty.call(obj, keyName);
-  }
-
-  function isObject(obj) {
-    return getTag(obj) === '[object Object]';
-  }
-
-  function isArray(arr) {
-    return getTag(arr) === '[object Array]';
-  }
-
-  function isString(str) {
-    return getTag(str) === '[object String]';
-  }
-
-  function isBoolean(bool) {
-    return getTag(bool) === '[object Boolean]';
-  }
-
-  function isNumber(number) {
-    return getTag(number) === '[object Number]';
-  }
-
-  function isMap(map) {
-    return getTag(map) === '[object Map]';
-  }
-
-  function isSet(set) {
-    return getTag(set) === '[object Set]';
-  }
-
-  function isFunction(func) {
-    return getTag(func) === '[object Function]';
-  }
-
-  var isEmpty = val => val == null || !(Object.keys(val) || val).length;
-
-  function is(x, y) {
-    // inlined Object.is polyFill to avoid requiring consumers ship their own
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      // Added the nonzero y check to make Flow happy, but it is redundant
-      return x !== 0 || y !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-
-  function isShallowEqual(objA, objB) {
-    if (is(objA, objB)) {
-      return true;
-    }
-
-    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-      return false;
-    }
-
-    var keysA = Object.keys(objA);
-    var keysB = Object.keys(objB);
-
-    if (keysA.length !== keysB.length) {
-      return false;
-    }
-
-    var i = 0;
-
-    while (i < keysA.length) {
-      if (!hasOwnProperty(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-        return false;
-      }
-
-      i += 1;
-    }
-
-    return true;
-  }
-
-  function has(obj, keyName) {
-    return obj !== null && obj !== undefined && hasOwnProperty(obj, keyName);
-  }
-
-  function reduce(src, func) {
-    var i = 0;
-    var acc = arguments[2];
-
-    if (isArray(src)) {
-      if (arguments.length !== 3) {
-        acc = src[0];
-      }
-
-      while (i < src.length) {
-        acc = func(acc, src[i], i, src);
-        i += 1;
-      }
-
-      return acc;
-    } else if (isObject(src)) {
-      var keys = Object.keys(src);
-
-      if (arguments.length !== 3) {
-        acc = src[keys[0]];
-      }
-
-      while (i < keys.length) {
-        var key = keys[i];
-        acc = func(acc, src[key], key, src);
-        i += 1;
-      }
-
-      return acc;
-    }
-
-    return acc;
-  }
-
-  function forEach(src, func) {
-    var i = 0;
-
-    if (isArray(src)) {
-      while (i < src.length) {
-        var rst = func(src[i], i, src);
-
-        if (rst === false) {
-          break;
-        }
-
-        i += 1;
-      }
-    } else if (isObject(src)) {
-      var keys = Object.keys(src);
-
-      while (i < keys.length) {
-        var key = keys[i];
-
-        var _rst = func(src[key], key, src);
-
-        if (_rst === false) {
-          break;
-        }
-
-        i += 1;
-      }
-    }
-  }
-
-  function map(src, func) {
-    var rst = [];
-    var i = 0;
-
-    if (isArray(src)) {
-      while (i < src.length) {
-        rst.push(func(src[i], i, src));
-        i += 1;
-      }
-    } else if (isObject(src)) {
-      var keys = Object.keys(src);
-
-      while (i < keys.length) {
-        var key = keys[i];
-        rst.push(func(src[key], key, src));
-        i += 1;
-      }
-    }
-
-    return rst;
-  }
-
-  function findIndex(src, func) {
-    var rst = -1;
-    forEach(src, (item, index, obj) => {
-      if (isFunction(func)) {
-        if (func(item, index, obj) === true) {
-          rst = index;
-          return false;
-        }
-      } else {
-        if (isShallowEqual(item, func)) {
-          rst = index;
-          return false;
-        }
-      }
-    });
-    return rst;
-  }
-
-  function find(src, func) {
-    var rst = undefined;
-    forEach(src, (item, key, obj) => {
-      if (isFunction(func)) {
-        if (func(item, key, obj) === true) {
-          rst = item;
-          return false;
-        }
-      } else {
-        if (isShallowEqual(item, func)) {
-          rst = item;
-          return false;
-        }
-      }
-    });
-    return rst;
-  }
-
-  var charCodeOfDot = '.'.charCodeAt(0);
-  var reEscapeChar = /\\(\\)?/g;
-  var rePropName = /[^.[\]]+|\[(?:(-?\d+(?:\.\d+)?)|(["'])((?:(?!\2)[^\\]|\\.)*?)\2)\]/g;
-
-  function stringToPath(string) {
-    var result = [];
-
-    if (string.charCodeAt(0) === charCodeOfDot) {
-      result.push('');
-    }
-
-    string.replace(rePropName, (match, expression, quote, subString) => {
-      var key = match;
-
-      if (quote) {
-        key = subString.replace(reEscapeChar, '$1');
-      } else if (expression) {
-        key = expression.trim();
-      }
-
-      result.push(key);
-    });
-    return result;
-  }
-
-  function toPath(value) {
-    if (!isString(value)) {
-      return [];
-    }
-
-    return stringToPath(value);
-  }
-
-  function get(object, path, defaultValue) {
-    if (object == null) {
-      return defaultValue;
-    }
-
-    if (!Array.isArray(path)) {
-      var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-      var reIsPlainProp = /^\w*$/;
-
-      var isKey = function (value, object) {
-        var type = typeof value;
-
-        if (type == 'number' || type == 'boolean' || value == null) {
-          return true;
-        }
-
-        return reIsPlainProp.test(value) || !reIsDeepProp.test(value) || object != null && value in Object(object);
-      };
-
-      if (isKey(path, object)) {
-        path = [path];
-      } else {
-        path = stringToPath(path);
-      }
-    }
-
-    var index = 0;
-    var length = path.length;
-
-    while (object != null && index < length) {
-      object = object[path[index]];
-      index += 1;
-    }
-
-    if (index && index === length) {
-      return object === undefined ? defaultValue : object;
-    } else {
-      return defaultValue;
-    }
-  }
-
-  function debounce(func, wait, options) {
-    var lastArgs, lastThis, maxWait, result, timerId, lastCallTime;
-    var lastInvokeTime = 0;
-    var leading = false;
-    var maxing = false;
-    var trailing = true; // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
-
-    var useRAF = !wait && wait !== 0 && typeof requestAnimationFrame === 'function';
-
-    if (typeof func !== 'function') {
-      throw new TypeError('Expected a function');
-    }
-
-    wait = +wait || 0;
-
-    if (isObject(options)) {
-      leading = !!options.leading;
-      maxing = 'maxWait' in options;
-      maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait;
-      trailing = 'trailing' in options ? !!options.trailing : trailing;
-    }
-
-    function invokeFunc(time) {
-      var args = lastArgs;
-      var thisArg = lastThis;
-      lastArgs = lastThis = undefined;
-      lastInvokeTime = time;
-      result = func.apply(thisArg, args);
-      return result;
-    }
-
-    function startTimer(pendingFunc, wait) {
-      if (useRAF) {
-        cancelAnimationFrame(timerId);
-        return requestAnimationFrame(pendingFunc);
-      }
-
-      return setTimeout(pendingFunc, wait);
-    }
-
-    function leadingEdge(time) {
-      // Reset any `maxWait` timer.
-      lastInvokeTime = time; // Start the timer for the trailing edge.
-
-      timerId = startTimer(timerExpired, wait); // Invoke the leading edge.
-
-      return leading ? invokeFunc(time) : result;
-    }
-
-    function remainingWait(time) {
-      var timeSinceLastCall = time - lastCallTime;
-      var timeSinceLastInvoke = time - lastInvokeTime;
-      var timeWaiting = wait - timeSinceLastCall;
-      return maxing ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke) : timeWaiting;
-    }
-
-    function shouldInvoke(time) {
-      var timeSinceLastCall = time - lastCallTime;
-      var timeSinceLastInvoke = time - lastInvokeTime; // Either this is the first call, activity has stopped and we're at the
-      // trailing edge, the system time has gone backwards and we're treating
-      // it as the trailing edge, or we've hit the `maxWait` limit.
-
-      return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
-    }
-
-    function timerExpired() {
-      var time = Date.now();
-
-      if (shouldInvoke(time)) {
-        return trailingEdge(time);
-      } // Restart the timer.
-
-
-      timerId = startTimer(timerExpired, remainingWait(time));
-    }
-
-    function trailingEdge(time) {
-      timerId = undefined; // Only invoke if we have `lastArgs` which means `func` has been
-      // deBounced at least once.
-
-      if (trailing && lastArgs) {
-        return invokeFunc(time);
-      }
-
-      lastArgs = lastThis = undefined;
-      return result;
-    }
-
-    function debounced() {
-      var time = Date.now();
-      var isInvoking = shouldInvoke(time);
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      lastArgs = args;
-      lastThis = this;
-      lastCallTime = time;
-
-      if (isInvoking) {
-        if (timerId === undefined) {
-          return leadingEdge(lastCallTime);
-        }
-
-        if (maxing) {
-          // Handle invocations in a tight loop.
-          timerId = startTimer(timerExpired, wait);
-          return invokeFunc(lastCallTime);
-        }
-      }
-
-      if (timerId === undefined) {
-        timerId = startTimer(timerExpired, wait);
-      }
-
-      return result;
-    }
-
-    return debounced;
-  }
-
-  function throttle(func, wait, options) {
-    var leading = true;
-    var trailing = true;
-
-    if (typeof func !== 'function') {
-      throw new TypeError('Expected a function');
-    }
-
-    if (isObject(options)) {
-      leading = 'leading' in options ? !!options.leading : leading;
-      trailing = 'trailing' in options ? !!options.trailing : trailing;
-    }
-
-    return debounce(func, wait, {
-      leading: leading,
-      trailing: trailing,
-      maxWait: wait
-    });
-  }
-
-  var pick = (obj, arr) => arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {}); // Only omit the first-level key, shallow copy objec
-
-
-  var omit = (obj, arr) => Object.keys(obj).filter(k => !arr.includes(k)).reduce((acc, key) => (acc[key] = obj[key], acc), {});
-
-  /**
-   * Main entry
-   */
-
   var functions = {
     // version
     version: version,
     noConflict: noConflict,
-    // detecting
+    // device
     ua: ua,
-    isIOS: isIOS,
     isIos: isIOS,
-    isiPhone: isiPhone,
+    isiPhone: iPhone,
     isIPad: isIPad,
     isAndroid: isAndroid,
     isMobile: isMobile,
@@ -2954,11 +2979,11 @@
     isWeixin: isWeixin,
     isNewsApp: isNewsApp,
     isQQ: isQQ,
+    mqqbrowser: mqqbrowser,
     isTenvideo: isTenvideo,
     isIphoneXmodel: isIphoneXmodel,
     ieVersion: ieVersion,
     isIE: isIE,
-    mqqbrowser: mqqbrowser,
     // log
     log: log,
     logs: logs,
@@ -2966,7 +2991,7 @@
     // arguments
     args: args,
     trash: trash,
-    noop: noop,
+    noop: noop$1,
     merge: merge,
     over: over,
     call: call,
@@ -2985,7 +3010,7 @@
     formToObject: formToObject,
     getStyle: getStyle,
     setStyle: setStyle,
-    attr: attr,
+    attr: att,
     // other
     uuid: uuid,
     hash: hash,
@@ -3029,8 +3054,7 @@
     // fill
     fill0: fill0,
     chainAsync: chainAsync,
-    // math
-    math: math,
+    numberFormat: numberFormat,
     // random
     randomColor: randomColor,
     randomA2B: randomA2B,
@@ -3044,7 +3068,7 @@
     imageOptimization: imageOptimization,
     // lodash
     getTag: getTag,
-    hasOwnProperty: hasOwnProperty,
+    hasOwnProperty: hasOwnProperty$1,
     isObject: isObject,
     isArray: isArray,
     isString: isString,
