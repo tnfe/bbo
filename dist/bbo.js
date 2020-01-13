@@ -490,24 +490,6 @@
     });
   };
 
-  function copyToClipboard(str) {
-    var el = document.createElement('textarea');
-    el.value = str;
-    att(el, 'readonly', '');
-    setStyle(el, 'position', 'absolute');
-    setStyle(el, 'left', '-9999px');
-    document.body.appendChild(el);
-    var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
-    el.select();
-    document.execCommand('copy');
-    document.body.removeChild(el);
-
-    if (selected) {
-      document.getSelection().removeAllRanges();
-      document.getSelection().addRange(selected);
-    }
-  }
-
   var elementContains = (parent, child) => parent !== child && parent.contains(child);
 
   var formToObject = form => Array.from(new FormData(form)).reduce((acc, _ref) => {
@@ -1142,7 +1124,7 @@
   }, {});
 
   /**
-   * String
+   * string
    */
   var string = {
     /**
@@ -1920,6 +1902,24 @@
       if (not(e, 'input') && not(e, 'textarea') && not(e, 'select') && not(e, 'menus')) e.preventDefault();
     }
   };
+
+  function copyToClipboard(str) {
+    var el = document.createElement('textarea');
+    el.value = str;
+    att(el, 'readonly', '');
+    setStyle(el, 'position', 'absolute');
+    setStyle(el, 'left', '-9999px');
+    document.body.appendChild(el);
+    var selected = document.getSelection().rangeCount > 0 ? document.getSelection().getRangeAt(0) : false;
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+
+    if (selected) {
+      document.getSelection().removeAllRanges();
+      document.getSelection().addRange(selected);
+    }
+  }
 
   /**
    * Check image size
@@ -3007,7 +3007,7 @@
     log: log,
     logs: logs,
     removeConsole: removeConsole,
-    // arguments
+    // arg(arguments)
     args: args,
     trash: trash,
     noop: noop,
@@ -3024,7 +3024,6 @@
     query: query,
     show: show,
     hide: hide,
-    copyToClipboard: copyToClipboard,
     elementContains: elementContains,
     formToObject: formToObject,
     getStyle: getStyle,
@@ -3039,10 +3038,11 @@
     isTypeof: isTypeof,
     construct: construct,
     paramsName: paramsName,
-    // other function
+    // load
     loadImages: loadImages,
     loadjs: loadjs,
     loadcss: loadcss,
+    // json
     toJson: toJson,
     toJSON: toJson,
     tojson: toJson,
@@ -3055,7 +3055,7 @@
     parseCookie: parseCookie,
     // storage
     storage: storage,
-    // url
+    // http
     getUrlParam: getUrlParam,
     setUrlParam: setUrlParam,
     deleteUrlParam: deleteUrlParam,
@@ -3072,6 +3072,7 @@
     formatDuration: formatDuration,
     // fill
     fill0: fill0,
+    floor: floor,
     chainAsync: chainAsync,
     numberFormat: numberFormat,
     // random
@@ -3079,9 +3080,9 @@
     randomA2B: randomA2B,
     randomFromA2B: randomA2B,
     randomKey: randomKey,
-    floor: floor,
-    // touch
+    // behavior
     lockTouch: lockTouch,
+    copyToClipboard: copyToClipboard,
     // image
     checkImageSize: checkImageSize,
     imageOptimization: imageOptimization,

@@ -1,5 +1,5 @@
 /**
- * String
+ * string
  */
 const string = {
   /**
@@ -234,4 +234,4 @@ const string = {
   }
 };
 
-export { string };
+export default string;

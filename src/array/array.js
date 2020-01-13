@@ -353,4 +353,4 @@ let array = {
   unary: (fn) => (val) => fn(val)
 };
 
-export { array };
+export default array;

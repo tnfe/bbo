@@ -3,7 +3,7 @@
  * Method for safely supporting localStorage sessionStorage 'setItem' 'getItem' 'removeItem' 'removeAll',
  * Some extension method 'has' 'get' adn Store prefix
  *************************************************************************/
-import { string } from '../string/string';
+import string from '../string/string';
 
 const ulocalStorage = window.localStorage;
 const ussesionStorage = window.sessionStorage;

@@ -1,5 +1,5 @@
-import attr from './attr';
-import setStyle from './set_style';
+import attr from '../bom/attr';
+import setStyle from '../bom/set_style';
 
 export default function copyToClipboard(str) {
   const el = document.createElement('textarea');

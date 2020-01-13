@@ -41,7 +41,6 @@ import c from './bom/c';
 import query from './bom/query';
 import show from './bom/show';
 import hide from './bom/hide';
-import copyToClipboard from './bom/copy_to_clipboard';
 import elementContains from './bom/element_contains';
 import formToObject from './bom/form_to_object';
 import getStyle from './bom/get_style';
@@ -104,6 +103,7 @@ import randomKey from './random/random_key';
 
 // behavior
 import lockTouch from './behavior/lock_touch';
+import copyToClipboard from './behavior/copy_to_clipboard';
 
 // image
 import checkImageSize from './image/check_image_size';
@@ -135,8 +135,11 @@ import throttle from './lodash/throttle';
 import pick from './lodash/pick';
 import omit from './lodash/omit';
 
-import { string } from './string/string';
-import { array } from './array/array';
+// string
+import string from './string/string';
+
+// array
+import array from './array/array';
 
 export default {
   // version
@@ -162,7 +165,7 @@ export default {
   log,
   logs,
   removeConsole,
-  // arguments
+  // arg(arguments)
   args,
   trash,
   noop,
@@ -179,7 +182,6 @@ export default {
   query,
   show,
   hide,
-  copyToClipboard,
   elementContains,
   formToObject,
   getStyle,
@@ -194,10 +196,11 @@ export default {
   isTypeof,
   construct,
   paramsName,
-  // other function
+  // load
   loadImages,
   loadjs,
   loadcss,
+  // json
   toJson,
   toJSON: toJson,
   tojson: toJson,
@@ -210,7 +213,7 @@ export default {
   parseCookie,
   // storage
   storage,
-  // url
+  // http
   getUrlParam,
   setUrlParam,
   deleteUrlParam,
@@ -227,6 +230,7 @@ export default {
   formatDuration,
   // fill
   fill0,
+  floor,
   chainAsync,
   numberFormat,
   // random
@@ -234,9 +238,9 @@ export default {
   randomA2B,
   randomFromA2B: randomA2B,
   randomKey,
-  floor,
-  // touch
+  // behavior
   lockTouch,
+  copyToClipboard,
   // image
   checkImageSize,
   imageOptimization,

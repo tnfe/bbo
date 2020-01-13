@@ -109,6 +109,12 @@ import storage from 'bbo/storage';
 </script>
 ```
 
+#### CDN
+
+```js
+// http://mat1.gtimg.com/www/js/libs/bbo.min.js
+````
+
 ### 开发
 
 **依赖nodejs, 请使用terminal/iTerm安装环境。**
