@@ -2990,6 +2990,7 @@
     // device
     ua: ua,
     isIos: isIOS,
+    isIOS: isIOS,
     isiPhone: iPhone,
     isIPad: isIPad,
     isAndroid: isAndroid,
