@@ -6,19 +6,17 @@
 
 ![npm version](https://img.shields.io/npm/v/bbo.svg) ![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size) ![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads) ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-> bbo 是一款实用的JavaScript函数工具库。🐝🐜
+> bbo 项目是一个实用的 js 函数工具库。
 
-### 背景
-
-日常使用node，react，vue，angular，webpack等进行前端开发时，需要编写许多utils方法。 但lodash和underscore并不是万能的，开发中必须不断重写很多函数方法，使用bbo可以简单而紧凑的解决日常开发中的这些问题。
+使用 node，react，vue，angular，webpack 等进行项目开发时，需要编写许多 utils 方法，并且开发中还需要不断重写很多函数，使用 bbo 可以简单经凑地解决这些问题。
 
 ### 概述
 
-每个前端开发人员都有自己的utils库, 这些方法我们高频使用，但又要在每个项目中重写。 [bbo](https://github.com/tnfe/bbo.git) 是一款超小且实用的函数工具库，而且不同于 [lodash](https://github.com/lodash/lodash) [underscore](https://github.com/jashkenas/underscore) [lazy.js](https://github.com/dtao/lazy.js).
+每个前端开发人员都有自己的 utils 库, 这些方法我们高频使用，但又要在每个项目中重写。 [bbo](https://github.com/tnfe/bbo.git) 是一款超小且实用的函数工具库，而且不同于 [lodash](https://github.com/lodash/lodash) [underscore](https://github.com/jashkenas/underscore) [lazy.js](https://github.com/dtao/lazy.js).
 
-项目整理了日常开发中最常用的功能。 这些功能在您的开发中几乎无处不在，并且在主流的函数工具库中找不到。大多数代码来自于高分答案中的[stackoverflow.com](https://stackoverflow.com/) 网站，向原始作者表示敬意。项目在gzip压缩下只有9K, 所以你可以随时随地使用。
+项目整理了日常开发中最常用的功能。 这些功能在您的开发中几乎无处不在，并且在主流的函数工具库中找不到。大多数代码来自于高分答案中的[stackoverflow.com](https://stackoverflow.com/) 网站，向原始作者表示敬意。项目在 gzip 压缩下只有 9K, 所以你可以随时随地使用。
 
-请参阅最新的文档 [Documentation](https://github.ahthw.com/bbo/) 以获取完整的API参考，或者在github上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
+请参阅最新的文档 [Documentation](https://github.ahthw.com/bbo/) 以获取完整的 API 参考，或者在 github 上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
 
 ### 文档
 
@@ -31,31 +29,36 @@
 
 ```js
 let username = bbo.getCookie('username'); // => 'bbo'
-let json =  cookie().getJson(); //  => {a: 1, b: 2}
+let json = cookie().getJson(); //  => {a: 1, b: 2}
 let isiPhone = bbo.isiPhone(); // => true
 
 // X XS, XSMax, XR
-let isIphoneXmodel = bbo.isIphoneXmodel() // => false
+let isIphoneXmodel = bbo.isIphoneXmodel(); // => false
 
 bbo.log('hello world!');
 
-let id = bbo.setTimesout(function(word){
+let id = bbo.setTimesout(
+  function(word) {
     console.log(word);
-    console.log(this);  // => log {index: 3 ,times: 8, over: false}
-}, 1000/20, 8, 'helloWorld')
+    console.log(this); // => log {index: 3 ,times: 8, over: false}
+  },
+  1000 / 20,
+  8,
+  'helloWorld'
+);
 
-bbo.math.numberFormat(1234.56, 2, ',', ' ') // => '1 234,56'
+bbo.math.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56'
 ```
 
 #### 引用
 
 [![bbo](https://nodei.co/npm/bbo.png)](https://npmjs.org/package/bbo)
 
-可以在Node.js, Rollup, Webpack, Browserify等环境中使用。
+可以在 Node.js, Rollup, Webpack, Browserify 等环境中使用。
 
 ![commonjs]
 
-#### 使用npm安装
+#### 使用 npm 安装
 
 ```js
 npm install bbo --save
@@ -92,7 +95,7 @@ import storage from 'bbo/storage';
 
 ![browsers]
 
-直接将js引入到浏览器中
+直接将 js 引入到浏览器中
 
 - [dist/bbo.min.js](./dist/bbo.min.js) , [source map](./dist/bbo.min.js.map) 混淆压缩
 - [dist/bbo.js](./dist/bbo.js) 未压缩
@@ -113,11 +116,11 @@ import storage from 'bbo/storage';
 
 ```js
 //mat1.gtimg.com/www/js/libs/bbo.min.js
-````
+```
 
 ### 开发
 
-**依赖nodejs, 请使用terminal/iTerm安装环境。**
+**依赖 nodejs, 请使用 terminal/iTerm 安装环境。**
 
 构建项目
 
@@ -191,7 +194,7 @@ vuepress build .
 
 ### 贡献者
 
-感谢为bbo做出贡献。
+感谢为 bbo 做出贡献。
 
 [https://github.com/tnfe/bbo/graphs/contributors](https://github.com/tnfe/bbo/graphs/contributors)
 
@@ -205,8 +208,7 @@ Detailed changes for each release are documented in the [release notes](https://
 
 ### License
 
-Bbo is released under the [MIT](http://www.opensource.org/licenses/mit-license) License.
+[MIT](http://www.opensource.org/licenses/mit-license).
 
 [commonjs]: http://mat1.gtimg.com/www/js/libs/raw/commonjs.png
-
 [browsers]: http://mat1.gtimg.com/www/js/libs/raw/browsers.png

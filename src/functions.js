@@ -148,6 +148,7 @@ export default {
   // device
   ua,
   isIos,
+  isIOS: isIos,
   isiPhone,
   isIPad,
   isAndroid,
