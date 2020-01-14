@@ -1,4 +1,4 @@
-<p align="right"><a href="https://github.com/Tnfe/bbo">中文</a> / <a href="https://github.com/tnfe/bbo/blob/master/README_EN.md">English</a></p>
+<p align="right"><a href="./README.md">中文</a> / <a href="./README_EN.md">English</a></p>
 
 ![logo](http://mat1.gtimg.com/www/js/libs/raw/bbo-logo.png)
 
@@ -14,7 +14,7 @@
 
 每个前端开发人员都有自己的 utils 库, 这些方法我们高频使用，但又要在每个项目中重写。 [bbo](https://github.com/tnfe/bbo.git) 是一款超小且实用的函数工具库，而且不同于 [lodash](https://github.com/lodash/lodash) [underscore](https://github.com/jashkenas/underscore) [lazy.js](https://github.com/dtao/lazy.js).
 
-项目整理了日常开发中最常用的功能。 这些功能在您的开发中几乎无处不在，并且在主流的函数工具库中找不到。大多数代码来自于高分答案中的[stackoverflow.com](https://stackoverflow.com/) 网站，向原始作者表示敬意。项目在 gzip 压缩下只有 9K, 所以你可以随时随地使用。
+项目整理了日常开发中最常用的功能。 这些功能在您的开发中几乎无处不在，并且在主流的函数工具库中找不到。大多数代码来自于高分答案中的[stackoverflow.com](https://stackoverflow.com/) 网站，向原始作者表示敬意。项目在 gzip 压缩下只有 7K, 所以你可以随时随地使用。
 
 请参阅最新的文档 [Documentation](https://github.ahthw.com/bbo/) 以获取完整的 API 参考，或者在 github 上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
 
@@ -142,7 +142,7 @@ npm run start
 
 ### 贡献内容
 
-如果你想参与这个项目的共同创作，修改或添加内容，可以先 [Fork](https://github.com/tnfe/bbo) 这个文档的仓库，然后将修改的内容提交 [Pull requests](https://github.com/tnfe/bbo/pulls) ；或者创建 [Issues](https://github.com/tnfe/bbo/issues)。
+如果你想参与这个项目的共同创作，修改或添加内容，可以先 [Fork](https://github.com/tnfe/bbo) 这个项目的仓库，然后将修改的内容提交 [Pull requests](https://github.com/tnfe/bbo/pulls) ；或者创建 [Issues](https://github.com/tnfe/bbo/issues)。
 
 Fork 后的仓库如何同步本仓库？
 
