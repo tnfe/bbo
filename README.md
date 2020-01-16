@@ -198,10 +198,6 @@ vuepress build .
 
 [https://github.com/tnfe/bbo/graphs/contributors](https://github.com/tnfe/bbo/graphs/contributors)
 
-### 参考
-
-[ppo](https://github.com/a-jie/ppo) , [ppo-cli](https://github.com/halldwang/ppo-cli) , [onavo](https://github.com/halldwang/onavo/tree/master) , [30-seconds](https://github.com/30-seconds) , [locutus](https://locutus.io/) , [mnu](https://github.com/ihtml5/mnu.git)
-
 ### Changelog
 
 Detailed changes for each release are documented in the [release notes](https://github.com/tnfe/bbo/releases).
