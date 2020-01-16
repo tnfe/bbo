@@ -136,10 +136,68 @@ import pick from './lodash/pick';
 import omit from './lodash/omit';
 
 // string
-import string from './string/string';
+import trim from './string/trim';
+import fillZero from './string/fill_zero';
+import longUnique from './string/long_unique';
+import stripTags from './string/strip_tags';
+import capitalize from './string/capitalize';
+import deCapitalize from './string/de_capitalize';
+import isAbsoluteURL from './string/is_absolute_url';
+import mapString from './string/map_string';
+import mask from './string/mask';
+import splitLines from './string/split_lines';
+import camelize from './string/camelize';
+import underscored from './string/underscored';
+import dasherize from './string/dasherize';
+import truncate from './string/truncate';
+import byteSize from './string/byte_size';
+import byteLen from './string/byte_len';
+import repeat from './string/repeat';
+import endsWith from './string/ends_with';
+import startsWith from './string/starts_with';
+import containsWith from './string/contains_with';
+import xssFilter from './string/xss_filter';
+import index from './string/index';
+import capwords from './string/capwords';
 
 // array
-import array from './array/array';
+import unique from './array/unique';
+import uniqueBy from './array/unique_by';
+import uniqueFrom from './array/unique_from';
+import random from './array/random';
+import randomSize from './array/random_size';
+import shuffle from './array/shuffle';
+import contains from './array/contains';
+import includesAll from './array/includes_all';
+import includesAny from './array/includes_any';
+import removeAt from './array/remove_at';
+import remove from './array/remove';
+import compact from './array/compact';
+import compactAll from './array/compact_all';
+import pluck from './array/pluck';
+import union from './array/union';
+import unionBy from './array/union_by';
+import unionWith from './array/union_with';
+import intersect from './array/intersect';
+import intersectBy from './array/intersect_by';
+import difference from './array/difference';
+import differenceBy from './array/difference_by';
+import max from './array/max';
+import min from './array/min';
+import equal from './array/equal';
+import allEqual from './array/all_equal';
+import all from './array/all';
+import any from './array/any';
+import chunk from './array/chunk';
+import countBy from './array/count_by';
+import countOccurrences from './array/count_occurrences';
+import drop from './array/drop';
+import dropRight from './array/drop_right';
+import dropWhile from './array/drop_while';
+import dropRightWhile from './array/drop_right_while';
+import column from './array/column';
+import search from './array/search';
+import unary from './array/unary';
 
 export default {
   // version
@@ -271,7 +329,65 @@ export default {
   pick,
   omit,
   // string
-  string,
+  trim,
+  fillZero,
+  longUnique,
+  stripTags,
+  capitalize,
+  deCapitalize,
+  isAbsoluteURL,
+  mapString,
+  mask,
+  splitLines,
+  camelize,
+  underscored,
+  dasherize,
+  truncate,
+  byteSize,
+  byteLen,
+  repeat,
+  endsWith,
+  startsWith,
+  containsWith,
+  xssFilter,
+  index,
+  capwords,
   // array
-  array
+  unique,
+  uniqueBy,
+  uniqueFrom,
+  random,
+  randomSize,
+  shuffle,
+  contains,
+  includesAll,
+  includesAny,
+  removeAt,
+  remove,
+  compact,
+  compactAll,
+  pluck,
+  union,
+  unionBy,
+  unionWith,
+  intersect,
+  intersectBy,
+  difference,
+  differenceBy,
+  max,
+  min,
+  equal,
+  allEqual,
+  all,
+  any,
+  chunk,
+  countBy,
+  countOccurrences,
+  drop,
+  dropRight,
+  dropWhile,
+  dropRightWhile,
+  column,
+  search,
+  unary
 };

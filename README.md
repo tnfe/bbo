@@ -1,4 +1,4 @@
-<p align="right"><a href="./README.md">中文</a> / <a href="./README_EN.md">English</a></p>
+<p align="right"><a href="./README_ZH.md">中文</a> / <a href="./README.md">English</a></p>
 
 ![logo](http://mat1.gtimg.com/www/js/libs/raw/bbo-logo.png)
 
@@ -6,26 +6,66 @@
 
 ![npm version](https://img.shields.io/npm/v/bbo.svg) ![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size) ![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads) ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-> bbo 项目是一个实用的 js 函数工具库。
+> 🐝🐜 bbo is a useful utility collection library with zero dependencies.
 
-使用 node，react，vue，angular，webpack 等进行项目开发时，需要编写许多 utils 方法，并且开发中还需要不断重写很多函数，使用 bbo 可以简单经凑地解决这些问题。
+## Overview
 
-### 概述
+Every frontend developer has his own utils library, and we often write methods that are easily forgotten and highly used. [bbo](https://github.com/tnfe/bbo.git) is a super small and useful utils library for JavaScript. It isn't couping with [lodash](https://github.com/lodash/lodash) [underscore](https://github.com/jashkenas/underscore) [lazy.js](https://github.com/dtao/lazy.js).
 
-每个前端开发人员都有自己的 utils 库, 这些方法我们高频使用，但又要在每个项目中重写。 [bbo](https://github.com/tnfe/bbo.git) 是一款超小且实用的函数工具库，而且不同于 [lodash](https://github.com/lodash/lodash) [underscore](https://github.com/jashkenas/underscore) [lazy.js](https://github.com/dtao/lazy.js).
+I sorted out the most frequently used functions in daily development. These functions are almost ubiquitous in your development, and they cannot be found in lodash and underscore.
 
-项目整理了日常开发中最常用的功能。 这些功能在您的开发中几乎无处不在，并且在主流的函数工具库中找不到。大多数代码来自于高分答案中的[stackoverflow.com](https://stackoverflow.com/) 网站，向原始作者表示敬意。项目在 gzip 压缩下只有 7K, 所以你可以随时随地使用。
+Most code comes from the [stackOverflow](https://stackoverflow.com/) site in the high-score answers, so we pay tribute to the original authors.
 
-请参阅最新的文档 [Documentation](https://github.ahthw.com/bbo/) 以获取完整的 API 参考，或者在 github 上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
+With easy code and less than 7k gzip, bbo can be used anytime and anywhere with no worries.
 
-### 文档
+See the [latest docs/documentation](https://github.ahthw.com/bbo/) for a full API reference or [bbo-docs](https://github.com/halldwang/bbo-docs.git).
 
-- [在线阅读](https://github.ahthw.com/bbo)
-- [文档仓库](https://github.com/halldwang/bbo-docs.git)
+## Why
 
-### 使用
+When you use react, vue, angular，you often need to write a lot of utils methods. But lodash and underscore libraries are not omnipotent. So you have to find a lot of tool libraries. By using bbo, you can solve many small problems in the daily development. It is simple and compact!
 
-#### 范例
+## Documentation
+
+- [Full api documentation on Line](https://github.ahthw.com/bbo)
+- [Github docs](https://github.com/halldwang/bbo-docs.git)
+
+## Functions
+
+| device                           | args                               | fill                                   | times                                | mlodash                          |
+| :------------------------------- | :--------------------------------- | :------------------------------------- | :----------------------------------- | :------------------------------- |
+| [ua][ua]                         | [args][args]                       | [fill0][fill0]                         | [setTimesout][settimesout]           | [getTag][gettag]                 |
+| [isIos][isios]                   | [trash][trash]                     | [floor][floor]                         | [clearTimesout][cleartimesout]       | [hasOwnProperty][hasownproperty] |
+| [isiPhone][isiphone]             | [noop][noop]                       | [chainAsync][chainasync]               | [getDate][getdate]                   | [isObject][isobject]             |
+| [isIPad][isipad]                 | [merge][merge]                     | [numberFormat][numberformat]           | [formatPassTime][formatpasstime]     | [isArray][isarray]               |
+| [isAndroid][isandroid]           | [over][over]                       | **cookie**                             | [formatRemainTime][formatremaintime] | [isString][isstring]             |
+| [isMobile][ismobile]             | [call][call]                       | [cookie][cookie]                       | [formatDuration][formatduration]     | [isBoolean][isboolean]           |
+| [isPC][ispc]                     | **bom**                            | [setCookie][setcookie]                 | **array**                            | [isNumber][isnumber]             |
+| [isWeixin][isweixin]             | [stopPropagation][stopprop]        | [getCookie][getcookie]                 | **string**                           | [isMap][ismap]                   |
+| [isNewsApp][isnewsapp]           | [g][g]                             | [deleteCookie][deletecookie]           |                                      | [isSet][isset]                   |
+| [isQQ][isqq]                     | [gc][gc]                           | [parseCookie][parsecookie]             |                                      | [isFunction][isfunction]         |
+| [mqqbrowser][mqqbrowser]         | [c][c]                             | **http**                               |                                      | [isEmpty][isempty]               |
+| [isTenvideo][istenvideo]         | [query][query]                     | [open][open]                           |                                      | [isShallowEqual][isshallowequal] |
+| [isIphoneXmodel][isiphonexmodel] | [show][show]                       | [getUrlParam][geturlparam]             |                                      | [has][has]                       |
+| [isIE][isie]                     | [hide][hide]                       | [setUrlParam][seturlparam]             |                                      | [toPath][topath]                 |
+| [ieVersion][ieversion]           | [elementContains][elementcontains] | [deleteUrlParam][deleteurlparam]       |                                      | [reduce][reduce]                 |
+| **log**                          | [formToObject][formtoobject]       | [objectParam][objectparam]             |                                      | [forEach][foreach]               |
+| [log][log]                       | [getStyle][getstyle]               | [httpGet][httpget]                     |                                      | [map][map]                       |
+| [logs][logs]                     | [setStyle][setstyle]               | [httpPost][httppost]                   |                                      | [find][find]                     |
+| [removeConsole][removeconsole]   | [attr][attr]                       | **random**                             |                                      | [findIndex][findindex]           |
+| **other**                        | **load**                           | [randomColor][randomcolor]             |                                      | [get][get]                       |
+| [uuid][uuid]                     | [loadImages][loadimages]           | [randomA2B][randoma2b]                 |                                      | [debounce][debounce]             |
+| [hash][hash]                     | [loadjs][loadjs]                   | [randomKey][randomkey]                 |                                      | [throttle][throttle]             |
+| [judge][judge]                   | [loadcss][loadcss]                 | **behavior**                           |                                      | [pick][pick]                     |
+| [getType][gettype]               | **json**                           | [trigger][trigger]                     |                                      | [omit][omit]                     |
+| [isTypeof][istypeof]             | [toJson][tojson]                   | [lockTouch][locktouch]                 |                                      |                                  |
+| [construct][construct]           | **storage**                        | [copyToClipboard][copytoclipboard]     |                                      |                                  |
+| [paramsName][paramsname]         | [bbo.storage][storage]             | **image**                              |                                      |                                  |
+|                                  |                                    | [checkImageSize][checkimagesize]       |                                      |                                  |
+|                                  |                                    | [imageOptimization][imageoptimization] |                                      |                                  |
+
+### Usage
+
+#### example
 
 ```js
 let username = bbo.getCookie('username'); // => 'bbo'
@@ -50,61 +90,65 @@ let id = bbo.setTimesout(
 bbo.math.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56'
 ```
 
-#### 引用
+#### Install
 
-[![bbo](https://nodei.co/npm/bbo.png)](https://npmjs.org/package/bbo)
-
-可以在 Node.js, Rollup, Webpack, Browserify 等环境中使用。
+bbo supports Node.js, Rollup, Webpack, Browserify。
 
 ![commonjs]
 
-#### 使用 npm 安装
+#### npm
+
+[![bbo](https://nodei.co/npm/bbo.png)](https://npmjs.org/package/bbo)
+
+Install the library with npm into your local modules directory:
 
 ```js
 npm install bbo --save
 ```
 
-#### CommonJS
+#### CommonJS modules
 
-使用整个库
+Then in your application require the entire library:
 
 ```js
 const bbo = require('bbo');
 bbo.isiPhone(); // => 'true'
 ```
 
-个别功能：
+Or require individual functions:
 
 ```js
 const cookie = require('bbo/cookie');
 ```
 
-#### ES2015
+#### ES2015 modules
+
+Bbo is compatible with ES2015 modules to import the entire library:
 
 ```js
 import bbo from 'bbo';
 ```
 
-导入单个功能：
+Or import individual functions:
 
 ```js
 import storage from 'bbo/storage';
 ```
 
-#### 浏览器
+#### Browser
 
 ![browsers]
 
-直接将 js 引入到浏览器中
+Load the UMD builds directly into browser's web page:
 
-- [dist/bbo.min.js](./dist/bbo.min.js) , [source map](./dist/bbo.min.js.map) 混淆压缩
-- [dist/bbo.js](./dist/bbo.js) 未压缩
+- [dist/bbo.min.js](./dist/bbo.min.js) , minified production-ready, with [source map](./dist/bbo.min.js.map)
+- [dist/bbo.js](./dist/bbo.js) uncompressed with comments
 
 ```js
 <script src="bbo.min.js" type="text/javascript"></script>
 ```
 
-使用`bbo`为全局变量
+Then a global variable `bbo` is exposed for the entire library:
 
 ```js
 <script type="text/javascript">
@@ -118,14 +162,12 @@ import storage from 'bbo/storage';
 //mat1.gtimg.com/www/js/libs/bbo.min.js
 ```
 
-### 开发
+## Building
 
-**依赖 nodejs, 请使用 terminal/iTerm 安装环境。**
+**node is a dependency, use terminal/iTerm to install it with**
 
-构建项目
-
-```js
-git clone https://github.com/tnfe/bbo.git
+```JavaScript
+git clone git://github.com/tnfe/bbo.git
 
 ...
 npm install
@@ -133,78 +175,157 @@ npm run lint
 npm run build
 ```
 
-运行项目
+And run example
 
-```js
+```JavaScript
 npm run start
-// 访问 http://localhost:8080
+//visit http://localhost:8080
 ```
 
-### 贡献内容
-
-如果你想参与这个项目的共同创作，修改或添加内容，可以先 [Fork](https://github.com/tnfe/bbo) 这个项目的仓库，然后将修改的内容提交 [Pull requests](https://github.com/tnfe/bbo/pulls) ；或者创建 [Issues](https://github.com/tnfe/bbo/issues)。
-
-Fork 后的仓库如何同步本仓库？
-
-```bash
-# 添加 upstream 源，只需执行一次
-git remote add upstream git@github.com:tnfe/bbo.git
-
-# 拉取远程代码
-git pull upstream master
-
-# 提交修改
-git add .
-git commit
-
-# 更新 fork 仓库
-git push origin master
-```
-
-更多参考： [Syncing a fork](https://help.github.com/articles/syncing-a-fork/)
-
-### 贡献文档
-
-文档使用 [Vuepress](https://vuepress.vuejs.org/zh/) 撰写并生成[网站](https://github.ahthw.com/bbo/)，请查看[文档仓库](https://github.com/halldwang/bbo-docs.git) `package.json` 中的 `scripts` 配置和 `/docs` 目录中的脚本来了解文档的构建和发布过程。
-
-```bash
-# 初始化 nodejs 依赖
-npm install
-
-# 安装 vuepress 插件
-npm install -g vuepress
-
-# 进入图书目录
-cd docs
-
-# 开始写作
-vuepress dev .
-
-# 构建静态文件
-vuepress build .
-
-# 查看本地文档内容
-# 访问 http://localhost:8080
-
-```
-
-### 维护者
+## Maintainers
 
 [@halldwang](https://github.com/halldwang).
 
-### 贡献者
+## Contribution
 
-感谢为 bbo 做出贡献。
+Contribution is welcome!
 
-[https://github.com/tnfe/bbo/graphs/contributors](https://github.com/tnfe/bbo/graphs/contributors)
+- Create a pull request containing bug fixes or new features. 😎
 
-### Changelog
+- [Propose](https://github.com/tnfe/bbo/issues/news) new functions, improvements, better documentation
+
+See [contributors](https://github.com/tnfe/bbo/graphs/contributors).
+
+If you want to participate in the creation of this project,Edit or add function,[Fork](https://github.com/tnfe/bbo) this project,Modify and [Pull requests](https://github.com/tnfe/bbo/pulls) or new [Issues](https://github.com/tnfe/bbo/issues).
+
+How to sync？
+
+```bash
+# Add upstream origin，Just execute it once
+git remote add upstream git@github.com:tnfe/bbo.git
+
+# Pull remote code
+git pull upstream master
+
+# Commit changes
+git add .
+git commit
+
+# update fork
+git push origin master
+```
+
+More: [Syncing a fork](https://help.github.com/articles/syncing-a-fork/)
+
+## Changelog
 
 Detailed changes for each release are documented in the [release notes](https://github.com/tnfe/bbo/releases).
 
-### License
+## License
 
 [MIT](http://www.opensource.org/licenses/mit-license).
 
 [commonjs]: http://mat1.gtimg.com/www/js/libs/raw/commonjs.png
 [browsers]: http://mat1.gtimg.com/www/js/libs/raw/browsers.png
+[ua]: https://tnfe.github.io/bbo/#ua
+[isios]: https://tnfe.github.io/bbo/#isios
+[isiphone]: https://tnfe.github.io/bbo/#isiphone
+[isipad]: https://tnfe.github.io/bbo/#isipad
+[isandroid]: https://tnfe.github.io/bbo/#isandroid
+[ismobile]: https://tnfe.github.io/bbo/#ismobile
+[ispc]: https://tnfe.github.io/bbo/#ispc
+[isweixin]: https://tnfe.github.io/bbo/#isweixin
+[isnewsapp]: https://tnfe.github.io/bbo/#isnewsapp
+[isqq]: https://tnfe.github.io/bbo/#isqq
+[mqqbrowser]: https://tnfe.github.io/bbo/#mqqbrowser
+[istenvideo]: https://tnfe.github.io/bbo/#istenvideo
+[isiphonexmodel]: https://tnfe.github.io/bbo/#isiphonexmodel
+[isie]: https://tnfe.github.io/bbo/#isie
+[ieversion]: https://tnfe.github.io/bbo/#ieversion
+[log]: https://tnfe.github.io/bbo/#log
+[logs]: https://tnfe.github.io/bbo/#logs
+[removeconsole]: https://tnfe.github.io/bbo/#removeconsole
+[uuid]: https://tnfe.github.io/bbo/#uuid
+[hash]: https://tnfe.github.io/bbo/#hash
+[judge]: https://tnfe.github.io/bbo/#judge
+[gettype]: https://tnfe.github.io/bbo/#gettype
+[istypeof]: https://tnfe.github.io/bbo/#istypeof
+[construct]: https://tnfe.github.io/bbo/#construct
+[paramsname]: https://tnfe.github.io/bbo/#paramsname
+[args]: https://tnfe.github.io/bbo/#args
+[trash]: https://tnfe.github.io/bbo/#trash
+[noop]: https://tnfe.github.io/bbo/#noop
+[merge]: https://tnfe.github.io/bbo/#merge
+[over]: https://tnfe.github.io/bbo/#over
+[call]: https://tnfe.github.io/bbo/#call
+[stopprop]: https://tnfe.github.io/bbo/#call
+[g]: https://tnfe.github.io/bbo/#g
+[gc]: https://tnfe.github.io/bbo/#gc
+[c]: https://tnfe.github.io/bbo/#c
+[query]: https://tnfe.github.io/bbo/#query
+[show]: https://tnfe.github.io/bbo/#show
+[hide]: https://tnfe.github.io/bbo/#hide
+[elementcontains]: https://tnfe.github.io/bbo/#elementcontains
+[formtoobject]: https://tnfe.github.io/bbo/#formtoobject
+[getstyle]: https://tnfe.github.io/bbo/#getstyle
+[setstyle]: https://tnfe.github.io/bbo/#setstyle
+[attr]: https://tnfe.github.io/bbo/#attr
+[loadimages]: https://tnfe.github.io/bbo/#loadimages
+[loadjs]: https://tnfe.github.io/bbo/#loadjs
+[loadcss]: https://tnfe.github.io/bbo/#loadcss
+[tojson]: https://tnfe.github.io/bbo/#tojson
+[cookie]: https://tnfe.github.io/bbo/#cookie
+[setcookie]: https://tnfe.github.io/bbo/#setCookie
+[getcookie]: https://tnfe.github.io/bbo/#getcookie
+[deletecookie]: https://tnfe.github.io/bbo/#deletecookie
+[parsecookie]: https://tnfe.github.io/bbo/#parsecookie
+[storage]: https://tnfe.github.io/bbo/#storage
+[open]: https://tnfe.github.io/bbo/#open
+[geturlparam]: https://tnfe.github.io/bbo/#geturlparam
+[seturlparam]: https://tnfe.github.io/bbo/#seturlparam
+[deleteurlparam]: https://tnfe.github.io/bbo/#deleteurlparam
+[objectparam]: https://tnfe.github.io/bbo/#objectparam
+[httpget]: https://tnfe.github.io/bbo/#httpget
+[httppost]: https://tnfe.github.io/bbo/#httppost
+[settimesout]: https://tnfe.github.io/bbo/#settimesout
+[cleartimesout]: https://tnfe.github.io/bbo/#cleartimesout
+[getdate]: https://tnfe.github.io/bbo/#getdate
+[formatpasstime]: https://tnfe.github.io/bbo/#formatpasstime
+[formatremaintime]: https://tnfe.github.io/bbo/#formatremaintime
+[formatduration]: https://tnfe.github.io/bbo/#formatduration
+[fill0]: https://tnfe.github.io/bbo/#fill0
+[floor]: https://tnfe.github.io/bbo/#floor
+[chainasync]: https://tnfe.github.io/bbo/#chainasync
+[numberformat]: https://tnfe.github.io/bbo/#numberformat
+[randomcolor]: https://tnfe.github.io/bbo/#randomcolor
+[randoma2b]: https://tnfe.github.io/bbo/#randoma2b
+[randomkey]: https://tnfe.github.io/bbo/#randomkey
+[trigger]: https://tnfe.github.io/bbo/#trigger
+[locktouch]: https://tnfe.github.io/bbo/#locktouch
+[copytoclipboard]: https://tnfe.github.io/bbo/#copytoclipboard
+[checkimagesize]: https://tnfe.github.io/bbo/#checkimagesize
+[imageoptimization]: https://tnfe.github.io/bbo/#imageoptimization
+[gettag]: https://tnfe.github.io/bbo/#gettag
+[hasownproperty]: https://tnfe.github.io/bbo/#hasownproperty
+[isobject]: https://tnfe.github.io/bbo/#isobject
+[isarray]: https://tnfe.github.io/bbo/#isarray
+[isstring]: https://tnfe.github.io/bbo/#isstring
+[isboolean]: https://tnfe.github.io/bbo/#isboolean
+[isnumber]: https://tnfe.github.io/bbo/#isnumber
+[ismap]: https://tnfe.github.io/bbo/#ismap
+[isset]: https://tnfe.github.io/bbo/#isset
+[isfunction]: https://tnfe.github.io/bbo/#isfunction
+[isempty]: https://tnfe.github.io/bbo/#isempty
+[isshallowequal]: https://tnfe.github.io/bbo/#isshallowequal
+[has]: https://tnfe.github.io/bbo/#has
+[reduce]: https://tnfe.github.io/bbo/#reduce
+[foreach]: https://tnfe.github.io/bbo/#foreach
+[map]: https://tnfe.github.io/bbo/#map
+[findindex]: https://tnfe.github.io/bbo/#findindex
+[find]: https://tnfe.github.io/bbo/#find
+[topath]: https://tnfe.github.io/bbo/#topath
+[get]: https://tnfe.github.io/bbo/#get
+[debounce]: https://tnfe.github.io/bbo/#debounce
+[throttle]: https://tnfe.github.io/bbo/#throttle
+[pick]: https://tnfe.github.io/bbo/#pick
+[omit]: https://tnfe.github.io/bbo/#omit

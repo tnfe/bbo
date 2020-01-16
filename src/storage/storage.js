@@ -3,7 +3,7 @@
  * Method for safely supporting localStorage sessionStorage 'setItem' 'getItem' 'removeItem' 'removeAll',
  * Some extension method 'has' 'get' adn Store prefix
  *************************************************************************/
-import string from '../string/string';
+import containsWith from '../string/contains_with';
 
 const ulocalStorage = window.localStorage;
 const ussesionStorage = window.sessionStorage;
@@ -81,7 +81,7 @@ class Storage {
 
   removeAll() {
     Object.keys(this._storage).forEach((k) => {
-      if (string.contains(k, this.prefix)) {
+      if (containsWith(k, this.prefix)) {
         this._remove(`${k}`);
       }
     });
