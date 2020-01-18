@@ -578,6 +578,268 @@
     return /\(\s*([\s\S]*?)\s*\)/.exec(fn.toString())[1].split(/\s*,\s*/);
   }
 
+  function getTag(src) {
+    return Object.prototype.toString.call(src);
+  }
+
+  function isFunction(func) {
+    return getTag(func) === '[object Function]';
+  }
+
+  function isObject(obj) {
+    return getTag(obj) === '[object Object]';
+  }
+
+  function isArray(arr) {
+    return getTag(arr) === '[object Array]';
+  }
+
+  function forEach(src, func) {
+    var i = 0;
+
+    if (isArray(src)) {
+      while (i < src.length) {
+        var rst = func(src[i], i, src);
+
+        if (rst === false) {
+          break;
+        }
+
+        i += 1;
+      }
+    } else if (isObject(src)) {
+      var keys = Object.keys(src);
+
+      while (i < keys.length) {
+        var key = keys[i];
+
+        var _rst = func(src[key], key, src);
+
+        if (_rst === false) {
+          break;
+        }
+
+        i += 1;
+      }
+    }
+  }
+
+  /* eslint-disable no-self-compare */
+  function is(x, y) {
+    // inlined Object.is polyfill to avoid requiring consumers ship their own
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      // Added the nonzero y check to make Flow happy, but it is redundant
+      return x !== 0 || y !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+
+  function isShallowEqual(objA, objB) {
+    if (is(objA, objB)) {
+      return true;
+    }
+
+    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
+      return false;
+    }
+
+    var keysA = Object.keys(objA);
+    var keysB = Object.keys(objB);
+
+    if (keysA.length !== keysB.length) {
+      return false;
+    }
+
+    var i = 0;
+
+    while (i < keysA.length) {
+      if (!hasOwnProperty(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+        return false;
+      }
+
+      i += 1;
+    }
+
+    return true;
+  }
+
+  function findIndex(src, func) {
+    var rst = -1;
+    forEach(src, (item, index, obj) => {
+      if (isFunction(func)) {
+        if (func(item, index, obj) === true) {
+          rst = index;
+          return false;
+        }
+      } else if (is(item, func)) {
+        rst = index;
+        return false;
+      } else if (isObject(item) && isObject(func)) {
+        var subEqual = true;
+        forEach(func, (v, k) => {
+          subEqual = isShallowEqual(item[k], v);
+          return subEqual;
+        });
+
+        if (subEqual) {
+          rst = index;
+          return false;
+        }
+      }
+    });
+    return rst;
+  }
+
+  /**
+  * function handleOne(a, b, c) {
+  *   console.log('one', a, b, c);
+  * }
+  * 
+  * function handleSecond(a, b, c) {
+  *   console.log('two', a, b, c);
+  * }
+  * 
+  * function handleThird(a, b, c) {
+  *   console.log('three', a, b, c);
+  * }
+  * 
+  * emitter
+  *   .on('demo', handleOne)
+  *   .once('demo', handleSecond)
+  *   .on('demo', handleThird);
+  * 
+  * emitter.emit('demo', [1, 2, 3]);
+   */
+
+  function EventEmitter() {
+    this.__events = {};
+  }
+
+  function isListener(listener) {
+    if (isFunction(listener)) {
+      return true;
+    } else if (listener && isObject(listener)) {
+      return isListener(listener.listener);
+    } else {
+      return false;
+    }
+  }
+
+  var prototype = EventEmitter.prototype;
+  /**
+   * on
+   * @param  {String} eventName
+   * @param  {Function} listener
+   * @return {Object}
+   */
+
+  prototype.on = function (eventName, listener) {
+    if (!eventName || !listener) return;
+
+    if (!isListener(listener)) {
+      throw new TypeError('listener is a function');
+    }
+
+    var events = this.__events;
+    var listeners = events[eventName] = events[eventName] || [];
+    var listenerIsWrapped = isObject(listener); // not repeat
+
+    if (findIndex(listeners, listener) === -1) {
+      var listenerOnce = {
+        listener: listener,
+        once: false
+      };
+      listeners.push(listenerIsWrapped ? listener : listenerOnce);
+      console.log(listeners);
+    }
+
+    return this;
+  };
+  /**
+   * once
+   * @param  {String} eventName
+   * @param  {Function} listener
+   * @return {Object} can chained call
+   */
+
+
+  prototype.once = function (eventName, listener) {
+    return this.on(eventName, {
+      listener: listener,
+      once: true
+    });
+  };
+  /**
+   * off
+   * @param  {String} eventName
+   * @param  {Function} listener
+   * @return {Object}  can chained call
+   */
+
+
+  prototype.off = function (eventName, listener) {
+    var listeners = this.__events[eventName];
+    if (!listeners) return;
+    var index;
+
+    for (var i = 0, len = listeners.length; i < len; i++) {
+      if (listeners[i] && listeners[i].listener === listener) {
+        index = i;
+        break;
+      }
+    }
+
+    if (typeof index !== 'undefined') {
+      listeners.splice(index, 1, null);
+    }
+
+    return this;
+  };
+  /**
+   * emit
+   * @param  {String} eventName
+   * @param  {Array} args
+   * @return {Object} can chained call
+   */
+
+
+  prototype.emit = function (eventName, args) {
+    var listeners = this.__events[eventName];
+    if (!listeners) return;
+
+    for (var i = 0; i < listeners.length; i++) {
+      var listener = listeners[i];
+
+      if (listener) {
+        listener.listener.apply(this, args || []);
+
+        if (listener.once) {
+          this.off(eventName, listener.listener);
+        }
+      }
+    }
+
+    return this;
+  };
+  /**
+   * allOff && allOne
+   * @param  {String[]}
+   */
+
+
+  prototype.allOff = function (eventName) {
+    if (eventName && this.__events[eventName]) {
+      this.__events[eventName] = [];
+    } else {
+      this.__events = {};
+    }
+  };
+
   function loadImages(options) {
     var len = 0;
     var index = 0;
@@ -1800,20 +2062,8 @@
     });
   };
 
-  function getTag(src) {
-    return Object.prototype.toString.call(src);
-  }
-
   function hasOwnProperty$1(obj, keyName) {
     return Object.prototype.hasOwnProperty.call(obj, keyName);
-  }
-
-  function isObject(obj) {
-    return getTag(obj) === '[object Object]';
-  }
-
-  function isArray(arr) {
-    return getTag(arr) === '[object Array]';
   }
 
   function isString(str) {
@@ -1836,10 +2086,6 @@
     return getTag(set) === '[object Set]';
   }
 
-  function isFunction(func) {
-    return getTag(func) === '[object Function]';
-  }
-
   /* eslint-disable no-eq-null */
   function isEmpty(value) {
     if (value == null) {
@@ -1856,50 +2102,6 @@
 
     if (isMap(value) || isSet(value)) {
       return value.size === 0;
-    }
-
-    return true;
-  }
-
-  /* eslint-disable no-self-compare */
-  function is(x, y) {
-    // inlined Object.is polyfill to avoid requiring consumers ship their own
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      // Added the nonzero y check to make Flow happy, but it is redundant
-      return x !== 0 || y !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-
-  function isShallowEqual(objA, objB) {
-    if (is(objA, objB)) {
-      return true;
-    }
-
-    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-      return false;
-    }
-
-    var keysA = Object.keys(objA);
-    var keysB = Object.keys(objB);
-
-    if (keysA.length !== keysB.length) {
-      return false;
-    }
-
-    var i = 0;
-
-    while (i < keysA.length) {
-      if (!hasOwnProperty(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
-        return false;
-      }
-
-      i += 1;
     }
 
     return true;
@@ -2004,36 +2206,6 @@
     return acc;
   }
 
-  function forEach(src, func) {
-    var i = 0;
-
-    if (isArray(src)) {
-      while (i < src.length) {
-        var rst = func(src[i], i, src);
-
-        if (rst === false) {
-          break;
-        }
-
-        i += 1;
-      }
-    } else if (isObject(src)) {
-      var keys = Object.keys(src);
-
-      while (i < keys.length) {
-        var key = keys[i];
-
-        var _rst = func(src[key], key, src);
-
-        if (_rst === false) {
-          break;
-        }
-
-        i += 1;
-      }
-    }
-  }
-
   function map(src, func) {
     var rst = [];
     var i = 0;
@@ -2077,33 +2249,6 @@
 
         if (subEqual) {
           rst = item;
-          return false;
-        }
-      }
-    });
-    return rst;
-  }
-
-  function findIndex(src, func) {
-    var rst = -1;
-    forEach(src, (item, index, obj) => {
-      if (isFunction(func)) {
-        if (func(item, index, obj) === true) {
-          rst = index;
-          return false;
-        }
-      } else if (is(item, func)) {
-        rst = index;
-        return false;
-      } else if (isObject(item) && isObject(func)) {
-        var subEqual = true;
-        forEach(func, (v, k) => {
-          subEqual = isShallowEqual(item[k], v);
-          return subEqual;
-        });
-
-        if (subEqual) {
-          rst = index;
           return false;
         }
       }
@@ -3039,6 +3184,7 @@
     isTypeof: isTypeof,
     construct: construct,
     paramsName: paramsName,
+    eventEmitter: EventEmitter,
     // load
     loadImages: loadImages,
     loadjs: loadjs,

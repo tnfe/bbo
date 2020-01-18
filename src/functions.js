@@ -55,6 +55,7 @@ import getType from './other/get_type';
 import isTypeof from './other/is_typeof';
 import construct from './other/construct';
 import paramsName from './other/params_name';
+import eventEmitter from './other/event_emitter';
 
 // load
 import loadImages from './load/load_images';
@@ -255,6 +256,7 @@ export default {
   isTypeof,
   construct,
   paramsName,
+  eventEmitter,
   // load
   loadImages,
   loadjs,

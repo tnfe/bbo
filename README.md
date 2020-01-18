@@ -60,18 +60,18 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [isTypeof][istypeof]                 | [fill0][fill0]                         | [isSet][isset]                     |                                | [allEqual][allequal]                 |
 | [construct][construct]               | [floor][floor]                         | [isFunction][isfunction]           |                                | [all][all]                           |
 | [paramsName][paramsname]             | [chainAsync][chainasync]               | [isEmpty][isempty]                 |                                | [any][any]                           |
-| **times**                            | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   |                                | [chunk][chunk]                       |
-| [setTimesout][settimesout]           | **cookie**                             | [has][has]                         |                                | [countBy][countby]                   |
-| [clearTimesout][cleartimesout]       | [cookie][cookie]                       | [toPath][topath]                   |                                | [countOccurrences][countoccurrences] |
-| [getDate][getdate]                   | [setCookie][setcookie]                 | [reduce][reduce]                   |                                | [drop][drop]                         |
-| [formatPassTime][formatpasstime]     | [getCookie][getcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
-| [formatRemainTime][formatremaintime] | [deleteCookie][deletecookie]           | [map][map]                         |                                | [dropWhile][dropwhile]               |
-| [formatDuration][formatduration]     | [parseCookie][parsecookie]             | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
-| **json**                             | **image**                              | [findIndex][findindex]             |                                | [column][column]                     |
-| [toJson][tojson]                     | [checkImageSize][checkimagesize]       | [get][get]                         |                                | [search][search]                     |
-| **storage**                          | [imageOptimization][imageoptimization] | [debounce][debounce]               |                                | [unary][unary]                       |
-| [storage][storage]                   |                                        | [throttle][throttle]               |                                |                                      |
-|                                      |                                        | [pick][pick]                       |                                |                                      |
+| [eventEmitter][eventemitter]         | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   |                                | [chunk][chunk]                       |
+| **times**                            | **cookie**                             | [has][has]                         |                                | [countBy][countby]                   |
+| [setTimesout][settimesout]           | [cookie][cookie]                       | [toPath][topath]                   |                                | [countOccurrences][countoccurrences] |
+| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [reduce][reduce]                   |                                | [drop][drop]                         |
+| [getDate][getdate]                   | [getCookie][getcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
+| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [map][map]                         |                                | [dropWhile][dropwhile]               |
+| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
+| [formatDuration][formatduration]     | **image**                              | [findIndex][findindex]             |                                | [column][column]                     |
+| **json**                             | [checkImageSize][checkimagesize]       | [get][get]                         |                                | [search][search]                     |
+| [toJson][tojson]                     | [imageOptimization][imageoptimization] | [debounce][debounce]               |                                | [unary][unary]                       |
+| **storage**                          |                                        | [throttle][throttle]               |                                |                                      |
+| [storage][storage]                   |                                        | [pick][pick]                       |                                |                                      |
 |                                      |                                        | [omit][omit]                       |                                |                                      |
 
 ### Usage
@@ -263,6 +263,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [istypeof]: https://tnfe.github.io/bbo/#istypeof
 [construct]: https://tnfe.github.io/bbo/#construct
 [paramsname]: https://tnfe.github.io/bbo/#paramsname
+[eventemitter]: https://tnfe.github.io/bbo/#eventemitter
 [args]: https://tnfe.github.io/bbo/#args
 [trash]: https://tnfe.github.io/bbo/#trash
 [noop]: https://tnfe.github.io/bbo/#noop
