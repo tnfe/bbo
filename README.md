@@ -40,7 +40,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [isAndroid][isandroid]               | [over][over]                           | [objectParam][objectparam]         | [capitalize][capitalize]       | [randomSize][randomsize]             |
 | [isMobile][ismobile]                 | [call][call]                           | [httpGet][httpget]                 | [deCapitalize][decapitalize]   | [shuffle][shuffle]                   |
 | [isPC][ispc]                         | **bom**                                | [httpPost][httppost]               | [isAbsoluteURL][isabsoluteurl] | [contains][contains]                 |
-| [isWeixin][isweixin]                 | [stopPropagation][stopprop]            | **random**                         | [mapString][mapstring]         | [includesAll][includesall]           |
+| [isWeixin][isweixin]                 | [stopPropagation][stoppropagation]     | **random**                         | [mapString][mapstring]         | [includesAll][includesall]           |
 | [isNewsApp][isnewsapp]               | [g][g]                                 | [randomColor][randomcolor]         | [mask][mask]                   | [includesAny][includesany]           |
 | [isQQ][isqq]                         | [gc][gc]                               | [randomA2B][randoma2b]             | [splitLines][splitlines]       | [removeAt][removeat]                 |
 | [mqqbrowser][mqqbrowser]             | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
@@ -270,7 +270,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [merge]: https://tnfe.github.io/bbo/#merge
 [over]: https://tnfe.github.io/bbo/#over
 [call]: https://tnfe.github.io/bbo/#call
-[stopprop]: https://tnfe.github.io/bbo/#call
+[stoppropagation]: https://tnfe.github.io/bbo/#stoppropagation
 [g]: https://tnfe.github.io/bbo/#g
 [gc]: https://tnfe.github.io/bbo/#gc
 [c]: https://tnfe.github.io/bbo/#c
