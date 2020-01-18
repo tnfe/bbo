@@ -23,6 +23,51 @@
 - [在线阅读](https://github.ahthw.com/bbo)
 - [文档仓库](https://github.com/halldwang/bbo-docs.git)
 
+## 功能
+
+| device                               | args                                   | http                               | string                         | array                                |
+| :----------------------------------- | :------------------------------------- | :--------------------------------- | :----------------------------- | :----------------------------------- |
+| [ua][ua]                             | [args][args]                           | [open][open]                       | [trim][trim]                   | [unique][unique]                     |
+| [isIos][isios]                       | [trash][trash]                         | [getUrlParam][geturlparam]         | [fillZero][fillzero]           | [uniqueBy][uniqueby]                 |
+| [isiPhone][isiphone]                 | [noop][noop]                           | [setUrlParam][seturlparam]         | [longUnique][longunique]       | [uniqueFrom][uniquefrom]             |
+| [isIPad][isipad]                     | [merge][merge]                         | [deleteUrlParam][deleteurlparam]   | [stripTags][striptags]         | [random][random]                     |
+| [isAndroid][isandroid]               | [over][over]                           | [objectParam][objectparam]         | [capitalize][capitalize]       | [randomSize][randomsize]             |
+| [isMobile][ismobile]                 | [call][call]                           | [httpGet][httpget]                 | [deCapitalize][decapitalize]   | [shuffle][shuffle]                   |
+| [isPC][ispc]                         | **bom**                                | [httpPost][httppost]               | [isAbsoluteURL][isabsoluteurl] | [contains][contains]                 |
+| [isWeixin][isweixin]                 | [stopPropagation][stoppropagation]     | **random**                         | [mapString][mapstring]         | [includesAll][includesall]           |
+| [isNewsApp][isnewsapp]               | [g][g]                                 | [randomColor][randomcolor]         | [mask][mask]                   | [includesAny][includesany]           |
+| [isQQ][isqq]                         | [gc][gc]                               | [randomA2B][randoma2b]             | [splitLines][splitlines]       | [removeAt][removeat]                 |
+| [mqqbrowser][mqqbrowser]             | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
+| [isTenvideo][istenvideo]             | [query][query]                         | **behavior**                       | [underscored][underscored]     | [compact][compact]                   |
+| [isIphoneXmodel][isiphonexmodel]     | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [compactAll][compactall]             |
+| [isIE][isie]                         | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [pluck][pluck]                       |
+| [ieVersion][ieversion]               | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [union][union]                       |
+| **log**                              | [formToObject][formtoobject]           | **mlodash**                        | [byteLen][bytelen]             | [unionBy][unionby]                   |
+| [log][log]                           | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [unionWith][unionwith]               |
+| [logs][logs]                         | [setStyle][setstyle]                   | [hasOwnProperty][hasownproperty]   | [endsWith][endswith]           | [intersect][intersect]               |
+| [removeConsole][removeconsole]       | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
+| **other**                            | **load**                               | [isArray][isarray]                 | [containsWith][containswith]   | [difference][difference]             |
+| [uuid][uuid]                         | [loadImages][loadimages]               | [isString][isstring]               | [xssFilter][xssfilter]         | [differenceBy][differenceby]         |
+| [hash][hash]                         | [loadjs][loadjs]                       | [isBoolean][isboolean]             | [index][index]                 | [max][max]                           |
+| [judge][judge]                       | [loadcss][loadcss]                     | [isNumber][isnumber]               | [capwords]                     | [min][min]                           |
+| [getType][gettype]                   | **fill**                               | [isMap][ismap]                     |                                | [equal][equal]                       |
+| [isTypeof][istypeof]                 | [fill0][fill0]                         | [isSet][isset]                     |                                | [allEqual][allequal]                 |
+| [construct][construct]               | [floor][floor]                         | [isFunction][isfunction]           |                                | [all][all]                           |
+| [paramsName][paramsname]             | [chainAsync][chainasync]               | [isEmpty][isempty]                 |                                | [any][any]                           |
+| [eventEmitter][eventemitter]         | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   |                                | [chunk][chunk]                       |
+| **times**                            | **cookie**                             | [has][has]                         |                                | [countBy][countby]                   |
+| [setTimesout][settimesout]           | [cookie][cookie]                       | [toPath][topath]                   |                                | [countOccurrences][countoccurrences] |
+| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [reduce][reduce]                   |                                | [drop][drop]                         |
+| [getDate][getdate]                   | [getCookie][getcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
+| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [map][map]                         |                                | [dropWhile][dropwhile]               |
+| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
+| [formatDuration][formatduration]     | **image**                              | [findIndex][findindex]             |                                | [column][column]                     |
+| **json**                             | [checkImageSize][checkimagesize]       | [get][get]                         |                                | [search][search]                     |
+| [toJson][tojson]                     | [imageOptimization][imageoptimization] | [debounce][debounce]               |                                | [unary][unary]                       |
+| **storage**                          |                                        | [throttle][throttle]               |                                |                                      |
+| [storage][storage]                   |                                        | [pick][pick]                       |                                |                                      |
+|                                      |                                        | [omit][omit]                       |                                |                                      |
+
 ### 使用
 
 #### 范例
@@ -208,3 +253,166 @@ Detailed changes for each release are documented in the [release notes](https://
 
 [commonjs]: http://mat1.gtimg.com/www/js/libs/raw/commonjs.png
 [browsers]: http://mat1.gtimg.com/www/js/libs/raw/browsers.png
+[ua]: https://tnfe.github.io/bbo/#ua
+[isios]: https://tnfe.github.io/bbo/#isios
+[isiphone]: https://tnfe.github.io/bbo/#isiphone
+[isipad]: https://tnfe.github.io/bbo/#isipad
+[isandroid]: https://tnfe.github.io/bbo/#isandroid
+[ismobile]: https://tnfe.github.io/bbo/#ismobile
+[ispc]: https://tnfe.github.io/bbo/#ispc
+[isweixin]: https://tnfe.github.io/bbo/#isweixin
+[isnewsapp]: https://tnfe.github.io/bbo/#isnewsapp
+[isqq]: https://tnfe.github.io/bbo/#isqq
+[mqqbrowser]: https://tnfe.github.io/bbo/#mqqbrowser
+[istenvideo]: https://tnfe.github.io/bbo/#istenvideo
+[isiphonexmodel]: https://tnfe.github.io/bbo/#isiphonexmodel
+[isie]: https://tnfe.github.io/bbo/#isie
+[ieversion]: https://tnfe.github.io/bbo/#ieversion
+[log]: https://tnfe.github.io/bbo/#log
+[logs]: https://tnfe.github.io/bbo/#logs
+[removeconsole]: https://tnfe.github.io/bbo/#removeconsole
+[uuid]: https://tnfe.github.io/bbo/#uuid
+[hash]: https://tnfe.github.io/bbo/#hash
+[judge]: https://tnfe.github.io/bbo/#judge
+[gettype]: https://tnfe.github.io/bbo/#gettype
+[istypeof]: https://tnfe.github.io/bbo/#istypeof
+[construct]: https://tnfe.github.io/bbo/#construct
+[paramsname]: https://tnfe.github.io/bbo/#paramsname
+[eventemitter]: https://tnfe.github.io/bbo/#eventemitter
+[args]: https://tnfe.github.io/bbo/#args
+[trash]: https://tnfe.github.io/bbo/#trash
+[noop]: https://tnfe.github.io/bbo/#noop
+[merge]: https://tnfe.github.io/bbo/#merge
+[over]: https://tnfe.github.io/bbo/#over
+[call]: https://tnfe.github.io/bbo/#call
+[stoppropagation]: https://tnfe.github.io/bbo/#stoppropagation
+[g]: https://tnfe.github.io/bbo/#g
+[gc]: https://tnfe.github.io/bbo/#gc
+[c]: https://tnfe.github.io/bbo/#c
+[query]: https://tnfe.github.io/bbo/#query
+[show]: https://tnfe.github.io/bbo/#show
+[hide]: https://tnfe.github.io/bbo/#hide
+[elementcontains]: https://tnfe.github.io/bbo/#elementcontains
+[formtoobject]: https://tnfe.github.io/bbo/#formtoobject
+[getstyle]: https://tnfe.github.io/bbo/#getstyle
+[setstyle]: https://tnfe.github.io/bbo/#setstyle
+[attr]: https://tnfe.github.io/bbo/#attr
+[loadimages]: https://tnfe.github.io/bbo/#loadimages
+[loadjs]: https://tnfe.github.io/bbo/#loadjs
+[loadcss]: https://tnfe.github.io/bbo/#loadcss
+[tojson]: https://tnfe.github.io/bbo/#tojson
+[cookie]: https://tnfe.github.io/bbo/#cookie
+[setcookie]: https://tnfe.github.io/bbo/#setCookie
+[getcookie]: https://tnfe.github.io/bbo/#getcookie
+[deletecookie]: https://tnfe.github.io/bbo/#deletecookie
+[parsecookie]: https://tnfe.github.io/bbo/#parsecookie
+[storage]: https://tnfe.github.io/bbo/#storage
+[open]: https://tnfe.github.io/bbo/#open
+[geturlparam]: https://tnfe.github.io/bbo/#geturlparam
+[seturlparam]: https://tnfe.github.io/bbo/#seturlparam
+[deleteurlparam]: https://tnfe.github.io/bbo/#deleteurlparam
+[objectparam]: https://tnfe.github.io/bbo/#objectparam
+[httpget]: https://tnfe.github.io/bbo/#httpget
+[httppost]: https://tnfe.github.io/bbo/#httppost
+[settimesout]: https://tnfe.github.io/bbo/#settimesout
+[cleartimesout]: https://tnfe.github.io/bbo/#cleartimesout
+[getdate]: https://tnfe.github.io/bbo/#getdate
+[formatpasstime]: https://tnfe.github.io/bbo/#formatpasstime
+[formatremaintime]: https://tnfe.github.io/bbo/#formatremaintime
+[formatduration]: https://tnfe.github.io/bbo/#formatduration
+[fill0]: https://tnfe.github.io/bbo/#fill0
+[floor]: https://tnfe.github.io/bbo/#floor
+[chainasync]: https://tnfe.github.io/bbo/#chainasync
+[numberformat]: https://tnfe.github.io/bbo/#numberformat
+[randomcolor]: https://tnfe.github.io/bbo/#randomcolor
+[randoma2b]: https://tnfe.github.io/bbo/#randoma2b
+[randomkey]: https://tnfe.github.io/bbo/#randomkey
+[trigger]: https://tnfe.github.io/bbo/#trigger
+[locktouch]: https://tnfe.github.io/bbo/#locktouch
+[copytoclipboard]: https://tnfe.github.io/bbo/#copytoclipboard
+[checkimagesize]: https://tnfe.github.io/bbo/#checkimagesize
+[imageoptimization]: https://tnfe.github.io/bbo/#imageoptimization
+[gettag]: https://tnfe.github.io/bbo/#gettag
+[hasownproperty]: https://tnfe.github.io/bbo/#hasownproperty
+[isobject]: https://tnfe.github.io/bbo/#isobject
+[isarray]: https://tnfe.github.io/bbo/#isarray
+[isstring]: https://tnfe.github.io/bbo/#isstring
+[isboolean]: https://tnfe.github.io/bbo/#isboolean
+[isnumber]: https://tnfe.github.io/bbo/#isnumber
+[ismap]: https://tnfe.github.io/bbo/#ismap
+[isset]: https://tnfe.github.io/bbo/#isset
+[isfunction]: https://tnfe.github.io/bbo/#isfunction
+[isempty]: https://tnfe.github.io/bbo/#isempty
+[isshallowequal]: https://tnfe.github.io/bbo/#isshallowequal
+[has]: https://tnfe.github.io/bbo/#has
+[reduce]: https://tnfe.github.io/bbo/#reduce
+[foreach]: https://tnfe.github.io/bbo/#foreach
+[map]: https://tnfe.github.io/bbo/#map
+[findindex]: https://tnfe.github.io/bbo/#findindex
+[find]: https://tnfe.github.io/bbo/#find
+[topath]: https://tnfe.github.io/bbo/#topath
+[get]: https://tnfe.github.io/bbo/#get
+[debounce]: https://tnfe.github.io/bbo/#debounce
+[throttle]: https://tnfe.github.io/bbo/#throttle
+[pick]: https://tnfe.github.io/bbo/#pick
+[omit]: https://tnfe.github.io/bbo/#omit
+[trim]: https://tnfe.github.io/bbo/#trim
+[fillzero]: https://tnfe.github.io/bbo/#fillzero
+[longunique]: https://tnfe.github.io/bbo/#longunique
+[striptags]: https://tnfe.github.io/bbo/#striptags
+[capitalize]: https://tnfe.github.io/bbo/#capitalize
+[decapitalize]: https://tnfe.github.io/bbo/#decapitalize
+[isabsoluteurl]: https://tnfe.github.io/bbo/#isabsoluteurl
+[mapstring]: https://tnfe.github.io/bbo/#mapstring
+[mask]: https://tnfe.github.io/bbo/#mask
+[splitlines]: https://tnfe.github.io/bbo/#splitlines
+[camelize]: https://tnfe.github.io/bbo/#camelize
+[underscored]: https://tnfe.github.io/bbo/#underscored
+[dasherize]: https://tnfe.github.io/bbo/#dasherize
+[truncate]: https://tnfe.github.io/bbo/#truncate
+[bytesize]: https://tnfe.github.io/bbo/#bytesize
+[bytelen]: https://tnfe.github.io/bbo/#bytelen
+[repeat]: https://tnfe.github.io/bbo/#repeat
+[endswith]: https://tnfe.github.io/bbo/#endswith
+[startswith]: https://tnfe.github.io/bbo/#startswith
+[containswith]: https://tnfe.github.io/bbo/#containswith
+[xssfilter]: https://tnfe.github.io/bbo/#xssfilter
+[index]: https://tnfe.github.io/bbo/#index
+[capwords]: https://tnfe.github.io/bbo/#capwords
+[unique]: https://tnfe.github.io/bbo/#unique
+[uniqueby]: https://tnfe.github.io/bbo/#uniqueby
+[uniquefrom]: https://tnfe.github.io/bbo/#uniquefrom
+[random]: https://tnfe.github.io/bbo/#random
+[randomsize]: https://tnfe.github.io/bbo/#randomsize
+[shuffle]: https://tnfe.github.io/bbo/#shuffle
+[contains]: https://tnfe.github.io/bbo/#contains
+[includesall]: https://tnfe.github.io/bbo/#includesall
+[includesany]: https://tnfe.github.io/bbo/#includesany
+[removeat]: https://tnfe.github.io/bbo/#removeat
+[remove]: https://tnfe.github.io/bbo/#remove
+[compact]: https://tnfe.github.io/bbo/#compact
+[compactall]: https://tnfe.github.io/bbo/#compactall
+[pluck]: https://tnfe.github.io/bbo/#pluck
+[union]: https://tnfe.github.io/bbo/#union
+[unionby]: https://tnfe.github.io/bbo/#unionby
+[unionwith]: https://tnfe.github.io/bbo/#unionwith
+[intersect]: https://tnfe.github.io/bbo/#intersect
+[intersectby]: https://tnfe.github.io/bbo/#intersectby
+[difference]: https://tnfe.github.io/bbo/#difference
+[differenceby]: https://tnfe.github.io/bbo/#differenceby
+[max]: https://tnfe.github.io/bbo/#max
+[min]: https://tnfe.github.io/bbo/#min
+[equal]: https://tnfe.github.io/bbo/#equal
+[allequal]: https://tnfe.github.io/bbo/#allequal
+[all]: https://tnfe.github.io/bbo/#all
+[any]: https://tnfe.github.io/bbo/#any
+[chunk]: https://tnfe.github.io/bbo/#chunk
+[countby]: https://tnfe.github.io/bbo/#countby
+[countoccurrences]: https://tnfe.github.io/bbo/#countoccurrences
+[drop]: https://tnfe.github.io/bbo/#drop
+[dropright]: https://tnfe.github.io/bbo/#dropright
+[dropwhile]: https://tnfe.github.io/bbo/#dropwhile
+[droprightwhile]: https://tnfe.github.io/bbo/#droprightwhile
+[column]: https://tnfe.github.io/bbo/#column
+[search]: https://tnfe.github.io/bbo/#search
+[unary]: https://tnfe.github.io/bbo/#unary
