@@ -34,8 +34,7 @@
     "coverage": "jest --coverage",
     "verify": "npm run eslint && npm run coverage",
     "jsdoc": "jsdoc --configure .jsdoc.json",
-    "deploy": "rollup -c config/rollup_dist.js && cp dist/bbo.js docs/scripts && scp -r docs/* halldwang:/users/halldwang/code/webdev/bbo_docs",
-    "precommit": "lint-staged && jest --onlyChanged"
+    "deploy": "rollup -c config/rollup_dist.js && cp dist/bbo.js docs/scripts && scp -r docs/* halldwang:/users/halldwang/code/webdev/bbo_docs"
   },
   "devDependencies": {
     "@babel/core": "7.7.7",
