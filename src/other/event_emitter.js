@@ -3,22 +3,22 @@ import isObject from '../lodash/is_object';
 import findIndex from '../lodash/find_index';
 
 /**
- * function handleOne(a, b, c) {
+ * function handle1(a, b, c) {
  *   console.log('one', a, b, c);
  * }
  *
- * function handleSecond(a, b, c) {
+ * function handle2(a, b, c) {
  *   console.log('two', a, b, c);
  * }
  *
- * function handleThird(a, b, c) {
+ * function handle3(a, b, c) {
  *   console.log('three', a, b, c);
  * }
  *
  * emitter
- *   .on('demo', handleOne)
- *   .once('demo', handleSecond)
- *   .on('demo', handleThird);
+ *   .on('demo', handle1)
+ *   .once('demo', handle2)
+ *   .on('demo', handle3);
  *
  * emitter.emit('demo', [1, 2, 3]);
  */

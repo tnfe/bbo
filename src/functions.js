@@ -233,7 +233,6 @@ export default {
   over,
   call,
   // bom
-  open,
   trigger,
   stopPropagation,
   g,
@@ -275,6 +274,7 @@ export default {
   // storage
   storage,
   // http
+  open,
   getUrlParam,
   setUrlParam,
   deleteUrlParam,
