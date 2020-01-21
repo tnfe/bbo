@@ -16,11 +16,11 @@
 
 项目整理了日常开发中最常用的功能。 这些功能在您的开发中几乎无处不在，并且在主流的函数工具库中找不到。大多数代码来自于高分答案中的[stackoverflow.com](https://stackoverflow.com/) 网站，向原始作者表示敬意。项目在 gzip 压缩下只有 7K, 所以你可以随时随地使用。
 
-请参阅最新的文档 [Documentation](https://github.ahthw.com/bbo/) 以获取完整的 API 参考，或者在 github 上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
+请参阅最新的文档 [Documentation](https://tnfe.github.io/bbo/) 以获取完整的 API 参考，或者在 github 上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
 
 ### 文档
 
-- [在线阅读](https://github.ahthw.com/bbo)
+- [在线阅读](https://tnfe.github.io/bbo/)
 - [文档仓库](https://github.com/halldwang/bbo-docs.git)
 
 ## 功能
@@ -210,7 +210,7 @@ git push origin master
 
 ### 贡献文档
 
-文档使用 [Vuepress](https://vuepress.vuejs.org/zh/) 撰写并生成[网站](https://github.ahthw.com/bbo/)，请查看[文档仓库](https://github.com/halldwang/bbo-docs.git) `package.json` 中的 `scripts` 配置和 `/docs` 目录中的脚本来了解文档的构建和发布过程。
+文档使用 [Vuepress](https://vuepress.vuejs.org/zh/) 撰写并生成[网站](https://tnfe.github.io/bbo/)，请查看[文档仓库](https://github.com/halldwang/bbo-docs.git) `package.json` 中的 `scripts` 配置和 `/docs` 目录中的脚本来了解文档的构建和发布过程。
 
 ```bash
 # 初始化 nodejs 依赖
