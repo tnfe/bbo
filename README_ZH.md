@@ -160,7 +160,7 @@ import storage from 'bbo/storage';
 #### CDN
 
 ```js
-//mat1.gtimg.com/www/js/libs/bbo.min.js
+https://mat1.gtimg.com/www/js/libs/bbo.1.1.11.min.js
 ```
 
 ### 开发

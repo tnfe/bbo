@@ -3,7 +3,7 @@
  * bbo is a useful utility collection library  with zero dependencies.
  * (c) 2011-2019 tnfe
  * https://github.com/tnfe/bbo.git
- * version 1.1.10
+ * version 1.1.11
  */
 
 (function (global, factory) {
@@ -300,6 +300,15 @@
   /**
    * arguments to array
    */
+
+  /**
+   * Converts the arguments object to an array object and slice it.
+   * first defalult is 0.
+   * @export
+   * @param {*} $arguments
+   * @param {*} first
+   * @returns
+   */
   function args($arguments, first) {
     return Array.prototype.slice.call($arguments, first || 0);
   }
@@ -394,7 +403,7 @@
     el.style[ruleName] = val;
   }
 
-  function att(el, ruleName, val) {
+  function attr(el, ruleName, val) {
     el.setAttribute(ruleName, val);
   }
 
@@ -423,7 +432,7 @@
     var el = document.createElement(t);
 
     if (cn) {
-      att(el, 'class', cn);
+      attr(el, 'class', cn);
     }
 
     if (i) {
@@ -431,7 +440,7 @@
     }
 
     if (id) {
-      att(el, 'id', id);
+      attr(el, 'id', id);
     }
 
     return el;
@@ -445,8 +454,8 @@
     var id = '_bbo_open_proxy';
     var a = g(id) || c('a', id, '', id);
     setStyle(a, 'display', 'none');
-    att(a, 'href', href);
-    att(a, 'target', '_blank');
+    attr(a, 'href', href);
+    attr(a, 'target', '_blank');
     if (!a.parentNode) document.body.appendChild(a);
     trigger(a, 'click', 'MouseEvents');
   };
@@ -696,24 +705,24 @@
   }
 
   /**
-  * function handleOne(a, b, c) {
-  *   console.log('one', a, b, c);
-  * }
-  * 
-  * function handleSecond(a, b, c) {
-  *   console.log('two', a, b, c);
-  * }
-  * 
-  * function handleThird(a, b, c) {
-  *   console.log('three', a, b, c);
-  * }
-  * 
-  * emitter
-  *   .on('demo', handleOne)
-  *   .once('demo', handleSecond)
-  *   .on('demo', handleThird);
-  * 
-  * emitter.emit('demo', [1, 2, 3]);
+   * function handle1(a, b, c) {
+   *   console.log('one', a, b, c);
+   * }
+   *
+   * function handle2(a, b, c) {
+   *   console.log('two', a, b, c);
+   * }
+   *
+   * function handle3(a, b, c) {
+   *   console.log('three', a, b, c);
+   * }
+   *
+   * emitter
+   *   .on('demo', handle1)
+   *   .once('demo', handle2)
+   *   .on('demo', handle3);
+   *
+   * emitter.emit('demo', [1, 2, 3]);
    */
 
   function EventEmitter() {
@@ -1917,7 +1926,7 @@
   function copyToClipboard(str) {
     var el = document.createElement('textarea');
     el.value = str;
-    att(el, 'readonly', '');
+    attr(el, 'readonly', '');
     setStyle(el, 'position', 'absolute');
     setStyle(el, 'left', '-9999px');
     document.body.appendChild(el);
@@ -3161,7 +3170,6 @@
     over: over,
     call: call,
     // bom
-    open: open,
     trigger: trigger,
     stopPropagation: stopPropagation,
     g: g,
@@ -3174,7 +3182,7 @@
     formToObject: formToObject,
     getStyle: getStyle,
     setStyle: setStyle,
-    attr: att,
+    attr: attr,
     // other
     uuid: uuid,
     hash: hash,
@@ -3203,6 +3211,7 @@
     // storage
     storage: storage,
     // http
+    open: open,
     getUrlParam: getUrlParam,
     setUrlParam: setUrlParam,
     deleteUrlParam: deleteUrlParam,

@@ -170,7 +170,7 @@ Then a global variable `bbo` is exposed for the entire library:
 #### CDN
 
 ```js
-//mat1.gtimg.com/www/js/libs/bbo.min.js
+https://mat1.gtimg.com/www/js/libs/bbo.1.1.11.min.js
 ```
 
 ## Building
