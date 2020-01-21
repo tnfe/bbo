@@ -6,7 +6,8 @@ module.exports = {
   globals: {
     // 全局变量 window 不允许被重新赋值
     window: false,
-    define: true
+    define: true,
+    bbo: false
   },
   rules: {
     // 强制使用一致的缩进
