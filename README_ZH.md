@@ -48,7 +48,7 @@
 | [removeConsole][removeconsole]       | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
 | **other**                            | **load**                               | [isArray][isarray]                 | [containsWith][containswith]   | [difference][difference]             |
 | [uuid][uuid]                         | [loadImages][loadimages]               | [isString][isstring]               | [xssFilter][xssfilter]         | [differenceBy][differenceby]         |
-| [hash][hash]                         | [loadjs][loadjs]                       | [isBoolean][isboolean]             | [index][index]                 | [max][max]                           |
+| [hash][hash]                         | [loadjs][loadjs]                       | [isBoolean][isboolean]             | [effortIndex][effortindex]                 | [max][max]                           |
 | [judge][judge]                       | [loadcss][loadcss]                     | [isNumber][isnumber]               | [capwords]                     | [min][min]                           |
 | [getType][gettype]                   | **fill**                               | [isMap][ismap]                     |                                | [equal][equal]                       |
 | [isTypeof][istypeof]                 | [fill0][fill0]                         | [isSet][isset]                     |                                | [allEqual][allequal]                 |
@@ -160,7 +160,7 @@ import storage from 'bbo/storage';
 #### CDN
 
 ```js
-https://mat1.gtimg.com/www/js/libs/bbo.1.1.11.min.js
+https://mat1.gtimg.com/www/js/libs/bbo.1.1.12.min.js
 ```
 
 ### 开发
@@ -377,7 +377,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [startswith]: https://tnfe.github.io/bbo/#startswith
 [containswith]: https://tnfe.github.io/bbo/#containswith
 [xssfilter]: https://tnfe.github.io/bbo/#xssfilter
-[index]: https://tnfe.github.io/bbo/#index
+[effortindex]: https://tnfe.github.io/bbo/#effortindex
 [capwords]: https://tnfe.github.io/bbo/#capwords
 [unique]: https://tnfe.github.io/bbo/#unique
 [uniqueby]: https://tnfe.github.io/bbo/#uniqueby

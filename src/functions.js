@@ -158,7 +158,7 @@ import endsWith from './string/ends_with';
 import startsWith from './string/starts_with';
 import containsWith from './string/contains_with';
 import xssFilter from './string/xss_filter';
-import index from './string/index';
+import effortIndex from './string/effort_Index';
 import capwords from './string/capwords';
 
 // array
@@ -352,7 +352,7 @@ export default {
   startsWith,
   containsWith,
   xssFilter,
-  index,
+  effortIndex,
   capwords,
   // array
   unique,

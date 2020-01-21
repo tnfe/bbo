@@ -3,7 +3,7 @@
  * bbo is a useful utility collection library  with zero dependencies.
  * (c) 2011-2019 tnfe
  * https://github.com/tnfe/bbo.git
- * version 1.1.11
+ * version 1.1.12
  */
 
 (function (global, factory) {
@@ -2722,7 +2722,7 @@
     return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;');
   }
 
-  function index(s, sep) {
+  function sindex(s, sep) {
     //  discuss at: https://locutus.io/golang/strings/Index
     // original by: Kevin van Zonneveld (https://kvz.io)
     //   example 1: Index('Kevin', 'K')
@@ -3289,7 +3289,7 @@
     startsWith: startsWith,
     containsWith: containsWith,
     xssFilter: xssFilter,
-    index: index,
+    effortIndex: sindex,
     capwords: capwords,
     // array
     unique: unique,
