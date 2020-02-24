@@ -96,6 +96,7 @@ import fill0 from './fill/fill0';
 import floor from './fill/floor';
 import chainAsync from './fill/chain_async';
 import numberFormat from './fill/number_format';
+import modulo from './fill/modulo';
 
 // random
 import randomColor from './random/random_color';
@@ -120,12 +121,14 @@ import isBoolean from './lodash/is_boolean';
 import isNumber from './lodash/is_number';
 import isMap from './lodash/is_map';
 import isSet from './lodash/is_set';
+import isSymbol from './lodash/is_symbol';
 import isFunction from './lodash/is_function';
 import isEmpty from './lodash/is_empty';
 import isShallowEqual from './lodash/is_shallow_equal';
 import has from './lodash/has';
 import toPath from './lodash/to_path';
 import reduce from './lodash/reduce';
+import deepClone from './lodash/deep_clone';
 import forEach from './lodash/for_each';
 import map from './lodash/map';
 import find from './lodash/find';
@@ -199,6 +202,7 @@ import dropRightWhile from './array/drop_right_while';
 import column from './array/column';
 import search from './array/search';
 import unary from './array/unary';
+import indexBy from './array/index_by';
 
 export default {
   // version
@@ -294,6 +298,7 @@ export default {
   floor,
   chainAsync,
   numberFormat,
+  modulo,
   // random
   randomColor,
   randomA2B,
@@ -315,11 +320,13 @@ export default {
   isNumber,
   isMap,
   isSet,
+  isSymbol,
   isFunction,
   isEmpty,
   isShallowEqual,
   has,
   reduce,
+  deepClone,
   forEach,
   map,
   findIndex,
@@ -391,5 +398,6 @@ export default {
   dropRightWhile,
   column,
   search,
-  unary
+  unary,
+  indexBy
 };
