@@ -32,6 +32,7 @@ let _insertScript = function(src, callback) {
   let script = document.createElement('script');
   script.setAttribute('type', 'text/javascript');
   script.setAttribute('src', src);
+  script.setAttribute('charset', 'utf-8');
   document.getElementsByTagName('head')[0].appendChild(script);
 
   if (/msie/.test(ua('l'))) {

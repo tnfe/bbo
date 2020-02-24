@@ -14,6 +14,7 @@ import isNewsApp from './device/is_news_app';
 import isQQ from './device/is_qq';
 import mqqbrowser from './device/mqqbrowser';
 import isTenvideo from './device/is_tenvideo';
+import isWeiShi from './device/is_weishi';
 import isIphoneXmodel from './device/is_iphonex_model';
 import isIE from './device/is_ie';
 import ieVersion from './device/ie_version';
@@ -42,7 +43,6 @@ import query from './bom/query';
 import show from './bom/show';
 import hide from './bom/hide';
 import elementContains from './bom/element_contains';
-import formToObject from './bom/form_to_object';
 import getStyle from './bom/get_style';
 import setStyle from './bom/set_style';
 import attr from './bom/attr';
@@ -218,6 +218,7 @@ export default {
   isQQ,
   mqqbrowser,
   isTenvideo,
+  isWeiShi,
   isIphoneXmodel,
   ieVersion,
   isIE,
@@ -242,7 +243,6 @@ export default {
   show,
   hide,
   elementContains,
-  formToObject,
   getStyle,
   setStyle,
   attr,

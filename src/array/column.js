@@ -1,34 +1,38 @@
 /**
  * discuss at: https://locutus.io/php/array_column/
  */
+import isObject from '../lodash/is_object';
+import isArray from '../lodash/is_array';
+
 export default function column(input, ColumnKey, IndexKey = null) {
-  let _input = input;
-  if (_input !== null && (typeof _input === 'object' || Array.isArray(_input))) {
-    let newArray = [];
-    if (typeof _input === 'object') {
-      let tempArray = [];
-      for (let key of Object.keys(_input)) {
-        tempArray.push(_input[key]);
+  if (input !== null && (isObject(input) || isArray(input))) {
+    let newarray = [];
+    if (isObject(input)) {
+      let temparray = [];
+      for (let key of Object.keys(input)) {
+        temparray.push(input[key]);
       }
-      _input = tempArray;
+      // eslint-disable-next-line no-param-reassign
+      input = temparray;
     }
-    if (Array.isArray(_input)) {
-      for (let key of _input.keys()) {
-        if (IndexKey && _input[key][IndexKey]) {
+    if (isArray(input)) {
+      for (let key of input.keys()) {
+        if (IndexKey && input[key][IndexKey]) {
           if (ColumnKey) {
-            newArray[_input[key][IndexKey]] = _input[key][ColumnKey];
+            newarray[input[key][IndexKey]] = input[key][ColumnKey];
           } else {
-            newArray[_input[key][IndexKey]] = _input[key];
+            newarray[input[key][IndexKey]] = input[key];
           }
         } else {
           if (ColumnKey) {
-            newArray.push(_input[key][ColumnKey]);
+            newarray.push(input[key][ColumnKey]);
           } else {
-            newArray.push(_input[key]);
+            newarray.push(input[key]);
           }
         }
       }
     }
-    return { ...newArray };
+    // eslint-disable-next-line prefer-object-spread
+    return Object.assign({}, newarray);
   }
 }
