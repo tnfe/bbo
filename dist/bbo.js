@@ -1,9 +1,9 @@
 /*
  * bbo
  * bbo is a useful utility collection library  with zero dependencies.
- * (c) 2011-2019 tnfe
+ * (c) 2011-2020 halld
  * https://github.com/tnfe/bbo.git
- * version 1.1.12
+ * version 1.1.13
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.10';
+  var version = '1.1.13';
 
   var globalObject = null;
 
@@ -201,7 +201,11 @@
   }
 
   function isTenvideo() {
-    return /qqlivebrowser/.test(ua()); // 腾讯视频
+    return /qqlivebrowser/.test(ua('l')); // 腾讯视频
+  }
+
+  function isWeiShi() {
+    return /weishi/.test(ua('l')); // 腾讯微视
   }
 
   function isIphoneXmodel() {
@@ -500,16 +504,6 @@
   };
 
   var elementContains = (parent, child) => parent !== child && parent.contains(child);
-
-  var formToObject = form => Array.from(new FormData(form)).reduce((acc, _ref) => {
-    var _ref2 = _slicedToArray(_ref, 2),
-        key = _ref2[0],
-        value = _ref2[1];
-
-    return { ...acc,
-      [key]: value
-    };
-  }, {});
 
   var getStyle = (el, ruleName) => getComputedStyle(el)[ruleName];
 
@@ -1028,6 +1022,7 @@
     var script = document.createElement('script');
     script.setAttribute('type', 'text/javascript');
     script.setAttribute('src', src);
+    script.setAttribute('charset', 'utf-8');
     document.getElementsByTagName('head')[0].appendChild(script);
 
     if (/msie/.test(ua('l'))) {
@@ -1400,7 +1395,7 @@
   function containsWith(target, item) {
     // discuss at: https://locutus.io/golang/strings/Contains
     // original by: Kevin van Zonneveld (https://kvz.io)
-    // example 1: bbo.string.contains('Kevin', 'K')
+    // example 1: bbo.contains('Kevin', 'K')
     // returns 1: true
     return String(target).indexOf(item) !== -1;
   }
@@ -1880,6 +1875,34 @@
     return s.join(dec);
   };
 
+  /**
+   * modulo of a number and a divisor
+   */
+  function modulo(n, d) {
+    // bbo.modulo(7, 5); // 2
+    // bbo.modulo(17, 23); // 17
+    // bbo.modulo(16.2, 3.8); // 1
+    // bbo.modulo(5.8, 3.4); //2.4
+    // bbo.modulo(4, 0); // 4
+    // bbo.modulo(-7, 5); // 3
+    // bbo.modulo(-2, 15); // 13
+    // bbo.modulo(-5.8, 3.4); // 1
+    // bbo.modulo(12, -1); // NaN
+    // bbo.modulo(-3, -8); // NaN
+    // bbo.modulo(12, 'apple'); // NaN
+    // bbo.modulo('bee', 9); // NaN
+    // bbo.modulo(null, undefined); // NaN
+    if (d === 0) {
+      return n;
+    }
+
+    if (d < 0) {
+      return NaN;
+    }
+
+    return (n % d + d) % d;
+  }
+
   function randomColor() {
     return '#' + ('00000' + (Math.random() * 0x1000000 << 0).toString(16)).slice(-6);
   }
@@ -2095,6 +2118,10 @@
     return getTag(set) === '[object Set]';
   }
 
+  function isSymbol(symbol) {
+    return getTag(symbol) === '[object Symbol]';
+  }
+
   /* eslint-disable no-eq-null */
   function isEmpty(value) {
     if (value == null) {
@@ -2213,6 +2240,55 @@
     }
 
     return acc;
+  }
+
+  /* eslint-disable eqeqeq */
+  function deepClone(obj) {
+    // var arr = [1, 2, 3];
+    // var subObj = { aa: 1 };
+    // var obj = { a: 3, b: 5, c: arr, d: subObj };
+    // var objClone = bbo.deepClone(obj);
+    // arr.push(4);
+    // subObj.bb = 2;
+    // obj; // {a: 3, b: 5, c: [1, 2, 3, 4], d: {aa: 1}}
+    // objClone; // {a: 3, b: 5, c: [1, 2, 3], d: {aa: 1, bb: 2}}
+    if (isFunction(obj)) {
+      return obj;
+    }
+
+    var result = isArray(obj) ? [] : {};
+
+    for (var key in obj) {
+      // include prototype properties
+      var value = obj[key];
+      var type = {}.toString.call(value).slice(8, -1);
+
+      if (type == 'Array' || type == 'Object') {
+        result[key] = deepClone(value);
+      } else if (type == 'Date') {
+        result[key] = new Date(value.getTime());
+      } else if (type == 'RegExp') {
+        result[key] = RegExp(value.source, getRegExpFlags(value));
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  }
+
+  function getRegExpFlags(regExp) {
+    if (typeof regExp.source.flags == 'string') {
+      return regExp.source.flags;
+    } else {
+      var flags = [];
+      regExp.global && flags.push('g');
+      regExp.ignoreCase && flags.push('i');
+      regExp.multiline && flags.push('m');
+      regExp.sticky && flags.push('y');
+      regExp.unicode && flags.push('u');
+      return flags.join('');
+    }
   }
 
   function map(src, func) {
@@ -3052,46 +3128,43 @@
     return arr.slice(0, rightIndex + 1);
   }
 
-  /**
-   * discuss at: https://locutus.io/php/array_column/
-   */
   function column(input, ColumnKey) {
     var IndexKey = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
-    var _input = input;
 
-    if (_input !== null && (typeof _input === 'object' || Array.isArray(_input))) {
-      var newArray = [];
+    if (input !== null && (isObject(input) || isArray(input))) {
+      var newarray = [];
 
-      if (typeof _input === 'object') {
-        var tempArray = [];
+      if (isObject(input)) {
+        var temparray = [];
 
-        for (var key of Object.keys(_input)) {
-          tempArray.push(_input[key]);
-        }
+        for (var key of Object.keys(input)) {
+          temparray.push(input[key]);
+        } // eslint-disable-next-line no-param-reassign
 
-        _input = tempArray;
+
+        input = temparray;
       }
 
-      if (Array.isArray(_input)) {
-        for (var _key of _input.keys()) {
-          if (IndexKey && _input[_key][IndexKey]) {
+      if (isArray(input)) {
+        for (var _key of input.keys()) {
+          if (IndexKey && input[_key][IndexKey]) {
             if (ColumnKey) {
-              newArray[_input[_key][IndexKey]] = _input[_key][ColumnKey];
+              newarray[input[_key][IndexKey]] = input[_key][ColumnKey];
             } else {
-              newArray[_input[_key][IndexKey]] = _input[_key];
+              newarray[input[_key][IndexKey]] = input[_key];
             }
           } else {
             if (ColumnKey) {
-              newArray.push(_input[_key][ColumnKey]);
+              newarray.push(input[_key][ColumnKey]);
             } else {
-              newArray.push(_input[_key]);
+              newarray.push(input[_key]);
             }
           }
         }
-      }
+      } // eslint-disable-next-line prefer-object-spread
 
-      return { ...newArray
-      };
+
+      return _extends({}, newarray);
     }
   }
 
@@ -3137,6 +3210,39 @@
 
   var unary = fn => val => fn(val);
 
+  /**
+   * return an object from an array, keyed by the value at the given id
+   */
+  function indexBy(arr, key) {
+    // bbp.indexBy([{id: 'first', val: 1}, {id: 'second', val: 2}], 'id');
+    // => {first: {id: 'first', val: 1}, second: {id: // 'second', val: 2}}
+    // indexBy([{id: 'first', val: 1}, null], 'id');
+    // => {first: {id: 'first', val: 1}}
+    // indexBy([], 'id'); // => {}
+    // indexBy([], null); // => throws
+    // indexBy({}, 'id'); // => throws
+    if (!isArray(arr)) {
+      throw new Error('expected an array for first argument');
+    }
+
+    if (!isString(key)) {
+      throw new Error('expected a string for second argument');
+    }
+
+    var result = {};
+    var len = arr.length;
+
+    for (var i = 0; i < len; i++) {
+      var index = arr[i] && arr[i][key];
+
+      if (index) {
+        result[index] = arr[i];
+      }
+    }
+
+    return result;
+  }
+
   var functions = {
     // version
     version: version,
@@ -3155,6 +3261,7 @@
     isQQ: isQQ,
     mqqbrowser: mqqbrowser,
     isTenvideo: isTenvideo,
+    isWeiShi: isWeiShi,
     isIphoneXmodel: isIphoneXmodel,
     ieVersion: ieVersion,
     isIE: isIE,
@@ -3179,7 +3286,6 @@
     show: show,
     hide: hide,
     elementContains: elementContains,
-    formToObject: formToObject,
     getStyle: getStyle,
     setStyle: setStyle,
     attr: attr,
@@ -3231,6 +3337,7 @@
     floor: floor,
     chainAsync: chainAsync,
     numberFormat: numberFormat,
+    modulo: modulo,
     // random
     randomColor: randomColor,
     randomA2B: randomA2B,
@@ -3252,11 +3359,13 @@
     isNumber: isNumber,
     isMap: isMap,
     isSet: isSet,
+    isSymbol: isSymbol,
     isFunction: isFunction,
     isEmpty: isEmpty,
     isShallowEqual: isShallowEqual,
     has: has,
     reduce: reduce,
+    deepClone: deepClone,
     forEach: forEach,
     map: map,
     findIndex: findIndex,
@@ -3328,7 +3437,8 @@
     dropRightWhile: dropRightWhile,
     column: column,
     search: search,
-    unary: unary
+    unary: unary,
+    indexBy: indexBy
   };
 
   /* eslint-disable no-invalid-this */
