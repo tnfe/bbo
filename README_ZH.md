@@ -39,34 +39,36 @@
 | [isQQ][isqq]                         | [gc][gc]                               | [randomA2B][randoma2b]             | [splitLines][splitlines]       | [removeAt][removeat]                 |
 | [mqqbrowser][mqqbrowser]             | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
 | [isTenvideo][istenvideo]             | [query][query]                         | **behavior**                       | [underscored][underscored]     | [compact][compact]                   |
-| [isIphoneXmodel][isiphonexmodel]     | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [compactAll][compactall]             |
-| [isIE][isie]                         | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [pluck][pluck]                       |
-| [ieVersion][ieversion]               | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [union][union]                       |
-| **log**                              | [formToObject][formtoobject]           | **mlodash**                        | [byteLen][bytelen]             | [unionBy][unionby]                   |
-| [log][log]                           | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [unionWith][unionwith]               |
-| [logs][logs]                         | [setStyle][setstyle]                   | [hasOwnProperty][hasownproperty]   | [endsWith][endswith]           | [intersect][intersect]               |
-| [removeConsole][removeconsole]       | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
-| **other**                            | **load**                               | [isArray][isarray]                 | [containsWith][containswith]   | [difference][difference]             |
-| [uuid][uuid]                         | [loadImages][loadimages]               | [isString][isstring]               | [xssFilter][xssfilter]         | [differenceBy][differenceby]         |
-| [hash][hash]                         | [loadjs][loadjs]                       | [isBoolean][isboolean]             | [effortIndex][effortindex]                 | [max][max]                           |
-| [judge][judge]                       | [loadcss][loadcss]                     | [isNumber][isnumber]               | [capwords]                     | [min][min]                           |
-| [getType][gettype]                   | **fill**                               | [isMap][ismap]                     |                                | [equal][equal]                       |
-| [isTypeof][istypeof]                 | [fill0][fill0]                         | [isSet][isset]                     |                                | [allEqual][allequal]                 |
-| [construct][construct]               | [floor][floor]                         | [isFunction][isfunction]           |                                | [all][all]                           |
-| [paramsName][paramsname]             | [chainAsync][chainasync]               | [isEmpty][isempty]                 |                                | [any][any]                           |
-| [eventEmitter][eventemitter]         | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   |                                | [chunk][chunk]                       |
-| **times**                            | **cookie**                             | [has][has]                         |                                | [countBy][countby]                   |
-| [setTimesout][settimesout]           | [cookie][cookie]                       | [toPath][topath]                   |                                | [countOccurrences][countoccurrences] |
-| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [reduce][reduce]                   |                                | [drop][drop]                         |
-| [getDate][getdate]                   | [getCookie][getcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
-| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [map][map]                         |                                | [dropWhile][dropwhile]               |
-| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
-| [formatDuration][formatduration]     | **image**                              | [findIndex][findindex]             |                                | [column][column]                     |
-| **json**                             | [checkImageSize][checkimagesize]       | [get][get]                         |                                | [search][search]                     |
-| [toJson][tojson]                     | [imageOptimization][imageoptimization] | [debounce][debounce]               |                                | [unary][unary]                       |
-| **storage**                          |                                        | [throttle][throttle]               |                                |                                      |
-| [storage][storage]                   |                                        | [pick][pick]                       |                                |                                      |
-|                                      |                                        | [omit][omit]                       |                                |                                      |
+| [isWeiShi][isweishi]                 | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [compactAll][compactall]             |
+| [isIphoneXmodel][isiphonexmodel]     | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [pluck][pluck]                       |
+| [isIE][isie]                         | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [union][union]                       |
+| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **mlodash**                        | [byteLen][bytelen]             | [unionBy][unionby]                   |
+| **log**                              | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [unionWith][unionwith]               |
+| [log][log]                           | [setStyle][setstyle]                   | [hasOwnProperty][hasownproperty]   | [endsWith][endswith]           | [intersect][intersect]               |
+| [logs][logs]                         | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
+| [removeConsole][removeconsole]       | **load**                               | [isArray][isarray]                 | [containsWith][containswith]   | [difference][difference]             |
+| **other**                            | [loadImages][loadimages]               | [isString][isstring]               | [xssFilter][xssfilter]         | [differenceBy][differenceby]         |
+| [uuid][uuid]                         | [loadjs][loadjs]                       | [isBoolean][isboolean]             | [effortIndex][effortindex]     | [max][max]                           |
+| [hash][hash]                         | [loadcss][loadcss]                     | [isNumber][isnumber]               | [capwords]                     | [min][min]                           |
+| [judge][judge]                       | **fill**                               | [isMap][ismap]                     |                                | [equal][equal]                       |
+| [getType][gettype]                   | [fill0][fill0]                         | [isSet][isset]                     |                                | [allEqual][allequal]                 |
+| [isTypeof][istypeof]                 | [floor][floor]                         | [isFunction][isfunction]           |                                | [all][all]                           |
+| [construct][construct]               | [chainAsync][chainasync]               | [isEmpty][isempty]                 |                                | [any][any]                           |
+| [paramsName][paramsname]             | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   |                                | [chunk][chunk]                       |
+| [eventEmitter][eventemitter]         | [modulo][modulo]                       | [has][has]                         |                                | [countBy][countby]                   |
+| **times**                            | **cookie**                             | [toPath][topath]                   |                                | [countOccurrences][countoccurrences] |
+| [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   |                                | [drop][drop]                         |
+| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
+| [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         |                                | [dropWhile][dropwhile]               |
+| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
+| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             |                                | [column][column]                     |
+| [formatDuration][formatduration]     | **image**                              | [get][get]                         |                                | [search][search]                     |
+| **json**                             | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [unary][unary]                       |
+| [toJson][tojson]                     | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
+| **storage**                          |                                        | [pick][pick]                       |                                |                                      |
+| [storage][storage]                   |                                        | [omit][omit]                       |                                |                                      |
+|                                      |                                        | [isSymbol][issymbol]               |                                |                                      |
+|                                      |                                        | [deepClone][deepclone]             |                                |                                      |
 
 ### 使用
 
@@ -160,7 +162,7 @@ import storage from 'bbo/storage';
 #### CDN
 
 ```js
-https://mat1.gtimg.com/www/js/libs/bbo.1.1.12.min.js
+https://mat1.gtimg.com/www/js/libs/bbo.min.js
 ```
 
 ### 开发
@@ -265,6 +267,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [isqq]: https://tnfe.github.io/bbo/#isqq
 [mqqbrowser]: https://tnfe.github.io/bbo/#mqqbrowser
 [istenvideo]: https://tnfe.github.io/bbo/#istenvideo
+[isweishi]: https://tnfe.github.io/bbo/#isweishi
 [isiphonexmodel]: https://tnfe.github.io/bbo/#isiphonexmodel
 [isie]: https://tnfe.github.io/bbo/#isie
 [ieversion]: https://tnfe.github.io/bbo/#ieversion
@@ -324,6 +327,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [floor]: https://tnfe.github.io/bbo/#floor
 [chainasync]: https://tnfe.github.io/bbo/#chainasync
 [numberformat]: https://tnfe.github.io/bbo/#numberformat
+[modulo]: https://tnfe.github.io/bbo/#modulo
 [randomcolor]: https://tnfe.github.io/bbo/#randomcolor
 [randoma2b]: https://tnfe.github.io/bbo/#randoma2b
 [randomkey]: https://tnfe.github.io/bbo/#randomkey
@@ -356,6 +360,8 @@ Detailed changes for each release are documented in the [release notes](https://
 [throttle]: https://tnfe.github.io/bbo/#throttle
 [pick]: https://tnfe.github.io/bbo/#pick
 [omit]: https://tnfe.github.io/bbo/#omit
+[issymbol]: https://tnfe.github.io/bbo/#issymbol
+[deepclone]: https://tnfe.github.io/bbo/#deepclone
 [trim]: https://tnfe.github.io/bbo/#trim
 [fillzero]: https://tnfe.github.io/bbo/#fillzero
 [longunique]: https://tnfe.github.io/bbo/#longunique
@@ -416,3 +422,4 @@ Detailed changes for each release are documented in the [release notes](https://
 [column]: https://tnfe.github.io/bbo/#column
 [search]: https://tnfe.github.io/bbo/#search
 [unary]: https://tnfe.github.io/bbo/#unary
+[indexby]: https://tnfe.github.io/bbo/#indexby
