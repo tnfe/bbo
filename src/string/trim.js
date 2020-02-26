@@ -1,14 +1,11 @@
 /**
  * Remove spaces after removing previous string
  */
+import isEmpty from '../lodash/is_empty';
 
 export default function trim(str) {
-  let _str = str.replace(/^\s+/, '');
-  for (let i = str.length - 1; i >= 0; i--) {
-    if (/\S/.test(str.charAt(i))) {
-      _str = str.slice(0, i + 1);
-      break;
-    }
+  if (isEmpty(str)) {
+    return str;
   }
-  return _str;
+  return str.replace(/(^\s*)|(\s*$)/g, '');
 }
