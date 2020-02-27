@@ -4,13 +4,16 @@
 /**
  * log on mobile html body
  */
+import c from '../bom/c';
+import g from '../bom/g';
+import attr from '../bom/attr';
 
 export default function log(msg, styles) {
-  let ele = document.getElementById('_bbo_log');
+  let ele = g('_bbo_log');
   if (ele === null) {
-    ele = document.createElement('div');
-    ele.setAttribute('id', '_bbo_log');
-    ele.setAttribute('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
+    ele = c('div');
+    attr(ele, 'id', '_bbo_log');
+    attr('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
     document.body.appendChild(ele);
   }
 

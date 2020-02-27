@@ -1,13 +1,14 @@
 /* eslint-disable */
 import noop from '../args/noop';
 import isFunction from '../lodash/is_function';
+import randomKey from '../random/random_key';
 
 /**
  * JSONP handler
  *
  * Options:
  *  - param {String} qs parameter (`callback`)
- *  - prefix {String} qs parameter (`__jp`)
+ *  - prefix {String} qs parameter (`bbo`)
  *  - name {String} qs parameter (`prefix` + incr)
  *  - timeout {Number} how long after a timeout error is emitted (`60000`)
  *
@@ -27,7 +28,7 @@ function jsonp(url, opts, fn) {
 
   // use the callback name that was passed if one was provided.
   // otherwise generate a unique name by incrementing our counter.
-  var id = opts.name || prefix + new Date().getTime();
+  var id = opts.name || prefix + randomKey(10);
 
   var param = opts.param || 'callback';
   var timeout = null != opts.timeout ? opts.timeout : 60000;

@@ -3,19 +3,19 @@
 /*
  * https://gist.github.com/pete-otaqui/3912307
  */
+import attr from '../bom/attr';
+import c from '../bom/c';
+import randomKey from '../random/random_key';
+
 export default function loadcss(url, callback) {
   let promise;
   let resolutions = [];
   let rejections = [];
   let resolved = false;
   let rejected = false;
-  let count;
   let id;
 
-  this.count = this.count ? ++this.count : 1;
-  count = this.count;
-  id = 'load-css-' + count;
-
+  id = 'load-css-' + randomKey(5);
   promise = {
     done: function(callback) {
       resolutions.push(callback);
@@ -39,10 +39,10 @@ export default function loadcss(url, callback) {
     for (let i = 0, len = rejections.length; i < len; i++) rejections[i]();
   }
 
-  let link = document.createElement('link');
-  link.setAttribute('id', id);
-  link.setAttribute('rel', 'stylesheet');
-  link.setAttribute('type', 'text/css');
+  let link = c('link');
+  attr(link, 'id', id);
+  attr(link, 'rel', 'stylesheet');
+  attr(link, 'type', 'text/css');
   if (typeof link.addEventListener !== 'undefined') {
     link.addEventListener('load', resolve, false);
     link.addEventListener('error', reject, false);
@@ -71,6 +71,6 @@ export default function loadcss(url, callback) {
     });
   }
   document.getElementsByTagName('head')[0].appendChild(link);
-  link.setAttribute('href', url);
+  attr(link, 'href', url);
   return promise;
 }

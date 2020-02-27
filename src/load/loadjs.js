@@ -2,6 +2,10 @@
 
 import hash from '../other/hash';
 import ua from '../device/ua';
+import attr from '../bom/attr';
+import c from '../bom/c';
+import isFunction from '../lodash/is_function';
+import isString from '../lodash/is_string';
 
 /**
  * load js
@@ -29,10 +33,10 @@ let _insertScripts = function(arr, callback) {
 };
 
 let _insertScript = function(src, callback) {
-  let script = document.createElement('script');
-  script.setAttribute('type', 'text/javascript');
-  script.setAttribute('src', src);
-  script.setAttribute('charset', 'utf-8');
+  let script = c('script');
+  attr(script, 'type', 'text/javascript');
+  attr(script, 'src', src);
+  attr(script, 'charset', 'utf-8');
   document.getElementsByTagName('head')[0].appendChild(script);
 
   if (/msie/.test(ua('l'))) {
@@ -56,7 +60,7 @@ export default function loadjs(url, b, c) {
   let onlyId;
   let callback;
 
-  if (typeof b === 'function') {
+  if (isFunction(b)) {
     onlyId = String(hash(String(url)));
     callback = b;
   } else if (typeof b === 'undefined') {
@@ -70,7 +74,7 @@ export default function loadjs(url, b, c) {
   if (_cache.urls[onlyId]) {
     callback && callback();
   } else {
-    let func = typeof url === 'string' ? _insertScript : _insertScripts;
+    let func = isString(url) ? _insertScript : _insertScripts;
     func.call(this, url, function() {
       _cache.urls[onlyId] = true;
       callback && callback();
