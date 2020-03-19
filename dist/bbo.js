@@ -3,7 +3,7 @@
  * bbo is a useful utility collection library  with zero dependencies.
  * (c) 2011-2020 halld
  * https://github.com/tnfe/bbo.git
- * version 1.1.13
+ * version 1.1.14
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.13';
+  var version = '1.1.14';
 
   var globalObject = null;
 
@@ -273,20 +273,42 @@
     return ieVersion() > 0;
   }
 
+  function attr(el, ruleName, val) {
+    el.setAttribute(ruleName, val);
+  }
+
+  function c(t, cn, i, id) {
+    var el = document.createElement(t);
+
+    if (cn) {
+      attr(el, 'class', cn);
+    }
+
+    if (i) {
+      el.innerHTML = i;
+    }
+
+    if (id) {
+      attr(el, 'id', id);
+    }
+
+    return el;
+  }
+
+  function g(i) {
+    return document.getElementById(i);
+  }
+
   /************************************************************************
    * LOGS
    *************************************************************************/
-
-  /**
-   * log on mobile html body
-   */
   function log(msg, styles) {
-    var ele = document.getElementById('_bbo_log');
+    var ele = g('_bbo_log');
 
     if (ele === null) {
-      ele = document.createElement('div');
-      ele.setAttribute('id', '_bbo_log');
-      ele.setAttribute('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
+      ele = c('div');
+      attr(ele, 'id', '_bbo_log');
+      attr('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
       document.body.appendChild(ele);
     }
 
@@ -407,10 +429,6 @@
     el.style[ruleName] = val;
   }
 
-  function attr(el, ruleName, val) {
-    el.setAttribute(ruleName, val);
-  }
-
   /**
    * trigger event
    * https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
@@ -427,28 +445,6 @@
       element.dispatchEvent(_e);
     }
   };
-
-  function g(i) {
-    return document.getElementById(i);
-  }
-
-  function c(t, cn, i, id) {
-    var el = document.createElement(t);
-
-    if (cn) {
-      attr(el, 'class', cn);
-    }
-
-    if (i) {
-      el.innerHTML = i;
-    }
-
-    if (id) {
-      attr(el, 'id', id);
-    }
-
-    return el;
-  }
 
   /**
    * open new url dont not blocked by browser
@@ -990,6 +986,10 @@
     }
   };
 
+  function isString(str) {
+    return getTag(str) === '[object String]';
+  }
+
   /* eslint-disable no-invalid-this */
   /**
    * load js
@@ -1019,10 +1019,10 @@
   };
 
   var _insertScript = function (src, callback) {
-    var script = document.createElement('script');
-    script.setAttribute('type', 'text/javascript');
-    script.setAttribute('src', src);
-    script.setAttribute('charset', 'utf-8');
+    var script = c('script');
+    attr(script, 'type', 'text/javascript');
+    attr(script, 'src', src);
+    attr(script, 'charset', 'utf-8');
     document.getElementsByTagName('head')[0].appendChild(script);
 
     if (/msie/.test(ua('l'))) {
@@ -1046,7 +1046,7 @@
     var onlyId;
     var callback;
 
-    if (typeof b === 'function') {
+    if (isFunction(b)) {
       onlyId = String(hash(String(url)));
       callback = b;
     } else if (typeof b === 'undefined') {
@@ -1060,7 +1060,7 @@
     if (_cache$1.urls[onlyId]) {
       callback && callback();
     } else {
-      var func = typeof url === 'string' ? _insertScript : _insertScripts;
+      var func = isString(url) ? _insertScript : _insertScripts;
       func.call(this, url, function () {
         _cache$1.urls[onlyId] = true;
         callback && callback();
@@ -1068,22 +1068,29 @@
     }
   }
 
-  /* eslint-disable no-invalid-this */
+  var randomKey = function () {
+    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 32;
 
-  /*
-   * https://gist.github.com/pete-otaqui/3912307
-   */
+    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
+    var possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+    var key = '';
+
+    for (var i = 0; i < len; i++) {
+      key += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return key;
+  };
+
+  /* eslint-disable no-invalid-this */
   function loadcss(url, callback) {
     var promise;
     var resolutions = [];
     var rejections = [];
     var resolved = false;
     var rejected = false;
-    var count;
     var id;
-    this.count = this.count ? ++this.count : 1;
-    count = this.count;
-    id = 'load-css-' + count;
+    id = 'load-css-' + randomKey(5);
     promise = {
       done: function (callback) {
         resolutions.push(callback);
@@ -1113,10 +1120,10 @@
       }
     }
 
-    var link = document.createElement('link');
-    link.setAttribute('id', id);
-    link.setAttribute('rel', 'stylesheet');
-    link.setAttribute('type', 'text/css');
+    var link = c('link');
+    attr(link, 'id', id);
+    attr(link, 'rel', 'stylesheet');
+    attr(link, 'type', 'text/css');
 
     if (typeof link.addEventListener !== 'undefined') {
       link.addEventListener('load', resolve, false);
@@ -1150,7 +1157,7 @@
     }
 
     document.getElementsByTagName('head')[0].appendChild(link);
-    link.setAttribute('href', url);
+    attr(link, 'href', url);
     return promise;
   }
 
@@ -1181,6 +1188,77 @@
       return res;
     }
   };
+
+  /* eslint-disable */
+  /**
+   * JSONP handler
+   *
+   * Options:
+   *  - param {String} qs parameter (`callback`)
+   *  - prefix {String} qs parameter (`bbo`)
+   *  - name {String} qs parameter (`prefix` + incr)
+   *  - timeout {Number} how long after a timeout error is emitted (`60000`)
+   *
+   * @param {String} url
+   * @param {Object|Function} optional options / callback
+   * @param {Function} optional callback
+   */
+
+  var debug = require('debug')('jsonp');
+
+  function jsonp(url, opts, fn) {
+    if (isFunction(opts)) {
+      fn = opts;
+      opts = {};
+    }
+
+    if (!opts) opts = {};
+    var prefix = opts.prefix || 'bbo'; // use the callback name that was passed if one was provided.
+    // otherwise generate a unique name by incrementing our counter.
+
+    var id = opts.name || prefix + randomKey(10);
+    var param = opts.param || 'callback';
+    var timeout = null != opts.timeout ? opts.timeout : 60000;
+    var enc = encodeURIComponent;
+    var target = document.getElementsByTagName('script')[0] || document.head;
+    var script;
+    var timer;
+
+    if (timeout) {
+      timer = setTimeout(function () {
+        cleanup();
+        if (fn) fn(new Error('Timeout'));
+      }, timeout);
+    }
+
+    function cleanup() {
+      if (script.parentNode) script.parentNode.removeChild(script);
+      window[id] = noop();
+      if (timer) clearTimeout(timer);
+    }
+
+    function cancel() {
+      if (window[id]) {
+        cleanup();
+      }
+    }
+
+    window[id] = function (data) {
+      debug('jsonp got', data);
+      cleanup();
+      if (fn) fn(data, null);
+    }; // add qs component
+
+
+    url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
+    url = url.replace('?&', '?');
+    debug('jsonp req "%s"', url); // create script
+
+    script = document.createElement('script');
+    script.src = url;
+    target.parentNode.insertBefore(script, target);
+    return cancel;
+  }
 
   /**
    * cookie
@@ -1786,6 +1864,39 @@
     }).join(', ');
   };
 
+  // Store a reference to the global setTimeout,
+  // in case it gets replaced (e.g. sinon.useFakeTimers())
+  var cachedSetTimeout = setTimeout;
+
+  function createSleepPromise(timeout, _ref) {
+    var useCachedSetTimeout = _ref.useCachedSetTimeout;
+    var timeoutFunction = useCachedSetTimeout ? cachedSetTimeout : setTimeout;
+    return new Promise(resolve => {
+      timeoutFunction(resolve, timeout);
+    });
+  }
+
+  function sleep(timeout) {
+    var _ref2 = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
+        useCachedSetTimeout = _ref2.useCachedSetTimeout;
+
+    var sleepPromise = createSleepPromise(timeout, {
+      useCachedSetTimeout: useCachedSetTimeout
+    }); // Pass value through, if used in a promise chain
+
+    function promiseFunction(value) {
+      return sleepPromise.then(() => value);
+    } // Normal promise
+
+
+    promiseFunction.then = function () {
+      return sleepPromise.then.apply(sleepPromise, arguments);
+    };
+
+    promiseFunction.catch = Promise.resolve().catch;
+    return promiseFunction;
+  }
+
   var floor = function (n) {
     var m = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
     return Math.floor(n * Math.pow(10, m)) / Math.pow(10, m);
@@ -1911,20 +2022,6 @@
   var randomA2B = (a, b, int) => {
     var result = Math.random() * (b - a) + a;
     return int ? Math.floor(result) : result;
-  };
-
-  var randomKey = function () {
-    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 32;
-
-    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
-    var possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
-    var key = '';
-
-    for (var i = 0; i < len; i++) {
-      key += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return key;
   };
 
   /**
@@ -2096,10 +2193,6 @@
 
   function hasOwnProperty$1(obj, keyName) {
     return Object.prototype.hasOwnProperty.call(obj, keyName);
-  }
-
-  function isString(str) {
-    return getTag(str) === '[object String]';
   }
 
   function isBoolean(bool) {
@@ -2570,16 +2663,11 @@
    * Remove spaces after removing previous string
    */
   function trim(str) {
-    var _str = str.replace(/^\s+/, '');
-
-    for (var i = str.length - 1; i >= 0; i--) {
-      if (/\S/.test(str.charAt(i))) {
-        _str = str.slice(0, i + 1);
-        break;
-      }
+    if (isEmpty(str)) {
+      return str;
     }
 
-    return _str;
+    return str.replace(/(^\s*)|(\s*$)/g, '');
   }
 
   /**
@@ -3307,6 +3395,7 @@
     toJson: toJson,
     toJSON: toJson,
     tojson: toJson,
+    jsonp: jsonp,
     // cookie
     cookie: cookie,
     setCookie: setCookie,
@@ -3332,6 +3421,7 @@
     formatPassTime: formatPassTime,
     formatRemainTime: formatRemainTime,
     formatDuration: formatDuration,
+    sleep: sleep,
     // fill
     fill0: fill0,
     floor: floor,

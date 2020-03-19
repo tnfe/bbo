@@ -69,12 +69,12 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
 | [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             |                                | [column][column]                     |
 | [formatDuration][formatduration]     | **image**                              | [get][get]                         |                                | [search][search]                     |
-| **json**                             | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [unary][unary]                       |
-| [toJson][tojson]                     | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
-| **storage**                          |                                        | [pick][pick]                       |                                |                                      |
-| [storage][storage]                   |                                        | [omit][omit]                       |                                |                                      |
-|                                      |                                        | [isSymbol][issymbol]               |                                |                                      |
-|                                      |                                        | [deepClone][deepclone]             |                                |                                      |
+| [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [unary][unary]                       |
+| **json**                             | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
+| [toJson][tojson]                     |                                        | [pick][pick]                       |                                |                                      |
+| [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
+| **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
+| [storage][storage]                   |                                        | [deepClone][deepclone]             |                                |                                      |
 
 ### Usage
 
@@ -289,6 +289,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [loadjs]: https://tnfe.github.io/bbo/#loadjs
 [loadcss]: https://tnfe.github.io/bbo/#loadcss
 [tojson]: https://tnfe.github.io/bbo/#tojson
+[jsonp]: https://tnfe.github.io/bbo/#jsonp
 [cookie]: https://tnfe.github.io/bbo/#cookie
 [setcookie]: https://tnfe.github.io/bbo/#setCookie
 [getcookie]: https://tnfe.github.io/bbo/#getcookie
@@ -308,6 +309,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [formatpasstime]: https://tnfe.github.io/bbo/#formatpasstime
 [formatremaintime]: https://tnfe.github.io/bbo/#formatremaintime
 [formatduration]: https://tnfe.github.io/bbo/#formatduration
+[sleep]: https://tnfe.github.io/bbo/#sleep
 [fill0]: https://tnfe.github.io/bbo/#fill0
 [floor]: https://tnfe.github.io/bbo/#floor
 [chainasync]: https://tnfe.github.io/bbo/#chainasync

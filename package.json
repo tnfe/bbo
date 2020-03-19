@@ -1,13 +1,22 @@
 {
   "name": "bbo",
-  "version": "1.1.13",
+  "version": "1.1.14",
   "description": "A utility belt library for modern JavaScript.",
   "homepage": "https://tnfe.github.io/bbo",
   "author": "halldwang",
   "license": "MIT",
   "keywords": [
     "bbo",
-    "bbo-cli"
+    "bbo-cli",
+    "10kb",
+    "tools",
+    "lodash",
+    "underscore",
+    "javascript-library",
+    "utils-library",
+    "utility-library",
+    "utility",
+    "utils"
   ],
   "repository": {
     "type": "git",

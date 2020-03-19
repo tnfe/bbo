@@ -64,6 +64,7 @@ import loadcss from './load/loadcss';
 
 // json
 import toJson from './json/to_json';
+import jsonp from './json/jsonp';
 
 // cookie
 import cookie from './cookie/cookie';
@@ -90,6 +91,7 @@ import getDate from './times/get_date';
 import formatPassTime from './times/format_pass_time';
 import formatRemainTime from './times/format_remain_time';
 import formatDuration from './times/format_duration';
+import sleep from './times/sleep';
 
 // fill
 import fill0 from './fill/fill0';
@@ -268,6 +270,7 @@ export default {
   toJson,
   toJSON: toJson,
   tojson: toJson,
+  jsonp,
   // cookie
   cookie,
   setCookie,
@@ -293,6 +296,7 @@ export default {
   formatPassTime,
   formatRemainTime,
   formatDuration,
+  sleep,
   // fill
   fill0,
   floor,
