@@ -1203,8 +1203,7 @@
    * @param {Object|Function} optional options / callback
    * @param {Function} optional callback
    */
-
-  var debug = require('debug')('jsonp');
+  // var debug = require('debug')('jsonp');
 
   function jsonp(url, opts, fn) {
     if (isFunction(opts)) {
@@ -1244,15 +1243,15 @@
     }
 
     window[id] = function (data) {
-      debug('jsonp got', data);
+      // debug('jsonp got', data);
       cleanup();
       if (fn) fn(data, null);
     }; // add qs component
 
 
     url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
-    url = url.replace('?&', '?');
-    debug('jsonp req "%s"', url); // create script
+    url = url.replace('?&', '?'); // debug('jsonp req "%s"', url);
+    // create script
 
     script = document.createElement('script');
     script.src = url;

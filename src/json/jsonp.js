@@ -16,7 +16,8 @@ import randomKey from '../random/random_key';
  * @param {Object|Function} optional options / callback
  * @param {Function} optional callback
  */
-var debug = require('debug')('jsonp');
+// var debug = require('debug')('jsonp');
+
 function jsonp(url, opts, fn) {
   if (isFunction(opts)) {
     fn = opts;
@@ -57,7 +58,7 @@ function jsonp(url, opts, fn) {
   }
 
   window[id] = function(data) {
-    debug('jsonp got', data);
+    // debug('jsonp got', data);
     cleanup();
     if (fn) fn(data, null);
   };
@@ -66,7 +67,7 @@ function jsonp(url, opts, fn) {
   url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
   url = url.replace('?&', '?');
 
-  debug('jsonp req "%s"', url);
+  // debug('jsonp req "%s"', url);
 
   // create script
   script = document.createElement('script');
