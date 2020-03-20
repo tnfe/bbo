@@ -3,7 +3,7 @@
  * bbo is a useful utility collection library  with zero dependencies.
  * (c) 2011-2020 halld
  * https://github.com/tnfe/bbo.git
- * version 1.1.14
+ * version 1.1.15
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.14';
+  var version = '1.1.15';
 
   var globalObject = null;
 
