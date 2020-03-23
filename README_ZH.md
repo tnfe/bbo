@@ -16,12 +16,12 @@
 
 项目整理了日常开发中最常用的功能。 这些功能在您的开发中几乎无处不在，并且在主流的函数工具库中找不到。大多数代码来自于高分答案中的[stackoverflow.com](https://stackoverflow.com/) 网站，向原始作者表示敬意。项目在 gzip 压缩下只有 7K, 所以你可以随时随地使用。
 
-请参阅最新的文档 [Documentation](https://tnfe.github.io/bbo/) 以获取完整的 API 参考，或者在 github 上贡献[bbo-docs](https://github.com/halldwang/bbo-docs.git)文档。
+请参阅最新的文档 [Documentation](https://tnfe.github.io/bbo/) 以获取完整的 API 参考，或者在 github 上贡献[bbo-docs](https://github.com/vsuke/bbo-docs.git)文档。
 
 ### 文档
 
 - [在线阅读](https://tnfe.github.io/bbo/)
-- [文档仓库](https://github.com/halldwang/bbo-docs.git)
+- [文档仓库](https://github.com/vsuke/bbo-docs.git)
 
 ## 功能
 
@@ -162,7 +162,7 @@ import storage from 'bbo/storage';
 #### CDN
 
 ```js
-https://mat1.gtimg.com/www/js/libs/bbo.min.js
+//mat1.gtimg.com/www/js/libs/bbo.min.js
 ```
 
 ### 开发
@@ -237,7 +237,7 @@ vuepress build .
 
 ### 维护者
 
-[@halldwang](https://github.com/halldwang).
+[@vsuke](https://github.com/vsuke).
 
 ### 贡献者
 

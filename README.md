@@ -18,7 +18,7 @@ Most code comes from the [stackOverflow](https://stackoverflow.com/) site in the
 
 With easy code and less than 7k gzip, bbo can be used anytime and anywhere with no worries.
 
-See the [latest docs/documentation](https://tnfe.github.io/bbo/) for a full API reference or [bbo-docs](https://github.com/halldwang/bbo-docs.git).
+See the [latest docs/documentation](https://tnfe.github.io/bbo/) for a full API reference or [bbo-docs](https://github.com/vsuke/bbo-docs.git).
 
 ## Why
 
@@ -27,7 +27,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 ## Documentation
 
 - [Full api documentation on Line](https://tnfe.github.io/bbo/)
-- [Github docs](https://github.com/halldwang/bbo-docs.git)
+- [Github docs](https://github.com/vsuke/bbo-docs.git)
 
 ## Functions
 
@@ -197,7 +197,7 @@ npm run start
 
 ## Maintainers
 
-[@halldwang](https://github.com/halldwang).
+[@vsuke](https://github.com/vsuke).
 
 ## Contribution
 
