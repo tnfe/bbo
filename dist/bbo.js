@@ -1191,19 +1191,15 @@
 
   /* eslint-disable */
   /**
-   * JSONP handler
-   *
    * Options:
    *  - param {String} qs parameter (`callback`)
    *  - prefix {String} qs parameter (`bbo`)
    *  - name {String} qs parameter (`prefix` + incr)
    *  - timeout {Number} how long after a timeout error is emitted (`60000`)
-   *
    * @param {String} url
    * @param {Object|Function} optional options / callback
    * @param {Function} optional callback
    */
-  // var debug = require('debug')('jsonp');
 
   function jsonp(url, opts, fn) {
     if (isFunction(opts)) {
@@ -1212,9 +1208,7 @@
     }
 
     if (!opts) opts = {};
-    var prefix = opts.prefix || 'bbo'; // use the callback name that was passed if one was provided.
-    // otherwise generate a unique name by incrementing our counter.
-
+    var prefix = opts.prefix || 'bbo';
     var id = opts.name || prefix + randomKey(10);
     var param = opts.param || 'callback';
     var timeout = null != opts.timeout ? opts.timeout : 60000;
@@ -1243,16 +1237,12 @@
     }
 
     window[id] = function (data) {
-      // debug('jsonp got', data);
       cleanup();
       if (fn) fn(data, null);
-    }; // add qs component
-
+    };
 
     url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
-    url = url.replace('?&', '?'); // debug('jsonp req "%s"', url);
-    // create script
-
+    url = url.replace('?&', '?');
     script = document.createElement('script');
     script.src = url;
     target.parentNode.insertBefore(script, target);
@@ -1863,8 +1853,6 @@
     }).join(', ');
   };
 
-  // Store a reference to the global setTimeout,
-  // in case it gets replaced (e.g. sinon.useFakeTimers())
   var cachedSetTimeout = setTimeout;
 
   function createSleepPromise(timeout, _ref) {
@@ -1881,12 +1869,11 @@
 
     var sleepPromise = createSleepPromise(timeout, {
       useCachedSetTimeout: useCachedSetTimeout
-    }); // Pass value through, if used in a promise chain
+    });
 
     function promiseFunction(value) {
       return sleepPromise.then(() => value);
-    } // Normal promise
-
+    }
 
     promiseFunction.then = function () {
       return sleepPromise.then.apply(sleepPromise, arguments);
@@ -2624,34 +2611,8 @@
     });
   }
 
-  //   arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
-  // Only pick the first-level key,
-
-  function pick(object) {
-    if (object === null || object === undefined) {
-      return {};
-    }
-
-    for (var _len = arguments.length, paths = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      paths[_key - 1] = arguments[_key];
-    }
-
-    return reduce(paths, (rst, path) => {
-      if (isArray(path)) {
-        forEach(path, item => {
-          if (has(object, item)) {
-            rst[item] = object[item];
-          }
-        });
-      } else {
-        if (has(object, path)) {
-          rst[path] = object[path];
-        }
-      }
-
-      return rst;
-    }, {});
-  }
+  /* eslint-disable */
+  var pick = (obj, arr) => arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
 
   /* eslint-disable no-return-assign */
 
