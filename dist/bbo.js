@@ -3,7 +3,7 @@
  * bbo is a useful utility collection library  with zero dependencies.
  * (c) 2011-2020 halld
  * https://github.com/tnfe/bbo.git
- * version 1.1.15
+ * version 1.1.16
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.15';
+  var version = '1.1.16';
 
   var globalObject = null;
 
@@ -838,6 +838,115 @@
       this.__events = {};
     }
   };
+
+  var properObject = o => isObject(o) && !o.hasOwnProperty ? { ...o
+  } : o;
+
+  var isDate = d => d instanceof Date;
+
+  var isEmpty = o => Object.keys(o).length === 0;
+
+  var objectDiff = (lhs, rhs) => {
+    if (lhs === rhs) return {}; // equal return no diff
+
+    if (!isObject(lhs) || !isObject(rhs)) return rhs; // return updated rhs
+
+    var l = properObject(lhs);
+    var r = properObject(rhs);
+    var deletedValues = Object.keys(l).reduce((acc, key) => {
+      return r.hasOwnProperty(key) ? acc : { ...acc,
+        [key]: undefined
+      };
+    }, {});
+
+    if (isDate(l) || isDate(r)) {
+      // eslint-disable-next-line eqeqeq
+      if (l.valueOf() == r.valueOf()) return {};
+      return r;
+    }
+
+    return Object.keys(r).reduce((acc, key) => {
+      if (!l.hasOwnProperty(key)) return { ...acc,
+        [key]: r[key]
+      }; // return added r key
+
+      var difference = objectDiff(l[key], r[key]);
+      if (isObject(difference) && isEmpty(difference) && !isDate(difference)) return acc; // return no diff
+
+      return { ...acc,
+        [key]: difference
+      }; // return updated key
+    }, deletedValues);
+  };
+
+  var addedDiff = (lhs, rhs) => {
+    if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
+    var l = properObject(lhs);
+    var r = properObject(rhs);
+    return Object.keys(r).reduce((acc, key) => {
+      if (l.hasOwnProperty(key)) {
+        var difference = addedDiff(l[key], r[key]);
+        if (isObject(difference) && isEmpty(difference)) return acc;
+        return { ...acc,
+          [key]: difference
+        };
+      }
+
+      return { ...acc,
+        [key]: r[key]
+      };
+    }, {});
+  };
+
+  var deletedDiff = (lhs, rhs) => {
+    if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
+    var l = properObject(lhs);
+    var r = properObject(rhs);
+    return Object.keys(l).reduce((acc, key) => {
+      if (r.hasOwnProperty(key)) {
+        var difference = deletedDiff(l[key], r[key]);
+        if (isObject(difference) && isEmpty(difference)) return acc;
+        return { ...acc,
+          [key]: difference
+        };
+      }
+
+      return { ...acc,
+        [key]: undefined
+      };
+    }, {});
+  };
+
+  var updatedDiff = (lhs, rhs) => {
+    if (lhs === rhs) return {};
+    if (!isObject(lhs) || !isObject(rhs)) return rhs;
+    var l = properObject(lhs);
+    var r = properObject(rhs);
+
+    if (isDate(l) || isDate(r)) {
+      // eslint-disable-next-line eqeqeq
+      if (l.valueOf() == r.valueOf()) return {};
+      return r;
+    }
+
+    return Object.keys(r).reduce((acc, key) => {
+      if (l.hasOwnProperty(key)) {
+        var difference = updatedDiff(l[key], r[key]);
+        if (isObject(difference) && isEmpty(difference) && !isDate(difference)) return acc;
+        return { ...acc,
+          [key]: difference
+        };
+      }
+
+      return acc;
+    }, {});
+  };
+
+  var detailedDiff = (lhs, rhs) => ({
+    added: addedDiff(lhs, rhs),
+    deleted: deletedDiff(lhs, rhs),
+    updated: updatedDiff(lhs, rhs)
+  });
 
   function loadImages(options) {
     var len = 0;
@@ -2201,27 +2310,6 @@
     return getTag(symbol) === '[object Symbol]';
   }
 
-  /* eslint-disable no-eq-null */
-  function isEmpty(value) {
-    if (value == null) {
-      return true;
-    }
-
-    if (isArray(value) || isString(value)) {
-      return value.length === 0;
-    }
-
-    if (isObject(value)) {
-      return Object.keys(value).length === 0;
-    }
-
-    if (isMap(value) || isSet(value)) {
-      return value.size === 0;
-    }
-
-    return true;
-  }
-
   /* eslint-disable max-params */
   var charCodeOfDot = '.'.charCodeAt(0);
   var reEscapeChar = /\\(\\)?/g;
@@ -3347,6 +3435,13 @@
     construct: construct,
     paramsName: paramsName,
     eventEmitter: EventEmitter,
+    // object
+    properObject: properObject,
+    objectDiff: objectDiff,
+    addedDiff: addedDiff,
+    deletedDiff: deletedDiff,
+    updatedDiff: updatedDiff,
+    detailedDiff: detailedDiff,
     // load
     loadImages: loadImages,
     loadjs: loadjs,
@@ -3403,6 +3498,7 @@
     getTag: getTag,
     hasOwnProperty: hasOwnProperty$1,
     isObject: isObject,
+    isDate: isDate,
     isArray: isArray,
     isString: isString,
     isBoolean: isBoolean,

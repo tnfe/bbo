@@ -57,6 +57,14 @@ import construct from './other/construct';
 import paramsName from './other/params_name';
 import eventEmitter from './other/event_emitter';
 
+// object
+import properObject from './object/proper_object';
+import objectDiff from './object/object_diff';
+import addedDiff from './object/added_diff';
+import deletedDiff from './object/deleted_diff';
+import updatedDiff from './object/updated_diff';
+import detailedDiff from './object/detailed_diff';
+
 // load
 import loadImages from './load/load_images';
 import loadjs from './load/loadjs';
@@ -117,6 +125,7 @@ import imageOptimization from './image/image_optimization';
 import getTag from './lodash/get_tag';
 import hasOwnProperty from './lodash/has_own_property';
 import isObject from './lodash/is_object';
+import isDate from './lodash/is_date';
 import isArray from './lodash/is_array';
 import isString from './lodash/is_string';
 import isBoolean from './lodash/is_boolean';
@@ -262,6 +271,13 @@ export default {
   construct,
   paramsName,
   eventEmitter,
+  // object
+  properObject,
+  objectDiff,
+  addedDiff,
+  deletedDiff,
+  updatedDiff,
+  detailedDiff,
   // load
   loadImages,
   loadjs,
@@ -318,6 +334,7 @@ export default {
   getTag,
   hasOwnProperty,
   isObject,
+  isDate,
   isArray,
   isString,
   isBoolean,
