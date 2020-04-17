@@ -1,3 +1,5 @@
+// https://github.com/mattphillips/deep-object-diff
+
 import addedDiff from './added_diff';
 import deletedDiff from './deleted_diff';
 import updatedDiff from './updated_diff';

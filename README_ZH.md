@@ -50,13 +50,13 @@
 | **other**                            | [loadImages][loadimages]               | [isString][isstring]               | [xssFilter][xssfilter]         | [differenceBy][differenceby]         |
 | [uuid][uuid]                         | [loadjs][loadjs]                       | [isBoolean][isboolean]             | [effortIndex][effortindex]     | [max][max]                           |
 | [hash][hash]                         | [loadcss][loadcss]                     | [isNumber][isnumber]               | [capwords]                     | [min][min]                           |
-| [judge][judge]                       | **fill**                               | [isMap][ismap]                     |                                | [equal][equal]                       |
-| [getType][gettype]                   | [fill0][fill0]                         | [isSet][isset]                     |                                | [allEqual][allequal]                 |
-| [isTypeof][istypeof]                 | [floor][floor]                         | [isFunction][isfunction]           |                                | [all][all]                           |
-| [construct][construct]               | [chainAsync][chainasync]               | [isEmpty][isempty]                 |                                | [any][any]                           |
-| [paramsName][paramsname]             | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   |                                | [chunk][chunk]                       |
-| [eventEmitter][eventemitter]         | [modulo][modulo]                       | [has][has]                         |                                | [countBy][countby]                   |
-| **times**                            | **cookie**                             | [toPath][topath]                   |                                | [countOccurrences][countoccurrences] |
+| [judge][judge]                       | **fill**                               | [isMap][ismap]                     | **object**                     | [equal][equal]                       |
+| [getType][gettype]                   | [fill0][fill0]                         | [isSet][isset]                     | [properObject][properobject]   | [allEqual][allequal]                 |
+| [isTypeof][istypeof]                 | [floor][floor]                         | [isFunction][isfunction]           | [objectDiff][objectdiff]       | [all][all]                           |
+| [construct][construct]               | [chainAsync][chainasync]               | [isEmpty][isempty]                 | [addedDiff][addeddiff]         | [any][any]                           |
+| [paramsName][paramsname]             | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   | [deletedDiff][deleteddiff]     | [chunk][chunk]                       |
+| [eventEmitter][eventemitter]         | [modulo][modulo]                       | [has][has]                         | [detailedDiff][detaileddiff]   | [countBy][countby]                   |
+| **times**                            | **cookie**                             | [toPath][topath]                   | [updatedDiff][updateddiff]     | [countOccurrences][countoccurrences] |
 | [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   |                                | [drop][drop]                         |
 | [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
 | [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         |                                | [dropWhile][dropwhile]               |
@@ -68,7 +68,8 @@
 | [toJson][tojson]                     |                                        | [pick][pick]                       |                                |                                      |
 | [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
 | **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
-| [storage][storage]                   |                                        | [deepClone][deepclone]             |                                |                                      |
+| [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
+|                                      |                                        | [deepClone][deepclone]             |                                |                                      |
 
 ### 使用
 
@@ -425,3 +426,10 @@ Detailed changes for each release are documented in the [release notes](https://
 [search]: https://tnfe.github.io/bbo/#search
 [unary]: https://tnfe.github.io/bbo/#unary
 [indexby]: https://tnfe.github.io/bbo/#indexby
+[isdate]: https://tnfe.github.io/bbo/#isDate
+[properobject]: https://tnfe.github.io/bbo/#properObject
+[objectdiff]: https://tnfe.github.io/bbo/#objectDiff
+[deleteddiff]: https://tnfe.github.io/bbo/#deletedDiff
+[detaileddiff]: https://tnfe.github.io/bbo/#detailedDiff
+[addeddiff]: https://tnfe.github.io/bbo/#addedDiff
+[updateddiff]: https://tnfe.github.io/bbo/#updatedDiff
