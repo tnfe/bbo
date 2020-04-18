@@ -426,10 +426,10 @@ Detailed changes for each release are documented in the [release notes](https://
 [search]: https://tnfe.github.io/bbo/#search
 [unary]: https://tnfe.github.io/bbo/#unary
 [indexby]: https://tnfe.github.io/bbo/#indexby
-[isdate]: https://tnfe.github.io/bbo/#isDate
-[properobject]: https://tnfe.github.io/bbo/#properObject
-[objectdiff]: https://tnfe.github.io/bbo/#objectDiff
-[deleteddiff]: https://tnfe.github.io/bbo/#deletedDiff
-[detaileddiff]: https://tnfe.github.io/bbo/#detailedDiff
-[addeddiff]: https://tnfe.github.io/bbo/#addedDiff
-[updateddiff]: https://tnfe.github.io/bbo/#updatedDiff
+[isdate]: https://tnfe.github.io/bbo/#isdate
+[properobject]: https://tnfe.github.io/bbo/#properobject
+[objectdiff]: https://tnfe.github.io/bbo/#objectdiff
+[deleteddiff]: https://tnfe.github.io/bbo/#deleteddiff
+[detaileddiff]: https://tnfe.github.io/bbo/#detaileddiff
+[addeddiff]: https://tnfe.github.io/bbo/#addeddiff
+[updateddiff]: https://tnfe.github.io/bbo/#updateddiff
