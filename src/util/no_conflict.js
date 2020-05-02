@@ -2,11 +2,11 @@
 import getGlobalObject from './get_global';
 
 const globalObject = getGlobalObject();
-const previousV = globalObject.v;
+const previous = globalObject.bbo;
 
 export default function noConflict() {
-  if (this === globalObject.v) {
-    globalObject.v = previousV;
+  if (this === globalObject.bbo) {
+    globalObject.bbo = previous;
   }
   return this;
 }
