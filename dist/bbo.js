@@ -125,10 +125,10 @@
 
   /* eslint-disable no-invalid-this */
   var globalObject$1 = getGlobalObject();
-  var previousV = globalObject$1.v;
+  var previous = globalObject$1.bbo;
   function noConflict() {
-    if (this === globalObject$1.v) {
-      globalObject$1.v = previousV;
+    if (this === globalObject$1.bbo) {
+      globalObject$1.bbo = previous;
     }
 
     return this;
@@ -846,6 +846,8 @@
 
   var isEmpty = o => Object.keys(o).length === 0;
 
+  // https://github.com/mattphillips/deep-object-diff
+
   var objectDiff = (lhs, rhs) => {
     if (lhs === rhs) return {}; // equal return no diff
 
@@ -879,6 +881,8 @@
     }, deletedValues);
   };
 
+  // https://github.com/mattphillips/deep-object-diff
+
   var addedDiff = (lhs, rhs) => {
     if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
     var l = properObject(lhs);
@@ -898,6 +902,8 @@
     }, {});
   };
 
+  // https://github.com/mattphillips/deep-object-diff
+
   var deletedDiff = (lhs, rhs) => {
     if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
     var l = properObject(lhs);
@@ -916,6 +922,8 @@
       };
     }, {});
   };
+
+  // https://github.com/mattphillips/deep-object-diff
 
   var updatedDiff = (lhs, rhs) => {
     if (lhs === rhs) return {};
@@ -941,6 +949,8 @@
       return acc;
     }, {});
   };
+
+  // https://github.com/mattphillips/deep-object-diff
 
   var detailedDiff = (lhs, rhs) => ({
     added: addedDiff(lhs, rhs),

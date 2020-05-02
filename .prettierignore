@@ -3,6 +3,7 @@
 /node_modules
 /docs
 /.vscode
+/coverage
 node_modules
 .eslintrc.js
 package.json
