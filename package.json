@@ -48,7 +48,6 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "verify": "npm run eslint && npm run coverage",
-    "jsdoc": "jsdoc --configure .jsdoc.json",
     "deploy": "rollup -c config/rollup_dist.js && cp dist/bbo.js docs/scripts && scp -r docs/* halldwang:/users/halldwang/code/webdev/bbo_docs",
     "precommit": "lint-staged && jest --onlyChanged"
   },
