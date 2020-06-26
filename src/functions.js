@@ -120,6 +120,10 @@ import copyToClipboard from './behavior/copy_to_clipboard';
 // image
 import checkImageSize from './image/check_image_size';
 import imageOptimization from './image/image_optimization';
+import toDataUrl from './image/to_data_url';
+
+// collection
+import clone from './collection/clone';
 
 // lodash
 import getTag from './lodash/get_tag';
@@ -139,7 +143,6 @@ import isShallowEqual from './lodash/is_shallow_equal';
 import has from './lodash/has';
 import toPath from './lodash/to_path';
 import reduce from './lodash/reduce';
-import deepClone from './lodash/deep_clone';
 import forEach from './lodash/for_each';
 import map from './lodash/map';
 import find from './lodash/find';
@@ -330,6 +333,10 @@ export default {
   // image
   checkImageSize,
   imageOptimization,
+  toDataUrl,
+  // collection
+  clone,
+  deepClone: clone,
   // lodash
   getTag,
   hasOwnProperty,
@@ -347,7 +354,6 @@ export default {
   isShallowEqual,
   has,
   reduce,
-  deepClone,
   forEach,
   map,
   findIndex,

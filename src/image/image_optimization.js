@@ -11,6 +11,9 @@
  * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
  * If the output type is image/gif，Then return as is image Parameter content.
  */
+
+import isString from '../lodash/is_string';
+
 const imageOptimization = (image, quality = 0.9, { maxWidth = 1920, mimeType } = {}) => {
   return new Promise((resolve, reject) => {
     if (image instanceof File) {
@@ -19,7 +22,7 @@ const imageOptimization = (image, quality = 0.9, { maxWidth = 1920, mimeType } =
         toBlob(this.result);
       };
       reader.readAsDataURL(image);
-    } else if (typeof image === 'string') {
+    } else if (isString(image)) {
       toBlob(image);
     }
 

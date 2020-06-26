@@ -2,23 +2,28 @@
  * Check image size
  * @param {(Object|String)} image - image information，allow File Object or Data URLs
  * @param {Object} [options={}] - Check options
- * @param {Number} [options.width] - Check width
- * @param {Number} [options.height] - Check height
- * @param {Number} [deviation=0] - Allowable deviation
  */
 
-const checkImageSize = (image, options, deviation = 0) => {
+import isString from '../lodash/is_string';
+
+const DEFAULT = {
+  enabledMaxSize: false,
+  enabledNatural: false,
+  ratio: 1
+};
+
+const checkImageSize = (image, { enabledMaxSize, enabledNatural, ratio } = DEFAULT) => {
   return new Promise((resolve, reject) => {
     /**
      * Check type of image
      */
     if (image instanceof File) {
       const reader = new FileReader();
-      reader.onload = function() {
-        checkSize(this.result);
+      reader.onload = () => {
+        checkSize(reader.result);
       };
       reader.readAsDataURL(image);
-    } else if (typeof image === 'string') {
+    } else if (isString(image)) {
       checkSize(image);
     }
 
@@ -26,19 +31,31 @@ const checkImageSize = (image, options, deviation = 0) => {
      * Check picture size
      * @param {String} data：Data URL
      */
-    function checkSize(data) {
-      const virtualImage = new Image();
-      virtualImage.src = data;
-      virtualImage.onload = function() {
-        let width = this.naturalWidth;
-        let height = this.naturalHeight;
-        if (options.width && Math.abs(options.width - width) > deviation) {
-          resolve(false);
+    function checkSize(url) {
+      const image = new Image();
+      image.src = url;
+      image.onload = () => {
+        let w = image.width / ratio;
+        let h = image.height / ratio;
+
+        if (enabledMaxSize) {
+          let nw = Math.min(w, 750 / 2);
+          h = h * (nw / w);
+          w = nw;
         }
-        if (options.height && Math.abs(options.height - height) > deviation) {
-          resolve(false);
+
+        if (enabledNatural) {
+          w = image.naturalWidth / ratio;
+          h = image.naturalHeight / ratio;
         }
-        resolve(true);
+
+        w = w >> 0;
+        h = h >> 0;
+
+        resolve({ width: w, height: h });
+      };
+      image.onerror = (e) => {
+        reject(e);
       };
     }
   });

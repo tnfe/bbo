@@ -1,20 +1,23 @@
-import isObject from './is_object';
-import debounce from './debounce';
-
-export default function throttle(func, wait, options) {
-  let leading = true;
-  let trailing = true;
-
-  if (typeof func !== 'function') {
-    throw new TypeError('Expected a function');
-  }
-  if (isObject(options)) {
-    leading = 'leading' in options ? !!options.leading : leading;
-    trailing = 'trailing' in options ? !!options.trailing : trailing;
-  }
-  return debounce(func, wait, {
-    leading,
-    trailing,
-    maxWait: wait
-  });
+/* eslint-disable no-invalid-this */
+export default function throttle(fn, interval, callFirst) {
+  let wait = false;
+  let callNow = false;
+  return function() {
+    callNow = callFirst && !wait;
+    let context = this;
+    let args = arguments;
+    if (!wait) {
+      wait = true;
+      setTimeout(function() {
+        wait = false;
+        if (!callFirst) {
+          return fn.apply(context, args);
+        }
+      }, interval);
+    }
+    if (callNow) {
+      callNow = false;
+      return fn.apply(this, arguments);
+    }
+  };
 }

@@ -1,41 +1,35 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable eqeqeq */
-/* eslint-disable no-eq-null */
+import isString from './is_string';
+import isSymbol from './is_symbol';
+import isArray from './is_array';
 
-import stringToPath from './string_to_path';
-export default function get(object, path, defaultValue) {
-  if (object == null) {
+export default function get(obj, propsArg, defaultValue) {
+  if (!obj) {
     return defaultValue;
   }
-  if (!Array.isArray(path)) {
-    const reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-    const reIsPlainProp = /^\w*$/;
-    const isKey = function(value, object) {
-      const type = typeof value;
-      if (type == 'number' || type == 'boolean' || value == null) {
-        return true;
-      }
-      return (
-        reIsPlainProp.test(value) ||
-        !reIsDeepProp.test(value) ||
-        (object != null && value in Object(object))
-      );
-    };
-    if (isKey(path, object)) {
-      path = [path];
-    } else {
-      path = stringToPath(path);
+  let props;
+  let prop;
+  if (Array.isArray(propsArg)) {
+    props = propsArg.slice(0);
+  }
+  if (isString(propsArg)) {
+    props = propsArg.split('.');
+  }
+  if (isSymbol(propsArg)) {
+    props = [propsArg];
+  }
+  if (!isArray(props)) {
+    throw new Error('props arg must be an array, a string or a symbol');
+  }
+  while (props.length) {
+    prop = props.shift();
+    if (!obj) {
+      return defaultValue;
+    }
+    // eslint-disable-next-line no-param-reassign
+    obj = obj[prop];
+    if (obj === undefined) {
+      return defaultValue;
     }
   }
-  let index = 0;
-  const length = path.length;
-  while (object != null && index < length) {
-    object = object[path[index]];
-    index += 1;
-  }
-  if (index && index === length) {
-    return object === undefined ? defaultValue : object;
-  } else {
-    return defaultValue;
-  }
+  return obj;
 }

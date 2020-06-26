@@ -6,14 +6,14 @@
  * Deep clones all properties except functions
  */
 
-import isFunction from './is_function';
-import isArray from './is_array';
+import isFunction from '../lodash/is_function';
+import isArray from '../lodash/is_array';
 
-export default function deepClone(obj) {
+export default function clone(obj) {
   // var arr = [1, 2, 3];
   // var subObj = { aa: 1 };
   // var obj = { a: 3, b: 5, c: arr, d: subObj };
-  // var objClone = bbo.deepClone(obj);
+  // var objClone = bbo.clone(obj);
   // arr.push(4);
   // subObj.bb = 2;
   // obj; // {a: 3, b: 5, c: [1, 2, 3, 4], d: {aa: 1}}
@@ -27,7 +27,7 @@ export default function deepClone(obj) {
     let value = obj[key];
     let type = {}.toString.call(value).slice(8, -1);
     if (type == 'Array' || type == 'Object') {
-      result[key] = deepClone(value);
+      result[key] = clone(value);
     } else if (type == 'Date') {
       result[key] = new Date(value.getTime());
     } else if (type == 'RegExp') {

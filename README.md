@@ -48,7 +48,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [isWeiShi][isweishi]                 | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [compactAll][compactall]             |
 | [isIphoneXmodel][isiphonexmodel]     | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [pluck][pluck]                       |
 | [isIE][isie]                         | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [union][union]                       |
-| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **mlodash**                        | [byteLen][bytelen]             | [unionBy][unionby]                   |
+| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **lodash**                         | [byteLen][bytelen]             | [unionBy][unionby]                   |
 | **log**                              | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [unionWith][unionwith]               |
 | [log][log]                           | [setStyle][setstyle]                   | [hasOwnProperty][hasownproperty]   | [endsWith][endswith]           | [intersect][intersect]               |
 | [logs][logs]                         | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
@@ -71,11 +71,11 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [formatDuration][formatduration]     | **image**                              | [get][get]                         |                                | [search][search]                     |
 | [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [unary][unary]                       |
 | **json**                             | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
-| [toJson][tojson]                     |                                        | [pick][pick]                       |                                |                                      |
-| [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
-| **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
+| [toJson][tojson]                     | [toDataUrl][todataurl]                 | [pick][pick]                       |                                |                                      |
+| [jsonp][jsonp]                       | **collection**                         | [omit][omit]                       |                                |                                      |
+| **storage**                          | [clone][clone]                         | [isSymbol][issymbol]               |                                |                                      |
 | [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
-|                                      |                                        | [deepClone][deepclone]             |                                |                                      |
+|                                      |                                        | [mapValues][mapvalues]             |                                |                                      |
 
 ### Usage
 
@@ -324,6 +324,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [copytoclipboard]: https://tnfe.github.io/bbo/#copytoclipboard
 [checkimagesize]: https://tnfe.github.io/bbo/#checkimagesize
 [imageoptimization]: https://tnfe.github.io/bbo/#imageoptimization
+[todataurl]: https://tnfe.github.io/bbo/#todataurl
 [gettag]: https://tnfe.github.io/bbo/#gettag
 [hasownproperty]: https://tnfe.github.io/bbo/#hasownproperty
 [isobject]: https://tnfe.github.io/bbo/#isobject
@@ -349,7 +350,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [pick]: https://tnfe.github.io/bbo/#pick
 [omit]: https://tnfe.github.io/bbo/#omit
 [issymbol]: https://tnfe.github.io/bbo/#issymbol
-[deepclone]: https://tnfe.github.io/bbo/#deepclone
+[clone]: https://tnfe.github.io/bbo/#clone
 [trim]: https://tnfe.github.io/bbo/#trim
 [fillzero]: https://tnfe.github.io/bbo/#fillzero
 [longunique]: https://tnfe.github.io/bbo/#longunique
