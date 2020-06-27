@@ -124,6 +124,9 @@ import toDataUrl from './image/to_data_url';
 
 // collection
 import clone from './collection/clone';
+import values from './collection/values';
+import entries from './collection/entries';
+import extend from './collection/extend';
 
 // lodash
 import getTag from './lodash/get_tag';
@@ -215,6 +218,7 @@ import dropWhile from './array/drop_while';
 import dropRightWhile from './array/drop_right_while';
 import column from './array/column';
 import search from './array/search';
+import split from './array/split';
 import unary from './array/unary';
 import indexBy from './array/index_by';
 
@@ -337,6 +341,9 @@ export default {
   // collection
   clone,
   deepClone: clone,
+  values,
+  entries,
+  extend,
   // lodash
   getTag,
   hasOwnProperty,
@@ -425,6 +432,7 @@ export default {
   dropRightWhile,
   column,
   search,
+  split,
   unary,
   indexBy
 };
