@@ -1,7 +1,7 @@
 /*
  * bbo
  * bbo is a useful utility collection library  with zero dependencies.
- * (c) 2011-2020 halld
+ * (c) 2011-2020
  * https://github.com/tnfe/bbo.git
  * version 1.1.16
  */
@@ -2408,7 +2408,7 @@
   function values(obj) {
     var result = [];
 
-    if (Array.isArray(obj)) {
+    if (isArray(obj)) {
       return obj.slice(0);
     }
 
@@ -2538,6 +2538,10 @@
     return getTag(symbol) === '[object Symbol]';
   }
 
+  function has(object, key) {
+    return object !== null && hasOwnProperty$1(object, key);
+  }
+
   /* eslint-disable max-params */
   var charCodeOfDot = '.'.charCodeAt(0);
   var reEscapeChar = /\\(\\)?/g;
@@ -2569,38 +2573,6 @@
     }
 
     return stringToPath(value);
-  }
-
-  /* eslint-disable eqeqeq */
-  function has(object, path) {
-    if (!isObject(object)) {
-      return false;
-    }
-
-    if (!isArray(path)) {
-      path = toPath(path);
-    }
-
-    var index = -1;
-    var length = path.length;
-    var result = false;
-
-    while (++index < length) {
-      var key = String(path[index]);
-
-      if (!(result = object != null && hasOwnProperty(object, key))) {
-        break;
-      }
-
-      object = object[key];
-    } // eslint-disable-next-line eqeqeq
-
-
-    if (result || ++index != length) {
-      return result;
-    }
-
-    return false;
   }
 
   function reduce(src, func) {
@@ -3149,12 +3121,25 @@
   }
 
   /**
-   * Removes undefined and Null from an array.
+   * returns a copy of an array with falsey values removed
    */
-  function compact(target) {
-    return target.filter(item => {
-      return item !== undefined;
-    });
+  function compact(arr) {
+    if (!isArray(arr)) {
+      throw new Error('expected an array');
+    }
+
+    var result = [];
+    var len = arr.length;
+
+    for (var i = 0; i < len; i++) {
+      var elem = arr[i];
+
+      if (elem) {
+        result.push(elem);
+      }
+    }
+
+    return result;
   }
 
   /**
