@@ -65,13 +65,13 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | **times**                            | **cookie**                             | [toPath][topath]                   | [updatedDiff][updateddiff]     | [countOccurrences][countoccurrences] |
 | [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   | **collection**                 | [drop][drop]                         |
 | [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 | [clone][clone]                 | [dropRight][dropright]               |
-| [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         |                                | [dropWhile][dropwhile]               |
-| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
-| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             |                                | [column][column]                     |
-| [formatDuration][formatduration]     | **image**                              | [get][get]                         |                                | [search][search]                     |
-| [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [unary][unary]                       |
+| [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         | [entries][entries]             | [dropWhile][dropwhile]               |
+| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       | [extend][extend]               | [dropRightWhile][droprightwhile]     |
+| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             | [flush][flush]                 | [column][column]                     |
+| [formatDuration][formatduration]     | **image**                              | [get][get]                         | [values][values]               | [search][search]                     |
+| [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               | [size][size]                   | [unary][unary]                       |
 | **json**                             | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
-| [toJson][tojson]                     | [toDataUrl][todataurl]                 | [pick][pick]                       |                                |                                      |
+| [toJson][tojson]                     | [toDataUrl][todataurl]                 | [pick][pick]                       |                                | [split][split]                       |
 | [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
 | **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
 | [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
@@ -351,6 +351,11 @@ Detailed changes for each release are documented in the [release notes](https://
 [omit]: https://tnfe.github.io/bbo/#omit
 [issymbol]: https://tnfe.github.io/bbo/#issymbol
 [clone]: https://tnfe.github.io/bbo/#clone
+[values]: https://tnfe.github.io/bbo/#values
+[entries]: https://tnfe.github.io/bbo/#entries
+[flush]: https://tnfe.github.io/bbo/#flush
+[extend]: https://tnfe.github.io/bbo/#extend
+[size]: https://tnfe.github.io/bbo/#size
 [trim]: https://tnfe.github.io/bbo/#trim
 [fillzero]: https://tnfe.github.io/bbo/#fillzero
 [longunique]: https://tnfe.github.io/bbo/#longunique
@@ -412,6 +417,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [search]: https://tnfe.github.io/bbo/#search
 [unary]: https://tnfe.github.io/bbo/#unary
 [indexby]: https://tnfe.github.io/bbo/#indexby
+[split]: https://tnfe.github.io/bbo/#split
 [isdate]: https://tnfe.github.io/bbo/#isdate
 [mapvalues]: https://tnfe.github.io/bbo/#mapvalues
 [properobject]: https://tnfe.github.io/bbo/#properobject

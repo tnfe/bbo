@@ -42,7 +42,7 @@
 | [isWeiShi][isweishi]                 | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [compactAll][compactall]             |
 | [isIphoneXmodel][isiphonexmodel]     | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [pluck][pluck]                       |
 | [isIE][isie]                         | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [union][union]                       |
-| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **mlodash**                        | [byteLen][bytelen]             | [unionBy][unionby]                   |
+| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **lodash**                         | [byteLen][bytelen]             | [unionBy][unionby]                   |
 | **log**                              | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [unionWith][unionwith]               |
 | [log][log]                           | [setStyle][setstyle]                   | [hasOwnProperty][hasownproperty]   | [endsWith][endswith]           | [intersect][intersect]               |
 | [logs][logs]                         | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
@@ -57,19 +57,19 @@
 | [paramsName][paramsname]             | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   | [deletedDiff][deleteddiff]     | [chunk][chunk]                       |
 | [eventEmitter][eventemitter]         | [modulo][modulo]                       | [has][has]                         | [detailedDiff][detaileddiff]   | [countBy][countby]                   |
 | **times**                            | **cookie**                             | [toPath][topath]                   | [updatedDiff][updateddiff]     | [countOccurrences][countoccurrences] |
-| [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   |                                | [drop][drop]                         |
-| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
-| [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         |                                | [dropWhile][dropwhile]               |
-| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
-| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             |                                | [column][column]                     |
-| [formatDuration][formatduration]     | **image**                              | [get][get]                         |                                | [search][search]                     |
-| [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [unary][unary]                       |
+| [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   | **collection**                 | [drop][drop]                         |
+| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 | [clone][clone]                 | [dropRight][dropright]               |
+| [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         | [entries][entries]             | [dropWhile][dropwhile]               |
+| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       | [extend][extend]               | [dropRightWhile][droprightwhile]     |
+| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             | [flush][flush]                 | [column][column]                     |
+| [formatDuration][formatduration]     | **image**                              | [get][get]                         | [values][values]               | [search][search]                     |
+| [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               | [size][size]                   | [unary][unary]                       |
 | **json**                             | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
-| [toJson][tojson]                     |                                        | [pick][pick]                       |                                |                                      |
+| [toJson][tojson]                     | [toDataUrl][todataurl]                 | [pick][pick]                       |                                | [split][split]                       |
 | [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
 | **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
 | [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
-|                                      |                                        | [deepClone][deepclone]             |                                |                                      |
+|                                      |                                        | [mapValues][mapvalues]             |                                |                                      |
 
 ### 使用
 
@@ -339,6 +339,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [copytoclipboard]: https://tnfe.github.io/bbo/#copytoclipboard
 [checkimagesize]: https://tnfe.github.io/bbo/#checkimagesize
 [imageoptimization]: https://tnfe.github.io/bbo/#imageoptimization
+[todataurl]: https://tnfe.github.io/bbo/#todataurl
 [gettag]: https://tnfe.github.io/bbo/#gettag
 [hasownproperty]: https://tnfe.github.io/bbo/#hasownproperty
 [isobject]: https://tnfe.github.io/bbo/#isobject
@@ -364,7 +365,12 @@ Detailed changes for each release are documented in the [release notes](https://
 [pick]: https://tnfe.github.io/bbo/#pick
 [omit]: https://tnfe.github.io/bbo/#omit
 [issymbol]: https://tnfe.github.io/bbo/#issymbol
-[deepclone]: https://tnfe.github.io/bbo/#deepclone
+[clone]: https://tnfe.github.io/bbo/#clone
+[values]: https://tnfe.github.io/bbo/#values
+[entries]: https://tnfe.github.io/bbo/#entries
+[flush]: https://tnfe.github.io/bbo/#flush
+[extend]: https://tnfe.github.io/bbo/#extend
+[size]: https://tnfe.github.io/bbo/#size
 [trim]: https://tnfe.github.io/bbo/#trim
 [fillzero]: https://tnfe.github.io/bbo/#fillzero
 [longunique]: https://tnfe.github.io/bbo/#longunique
@@ -426,7 +432,9 @@ Detailed changes for each release are documented in the [release notes](https://
 [search]: https://tnfe.github.io/bbo/#search
 [unary]: https://tnfe.github.io/bbo/#unary
 [indexby]: https://tnfe.github.io/bbo/#indexby
+[split]: https://tnfe.github.io/bbo/#split
 [isdate]: https://tnfe.github.io/bbo/#isdate
+[mapvalues]: https://tnfe.github.io/bbo/#mapvalues
 [properobject]: https://tnfe.github.io/bbo/#properobject
 [objectdiff]: https://tnfe.github.io/bbo/#objectdiff
 [deleteddiff]: https://tnfe.github.io/bbo/#deleteddiff

@@ -127,6 +127,7 @@ import clone from './collection/clone';
 import values from './collection/values';
 import entries from './collection/entries';
 import extend from './collection/extend';
+import size from './collection/size';
 
 // lodash
 import getTag from './lodash/get_tag';
@@ -344,6 +345,7 @@ export default {
   values,
   entries,
   extend,
+  size,
   // lodash
   getTag,
   hasOwnProperty,
