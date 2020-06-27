@@ -2170,12 +2170,19 @@
    * Check image size
    * @param {(Object|String)} image - image information，allow File Object or Data URLs
    * @param {Object} [options={}] - Check options
-   * @param {Number} [options.width] - Check width
-   * @param {Number} [options.height] - Check height
-   * @param {Number} [deviation=0] - Allowable deviation
    */
-  var checkImageSize = function (image, options) {
-    var deviation = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+  var DEFAULT = {
+    enabledMaxSize: false,
+    enabledNatural: false,
+    ratio: 1
+  };
+
+  var checkImageSize = function (image) {
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT,
+        enabledMaxSize = _ref.enabledMaxSize,
+        enabledNatural = _ref.enabledNatural,
+        ratio = _ref.ratio;
+
     return new Promise((resolve, reject) => {
       /**
        * Check type of image
@@ -2183,12 +2190,12 @@
       if (image instanceof File) {
         var reader = new FileReader();
 
-        reader.onload = function () {
-          checkSize(this.result);
+        reader.onload = () => {
+          checkSize(reader.result);
         };
 
         reader.readAsDataURL(image);
-      } else if (typeof image === 'string') {
+      } else if (isString(image)) {
         checkSize(image);
       }
       /**
@@ -2197,23 +2204,35 @@
        */
 
 
-      function checkSize(data) {
-        var virtualImage = new Image();
-        virtualImage.src = data;
+      function checkSize(url) {
+        var image = new Image();
+        image.src = url;
 
-        virtualImage.onload = function () {
-          var width = this.naturalWidth;
-          var height = this.naturalHeight;
+        image.onload = () => {
+          var w = image.width / ratio;
+          var h = image.height / ratio;
 
-          if (options.width && Math.abs(options.width - width) > deviation) {
-            resolve(false);
+          if (enabledMaxSize) {
+            var nw = Math.min(w, 750 / 2);
+            h = h * (nw / w);
+            w = nw;
           }
 
-          if (options.height && Math.abs(options.height - height) > deviation) {
-            resolve(false);
+          if (enabledNatural) {
+            w = image.naturalWidth / ratio;
+            h = image.naturalHeight / ratio;
           }
 
-          resolve(true);
+          w = w >> 0;
+          h = h >> 0;
+          resolve({
+            width: w,
+            height: h
+          });
+        };
+
+        image.onerror = e => {
+          reject(e);
         };
       }
     });
@@ -2232,6 +2251,7 @@
    * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
    * If the output type is image/gif，Then return as is image Parameter content.
    */
+
   var imageOptimization = function (image) {
     var quality = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.9;
 
@@ -2249,7 +2269,7 @@
         };
 
         reader.readAsDataURL(image);
-      } else if (typeof image === 'string') {
+      } else if (isString(image)) {
         toBlob(image);
       }
       /**
@@ -2296,16 +2316,181 @@
     });
   };
 
-  function hasOwnProperty$1(obj, keyName) {
-    return Object.prototype.hasOwnProperty.call(obj, keyName);
+  var DEFAULT$1 = {
+    enabledType: false
+  };
+  function toDataUrl(url) {
+    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT$1,
+        enabledType = _ref.enabledType;
+
+    return new Promise((resolve, reject) => {
+      try {
+        var request = new XMLHttpRequest();
+
+        request.onload = () => {
+          var reader = new FileReader();
+
+          reader.onloadend = () => {
+            if (enabledType) {
+              var image = new Image();
+              image.crossOrigin = 'Anonymous';
+              image.src = reader.result;
+
+              image.onload = () => {
+                resolve(image);
+              };
+            } else {
+              resolve(reader.result);
+            }
+          };
+
+          reader.readAsDataURL(request.response);
+        };
+
+        request.open('GET', url, true);
+        request.responseType = 'blob';
+        request.send();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
+
+  /* eslint-disable eqeqeq */
+  function clone(obj) {
+    // var arr = [1, 2, 3];
+    // var subObj = { aa: 1 };
+    // var obj = { a: 3, b: 5, c: arr, d: subObj };
+    // var objClone = bbo.clone(obj);
+    // arr.push(4);
+    // subObj.bb = 2;
+    // obj; // {a: 3, b: 5, c: [1, 2, 3, 4], d: {aa: 1}}
+    // objClone; // {a: 3, b: 5, c: [1, 2, 3], d: {aa: 1, bb: 2}}
+    if (isFunction(obj)) {
+      return obj;
+    }
+
+    var result = isArray(obj) ? [] : {};
+
+    for (var key in obj) {
+      // include prototype properties
+      var value = obj[key];
+      var type = {}.toString.call(value).slice(8, -1);
+
+      if (type == 'Array' || type == 'Object') {
+        result[key] = clone(value);
+      } else if (type == 'Date') {
+        result[key] = new Date(value.getTime());
+      } else if (type == 'RegExp') {
+        result[key] = RegExp(value.source, getRegExpFlags(value));
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  }
+
+  function getRegExpFlags(regExp) {
+    if (typeof regExp.source.flags == 'string') {
+      return regExp.source.flags;
+    } else {
+      var flags = [];
+      regExp.global && flags.push('g');
+      regExp.ignoreCase && flags.push('i');
+      regExp.multiline && flags.push('m');
+      regExp.sticky && flags.push('y');
+      regExp.unicode && flags.push('u');
+      return flags.join('');
+    }
+  }
+
+  function values(obj) {
+    var result = [];
+
+    if (Array.isArray(obj)) {
+      return obj.slice(0);
+    }
+
+    if (isObject(obj) || isFunction(obj)) {
+      var keys = Object.keys(obj);
+      var len = keys.length;
+
+      for (var i = 0; i < len; i++) {
+        result.push(obj[keys[i]]);
+      }
+
+      return result;
+    }
+
+    throw new Error('argument to `values` must be an object');
+  }
+
+  function entries(obj) {
+    if (!isObject(obj) && !isFunction(obj) || obj === null) {
+      throw new Error('argument to `entries` must be an object');
+    }
+
+    var result = [];
+
+    for (var key in obj) {
+      if (obj.hasOwnProperty(key)) {
+        result.push([key, obj[key]]);
+      }
+    }
+
+    return result;
   }
 
   function isBoolean(bool) {
     return getTag(bool) === '[object Boolean]';
   }
 
-  function isNumber(number) {
-    return getTag(number) === '[object Number]';
+  function extend()
+  /* [deep], obj1, obj2, [objn] */
+  {
+    var args = [].slice.call(arguments);
+    var deep = false;
+
+    if (isBoolean(args[0])) {
+      deep = args.shift();
+    }
+
+    var result = args[0];
+
+    if (isUnextendable(result)) {
+      throw new Error('extendee must be an object');
+    }
+
+    var extenders = args.slice(1);
+    var len = extenders.length;
+
+    for (var i = 0; i < len; i++) {
+      var extender = extenders[i];
+
+      for (var key in extender) {
+        if (extender.hasOwnProperty(key)) {
+          var value = extender[key];
+
+          if (deep && isCloneable(value)) {
+            var base = isArray(value) ? [] : {};
+            result[key] = extend(true, result.hasOwnProperty(key) && !isUnextendable(result[key]) ? result[key] : base, value);
+          } else {
+            result[key] = value;
+          }
+        }
+      }
+    }
+
+    return result;
+  }
+
+  function isCloneable(obj) {
+    return isArray(obj) || isObject(obj);
+  }
+
+  function isUnextendable(val) {
+    return !val || !isObject(val) && !isFunction(val);
   }
 
   function isMap(map) {
@@ -2314,6 +2499,39 @@
 
   function isSet(set) {
     return getTag(set) === '[object Set]';
+  }
+
+  /**
+   * Gets the size of `collection` by returning its length for array-like
+   * values or the number of own enumerable string keyed properties for objects.
+   *
+   * @category Collection
+   * @param {Array|Object|string} collection The collection to inspect.
+   * @returns {number} Returns the collection size.
+   */
+
+  function size(collection) {
+    if (collection === null) {
+      return 0;
+    }
+
+    if (isArray(collection) || isString(collection)) {
+      return collection.length;
+    }
+
+    if (isMap(collection) || isSet(collection)) {
+      return collection.size;
+    }
+
+    return Object.keys(collection).length;
+  }
+
+  function hasOwnProperty$1(obj, keyName) {
+    return Object.prototype.hasOwnProperty.call(obj, keyName);
+  }
+
+  function isNumber(number) {
+    return getTag(number) === '[object Number]';
   }
 
   function isSymbol(symbol) {
@@ -2419,55 +2637,6 @@
     return acc;
   }
 
-  /* eslint-disable eqeqeq */
-  function deepClone(obj) {
-    // var arr = [1, 2, 3];
-    // var subObj = { aa: 1 };
-    // var obj = { a: 3, b: 5, c: arr, d: subObj };
-    // var objClone = bbo.deepClone(obj);
-    // arr.push(4);
-    // subObj.bb = 2;
-    // obj; // {a: 3, b: 5, c: [1, 2, 3, 4], d: {aa: 1}}
-    // objClone; // {a: 3, b: 5, c: [1, 2, 3], d: {aa: 1, bb: 2}}
-    if (isFunction(obj)) {
-      return obj;
-    }
-
-    var result = isArray(obj) ? [] : {};
-
-    for (var key in obj) {
-      // include prototype properties
-      var value = obj[key];
-      var type = {}.toString.call(value).slice(8, -1);
-
-      if (type == 'Array' || type == 'Object') {
-        result[key] = deepClone(value);
-      } else if (type == 'Date') {
-        result[key] = new Date(value.getTime());
-      } else if (type == 'RegExp') {
-        result[key] = RegExp(value.source, getRegExpFlags(value));
-      } else {
-        result[key] = value;
-      }
-    }
-
-    return result;
-  }
-
-  function getRegExpFlags(regExp) {
-    if (typeof regExp.source.flags == 'string') {
-      return regExp.source.flags;
-    } else {
-      var flags = [];
-      regExp.global && flags.push('g');
-      regExp.ignoreCase && flags.push('i');
-      regExp.multiline && flags.push('m');
-      regExp.sticky && flags.push('y');
-      regExp.unicode && flags.push('u');
-      return flags.join('');
-    }
-  }
-
   function map(src, func) {
     var rst = [];
     var i = 0;
@@ -2518,195 +2687,99 @@
     return rst;
   }
 
-  /* eslint-disable no-param-reassign */
-  function get(object, path, defaultValue) {
-    if (object == null) {
+  function get(obj, propsArg, defaultValue) {
+    if (!obj) {
       return defaultValue;
     }
 
-    if (!Array.isArray(path)) {
-      var reIsDeepProp = /\.|\[(?:[^[\]]*|(["'])(?:(?!\1)[^\\]|\\.)*?\1)\]/;
-      var reIsPlainProp = /^\w*$/;
+    var props;
+    var prop;
 
-      var isKey = function (value, object) {
-        var type = typeof value;
+    if (Array.isArray(propsArg)) {
+      props = propsArg.slice(0);
+    }
 
-        if (type == 'number' || type == 'boolean' || value == null) {
-          return true;
-        }
+    if (isString(propsArg)) {
+      props = propsArg.split('.');
+    }
 
-        return reIsPlainProp.test(value) || !reIsDeepProp.test(value) || object != null && value in Object(object);
-      };
+    if (isSymbol(propsArg)) {
+      props = [propsArg];
+    }
 
-      if (isKey(path, object)) {
-        path = [path];
-      } else {
-        path = stringToPath(path);
+    if (!isArray(props)) {
+      throw new Error('props arg must be an array, a string or a symbol');
+    }
+
+    while (props.length) {
+      prop = props.shift();
+
+      if (!obj) {
+        return defaultValue;
+      } // eslint-disable-next-line no-param-reassign
+
+
+      obj = obj[prop];
+
+      if (obj === undefined) {
+        return defaultValue;
       }
     }
 
-    var index = 0;
-    var length = path.length;
-
-    while (object != null && index < length) {
-      object = object[path[index]];
-      index += 1;
-    }
-
-    if (index && index === length) {
-      return object === undefined ? defaultValue : object;
-    } else {
-      return defaultValue;
-    }
+    return obj;
   }
 
-  /* eslint-disable no-implicit-coercion */
-  function debounce(func, wait, options) {
-    var lastArgs;
-    var lastThis;
-    var maxWait;
-    var result;
-    var timerId;
-    var lastCallTime;
-    var lastInvokeTime = 0;
-    var leading = false;
-    var maxing = false;
-    var trailing = true; // Bypass `requestAnimationFrame` by explicitly setting `wait=0`.
-
-    var useRAF = !wait && wait !== 0 && typeof requestAnimationFrame === 'function';
-
-    if (typeof func !== 'function') {
-      throw new TypeError('Expected a function');
-    }
-
-    wait = +wait || 0;
-
-    if (isObject(options)) {
-      leading = !!options.leading;
-      maxing = 'maxWait' in options;
-      maxWait = maxing ? Math.max(+options.maxWait || 0, wait) : maxWait;
-      trailing = 'trailing' in options ? !!options.trailing : trailing;
-    }
-
-    function invokeFunc(time) {
-      var args = lastArgs;
-      var thisArg = lastThis;
-      lastArgs = lastThis = undefined;
-      lastInvokeTime = time;
-      result = func.apply(thisArg, args);
-      return result;
-    }
-
-    function startTimer(pendingFunc, wait) {
-      if (useRAF) {
-        cancelAnimationFrame(timerId);
-        return requestAnimationFrame(pendingFunc);
+  /* eslint-disable no-invalid-this */
+  function debounce(fn, wait, callFirst) {
+    var timeout;
+    return function () {
+      if (!wait) {
+        return fn.apply(this, arguments);
       }
 
-      return setTimeout(pendingFunc, wait);
-    } // eslint-disable-next-line no-unused-vars
+      var context = this;
+      var args = arguments;
+      var callNow = callFirst && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(function () {
+        timeout = null;
 
-    function leadingEdge(time) {
-      // Reset any `maxWait` timer.
-      lastInvokeTime = time; // Start the timer for the trailing edge.
-
-      timerId = startTimer(timerExpired, wait); // Invoke the leading edge.
-
-      return leading ? invokeFunc(time) : result;
-    }
-
-    function remainingWait(time) {
-      var timeSinceLastCall = time - lastCallTime;
-      var timeSinceLastInvoke = time - lastInvokeTime;
-      var timeWaiting = wait - timeSinceLastCall;
-      return maxing ? Math.min(timeWaiting, maxWait - timeSinceLastInvoke) : timeWaiting;
-    }
-
-    function shouldInvoke(time) {
-      var timeSinceLastCall = time - lastCallTime;
-      var timeSinceLastInvoke = time - lastInvokeTime; // Either this is the first call, activity has stopped and we're at the
-      // trailing edge, the system time has gone backwards and we're treating
-      // it as the trailing edge, or we've hit the `maxWait` limit.
-
-      return lastCallTime === undefined || timeSinceLastCall >= wait || timeSinceLastCall < 0 || maxing && timeSinceLastInvoke >= maxWait;
-    }
-
-    function timerExpired() {
-      var time = Date.now();
-
-      if (shouldInvoke(time)) {
-        return trailingEdge(time);
-      } // Restart the timer.
-
-
-      timerId = startTimer(timerExpired, remainingWait(time));
-    }
-
-    function trailingEdge(time) {
-      timerId = undefined; // Only invoke if we have `lastArgs` which means `func` has been
-      // debounced at least once.
-
-      if (trailing && lastArgs) {
-        return invokeFunc(time);
-      }
-
-      lastArgs = lastThis = undefined;
-      return result;
-    }
-
-    function debounced() {
-      var time = Date.now();
-      var isInvoking = shouldInvoke(time);
-
-      for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-        args[_key] = arguments[_key];
-      }
-
-      lastArgs = args; // eslint-disable-next-line no-invalid-this
-
-      lastThis = this;
-      lastCallTime = time;
-
-      if (isInvoking) {
-        if (timerId === undefined) {
-          return leadingEdge(lastCallTime);
+        if (!callNow) {
+          return fn.apply(context, args);
         }
+      }, wait);
 
-        if (maxing) {
-          // Handle invocations in a tight loop.
-          timerId = startTimer(timerExpired, wait);
-          return invokeFunc(lastCallTime);
-        }
+      if (callNow) {
+        return fn.apply(this, arguments);
       }
-
-      if (timerId === undefined) {
-        timerId = startTimer(timerExpired, wait);
-      }
-
-      return result;
-    }
-
-    return debounced;
+    };
   }
 
-  function throttle(func, wait, options) {
-    var leading = true;
-    var trailing = true;
+  /* eslint-disable no-invalid-this */
+  function throttle(fn, interval, callFirst) {
+    var wait = false;
+    var callNow = false;
+    return function () {
+      callNow = callFirst && !wait;
+      var context = this;
+      var args = arguments;
 
-    if (typeof func !== 'function') {
-      throw new TypeError('Expected a function');
-    }
+      if (!wait) {
+        wait = true;
+        setTimeout(function () {
+          wait = false;
 
-    if (isObject(options)) {
-      leading = 'leading' in options ? !!options.leading : leading;
-      trailing = 'trailing' in options ? !!options.trailing : trailing;
-    }
+          if (!callFirst) {
+            return fn.apply(context, args);
+          }
+        }, interval);
+      }
 
-    return debounce(func, wait, {
-      leading: leading,
-      trailing: trailing,
-      maxWait: wait
-    });
+      if (callNow) {
+        callNow = false;
+        return fn.apply(this, arguments);
+      }
+    };
   }
 
   /* eslint-disable */
@@ -3056,13 +3129,23 @@
     return !!target.splice(index, 1).length;
   }
 
-  /**
-   * Remove parameter 2 in parameter 1 and return boolean
-   */
+  function remove(arr1, arr2) {
+    if (!isArray(arr1) || !isArray(arr2)) {
+      throw new Error('expected both arguments to be arrays');
+    }
 
-  function remove(target, item) {
-    var index = target.indexOf(item);
-    return index > -1 ? removeAt(target, index) : false;
+    var result = [];
+    var len = arr1.length;
+
+    for (var i = 0; i < len; i++) {
+      var elem = arr1[i];
+
+      if (arr2.indexOf(elem) === -1) {
+        result.push(elem);
+      }
+    }
+
+    return result;
   }
 
   /**
@@ -3354,6 +3437,27 @@
     return false;
   }
 
+  function split(arr, n) {
+    if (!isArray(arr)) {
+      throw new Error('expected an array for the first argument');
+    }
+
+    if (n !== null && !isNumber(n)) {
+      throw new Error('expected a number or null for the second argument');
+    } // eslint-disable-next-line no-param-reassign
+
+
+    n = n !== null ? n : arr.length;
+    var len = arr.length;
+    var groups = [];
+
+    for (var i = 0; i < len; i += n) {
+      groups.push(arr.slice(i, i + n));
+    }
+
+    return groups;
+  }
+
   var unary = fn => val => fn(val);
 
   /**
@@ -3504,6 +3608,14 @@
     // image
     checkImageSize: checkImageSize,
     imageOptimization: imageOptimization,
+    toDataUrl: toDataUrl,
+    // collection
+    clone: clone,
+    deepClone: clone,
+    values: values,
+    entries: entries,
+    extend: extend,
+    size: size,
     // lodash
     getTag: getTag,
     hasOwnProperty: hasOwnProperty$1,
@@ -3521,7 +3633,6 @@
     isShallowEqual: isShallowEqual,
     has: has,
     reduce: reduce,
-    deepClone: deepClone,
     forEach: forEach,
     map: map,
     findIndex: findIndex,
@@ -3593,6 +3704,7 @@
     dropRightWhile: dropRightWhile,
     column: column,
     search: search,
+    split: split,
     unary: unary,
     indexBy: indexBy
   };
