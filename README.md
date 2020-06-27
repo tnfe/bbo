@@ -63,8 +63,8 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [paramsName][paramsname]             | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   | [deletedDiff][deleteddiff]     | [chunk][chunk]                       |
 | [eventEmitter][eventemitter]         | [modulo][modulo]                       | [has][has]                         | [detailedDiff][detaileddiff]   | [countBy][countby]                   |
 | **times**                            | **cookie**                             | [toPath][topath]                   | [updatedDiff][updateddiff]     | [countOccurrences][countoccurrences] |
-| [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   |                                | [drop][drop]                         |
-| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 |                                | [dropRight][dropright]               |
+| [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   | **collection**                 | [drop][drop]                         |
+| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 | [clone][clone]                 | [dropRight][dropright]               |
 | [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         |                                | [dropWhile][dropwhile]               |
 | [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       |                                | [dropRightWhile][droprightwhile]     |
 | [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             |                                | [column][column]                     |
@@ -72,8 +72,8 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [unary][unary]                       |
 | **json**                             | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
 | [toJson][tojson]                     | [toDataUrl][todataurl]                 | [pick][pick]                       |                                |                                      |
-| [jsonp][jsonp]                       | **collection**                         | [omit][omit]                       |                                |                                      |
-| **storage**                          | [clone][clone]                         | [isSymbol][issymbol]               |                                |                                      |
+| [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
+| **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
 | [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
 |                                      |                                        | [mapValues][mapvalues]             |                                |                                      |
 
@@ -413,6 +413,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [unary]: https://tnfe.github.io/bbo/#unary
 [indexby]: https://tnfe.github.io/bbo/#indexby
 [isdate]: https://tnfe.github.io/bbo/#isdate
+[mapvalues]: https://tnfe.github.io/bbo/#mapvalues
 [properobject]: https://tnfe.github.io/bbo/#properobject
 [objectdiff]: https://tnfe.github.io/bbo/#objectdiff
 [deleteddiff]: https://tnfe.github.io/bbo/#deleteddiff
