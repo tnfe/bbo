@@ -1,9 +1,9 @@
 /*
  * bbo
- * bbo is a useful utility collection library  with zero dependencies.
- * (c) 2011-2020
+ * bbo is a utility library of zero dependencies for javascript.
+ * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.16
+ * version 1.1.17
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.16';
+  var version = '1.1.17';
 
   var globalObject = null;
 
