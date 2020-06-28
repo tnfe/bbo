@@ -4,9 +4,14 @@
 
 ---
 
-![npm version](https://img.shields.io/npm/v/bbo.svg) ![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size) ![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads) ![license](https://img.shields.io/badge/license-MIT-blue.svg)
+![npm version](https://img.shields.io/npm/v/bbo.svg)
+![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size)
+![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads)
+[![jest](https://img.shields.io/badge/test%20with-jest-brightgreen.svg)](https://github.com/facebook/jest)
+![codecov-image](https://codecov.io/gh/tnfe/bbo/branch/bbo-next/graphs/badge.svg)
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-> 🐝🐜 bbo is a useful utility collection library with zero dependencies.
+> bbo is a utility library of zero dependencies for javascript.
 
 ## Overview
 
@@ -172,8 +177,10 @@ Then a global variable `bbo` is exposed for the entire library:
 
 #### CDN
 
+[jsDelivr](https://www.jsdelivr.com/package/npm/bbo) & [UNPKG](https://unpkg.com/bbo/)
+
 ```js
-//mat1.gtimg.com/www/js/libs/bbo.min.js
+<script src="https://cdn.jsdelivr.net/npm/bbo"></script>
 ```
 
 ## Building
@@ -195,10 +202,6 @@ And run example
 npm run start
 //visit http://localhost:8080
 ```
-
-## Maintainers
-
-[@vsuke](https://github.com/vsuke).
 
 ## Contribution
 

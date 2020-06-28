@@ -4,9 +4,14 @@
 
 ---
 
-![npm version](https://img.shields.io/npm/v/bbo.svg) ![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size) ![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads) ![license](https://img.shields.io/badge/license-MIT-blue.svg)
+![npm version](https://img.shields.io/npm/v/bbo.svg)
+![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size)
+![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads)
+[![jest](https://img.shields.io/badge/test%20with-jest-brightgreen.svg)](https://github.com/facebook/jest)
+![codecov-image](https://codecov.io/gh/tnfe/bbo/branch/bbo-next/graphs/badge.svg)
+![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
-> bbo 项目是一个实用的 js 函数工具库。
+> bbo 项目是一个实用的 javba 函数工具库。
 
 使用 node，react，vue，angular，webpack 等进行项目开发时，需要编写许多 utils 方法，并且开发中还需要不断重写很多函数，使用 bbo 可以简单经凑地解决这些问题。
 
@@ -162,8 +167,10 @@ import storage from 'bbo/storage';
 
 #### CDN
 
+[jsDelivr](https://www.jsdelivr.com/package/npm/bbo) & [UNPKG](https://unpkg.com/bbo/)
+
 ```js
-//mat1.gtimg.com/www/js/libs/bbo.min.js
+<script src="https://cdn.jsdelivr.net/npm/bbo"></script>
 ```
 
 ### 开发
