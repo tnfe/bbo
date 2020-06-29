@@ -1,5 +1,4 @@
-import getTag from './get_tag';
-
-export default function isObject(obj) {
-  return getTag(obj) === '[object Object]';
+export default function isObject(value) {
+  const type = typeof value;
+  return value !== null && (type === 'object' || type === 'function');
 }
