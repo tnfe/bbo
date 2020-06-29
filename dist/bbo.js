@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.17
+ * version 1.1.18
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.17';
+  var version = '1.1.18';
 
   var globalObject = null;
 
@@ -844,7 +844,42 @@
 
   var isDate = d => d instanceof Date;
 
-  var isEmpty = o => Object.keys(o).length === 0;
+  function isString(str) {
+    return getTag(str) === '[object String]';
+  }
+
+  function isMap(map) {
+    return getTag(map) === '[object Map]';
+  }
+
+  function isSet(set) {
+    return getTag(set) === '[object Set]';
+  }
+
+  function isEmpty(obj) {
+    if (obj === null) {
+      return true;
+    }
+
+    if (isArray(obj)) {
+      return !obj.length;
+    }
+
+    if (isString(obj)) {
+      return !obj.length;
+    }
+
+    if (isObject(obj)) {
+      return !Object.keys(obj).length;
+    }
+
+    if (isMap(obj) || isSet(obj)) {
+      return !obj.size;
+    } // other primitive || unidentifed object type
+
+
+    return Object(obj) !== obj || !Object.keys(obj).length;
+  }
 
   // https://github.com/mattphillips/deep-object-diff
 
@@ -1104,10 +1139,6 @@
       this.img.detachEvent('on' + eventName, eventHandler);
     }
   };
-
-  function isString(str) {
-    return getTag(str) === '[object String]';
-  }
 
   /* eslint-disable no-invalid-this */
   /**
@@ -2493,14 +2524,6 @@
     return !val || !isObject(val) && !isFunction(val);
   }
 
-  function isMap(map) {
-    return getTag(map) === '[object Map]';
-  }
-
-  function isSet(set) {
-    return getTag(set) === '[object Set]';
-  }
-
   /**
    * Gets the size of `collection` by returning its length for array-like
    * values or the number of own enumerable string keyed properties for objects.
@@ -2511,7 +2534,7 @@
    */
 
   function size(collection) {
-    if (collection === null) {
+    if (collection === null || collection === undefined) {
       return 0;
     }
 

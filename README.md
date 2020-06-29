@@ -179,10 +179,6 @@ Then a global variable `bbo` is exposed for the entire library:
 
 [jsDelivr](https://www.jsdelivr.com/package/npm/bbo) & [UNPKG](https://unpkg.com/bbo/)
 
-```js
-<script src="https://cdn.jsdelivr.net/npm/bbo"></script>
-```
-
 ## Building
 
 **node is a dependency, use terminal/iTerm to install it with**

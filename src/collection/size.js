@@ -12,7 +12,7 @@ import isSet from '../lodash/is_set';
  * @returns {number} Returns the collection size.
  */
 export default function size(collection) {
-  if (collection === null) {
+  if (collection === null || collection === undefined) {
     return 0;
   }
   if (isArray(collection) || isString(collection)) {

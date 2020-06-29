@@ -169,10 +169,6 @@ import storage from 'bbo/storage';
 
 [jsDelivr](https://www.jsdelivr.com/package/npm/bbo) & [UNPKG](https://unpkg.com/bbo/)
 
-```js
-<script src="https://cdn.jsdelivr.net/npm/bbo"></script>
-```
-
 ### 开发
 
 **依赖 nodejs, 请使用 terminal/iTerm 安装环境。**
