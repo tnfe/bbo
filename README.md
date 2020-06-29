@@ -4,11 +4,11 @@
 
 ---
 
-![npm version](https://img.shields.io/npm/v/bbo.svg)
-![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size)
-![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads)
+[![npm version](https://img.shields.io/npm/v/bbo.svg)](https://www.npmjs.com/package/bbo)
+[![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size)](https://www.npmjs.com/package/bbo)
+[![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads)](https://www.npmjs.com/package/bbo)
 [![jest](https://img.shields.io/badge/test%20with-jest-brightgreen.svg)](https://github.com/facebook/jest)
-![codecov-image](https://codecov.io/gh/tnfe/bbo/branch/bbo-next/graphs/badge.svg)
+[![codecov-image](https://codecov.io/gh/tnfe/bbo/branch/bbo-next/graphs/badge.svg)](https://codecov.io/gh/tnfe/bbo/branch/bbo-next)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 > bbo is a utility library of zero dependencies for javascript.
@@ -31,7 +31,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 
 ## Documentation
 
-- [Full api documentation on Line](https://tnfe.github.io/bbo/)
+- [API Reference](https://tnfe.github.io/bbo/)
 - [Github docs](https://github.com/vsuke/bbo-docs.git)
 
 ## Functions
@@ -183,12 +183,21 @@ Then a global variable `bbo` is exposed for the entire library:
 
 **node is a dependency, use terminal/iTerm to install it with**
 
+Clone git repository:
+
 ```JavaScript
 git clone git://github.com/tnfe/bbo.git
+```
 
-...
+Install dependencies:
+
+```JavaScript
 npm install
-npm run lint
+```
+
+Build bundle
+
+```JavaScript
 npm run build
 ```
 
@@ -199,9 +208,14 @@ npm run start
 //visit http://localhost:8080
 ```
 
+## Testing
+
+- Run all tests as a single test suite with `npm run test`
+- Show the world you're using Jest.
+
 ## Contribution
 
-Contribution is welcome!
+Contribution is welcome! If you wish to contribute to the project, please send the pull requests to the develop branch
 
 - Create a pull request containing bug fixes or new features. 😎
 
@@ -236,7 +250,7 @@ Detailed changes for each release are documented in the [release notes](https://
 
 ## License
 
-[MIT](http://www.opensource.org/licenses/mit-license).
+bbo is [MIT](http://www.opensource.org/licenses/mit-license) licensed.
 
 [commonjs]: http://mat1.gtimg.com/www/js/libs/raw/commonjs.png
 [browsers]: http://mat1.gtimg.com/www/js/libs/raw/browsers.png
