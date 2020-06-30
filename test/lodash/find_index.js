@@ -1,16 +1,11 @@
 import assert from 'assert';
-import bbo from '../bbo';
 import lodashStable from 'lodash';
+import bbo from '../bbo';
 
 import { LARGE_ARRAY_SIZE, isEven, square, _ } from '../const';
 
 describe('find methods', function() {
-  /**
-   * QUnit.module('lodash.find and lodash.findLast'); time 2020-06-30
-   * https://github.com/lodash/lodash/blob/4.5.0/test/test.js
-   */
-
-  lodashStable.each(['find', 'findIndex'], function(methodName) {
+  lodashStable.each(['findIndex'], function(methodName) {
     let isFind = bbo[methodName] === 'find';
 
     it('bbo.' + methodName + '` should support shortcut fusion', function() {
