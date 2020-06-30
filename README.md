@@ -177,7 +177,8 @@ Then a global variable `bbo` is exposed for the entire library:
 
 #### CDN
 
-[jsDelivr](https://www.jsdelivr.com/package/npm/bbo) & [UNPKG](https://unpkg.com/bbo/)
+[![](https://img.shields.io/badge/jsDelivr-CDN-red.svg)](https://www.jsdelivr.com/package/npm/bbo)
+[![](https://img.shields.io/badge/UNPKG-CDN-red.svg)](https://unpkg.com/bbo/)
 
 ## Building
 

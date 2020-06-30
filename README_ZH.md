@@ -167,7 +167,8 @@ import storage from 'bbo/storage';
 
 #### CDN
 
-[jsDelivr](https://www.jsdelivr.com/package/npm/bbo) & [UNPKG](https://unpkg.com/bbo/)
+[![](https://img.shields.io/badge/jsDelivr-CDN-red.svg)](https://www.jsdelivr.com/package/npm/bbo)
+[![](https://img.shields.io/badge/UNPKG-CDN-red.svg)](https://unpkg.com/bbo/)
 
 ### 开发
 
