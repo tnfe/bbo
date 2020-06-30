@@ -32,7 +32,8 @@ var MAX_ARRAY_LENGTH = 4294967295,
 /** `Object#toString` result references. */
 var funcTag = '[object Function]',
   numberTag = '[object Number]',
-  objectTag = '[object Object]';
+  objectTag = '[object Object]',
+  arrayTag = '[object Array]';
 
 /** Used as a reference to the global object. */
 var root = (typeof global === 'object' && global) || this;
@@ -1289,6 +1290,7 @@ export {
   funcTag,
   numberTag,
   objectTag,
+  arrayTag,
   lodashBizarro,
   arrayProto,
   funcProto,
