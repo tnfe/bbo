@@ -4,7 +4,7 @@ import lodashStable from 'lodash';
 
 import { LARGE_ARRAY_SIZE, isEven, square, _ } from '../const';
 
-describe('find methods', function() {
+describe('find', function() {
   /**
    * QUnit.module('lodash.find and lodash.findLast'); time 2020-06-30
    * https://github.com/lodash/lodash/blob/4.5.0/test/test.js

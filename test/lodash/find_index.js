@@ -4,7 +4,7 @@ import bbo from '../bbo';
 
 import { LARGE_ARRAY_SIZE, isEven, square, _ } from '../const';
 
-describe('find methods', function() {
+describe('findIndex', function() {
   lodashStable.each(['findIndex'], function(methodName) {
     let isFind = bbo[methodName] === 'find';
 

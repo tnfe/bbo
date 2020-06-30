@@ -31,6 +31,7 @@ import noop from './args/noop';
 import merge from './args/merge';
 import over from './args/over';
 import call from './args/call';
+import hasOwnProperty from './args/has_own_property';
 
 // bom
 import open from './bom/open';
@@ -131,7 +132,7 @@ import size from './collection/size';
 
 // lodash
 import getTag from './lodash/get_tag';
-import hasOwnProperty from './lodash/has_own_property';
+import is from './lodash/is';
 import isObject from './lodash/is_object';
 import isDate from './lodash/is_date';
 import isArray from './lodash/is_array';
@@ -256,6 +257,7 @@ export default {
   merge,
   over,
   call,
+  hasOwnProperty,
   // bom
   trigger,
   stopPropagation,
@@ -348,7 +350,7 @@ export default {
   size,
   // lodash
   getTag,
-  hasOwnProperty,
+  is,
   isObject,
   isDate,
   isArray,
@@ -364,6 +366,7 @@ export default {
   has,
   reduce,
   forEach,
+  each: forEach,
   map,
   findIndex,
   find,
