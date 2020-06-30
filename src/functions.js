@@ -150,6 +150,7 @@ import toPath from './lodash/to_path';
 import reduce from './lodash/reduce';
 import forEach from './lodash/for_each';
 import map from './lodash/map';
+import mapValues from './lodash/map_values';
 import find from './lodash/find';
 import findIndex from './lodash/find_index';
 import get from './lodash/get';
@@ -368,6 +369,7 @@ export default {
   forEach,
   each: forEach,
   map,
+  mapValues,
   findIndex,
   find,
   toPath,

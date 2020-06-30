@@ -1,8 +1,16 @@
-/* eslint-disable no-return-assign */
-/* eslint-disable no-sequences */
-const omit = (obj, arr) =>
-  Object.keys(obj)
-    .filter((k) => !arr.includes(k))
-    .reduce((acc, key) => ((acc[key] = obj[key]), acc), {});
-
-export default omit;
+/* eslint-disable no-param-reassign */
+import isString from './is_string';
+export default function omit(obj, remove) {
+  let result = {};
+  if (isString(remove)) {
+    remove = [].slice.call(arguments, 1);
+  }
+  for (let prop in obj) {
+    if (!obj.hasOwnProperty || obj.hasOwnProperty(prop)) {
+      if (remove.indexOf(prop) === -1) {
+        result[prop] = obj[prop];
+      }
+    }
+  }
+  return result;
+}

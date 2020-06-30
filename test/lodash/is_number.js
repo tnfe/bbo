@@ -26,7 +26,6 @@ describe('isNumber', function() {
     assert.strictEqual(bbo.isNumber(true), false);
     assert.strictEqual(bbo.isNumber(new Date()), false);
     assert.strictEqual(bbo.isNumber(new Error()), false);
-    assert.strictEqual(bbo.isNumber(_), false);
     assert.strictEqual(bbo.isNumber(slice), false);
     assert.strictEqual(bbo.isNumber({ a: 1 }), false);
     assert.strictEqual(bbo.isNumber(/x/), false);
