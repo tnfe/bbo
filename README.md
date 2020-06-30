@@ -213,6 +213,8 @@ npm run start
 - Run all tests as a single test suite with `npm run test`
 - Show the world you're using Jest.
 
+## Coverage sunburst
+
 Each block represents a single file in the project(codecov.io). The size and color of each block is represented by the number of statements and the coverage, respectively.
 
 [![codecov](https://codecov.io/gh/tnfe/bbo/commit/1fd31a2c7045ec55d0319ffffa2a905728027df6/graphs/tree.svg)](https://codecov.io/gh/tnfe/bbo/branch/bbo-next)
