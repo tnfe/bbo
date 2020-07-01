@@ -154,6 +154,7 @@ import mapValues from './lodash/map_values';
 import find from './lodash/find';
 import findIndex from './lodash/find_index';
 import get from './lodash/get';
+import set from './lodash/set';
 import debounce from './lodash/debounce';
 import throttle from './lodash/throttle';
 import pick from './lodash/pick';
@@ -374,6 +375,7 @@ export default {
   find,
   toPath,
   get,
+  set,
   debounce,
   throttle,
   pick,
