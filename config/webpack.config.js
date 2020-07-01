@@ -1,5 +1,4 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
 module.exports = {
   mode: 'development',
   entry: {
@@ -24,7 +23,6 @@ module.exports = {
   ],
   devtool: 'source-map',
   devServer: {
-    host: '0.0.0.0',
     disableHostCheck: true
   }
 };
