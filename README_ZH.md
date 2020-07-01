@@ -38,42 +38,43 @@
 | [isIPad][isipad]                     | [merge][merge]                         | [deleteUrlParam][deleteurlparam]   | [stripTags][striptags]         | [random][random]                     |
 | [isAndroid][isandroid]               | [over][over]                           | [objectParam][objectparam]         | [capitalize][capitalize]       | [randomSize][randomsize]             |
 | [isMobile][ismobile]                 | [call][call]                           | [httpGet][httpget]                 | [deCapitalize][decapitalize]   | [shuffle][shuffle]                   |
-| [isPC][ispc]                         | **bom**                                | [httpPost][httppost]               | [isAbsoluteURL][isabsoluteurl] | [contains][contains]                 |
-| [isWeixin][isweixin]                 | [stopPropagation][stoppropagation]     | **random**                         | [mapString][mapstring]         | [includesAll][includesall]           |
-| [isNewsApp][isnewsapp]               | [g][g]                                 | [randomColor][randomcolor]         | [mask][mask]                   | [includesAny][includesany]           |
-| [isQQ][isqq]                         | [gc][gc]                               | [randomA2B][randoma2b]             | [splitLines][splitlines]       | [removeAt][removeat]                 |
-| [mqqbrowser][mqqbrowser]             | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
-| [isTenvideo][istenvideo]             | [query][query]                         | **behavior**                       | [underscored][underscored]     | [compact][compact]                   |
-| [isWeiShi][isweishi]                 | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [compactAll][compactall]             |
-| [isIphoneXmodel][isiphonexmodel]     | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [pluck][pluck]                       |
-| [isIE][isie]                         | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [union][union]                       |
-| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **lodash**                         | [byteLen][bytelen]             | [unionBy][unionby]                   |
-| **log**                              | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [unionWith][unionwith]               |
-| [log][log]                           | [setStyle][setstyle]                   | [hasOwnProperty][hasownproperty]   | [endsWith][endswith]           | [intersect][intersect]               |
-| [logs][logs]                         | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
-| [removeConsole][removeconsole]       | **load**                               | [isArray][isarray]                 | [containsWith][containswith]   | [difference][difference]             |
-| **other**                            | [loadImages][loadimages]               | [isString][isstring]               | [xssFilter][xssfilter]         | [differenceBy][differenceby]         |
-| [uuid][uuid]                         | [loadjs][loadjs]                       | [isBoolean][isboolean]             | [effortIndex][effortindex]     | [max][max]                           |
-| [hash][hash]                         | [loadcss][loadcss]                     | [isNumber][isnumber]               | [capwords]                     | [min][min]                           |
-| [judge][judge]                       | **fill**                               | [isMap][ismap]                     | **object**                     | [equal][equal]                       |
-| [getType][gettype]                   | [fill0][fill0]                         | [isSet][isset]                     | [properObject][properobject]   | [allEqual][allequal]                 |
-| [isTypeof][istypeof]                 | [floor][floor]                         | [isFunction][isfunction]           | [objectDiff][objectdiff]       | [all][all]                           |
-| [construct][construct]               | [chainAsync][chainasync]               | [isEmpty][isempty]                 | [addedDiff][addeddiff]         | [any][any]                           |
-| [paramsName][paramsname]             | [numberFormat][numberformat]           | [isShallowEqual][isshallowequal]   | [deletedDiff][deleteddiff]     | [chunk][chunk]                       |
-| [eventEmitter][eventemitter]         | [modulo][modulo]                       | [has][has]                         | [detailedDiff][detaileddiff]   | [countBy][countby]                   |
-| **times**                            | **cookie**                             | [toPath][topath]                   | [updatedDiff][updateddiff]     | [countOccurrences][countoccurrences] |
-| [setTimesout][settimesout]           | [cookie][cookie]                       | [reduce][reduce]                   | **collection**                 | [drop][drop]                         |
-| [clearTimesout][cleartimesout]       | [setCookie][setcookie]                 | [forEach][foreach]                 | [clone][clone]                 | [dropRight][dropright]               |
-| [getDate][getdate]                   | [getCookie][getcookie]                 | [map][map]                         | [entries][entries]             | [dropWhile][dropwhile]               |
-| [formatPassTime][formatpasstime]     | [deleteCookie][deletecookie]           | [find][find]                       | [extend][extend]               | [dropRightWhile][droprightwhile]     |
-| [formatRemainTime][formatremaintime] | [parseCookie][parsecookie]             | [findIndex][findindex]             | [flush][flush]                 | [column][column]                     |
-| [formatDuration][formatduration]     | **image**                              | [get][get]                         | [values][values]               | [search][search]                     |
-| [sleep][sleep]                       | [checkImageSize][checkimagesize]       | [debounce][debounce]               | [size][size]                   | [unary][unary]                       |
-| **json**                             | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [indexBy][indexby]                   |
-| [toJson][tojson]                     | [toDataUrl][todataurl]                 | [pick][pick]                       |                                | [split][split]                       |
-| [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
-| **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
-| [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
+| [isPC][ispc]                         | [hasOwnProperty][hasownproperty]       | [httpPost][httppost]               | [isAbsoluteURL][isabsoluteurl] | [contains][contains]                 |
+| [isWeixin][isweixin]                 | **bom**                                | **random**                         | [mapString][mapstring]         | [includesAll][includesall]           |
+| [isNewsApp][isnewsapp]               | [stopPropagation][stoppropagation]     | [randomColor][randomcolor]         | [mask][mask]                   | [includesAny][includesany]           |
+| [isQQ][isqq]                         | [g][g]                                 | [randomA2B][randoma2b]             | [splitLines][splitlines]       | [removeAt][removeat]                 |
+| [mqqbrowser][mqqbrowser]             | [gc][gc]                               | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
+| [isTenvideo][istenvideo]             | [c][c]                                 | **behavior**                       | [underscored][underscored]     | [compact][compact]                   |
+| [isWeiShi][isweishi]                 | [query][query]                         | [trigger][trigger]                 | [dasherize][dasherize]         | [compactAll][compactall]             |
+| [isIphoneXmodel][isiphonexmodel]     | [show][show]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [pluck][pluck]                       |
+| [isIE][isie]                         | [hide][hide]                           | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [union][union]                       |
+| [ieVersion][ieversion]               | [elementContains][elementcontains]     | **lodash**                         | [byteLen][bytelen]             | [unionBy][unionby]                   |
+| **log**                              | [formToObject][formtoobject]           | [getTag][gettag]                   | [repeat][repeat]               | [unionWith][unionwith]               |
+| [log][log]                           | [getStyle][getstyle]                   | [is][is]                           | [endsWith][endswith]           | [intersect][intersect]               |
+| [logs][logs]                         | [setStyle][setstyle]                   | [isObject][isobject]               | [startsWith][startswith]       | [intersectBy][intersectby]           |
+| [removeConsole][removeconsole]       | [attr][attr]                           | [isArray][isarray]                 | [containsWith][containswith]   | [difference][difference]             |
+| **other**                            | **load**                               | [isString][isstring]               | [xssFilter][xssfilter]         | [differenceBy][differenceby]         |
+| [uuid][uuid]                         | [loadImages][loadimages]               | [isBoolean][isboolean]             | [effortIndex][effortindex]     | [max][max]                           |
+| [hash][hash]                         | [loadjs][loadjs]                       | [isNumber][isnumber]               | [capwords]                     | [min][min]                           |
+| [judge][judge]                       | [loadcss][loadcss]                     | [isMap][ismap]                     | **object**                     | [equal][equal]                       |
+| [getType][gettype]                   | **fill**                               | [isSet][isset]                     | [properObject][properobject]   | [allEqual][allequal]                 |
+| [isTypeof][istypeof]                 | [fill0][fill0]                         | [isFunction][isfunction]           | [objectDiff][objectdiff]       | [all][all]                           |
+| [construct][construct]               | [floor][floor]                         | [isEmpty][isempty]                 | [addedDiff][addeddiff]         | [any][any]                           |
+| [paramsName][paramsname]             | [chainAsync][chainasync]               | [isShallowEqual][isshallowequal]   | [deletedDiff][deleteddiff]     | [chunk][chunk]                       |
+| [eventEmitter][eventemitter]         | [numberFormat][numberformat]           | [has][has]                         | [detailedDiff][detaileddiff]   | [countBy][countby]                   |
+| **times**                            | [modulo][modulo]                       | [toPath][topath]                   | [updatedDiff][updateddiff]     | [countOccurrences][countoccurrences] |
+| [setTimesout][settimesout]           | **cookie**                             | [reduce][reduce]                   | **collection**                 | [drop][drop]                         |
+| [clearTimesout][cleartimesout]       | [cookie][cookie]                       | [forEach][foreach]                 | [clone][clone]                 | [dropRight][dropright]               |
+| [getDate][getdate]                   | [setCookie][setcookie]                 | [map][map]                         | [entries][entries]             | [dropWhile][dropwhile]               |
+| [formatPassTime][formatpasstime]     | [getCookie][getcookie]                 | [find][find]                       | [extend][extend]               | [dropRightWhile][droprightwhile]     |
+| [formatRemainTime][formatremaintime] | [deleteCookie][deletecookie]           | [findIndex][findindex]             | [flush][flush]                 | [column][column]                     |
+| [formatDuration][formatduration]     | [parseCookie][parsecookie]             | [get][get]                         | [values][values]               | [search][search]                     |
+| [sleep][sleep]                       | **image**                              | [set][set]                         | [size][size]                   | [unary][unary]                       |
+| **json**                             | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [indexBy][indexby]                   |
+| [toJson][tojson]                     | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                | [split][split]                       |
+| [jsonp][jsonp]                       | [toDataUrl][todataurl]                 | [pick][pick]                       |                                |                                      |
+| **storage**                          |                                        | [omit][omit]                       |                                |                                      |
+| [storage][storage]                   |                                        | [isSymbol][issymbol]               |                                |                                      |
+|                                      |                                        | [isDate][isdate]                   |                                |                                      |
 |                                      |                                        | [mapValues][mapvalues]             |                                |                                      |
 
 ### 使用
@@ -346,6 +347,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [todataurl]: https://tnfe.github.io/bbo/#todataurl
 [gettag]: https://tnfe.github.io/bbo/#gettag
 [hasownproperty]: https://tnfe.github.io/bbo/#hasownproperty
+[is]: https://tnfe.github.io/bbo/#is
 [isobject]: https://tnfe.github.io/bbo/#isobject
 [isarray]: https://tnfe.github.io/bbo/#isarray
 [isstring]: https://tnfe.github.io/bbo/#isstring
@@ -364,6 +366,7 @@ Detailed changes for each release are documented in the [release notes](https://
 [find]: https://tnfe.github.io/bbo/#find
 [topath]: https://tnfe.github.io/bbo/#topath
 [get]: https://tnfe.github.io/bbo/#get
+[set]: https://tnfe.github.io/bbo/#set
 [debounce]: https://tnfe.github.io/bbo/#debounce
 [throttle]: https://tnfe.github.io/bbo/#throttle
 [pick]: https://tnfe.github.io/bbo/#pick
