@@ -365,6 +365,7 @@ export default {
   isFunction,
   isEmpty,
   isShallowEqual,
+  isEqual: isShallowEqual,
   has,
   reduce,
   forEach,
