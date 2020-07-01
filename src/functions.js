@@ -144,6 +144,7 @@ import isSet from './lodash/is_set';
 import isSymbol from './lodash/is_symbol';
 import isFunction from './lodash/is_function';
 import isEmpty from './lodash/is_empty';
+import isNil from './lodash/is_nil';
 import isShallowEqual from './lodash/is_shallow_equal';
 import has from './lodash/has';
 import toPath from './lodash/to_path';
@@ -364,6 +365,7 @@ export default {
   isSymbol,
   isFunction,
   isEmpty,
+  isNil,
   isShallowEqual,
   isEqual: isShallowEqual,
   has,
