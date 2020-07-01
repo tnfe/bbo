@@ -7,7 +7,28 @@
 /* eslint-disable one-var */
 /* eslint-disable no-var */
 
-var REGEXP_SEMVER = /\bv?(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?\b/gi;
+/**
+ * The string containing all printable ASCII characters.
+ * @ignore
+ * @type {string}
+ */
+const PRINTABLE_ASCII =
+  ' !"#$%&\'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_`abcdefghijklmnopqrstuvwxyz{|}~';
+
+/**
+ * The string containing all printable ASCII characters in reverse order.
+ * @ignore
+ * @type {string}
+ */
+const REVERSED_PRINTABLE_ASCII =
+  '~}|{zyxwvutsrqponmlkjihgfedcba`_^]\\[ZYXWVUTSRQPONMLKJIHGFEDCBA@?>=<;:9876543210/.-,+*)(\'&%$#"! ';
+
+/**
+ * Regular expression to match the library version.
+ * @see http://semver.org/
+ * @type {RegExp}
+ */
+const REGEXP_SEMVER = /\bv?(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)(?:-[\da-z\-]+(?:\.[\da-z\-]+)*)?(?:\+[\da-z\-]+(?:\.[\da-z\-]+)*)?\b/gi;
 
 /** Used to detect when a function becomes hot. */
 var HOT_COUNT = 150;
@@ -1378,5 +1399,7 @@ export {
   skipAssert,
   toArgs,
   // add
-  REGEXP_SEMVER
+  REGEXP_SEMVER,
+  PRINTABLE_ASCII,
+  REVERSED_PRINTABLE_ASCII
 };
