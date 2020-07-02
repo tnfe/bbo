@@ -425,6 +425,10 @@
     return context => context[key].apply(context, args);
   };
 
+  function hasOwnProperty(obj, keyName) {
+    return Object.prototype.hasOwnProperty.call(obj, keyName);
+  }
+
   function setStyle(el, ruleName, val) {
     el.style[ruleName] = val;
   }
@@ -585,8 +589,9 @@
     return getTag(func) === '[object Function]';
   }
 
-  function isObject(obj) {
-    return getTag(obj) === '[object Object]';
+  function isObject(value) {
+    var type = typeof value;
+    return value !== null && (type === 'object' || type === 'function');
   }
 
   function isArray(arr) {
@@ -638,30 +643,94 @@
     }
   }
 
-  function isShallowEqual(objA, objB) {
-    if (is(objA, objB)) {
-      return true;
+  var isDate = d => d instanceof Date;
+
+  /* eslint-disable guard-for-in */
+  function isShallowEqual() {
+    for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
+      objs[_key] = arguments[_key];
     }
 
-    if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-      return false;
+    if (objs.length < 2) return false;
+
+    for (var i in objs) {
+      i = Number(i);
+
+      if (objs[i + 1] !== undefined) {
+        if (isArray(objs[i])) {
+          if (!compareArrays(objs[i], objs[i + 1])) {
+            return false;
+          }
+        } else if (isObject(objs[i])) {
+          if (!compareObjects(objs[i], objs[i + 1])) {
+            return false;
+          }
+        } else if (isDate(objs[i])) {
+          if (!compareDates(objs[i], objs[i + 1])) {
+            return false;
+          }
+        } else {
+          if (objs[i] !== objs[i + 1]) {
+            return false;
+          }
+        }
+      }
     }
 
-    var keysA = Object.keys(objA);
-    var keysB = Object.keys(objB);
+    return true;
+  }
 
-    if (keysA.length !== keysB.length) {
-      return false;
-    }
-
-    var i = 0;
-
-    while (i < keysA.length) {
-      if (!hasOwnProperty(objB, keysA[i]) || !is(objA[keysA[i]], objB[keysA[i]])) {
+  function compare(obj, obj1) {
+    for (var i in obj) {
+      if (obj1[i] === undefined) {
         return false;
       }
 
-      i += 1;
+      if (isArray(obj[i])) {
+        if (!compareArrays(obj[i], obj1[i])) {
+          return false;
+        }
+      } else if (isObject(obj[i])) {
+        if (!compareObjects(obj[i], obj1[i])) {
+          return false;
+        }
+      } else if (isDate(obj[i])) {
+        if (!compareDates(obj[i], obj1[i])) {
+          return false;
+        }
+      } else {
+        if (obj[i] !== obj1[i]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  function compareArrays(obj, obj1) {
+    if (!isArray(obj1)) return false;
+    if (obj.length !== obj1.length) return false;
+    var equal = compare(obj, obj1);
+    return equal;
+  }
+
+  function compareObjects(obj, obj1) {
+    if (!isObject(obj1)) return false;
+
+    for (var key in obj1) {
+      if (obj[key] === undefined) {
+        return false;
+      }
+    }
+
+    var equal = compare(obj, obj1);
+    return equal;
+  }
+
+  function compareDates(obj, obj1) {
+    if (!isDate(obj1) || obj.getTime() !== obj1.getTime()) {
+      return false;
     }
 
     return true;
@@ -841,8 +910,6 @@
 
   var properObject = o => isObject(o) && !o.hasOwnProperty ? { ...o
   } : o;
-
-  var isDate = d => d instanceof Date;
 
   function isString(str) {
     return getTag(str) === '[object String]';
@@ -2549,10 +2616,6 @@
     return Object.keys(collection).length;
   }
 
-  function hasOwnProperty$1(obj, keyName) {
-    return Object.prototype.hasOwnProperty.call(obj, keyName);
-  }
-
   function isNumber(number) {
     return getTag(number) === '[object Number]';
   }
@@ -2561,8 +2624,38 @@
     return getTag(symbol) === '[object Symbol]';
   }
 
+  /* eslint-disable no-eq-null */
+
+  /* eslint-disable eqeqeq */
+  function isNil(value) {
+    return value == undefined || value == null;
+  }
+
+  /* eslint-disable eqeqeq */
   function has(object, key) {
-    return object !== null && hasOwnProperty$1(object, key);
+    return object != null && hasOwnProperty(object, key);
+  }
+
+  function map(src, func) {
+    var rst = [];
+    var i = 0;
+
+    if (isArray(src)) {
+      while (i < src.length) {
+        rst.push(func(src[i], i, src));
+        i += 1;
+      }
+    } else if (isObject(src)) {
+      var keys = Object.keys(src);
+
+      while (i < keys.length) {
+        var key = keys[i];
+        rst.push(func(src[key], key, src));
+        i += 1;
+      }
+    }
+
+    return rst;
   }
 
   /* eslint-disable max-params */
@@ -2590,68 +2683,64 @@
     return result;
   }
 
+  /* eslint-disable eqeqeq */
+
+  var INFINITY = 1 / 0;
+
+  function toKey(value) {
+    if (isString(value) || isSymbol(value)) {
+      return value;
+    }
+
+    var result = `${value}`;
+    return result == '0' && 1 / value == -INFINITY ? '-0' : result;
+  }
+
   function toPath(value) {
-    if (!isString(value)) {
-      return [];
+    if (isArray(value)) {
+      return map(value, toKey);
     }
 
-    return stringToPath(value);
+    return isSymbol(value) ? [value] : clone(stringToPath(value));
   }
 
-  function reduce(src, func) {
-    var i = 0;
-    var acc = arguments[2];
+  /* eslint-disable no-param-reassign */
 
-    if (isArray(src)) {
-      if (arguments.length !== 3) {
-        acc = src[0];
+  /* eslint-disable max-params */
+  function reduce(obj, predicate
+  /* , initialValue */
+  ) {
+    var args = [callback];
+    var hasInitialValue = 2 in arguments;
+    hasInitialValue && args.push(arguments[2]);
+
+    function callback(previousValue, currentKey, currentIndex, array) {
+      if (!hasInitialValue) {
+        previousValue = obj[array[0]];
+        hasInitialValue = true;
       }
 
-      while (i < src.length) {
-        acc = func(acc, src[i], i, src);
-        i += 1;
-      }
-
-      return acc;
-    } else if (isObject(src)) {
-      var keys = Object.keys(src);
-
-      if (arguments.length !== 3) {
-        acc = src[keys[0]];
-      }
-
-      while (i < keys.length) {
-        var key = keys[i];
-        acc = func(acc, src[key], key, src);
-        i += 1;
-      }
-
-      return acc;
+      return predicate(previousValue, currentKey, obj[currentKey], currentIndex, array);
     }
 
-    return acc;
+    return Array.prototype.reduce.apply(Object.keys(obj), args);
   }
 
-  function map(src, func) {
-    var rst = [];
-    var i = 0;
+  /*
+    returns a new object with the predicate applied to each value
+    like map-object, but (value, key, object) are passed to the predicate
+  */
+  function mapValues(obj, predicate) {
+    var result = {};
+    var keys = Object.keys(obj);
+    var len = keys.length;
 
-    if (isArray(src)) {
-      while (i < src.length) {
-        rst.push(func(src[i], i, src));
-        i += 1;
-      }
-    } else if (isObject(src)) {
-      var keys = Object.keys(src);
-
-      while (i < keys.length) {
-        var key = keys[i];
-        rst.push(func(src[key], key, src));
-        i += 1;
-      }
+    for (var i = 0; i < len; i++) {
+      var key = keys[i];
+      result[key] = predicate(obj[key], key, obj);
     }
 
-    return rst;
+    return result;
   }
 
   function find(src, func) {
@@ -2724,6 +2813,40 @@
     return obj;
   }
 
+  /* eslint-disable eqeqeq */
+  function set(obj, props, value) {
+    if (isString(props)) {
+      props = props.split('.');
+    }
+
+    if (isSymbol(props)) {
+      props = [props];
+    }
+
+    var lastProp = props.pop();
+
+    if (!lastProp) {
+      return false;
+    }
+
+    var thisProp;
+
+    while (thisProp = props.shift()) {
+      if (typeof obj[thisProp] == 'undefined') {
+        obj[thisProp] = {};
+      }
+
+      obj = obj[thisProp];
+
+      if (!obj || !isObject(obj)) {
+        return false;
+      }
+    }
+
+    obj[lastProp] = value;
+    return true;
+  }
+
   /* eslint-disable no-invalid-this */
   function debounce(fn, wait, callFirst) {
     var timeout;
@@ -2777,13 +2900,45 @@
     };
   }
 
-  /* eslint-disable */
-  var pick = (obj, arr) => arr.reduce((acc, curr) => (curr in obj && (acc[curr] = obj[curr]), acc), {});
+  /* eslint-disable no-param-reassign */
+  function pick(obj, select) {
+    var result = {};
 
-  /* eslint-disable no-return-assign */
+    if (isString(select)) {
+      select = [].slice.call(arguments, 1);
+    }
 
-  /* eslint-disable no-sequences */
-  var omit = (obj, arr) => Object.keys(obj).filter(k => !arr.includes(k)).reduce((acc, key) => (acc[key] = obj[key], acc), {});
+    var len = select.length;
+
+    for (var i = 0; i < len; i++) {
+      var key = select[i];
+
+      if (key in obj) {
+        result[key] = obj[key];
+      }
+    }
+
+    return result;
+  }
+
+  /* eslint-disable no-param-reassign */
+  function omit(obj, remove) {
+    var result = {};
+
+    if (isString(remove)) {
+      remove = [].slice.call(arguments, 1);
+    }
+
+    for (var prop in obj) {
+      if (!obj.hasOwnProperty || obj.hasOwnProperty(prop)) {
+        if (remove.indexOf(prop) === -1) {
+          result[prop] = obj[prop];
+        }
+      }
+    }
+
+    return result;
+  }
 
   /**
    * Remove spaces after removing previous string
@@ -3534,6 +3689,7 @@
     merge: merge,
     over: over,
     call: call,
+    hasOwnProperty: hasOwnProperty,
     // bom
     trigger: trigger,
     stopPropagation: stopPropagation,
@@ -3626,7 +3782,7 @@
     size: size,
     // lodash
     getTag: getTag,
-    hasOwnProperty: hasOwnProperty$1,
+    is: is,
     isObject: isObject,
     isDate: isDate,
     isArray: isArray,
@@ -3638,15 +3794,20 @@
     isSymbol: isSymbol,
     isFunction: isFunction,
     isEmpty: isEmpty,
+    isNil: isNil,
     isShallowEqual: isShallowEqual,
+    isEqual: isShallowEqual,
     has: has,
     reduce: reduce,
     forEach: forEach,
+    each: forEach,
     map: map,
+    mapValues: mapValues,
     findIndex: findIndex,
     find: find,
     toPath: toPath,
     get: get,
+    set: set,
     debounce: debounce,
     throttle: throttle,
     pick: pick,
