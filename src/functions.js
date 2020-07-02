@@ -92,7 +92,7 @@ import deleteUrlParam from './http/delete_url_param';
 import objectParam from './http/object_param';
 import httpGet from './http/http_get';
 import httpPost from './http/http_post';
-import isAbsoluteURL from './string/is_absolute_url';
+import isAbsoluteURL from './http/is_absolute_url';
 
 // times
 import setTimesout from './times/set_timesout';
