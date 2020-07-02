@@ -92,6 +92,7 @@ import deleteUrlParam from './http/delete_url_param';
 import objectParam from './http/object_param';
 import httpGet from './http/http_get';
 import httpPost from './http/http_post';
+import isAbsoluteURL from './string/is_absolute_url';
 
 // times
 import setTimesout from './times/set_timesout';
@@ -168,7 +169,6 @@ import longUnique from './string/long_unique';
 import stripTags from './string/strip_tags';
 import capitalize from './string/capitalize';
 import deCapitalize from './string/de_capitalize';
-import isAbsoluteURL from './string/is_absolute_url';
 import mapString from './string/map_string';
 import mask from './string/mask';
 import splitLines from './string/split_lines';
