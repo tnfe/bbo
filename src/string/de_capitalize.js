@@ -2,7 +2,23 @@
  * DeCapitalizes the first letter of a string.
  */
 
-const deCapitalize = ([first, ...rest], upperRest = false) =>
-  first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join(''));
+import isString from '../lodash/is_string';
+import isNil from '../lodash/is_nil';
 
-export default deCapitalize;
+function coerceToString(value, defaultValue = '') {
+  if (isNil(value)) {
+    return defaultValue;
+  }
+  if (isString(value)) {
+    return value;
+  }
+  return String(value);
+}
+
+export default function deCapitalize(subject) {
+  const subjectString = coerceToString(subject);
+  if (subjectString === '') {
+    return '';
+  }
+  return subjectString.substr(0, 1).toLowerCase() + subjectString.substr(1);
+}
