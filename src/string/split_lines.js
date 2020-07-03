@@ -3,5 +3,5 @@
  * ['This', 'is a', 'multiline', 'string.' , '']
  */
 export default function splitLines(str) {
-  str.split(/\r?\n/);
+  return str.split(/\r?\n/);
 }
