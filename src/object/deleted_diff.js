@@ -1,5 +1,3 @@
-// https://github.com/mattphillips/deep-object-diff
-
 import isEmpty from '../lodash/is_empty';
 import isObject from '../lodash/is_object';
 import properObject from './proper_object';

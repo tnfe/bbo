@@ -1,5 +1,3 @@
-// https://github.com/mattphillips/deep-object-diff
-
 import isDate from '../lodash/is_date';
 import isEmpty from '../lodash/is_empty';
 import isObject from '../lodash/is_object';
