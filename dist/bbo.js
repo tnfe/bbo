@@ -948,8 +948,6 @@
     return Object(obj) !== obj || !Object.keys(obj).length;
   }
 
-  // https://github.com/mattphillips/deep-object-diff
-
   var objectDiff = (lhs, rhs) => {
     if (lhs === rhs) return {}; // equal return no diff
 
@@ -983,8 +981,6 @@
     }, deletedValues);
   };
 
-  // https://github.com/mattphillips/deep-object-diff
-
   var addedDiff = (lhs, rhs) => {
     if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
     var l = properObject(lhs);
@@ -1004,8 +1000,6 @@
     }, {});
   };
 
-  // https://github.com/mattphillips/deep-object-diff
-
   var deletedDiff = (lhs, rhs) => {
     if (lhs === rhs || !isObject(lhs) || !isObject(rhs)) return {};
     var l = properObject(lhs);
@@ -1024,8 +1018,6 @@
       };
     }, {});
   };
-
-  // https://github.com/mattphillips/deep-object-diff
 
   var updatedDiff = (lhs, rhs) => {
     if (lhs === rhs) return {};
@@ -1051,8 +1043,6 @@
       return acc;
     }, {});
   };
-
-  // https://github.com/mattphillips/deep-object-diff
 
   var detailedDiff = (lhs, rhs) => ({
     added: addedDiff(lhs, rhs),
@@ -1930,6 +1920,11 @@
 
     request.send(data);
   };
+
+  /**
+   * Returns true if the given string is an absolute URL, false otherwise.
+   */
+  var isAbsoluteURL = str => /^[a-z][a-z0-9+.-]*:/.test(str);
 
   /**
    * setInterval func fix times
@@ -2996,25 +2991,36 @@
    * Capitalizes the first letter of a string.
    */
   function capitalize(target) {
-    return target.charAt(0).toUpperCase() + target.slice(1).toLowerCase();
+    return String(target).charAt(0).toUpperCase() + String(target).slice(1).toLowerCase();
   }
 
   /**
    * DeCapitalizes the first letter of a string.
    */
-  var deCapitalize = function (_ref) {
-    var _ref2 = _toArray(_ref),
-        first = _ref2[0],
-        rest = _ref2.slice(1);
 
-    var upperRest = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    return first.toLowerCase() + (upperRest ? rest.join('').toUpperCase() : rest.join(''));
-  };
+  function coerceToString(value) {
+    var defaultValue = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
 
-  /**
-   * Returns true if the given string is an absolute URL, false otherwise.
-   */
-  var isAbsoluteURL = str => /^[a-z][a-z0-9+.-]*:/.test(str);
+    if (isNil(value)) {
+      return defaultValue;
+    }
+
+    if (isString(value)) {
+      return value;
+    }
+
+    return String(value);
+  }
+
+  function deCapitalize(subject) {
+    var subjectString = coerceToString(subject);
+
+    if (subjectString === '') {
+      return '';
+    }
+
+    return subjectString.substr(0, 1).toLowerCase() + subjectString.substr(1);
+  }
 
   /**
    * Creates a new string with the results of calling a provided function
@@ -3036,7 +3042,7 @@
    * ['This', 'is a', 'multiline', 'string.' , '']
    */
   function splitLines(str) {
-    str.split(/\r?\n/);
+    return str.split(/\r?\n/);
   }
 
   /**
@@ -3064,14 +3070,19 @@
    */
 
   function dasherize(target) {
-    return underscored(target).replace(/_/g, '-');
+    return underscored(String(target)).replace(/_/g, '-');
   }
 
   /**
    * Truncates a string up to a specified length.
    * The default length is 3, and the truncated symbol defaults '...'
    */
-  var truncate = (str, num) => str.length > num ? str.slice(0, num > 3 ? num - 3 : num) + '...' : str;
+
+  var truncate = function (str) {
+    var num = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 3;
+    var len = size(str);
+    return len > num ? str.slice(0, num > 3 ? num - 3 : num) + '...' : str;
+  };
 
   /**
    * Returns the length of a string in bytes.
@@ -3124,7 +3135,7 @@
    * Repeat item, times times
    */
   function repeat(item, times) {
-    var s = item;
+    var s = String(item);
     var target = '';
 
     while (times > 0) {
@@ -3156,7 +3167,7 @@
    *  Item is the beginning of the target
    */
   function startsWith(target, item, ignore) {
-    var str = target.slice(0, item.length);
+    var str = String(target).slice(0, item.length);
     return ignore ? str.toLowerCase() === item.toLowerCase() : str === item;
   }
 
@@ -3443,8 +3454,7 @@
   };
 
   /**
-   * Returns true if the provided predicate function returns true for at least one element in a collection,
-   * false otherwise.
+   * Returns true if the provided predicate function returns true for at least one element in a collection,false otherwise.
    */
   var any = function (arr) {
     var fn = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : Boolean;
@@ -3455,7 +3465,7 @@
    * Chunks an array into smaller arrays of a specified size.
    */
   var chunk = (arr, size) => {
-    Array.from({
+    return Array.from({
       length: Math.ceil(arr.length / size)
     }, (v, i) => arr.slice(i * size, i * size + size));
   };
