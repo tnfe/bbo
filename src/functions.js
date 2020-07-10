@@ -199,7 +199,6 @@ import includesAny from './array/includes_any';
 import removeAt from './array/remove_at';
 import remove from './array/remove';
 import compact from './array/compact';
-import compactAll from './array/compact_all';
 import pluck from './array/pluck';
 import union from './array/union';
 import unionBy from './array/union_by';
@@ -420,7 +419,6 @@ export default {
   removeAt,
   remove,
   compact,
-  compactAll,
   pluck,
   union,
   unionBy,
