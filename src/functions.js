@@ -194,6 +194,7 @@ import random from './array/random';
 import randomSize from './array/random_size';
 import shuffle from './array/shuffle';
 import contains from './array/contains';
+import copyArray from './array/copy_array';
 import includesAll from './array/includes_all';
 import includesAny from './array/includes_any';
 import removeAt from './array/remove_at';
@@ -414,6 +415,7 @@ export default {
   randomSize,
   shuffle,
   contains,
+  copyArray,
   includesAll,
   includesAny,
   removeAt,
