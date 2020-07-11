@@ -6,14 +6,6 @@ import isArray from '../lodash/is_array';
 import isString from '../lodash/is_string';
 
 export default function indexBy(arr, key) {
-  // bbp.indexBy([{id: 'first', val: 1}, {id: 'second', val: 2}], 'id');
-  // => {first: {id: 'first', val: 1}, second: {id: // 'second', val: 2}}
-  // indexBy([{id: 'first', val: 1}, null], 'id');
-  // => {first: {id: 'first', val: 1}}
-  // indexBy([], 'id'); // => {}
-  // indexBy([], null); // => throws
-  // indexBy({}, 'id'); // => throws
-
   if (!isArray(arr)) {
     throw new Error('expected an array for first argument');
   }
