@@ -130,6 +130,7 @@ import values from './collection/values';
 import entries from './collection/entries';
 import extend from './collection/extend';
 import size from './collection/size';
+import search from './collection/search';
 
 // lodash
 import getTag from './lodash/get_tag';
@@ -222,7 +223,6 @@ import dropRight from './array/drop_right';
 import dropWhile from './array/drop_while';
 import dropRightWhile from './array/drop_right_while';
 import column from './array/column';
-import search from './array/search';
 import split from './array/split';
 import unary from './array/unary';
 import indexBy from './array/index_by';

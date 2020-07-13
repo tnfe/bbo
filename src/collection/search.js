@@ -1,13 +1,11 @@
-export default function search(needle, haystack, argStrict) {
-  // discuss at: https://locutus.io/php/array_search/'
-  // example 1: bbo.array.search('3', {a: 3, b: 5, c: 7})
-  // returns 1: 'a'
+import isFunction from '../lodash/is_function';
 
+export default function search(needle, haystack, argStrict) {
   let strict = !!argStrict;
   let key = '';
   let _needle = needle;
 
-  if (typeof _needle === 'object' && _needle.exec) {
+  if (isFunction(_needle) && _needle.exec) {
     // Duck-type for RegExp
     if (!strict) {
       // Let's consider case sensitive searches as strict
