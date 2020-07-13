@@ -66,10 +66,10 @@
 | [clearTimesout][cleartimesout]       | [cookie][cookie]                       | [forEach][foreach]                 | [clone][clone]                 | [dropWhile][dropwhile]               |
 | [getDate][getdate]                   | [setCookie][setcookie]                 | [map][map]                         | [entries][entries]             | [dropRightWhile][droprightwhile]     |
 | [formatPassTime][formatpasstime]     | [getCookie][getcookie]                 | [find][find]                       | [extend][extend]               | [column][column]                     |
-| [formatRemainTime][formatremaintime] | [deleteCookie][deletecookie]           | [findIndex][findindex]             | [flush][flush]                 | [search][search]                     |
+| [formatRemainTime][formatremaintime] | [deleteCookie][deletecookie]           | [findIndex][findindex]             | [flush][flush]                 | [split][split]                       |
 | [formatDuration][formatduration]     | [parseCookie][parsecookie]             | [get][get]                         | [values][values]               | [unary][unary]                       |
 | [sleep][sleep]                       | **image**                              | [set][set]                         | [size][size]                   | [indexBy][indexby]                   |
-| **json**                             | [checkImageSize][checkimagesize]       | [debounce][debounce]               |                                | [split][split]                       |
+| **json**                             | [checkImageSize][checkimagesize]       | [debounce][debounce]               | [search][search]               |                                      |
 | [toJson][tojson]                     | [imageOptimization][imageoptimization] | [throttle][throttle]               |                                |                                      |
 | [jsonp][jsonp]                       | [toDataUrl][todataurl]                 | [pick][pick]                       |                                |                                      |
 | **storage**                          |                                        | [omit][omit]                       |                                |                                      |
@@ -101,7 +101,7 @@ let id = bbo.setTimesout(
   'helloWorld'
 );
 
-bbo.math.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56'
+bbo.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56'
 ```
 
 #### 引用

@@ -107,7 +107,7 @@ let id = bbo.setTimesout(
   'helloWorld'
 );
 
-bbo.math.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56'
+bbo.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56'
 ```
 
 #### Install
