@@ -22,11 +22,11 @@ import ieVersion from './device/ie_version';
 // log
 import log from './log/log';
 import logs from './log/logs';
+import trash from './log/trash';
 import removeConsole from './log/remove_console';
 
 // args
 import args from './args/args';
-import trash from './args/trash';
 import noop from './args/noop';
 import merge from './args/merge';
 import over from './args/over';
