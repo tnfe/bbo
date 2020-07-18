@@ -1,11 +1,10 @@
 /**
  * Check two arrays are equal
  */
+import size from '../collection/size';
 export default function equal(arr1, arr2) {
-  if (arr1 === arr2) return true;
-  if (arr1.length !== arr2.length) return false;
-  for (let i = 0; i < arr1.length; ++i) {
-    if (arr1[i] !== arr2[i]) return false;
-  }
+  let length = size(arr1);
+  if (length !== size(arr2)) return false;
+  for (let i = 0; i < length; i++) if (arr1[i] !== arr2[i]) return false;
   return true;
 }
