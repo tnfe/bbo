@@ -19,7 +19,7 @@ describe('flush', () => {
     expect(bbo.flush([])).toEqual([]);
   });
 
-  test('returns empty object as-is', function() {
+  test('returns empty object array as-is', function() {
     expect(bbo.flush({})).toEqual({});
   });
 
