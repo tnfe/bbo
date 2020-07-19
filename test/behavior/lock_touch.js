@@ -17,7 +17,7 @@ describe('lockTouch', () => {
     buttons[0].addEventListener('touchstart', (e) => {
       e.target.innerText = 'touchstartd';
     });
-    expect(buttons[0].innerText).not.toBe('touchmoved'); //true
+    expect(buttons[0].innerText).not.toBe('touchmoved'); // true
 
     const touchmove = new Event('touchmove');
     buttons[0].dispatchEvent(touchmove);
