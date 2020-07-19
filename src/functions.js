@@ -129,6 +129,7 @@ import clone from './collection/clone';
 import values from './collection/values';
 import entries from './collection/entries';
 import extend from './collection/extend';
+import flush from './collection/flush';
 import size from './collection/size';
 import search from './collection/search';
 
@@ -350,6 +351,8 @@ export default {
   values,
   entries,
   extend,
+  flush,
+  search,
   size,
   // lodash
   getTag,
@@ -443,7 +446,6 @@ export default {
   dropWhile,
   dropRightWhile,
   column,
-  search,
   split,
   unary,
   indexBy
