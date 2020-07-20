@@ -6,6 +6,8 @@ describe('trim', function() {
     expect(bbo.trim(' abc')).toEqual('abc');
     expect(bbo.trim('abc')).toEqual('abc');
     expect(bbo.trim('a bc')).toEqual('a bc');
+    expect(bbo.trim(' ')).toEqual('');
+    expect(bbo.trim(null)).toEqual(null);
     done();
   });
 });
