@@ -34,5 +34,7 @@ export default function column(input, ColumnKey, IndexKey = null) {
     }
     // eslint-disable-next-line prefer-object-spread
     return Object.assign({}, newarray);
+  } else {
+    throw new Error('throw an error');
   }
 }

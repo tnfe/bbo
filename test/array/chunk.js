@@ -2,54 +2,14 @@ import bbo from '../bbo';
 
 describe('chunk', () => {
   it('base case', () => {
-    expect(
-      bbo.column(
-        [
-          { name: 'a', value: 1 },
-          { name: 'b', value: 2 },
-          { name: 'c', value: 3 }
-        ],
-        'name'
-      )
-    ).toEqual({ 0: 'a', 1: 'b', 2: 'c' });
-
-    expect(
-      bbo.column(
-        {
-          0: { name: 'a', value: 1 },
-          1: { name: 'b', value: 2 },
-          2: { name: 'c', value: 3 }
-        },
-        'name'
-      )
-    ).toEqual({ 0: 'a', 1: 'b', 2: 'c' });
-
-    expect(
-      bbo.column(
-        [
-          { name: 'a', value: 1 },
-          { name: 'b', value: 2 },
-          { name: 'c', value: 3 }
-        ],
-        'name',
-        'value'
-      )
-    ).toEqual({ 1: 'a', 2: 'b', 3: 'c' });
-
-    expect(
-      bbo.column(
-        [
-          { name: 'a', value: 1 },
-          { name: 'b', value: 2 },
-          { name: 'c', value: 3 }
-        ],
-        null,
-        'value'
-      )
-    ).toEqual({
-      1: { name: 'a', value: 1 },
-      2: { name: 'b', value: 2 },
-      3: { name: 'c', value: 3 }
-    });
+    expect(bbo.chunk([1, 2, 3, 4, 5], 2)).toEqual([[1, 2], [3, 4], [5]]);
+    expect(bbo.chunk([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 4)).toEqual([
+      [1, 2, 3, 4],
+      [5, 6, 7, 8],
+      [9, 10, 11, 12],
+      [13, 14, 15]
+    ]);
+    expect(bbo.chunk([], 3)).toEqual([]);
+    expect(bbo.chunk([1, 2, 3], 4)).toEqual([[1, 2, 3]]);
   });
 });
