@@ -53,7 +53,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [isWeiShi][isweishi]                 | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [pluck][pluck]                       |
 | [isIphoneXmodel][isiphonexmodel]     | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [union][union]                       |
 | [isIE][isie]                         | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [unionBy][unionby]                   |
-| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **lodash**                         | [byteLen][bytelen]             | [unionWith][unionwith]               |
+| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **mlodash**                         | [byteLen][bytelen]             | [unionWith][unionwith]               |
 | **log**                              | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [intersect][intersect]               |
 | [log][log]                           | [setStyle][setstyle]                   | [is][is]                           | [endsWith][endswith]           | [intersectBy][intersectby]           |
 | [logs][logs]                         | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [difference][difference]             |
@@ -219,7 +219,7 @@ npm run start
 
 Each block represents a single file in the project(codecov.io). The size and color of each block is represented by the number of statements and the coverage, respectively.
 
-[![codecov](https://codecov.io/gh/tnfe/bbo/commit/1fd31a2c7045ec55d0319ffffa2a905728027df6/graphs/tree.svg)](https://codecov.io/gh/tnfe/bbo/branch/bbo-next)
+[![codecov](https://codecov.io/gh/tnfe/bbo/branch/bbo-next/graphs/tree.svg)](https://codecov.io/gh/tnfe/bbo/branch/bbo-next)
 
 ## Contribution
 
