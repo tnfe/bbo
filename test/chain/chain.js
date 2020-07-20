@@ -42,4 +42,16 @@ describe('chain', function() {
       )
     ).toBe('{"aaa":2}');
   });
+
+  it('should allow to pass thru the wrapped value', function() {
+    expect(
+      bbo('Hello world')
+        .chain()
+        .deCapitalize()
+        .thru(function(words) {
+          return words[0] + 1;
+        })
+        .value()
+    ).toBe('h1');
+  });
 });
