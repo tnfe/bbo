@@ -6,4 +6,10 @@ describe('remove', () => {
     expect(bbo.remove(array, [2, 4])).toEqual([1, 3, 5]);
     expect(bbo.remove(array, [])).toEqual(array);
   });
+
+  test('bbo.remove !isArray throws an error', () => {
+    expect(() => {
+      bbo.remove(true, 'str');
+    }).toThrow();
+  });
 });

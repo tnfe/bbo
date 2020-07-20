@@ -7,4 +7,14 @@ describe('split', () => {
     expect(bbo.split(array, 2)).toEqual([[1, 2], [3, 4], [5]]);
     expect(bbo.split([], 3)).toEqual([]);
   });
+
+  test('bbo.split !isArray throws an error', () => {
+    expect(() => {
+      bbo.split('', 1);
+    }).toThrow();
+
+    expect(() => {
+      bbo.split([], 'a');
+    }).toThrow();
+  });
 });

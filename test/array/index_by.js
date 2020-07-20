@@ -18,4 +18,14 @@ describe('indexBy', () => {
 
     expect(bbo.indexBy([], 'id')).toEqual({});
   });
+
+  test('bbo.indexBy !isArray throws an error', () => {
+    expect(() => {
+      bbo.indexBy('', 1);
+    }).toThrow();
+
+    expect(() => {
+      bbo.indexBy([], []);
+    }).toThrow();
+  });
 });

@@ -11,4 +11,10 @@ describe('compact', () => {
     expect(bbo.compact([1, 2, [], 4, {}])).toEqual([1, 2, [], 4, {}]);
     expect(bbo.compact([])).toEqual([]);
   });
+
+  test('bbo.compact !isArray throws an error', () => {
+    expect(() => {
+      bbo.compact(null);
+    }).toThrow();
+  });
 });
