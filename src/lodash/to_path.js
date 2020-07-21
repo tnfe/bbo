@@ -21,5 +21,5 @@ export default function toPath(value) {
   if (isArray(value)) {
     return map(value, toKey);
   }
-  return isSymbol(value) ? [value] : clone(stringToPath(value));
+  return isSymbol(value) ? [value] : clone(stringToPath(String(value)));
 }

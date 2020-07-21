@@ -38,29 +38,12 @@ describe('toPath', function() {
     assert.deepStrictEqual(actual, ['a', '-1.23', '["b"]', 'c', "['d']", '\ne\n', 'f', 'g']);
   });
 
-  // it('should handle consecutive empty brackets and dots', function() {
-  //   let expected = ['', 'a'];
-  //   assert.deepStrictEqual(bbo.toPath('.a'), expected);
-  //   assert.deepStrictEqual(bbo.toPath('[].a'), expected);
+  it('should handle consecutive empty brackets and dots', function() {
+    expect(bbo.toPath('.a')).toEqual(['', 'a']);
+    expect(bbo.toPath('[].a')).toEqual(['a']);
 
-  //   expected = ['', '', 'a'];
-  //   assert.deepStrictEqual(bbo.toPath('..a'), expected);
-  //   assert.deepStrictEqual(bbo.toPath('[][].a'), expected);
-
-  //   expected = ['a', '', 'b'];
-  //   assert.deepStrictEqual(bbo.toPath('a..b'), expected);
-  //   assert.deepStrictEqual(bbo.toPath('a[].b'), expected);
-
-  //   expected = ['a', '', '', 'b'];
-  //   assert.deepStrictEqual(bbo.toPath('a...b'), expected);
-  //   assert.deepStrictEqual(bbo.toPath('a[][].b'), expected);
-
-  //   expected = ['a', ''];
-  //   assert.deepStrictEqual(bbo.toPath('a.'), expected);
-  //   assert.deepStrictEqual(bbo.toPath('a[]'), expected);
-
-  //   expected = ['a', '', ''];
-  //   assert.deepStrictEqual(bbo.toPath('a..'), expected);
-  //   assert.deepStrictEqual(bbo.toPath('a[][]'), expected);
-  // });
+    expect(bbo.toPath('a')).toEqual(['a']);
+    expect(bbo.toPath(0)).toEqual(['0']);
+    expect(bbo.toPath(1)).toEqual(['1']);
+  });
 });
