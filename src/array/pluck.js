@@ -5,8 +5,8 @@ export default function pluck(target, name) {
   let result = [];
   let temp;
   target.forEach(function(item) {
-    temp = item[name];
-    if (temp !== null) {
+    if (item[name]) {
+      temp = item[name];
       result.push(temp);
     }
   });

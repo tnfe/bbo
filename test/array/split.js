@@ -6,6 +6,8 @@ describe('split', () => {
   it('base case 1', () => {
     expect(bbo.split(array, 2)).toEqual([[1, 2], [3, 4], [5]]);
     expect(bbo.split([], 3)).toEqual([]);
+
+    expect(bbo.split([], null)).toEqual([]);
   });
 
   test('bbo.split !isArray throws an error', () => {
