@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.18
+ * version 1.1.19
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.18';
+  var version = '1.1.19';
 
   var globalObject = null;
 
@@ -366,6 +366,22 @@
     }
   }
 
+  /**
+   * a trash object
+   */
+  var trash = {
+    clear: () => {
+      for (var key in trash) {
+        if (key !== 'log' && key !== 'clear') delete trash[key];
+      }
+    },
+    log: () => {
+      for (var key in trash) {
+        if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
+      }
+    }
+  };
+
   var noop = () => {};
 
   function removeConsole(clear) {
@@ -375,22 +391,6 @@
       if (clear === 'clear' && window.console.clear) window.console.clear();
     } catch (e) {}
   }
-
-  /**
-   * a trash object
-   */
-  var trash = {
-    clear: function () {
-      for (var key in trash) {
-        if (key !== 'log' && key !== 'clear') delete trash[key];
-      }
-    },
-    log: function () {
-      for (var key in trash) {
-        if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
-      }
-    }
-  };
 
   var merge = function () {
     for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -2586,6 +2586,51 @@
     return !val || !isObject(val) && !isFunction(val);
   }
 
+  /* eslint-disable eqeqeq */
+  function flush(collection) {
+    var result;
+    var len;
+    var i;
+
+    if (!collection) {
+      return undefined;
+    }
+
+    if (isArray(collection)) {
+      result = [];
+      len = collection.length;
+
+      for (i = 0; i < len; i++) {
+        var elem = collection[i];
+
+        if (elem != null) {
+          result.push(elem);
+        }
+      }
+
+      return result;
+    }
+
+    if (isObject(collection)) {
+      result = {};
+      var keys = Object.keys(collection);
+      len = keys.length;
+
+      for (i = 0; i < len; i++) {
+        var key = keys[i];
+        var value = collection[key];
+
+        if (value != null) {
+          result[key] = value;
+        }
+      }
+
+      return result;
+    }
+
+    return undefined;
+  }
+
   /**
    * Gets the size of `collection` by returning its length for array-like
    * values or the number of own enumerable string keyed properties for objects.
@@ -2609,6 +2654,43 @@
     }
 
     return Object.keys(collection).length;
+  }
+
+  function search(needle, haystack, argStrict) {
+    var strict = !!argStrict;
+    var key = '';
+    var _needle = needle;
+
+    if (isFunction(_needle) && _needle.exec) {
+      // Duck-type for RegExp
+      if (!strict) {
+        // Let's consider case sensitive searches as strict
+        var flags = 'i' + (_needle.global ? 'g' : '') + (_needle.multiline ? 'm' : '') + ( // sticky is FF only
+        _needle.sticky ? 'y' : '');
+        _needle = new RegExp(_needle.source, flags);
+      }
+
+      for (key in haystack) {
+        if (haystack.hasOwnProperty(key)) {
+          if (_needle.test(haystack[key])) {
+            return key;
+          }
+        }
+      }
+
+      return false;
+    }
+
+    for (key in haystack) {
+      if (haystack.hasOwnProperty(key)) {
+        // eslint-disable-next-line eqeqeq
+        if (strict && haystack[key] === needle || !strict && haystack[key] == needle) {
+          return key;
+        }
+      }
+    }
+
+    return false;
   }
 
   function isNumber(number) {
@@ -2696,7 +2778,7 @@
       return map(value, toKey);
     }
 
-    return isSymbol(value) ? [value] : clone(stringToPath(value));
+    return isSymbol(value) ? [value] : clone(stringToPath(String(value)));
   }
 
   /* eslint-disable no-param-reassign */
@@ -3095,40 +3177,40 @@
    * Returns the length of a string in bytes by Unicode (utf-8 utf8 utf-16 utf16)
    */
   function byteLen(str, charset) {
-    var target = 0;
+    var total = 0;
     var charCode;
-    var i;
-    var len;
 
-    var _charset = charset ? charset.toLowerCase() : '';
+    if (charset === 'utf-8' || charset === 'utf8') {
+      for (var i = 0, len = str.length; i < len; i++) {
+        charCode = str.codePointAt(i);
 
-    if (_charset === 'utf-16' || _charset === 'utf16') {
-      for (i = 0, len = str.length; i < len; i++) {
-        charCode = str.charCodeAt(i);
+        if (charCode <= 0x007f) {
+          total += 1;
+        } else if (charCode <= 0x07ff) {
+          total += 2;
+        } else if (charCode <= 0xffff) {
+          total += 3;
+        } else {
+          total += 4;
+          i++;
+        }
+      }
+    } else if (charset === 'utf-16' || charset === 'utf16') {
+      for (var _i = 0, _len = str.length; _i < _len; _i++) {
+        charCode = str.codePointAt(_i);
 
         if (charCode <= 0xffff) {
-          target += 2;
+          total += 2;
         } else {
-          target += 4;
+          total += 4;
+          _i++;
         }
       }
     } else {
-      for (i = 0, len = str.length; i < len; i++) {
-        charCode = str.charCodeAt(i);
-
-        if (charCode <= 0x007f) {
-          target += 1;
-        } else if (charCode <= 0x07ff) {
-          target += 2;
-        } else if (charCode <= 0xffff) {
-          target += 3;
-        } else {
-          target += 4;
-        }
-      }
+      total = str.replace(/[^\x00-\xff]/g, 'aa').length;
     }
 
-    return target;
+    return total;
   }
 
   /**
@@ -3274,6 +3356,27 @@
   }
 
   /**
+   * Copies the values of `source` to `array`.
+   *
+   * @private
+   * @param {Array} source The array to copy values from.
+   * @param {Array} [array=[]] The array to copy values to.
+   * @returns {Array} Returns `array`.
+   */
+  function copyArray(source, array) {
+    var index = -1;
+    var length = source.length; // eslint-disable-next-line no-param-reassign
+
+    array || (array = new Array(length));
+
+    while (++index < length) {
+      array[index] = source[index];
+    }
+
+    return array;
+  }
+
+  /**
    * Returns true if all the elements values are included in arr, false otherwise.
    */
   var includesAll = (arr, values) => values.every(v => arr.includes(v));
@@ -3332,21 +3435,14 @@
   }
 
   /**
-   * Removes falsy values from an array.
-   * (false, null, 0, "", undefined, and NaN).
-   */
-  var compactAll = arr => arr.filter(Boolean);
-
-  /**
    * Get the attribute values in an array object and combine them into a new array
    */
   function pluck(target, name) {
     var result = [];
     var temp;
     target.forEach(function (item) {
-      temp = item[name];
-
-      if (temp !== null) {
+      if (item[name]) {
+        temp = item[name];
         result.push(temp);
       }
     });
@@ -3373,7 +3469,7 @@
    * using a provided comparator function.
    */
   var unionWith = (a, b, comp) => {
-    Array.from(new Set([].concat(_toConsumableArray(a), _toConsumableArray(b.filter(x => a.findIndex(y => comp(x, y)) === -1)))));
+    return Array.from(new Set([].concat(_toConsumableArray(a), _toConsumableArray(b.filter(x => a.findIndex(y => comp(x, y)) === -1)))));
   };
 
   /**
@@ -3430,10 +3526,10 @@
    * Check two arrays are equal
    */
   function equal(arr1, arr2) {
-    if (arr1 === arr2) return true;
-    if (arr1.length !== arr2.length) return false;
+    var length = size(arr1);
+    if (length !== size(arr2)) return false;
 
-    for (var i = 0; i < arr1.length; ++i) {
+    for (var i = 0; i < length; i++) {
       if (arr1[i] !== arr2[i]) return false;
     }
 
@@ -3473,8 +3569,9 @@
   /**
    * Groups the elements of an array based on the given function and returns the count of elements in each group.
    */
+
   var countBy = (arr, fn) => {
-    arr.map(typeof fn === 'function' ? fn : val => val[fn]).reduce((acc, val) => {
+    return arr.map(isFunction(fn) ? fn : val => val[fn]).reduce((acc, val) => {
       acc[val] = (acc[val] || 0) + 1;
       return acc;
     }, {});
@@ -3484,7 +3581,7 @@
    * Counts the occurrences of a value in an array.
    */
   var countOccurrences = (arr, val) => {
-    arr.reduce((a, v) => v === val ? a + 1 : a, 0);
+    return arr.reduce((a, v) => v === val ? a + 1 : a, 0);
   };
 
   /**
@@ -3522,7 +3619,7 @@
    * Returns the remaining elements in the array.
    */
   function dropRightWhile(arr, func) {
-    var rightIndex = arr.length;
+    var rightIndex = size(arr);
 
     while (rightIndex-- && !func(arr[rightIndex])) {
     }
@@ -3567,47 +3664,9 @@
 
 
       return _extends({}, newarray);
+    } else {
+      throw new Error('throw an error');
     }
-  }
-
-  function search(needle, haystack, argStrict) {
-    // discuss at: https://locutus.io/php/array_search/'
-    // example 1: bbo.array.search('3', {a: 3, b: 5, c: 7})
-    // returns 1: 'a'
-    var strict = !!argStrict;
-    var key = '';
-    var _needle = needle;
-
-    if (typeof _needle === 'object' && _needle.exec) {
-      // Duck-type for RegExp
-      if (!strict) {
-        // Let's consider case sensitive searches as strict
-        var flags = 'i' + (_needle.global ? 'g' : '') + (_needle.multiline ? 'm' : '') + ( // sticky is FF only
-        _needle.sticky ? 'y' : '');
-        _needle = new RegExp(_needle.source, flags);
-      }
-
-      for (key in haystack) {
-        if (haystack.hasOwnProperty(key)) {
-          if (_needle.test(haystack[key])) {
-            return key;
-          }
-        }
-      }
-
-      return false;
-    }
-
-    for (key in haystack) {
-      if (haystack.hasOwnProperty(key)) {
-        // eslint-disable-next-line eqeqeq
-        if (strict && haystack[key] === needle || !strict && haystack[key] == needle) {
-          return key;
-        }
-      }
-    }
-
-    return false;
   }
 
   function split(arr, n) {
@@ -3637,13 +3696,6 @@
    * return an object from an array, keyed by the value at the given id
    */
   function indexBy(arr, key) {
-    // bbp.indexBy([{id: 'first', val: 1}, {id: 'second', val: 2}], 'id');
-    // => {first: {id: 'first', val: 1}, second: {id: // 'second', val: 2}}
-    // indexBy([{id: 'first', val: 1}, null], 'id');
-    // => {first: {id: 'first', val: 1}}
-    // indexBy([], 'id'); // => {}
-    // indexBy([], null); // => throws
-    // indexBy({}, 'id'); // => throws
     if (!isArray(arr)) {
       throw new Error('expected an array for first argument');
     }
@@ -3789,6 +3841,8 @@
     values: values,
     entries: entries,
     extend: extend,
+    flush: flush,
+    search: search,
     size: size,
     // lodash
     getTag: getTag,
@@ -3854,12 +3908,12 @@
     randomSize: randomSize,
     shuffle: shuffle,
     contains: contains,
+    copyArray: copyArray,
     includesAll: includesAll,
     includesAny: includesAny,
     removeAt: removeAt,
     remove: remove,
     compact: compact,
-    compactAll: compactAll,
     pluck: pluck,
     union: union,
     unionBy: unionBy,
@@ -3882,7 +3936,6 @@
     dropWhile: dropWhile,
     dropRightWhile: dropRightWhile,
     column: column,
-    search: search,
     split: split,
     unary: unary,
     indexBy: indexBy
