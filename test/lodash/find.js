@@ -30,4 +30,23 @@ describe('find', function() {
     assert.strictEqual(mapCount, isFind ? 1 : mapCount);
     assert.strictEqual(actual, isFind ? square(LARGE_ARRAY_SIZE) : actual);
   });
+
+  test('returns base case', () => {
+    let users = [
+      { user: 'barney', age: 36, active: true },
+      { user: 'fred', age: 40, active: false },
+      { user: 'pebbles', age: 1, active: true }
+    ];
+
+    const pebblesObject = { user: 'pebbles', age: 1, active: true };
+    const barneyObject = { user: 'barney', age: 36, active: true };
+
+    const findObj = bbo.find(users, function(o) {
+      return o.age < 40;
+    });
+
+    expect(bbo.find(users, findObj)).toEqual(barneyObject);
+    expect(bbo.find(users, { age: 1, active: true })).toEqual(pebblesObject);
+    expect(bbo.find(users, { active: false })).toEqual({ active: false, age: 40, user: 'fred' });
+  });
 });
