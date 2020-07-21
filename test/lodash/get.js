@@ -126,6 +126,12 @@ describe('get', function() {
     expect(bbo.get(undefined, 'a', 888)).toStrictEqual(888);
   });
 
+  test('props arg must be an array, a string or a symbol', () => {
+    expect(() => {
+      bbo.get([]);
+    }).toThrow();
+  });
+
   /* eslint-disable no-undef */
   if (typeof Symbol === 'function') {
     test('works with symbols', () => {
