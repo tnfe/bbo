@@ -82,6 +82,7 @@
 #### 范例
 
 ```js
+// base case
 bbo.getCookie('username'); // => 'userName'
 bbo.cookie().getJson(); //  => {a: 1, b: 2}
 bbo.isiPhone(); // => true or false
@@ -106,6 +107,32 @@ var users = [
 ];
 bbo.find(users, { age: 1, active: true }); // => {"active": true, "age": 36, "user": "barney"}
 bbo.findIndex(users, ["active", false]); // => 1
+
+// chain case
+var array1 = [1, 2, 3, null];
+var array2 = [3, 4, 5, ''];
+var object1 = { a: 6, b: 7 };
+var object2 = { c: 8, d: 9 };
+
+bbo
+  .chain(object1)
+  .extend(object2) // => {a: 6, b: 7, c: 8, d: 9}
+  .entries() // =>  [["a", 6], ["b", 7], ["c", 8], ["d", 9]]
+  .thru((words) => {
+    const temp = [];
+    bbo.forEach(words, (item, index) => {
+      temp.push(item[1]);
+    });
+    return temp;
+  }) // => [6, 7, 8, 9]
+  .union(array1) // => [6, 7, 8, 9, 1, 2, 3, null]
+  .union(array2) // => [6, 7, 8, 9, 1, 2, 3, null, 4, 5, ""]
+  .compact() // => [6, 7, 8, 9, 1, 2, 3, 4, 5]
+  .thru((array) => {
+    return array.sort();
+  }) // => [1, 2, 3, 4, 5, 6, 7, 8, 9]
+  .value();
+// return  => [1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 ... ∞
 ```
