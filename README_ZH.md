@@ -82,26 +82,32 @@
 #### 范例
 
 ```js
-let username = bbo.getCookie('username'); // => 'bbo'
-let json = cookie().getJson(); //  => {a: 1, b: 2}
-let isiPhone = bbo.isiPhone(); // => true
+bbo.getCookie('username'); // => 'userName'
+bbo.cookie().getJson(); //  => {a: 1, b: 2}
+bbo.isiPhone(); // => true or false
+bbo.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56';
+bbo.split([1, 2, 3, 4, 5], 2); // => [[1,2], [3,4], [5]]
+bbo.entries({ c: 8, a: 4 }); // => [['c', 8], ['a', 4]]
+bbo.toPath("a.b.c"); // => ['a', 'b', 'c']
+bbo.get({ a: { aa: { aaa: 2 } }, b: 4 }, "a.aa.aaa"); // => 2
+bbo.union([1, 2, 3], [4, 3, 2]); // => [1, 2, 3, 4]
+bbo.intersect([1, 2, 3], [4, 3, 2]); // => [2, 3]
+bbo.unionBy([2.1], [1.2, 2.3], Math.floor); // [2.1, 1.2]
+bbo.mapValues({ a: 3, b: 5, c: 9 }, (value) => value + 1); //=> {a: 4, b: 6, c: 10}
+bbo.compact([0, 1, false, 2, "", 3]); // [1, 2, 3]
+bbo.flush({a: 2, b: null, c: 4, d: undefined}); // => {a: 2, c: 4}
+bbo.differenceBy([2.1, 1.2], [2.3, 3.4], Math.floor); // => [1]
+bbo.search("3", { a: 3, b: 5, c: 7 }); // => 'a'
+bbo.size({ a: 1, b: 2 }); // => 2
 
-// X XS, XSMax, XR
-let isIphoneXmodel = bbo.isIphoneXmodel(); // => false
+var users = [
+  { user: "barney", age: 36, active: true },
+  { user: "fred", age: 40, active: false },
+];
+bbo.find(users, { age: 1, active: true }); // => {"active": true, "age": 36, "user": "barney"}
+bbo.findIndex(users, ["active", false]); // => 1
 
-bbo.log('hello world!');
-
-let id = bbo.setTimesout(
-  function(word) {
-    console.log(word);
-    console.log(this); // => log {index: 3 ,times: 8, over: false}
-  },
-  1000 / 20,
-  8,
-  'helloWorld'
-);
-
-bbo.numberFormat(1234.56, 2, ',', ' '); // => '1 234,56'
+... ∞
 ```
 
 #### 引用

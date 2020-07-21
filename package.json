@@ -24,6 +24,7 @@
   "bugs": {
     "url": "https://github.com/tnfe/bbo/issues"
   },
+  "publishConfig": { "registry": "https://npm.pkg.github.com/" },
   "main": "index.js",
   "module": "es/index.js",
   "husky": {
