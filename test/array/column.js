@@ -17,6 +17,7 @@ describe('column', () => {
     expect(bbo.column(array, 'name')).toEqual({ 0: 'a', 1: 'b', 2: 'c' });
     expect(bbo.column(array, 'name', null)).toEqual({ 0: 'a', 1: 'b', 2: 'c' });
     expect(bbo.column(array, 'name', 1)).toEqual({ 0: 'a', 1: 'b', 2: 'c' });
+    expect(bbo.column(array, null, 5)).toEqual(object);
     expect(bbo.column(array, 'name', 5)).toEqual({ 0: 'a', 1: 'b', 2: 'c' });
     expect(bbo.column(array, 'name', 'value')).toEqual({ 1: 'a', 2: 'b', 3: 'c' });
     expect(bbo.column(object, 'name')).toEqual({ 0: 'a', 1: 'b', 2: 'c' });
