@@ -29,4 +29,27 @@ describe('findIndex', function() {
       assert.strictEqual(actual, isFind ? square(LARGE_ARRAY_SIZE) : actual);
     });
   });
+
+  test('returns base case', () => {
+    const users = [
+      { user: 'barney', age: 36, active: true },
+      { user: 'fred', age: 40, active: false },
+      { user: 'pebbles', age: 1, active: true }
+    ];
+
+    expect(bbo.findIndex(users, { active: false })).toBe(1);
+    expect(bbo.findIndex(users, { user: 'fred', active: false })).toBe(1);
+  });
+
+  test('returns function case', () => {
+    const array = [
+      { user: 'barney', age: 36, active: true },
+      { user: 'fred', age: 40, active: false },
+      { user: 'pebbles', age: 1, active: true }
+    ];
+    const findIndexObj = bbo.findIndex(array, function(o, i, j) {
+      return o.user === 'barney';
+    });
+    expect(findIndexObj).toBe(0);
+  });
 });
