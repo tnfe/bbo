@@ -1,3 +1,4 @@
+/* eslint-disable */
 /* eslint-disable no-invalid-this */
 /* eslint-disable no-unreachable */
 /* eslint-disable no-param-reassign */
