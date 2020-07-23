@@ -204,6 +204,11 @@ import storage from 'bbo/storage';
 [![](https://img.shields.io/badge/jsDelivr-CDN-red.svg)](https://www.jsdelivr.com/package/npm/bbo)
 [![](https://img.shields.io/badge/UNPKG-CDN-red.svg)](https://unpkg.com/bbo/)
 
+```js
+https://mat1.gtimg.com/www/js/libs/bbo.min.js
+// 国内用户可以直接使用此cdn
+```
+
 ### 开发
 
 **依赖 nodejs, 请使用 terminal/iTerm 安装环境。**
