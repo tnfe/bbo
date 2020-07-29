@@ -1,6 +1,6 @@
 import setStyle from './set_style';
 import attr from './attr';
-import trigger from './trigger';
+import trigger from '../behavior/trigger';
 import g from './g';
 import c from './c';
 

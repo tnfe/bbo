@@ -35,7 +35,6 @@ import hasOwnProperty from './args/has_own_property';
 
 // bom
 import open from './bom/open';
-import trigger from './bom/trigger';
 import stopPropagation from './bom/stop_propagation';
 import g from './bom/g';
 import gc from './bom/gc';
@@ -118,6 +117,7 @@ import randomKey from './random/random_key';
 // behavior
 import lockTouch from './behavior/lock_touch';
 import copyToClipboard from './behavior/copy_to_clipboard';
+import trigger from './behavior/trigger';
 
 // image
 import checkImageSize from './image/check_image_size';
