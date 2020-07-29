@@ -25,7 +25,7 @@ const setCookie = (name, value, option) => {
       date.setTime(date.getTime() + ms);
       cookie += '; expires=' + date.toGMTString();
     }
-
+    console.log(option);
     if (option.path) cookie += '; path=' + option.path;
     if (option.domain) cookie += '; domain=' + option.domain;
     if (option.secure) cookie += '; true';
