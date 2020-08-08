@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.19
+ * version 1.1.20
  */
 
 (function (global, factory) {
@@ -96,7 +96,7 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.19';
+  var version = '1.1.20';
 
   var globalObject = null;
 
@@ -1457,11 +1457,38 @@
   }
 
   /**
-   * cookie
-   * https://github.com/jiayi2/onavo/blob/master/onavo.js#L209
+   * Gets the size of `collection` by returning its length for array-like
+   * values or the number of own enumerable string keyed properties for objects.
+   *
+   * @category Collection
+   * @param {Array|Object|string} collection The collection to inspect.
+   * @returns {number} Returns the collection size.
    */
+
+  function size(collection) {
+    if (collection === null || collection === undefined) {
+      return 0;
+    }
+
+    if (isArray(collection) || isString(collection)) {
+      return collection.length;
+    }
+
+    if (isMap(collection) || isSet(collection)) {
+      return collection.size;
+    }
+
+    return Object.keys(collection).length;
+  }
+
+  function isNumber(number) {
+    return getTag(number) === '[object Number]';
+  }
+
+  /* eslint-disable no-param-reassign */
+
   var cookie = () => {
-    function _extend() {
+    function cookieAttrExtend() {
       var i = 0;
       var result = {};
 
@@ -1469,7 +1496,7 @@
         var attributes = arguments[i];
 
         for (var key in attributes) {
-          if (Object.prototype.hasOwnProperty.call(key, attributes)) {
+          if (hasOwnProperty(attributes, key)) {
             result[key] = attributes[key];
           }
         }
@@ -1479,7 +1506,6 @@
     }
 
     function init(converter) {
-      // #lizard forgives
       function api(key, value, attributes) {
         var result;
 
@@ -1487,42 +1513,36 @@
           return;
         }
 
-        if (arguments.length > 1) {
-          var _attributes = _extend({
+        if (size(arguments) > 1) {
+          attributes = cookieAttrExtend({
             path: '/'
           }, api.defaults, attributes);
 
-          if (typeof _attributes.expires === 'number') {
+          if (isNumber(attributes.expires)) {
             var expires = new Date();
-            expires.setMilliseconds(expires.getMilliseconds() + _attributes.expires * 864e5);
-            _attributes.expires = expires;
+            expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e5);
+            attributes.expires = expires;
           }
 
-          var _value = value;
-
           try {
-            result = JSON.stringify(_value);
+            result = JSON.stringify(value);
 
             if (/^[\{\[]/.test(result)) {
-              _value = result;
+              value = result;
             }
           } catch (e) {}
 
           if (!converter.write) {
-            _value = encodeURIComponent(String(_value)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+            value = encodeURIComponent(String(value)).replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
           } else {
-            _value = converter.write(_value, key);
+            value = converter.write(value, key);
           }
 
-          var _key = encodeURIComponent(String(key));
+          key = encodeURIComponent(String(key));
+          key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+          key = key.replace(/[\(\)]/g, escape); // eslint-disable-next-line no-return-assign
 
-          var __key = _key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
-
-          var ___key = __key.replace(/[\(\)]/g, escape);
-
-          var _cookie = document.cookie = [___key, '=', value, attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '', attributes.path ? '; path=' + attributes.path : '', attributes.domain ? '; domain=' + attributes.domain : '', attributes.secure ? '; secure' : ''].join('');
-
-          return _cookie;
+          return document.cookie = [key, '=', value, attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '', attributes.path ? '; path=' + attributes.path : '', attributes.domain ? '; domain=' + attributes.domain : '', attributes.secure ? '; secure' : ''].join('');
         }
 
         if (!key) {
@@ -1530,35 +1550,35 @@
         }
 
         var cookies = document.cookie ? document.cookie.split('; ') : [];
-        var setDecode = /(%[0-9A-Z]{2})+/g;
+        var rdecode = /(%[0-9A-Z]{2})+/g;
         var i = 0;
 
         for (; i < cookies.length; i++) {
           var parts = cookies[i].split('=');
 
-          var _cookie2 = parts.slice(1).join('=');
+          var _cookie = parts.slice(1).join('=');
 
-          if (_cookie2.charAt(0) === '"') {
-            _cookie2 = _cookie2.slice(1, -1);
+          if (_cookie.charAt(0) === '"') {
+            _cookie = _cookie.slice(1, -1);
           }
 
           try {
-            var name = parts[0].replace(setDecode, decodeURIComponent);
-            _cookie2 = converter.read ? converter.read(_cookie2, name) : converter(_cookie2, name) || _cookie2.replace(setDecode, decodeURIComponent);
+            var name = parts[0].replace(rdecode, decodeURIComponent);
+            _cookie = converter.read ? converter.read(_cookie, name) : converter(_cookie, name) || _cookie.replace(rdecode, decodeURIComponent); // eslint-disable-next-line no-invalid-this
 
-            try {
-              _cookie2 = JSON.parse(_cookie2);
-            } catch (e) {
-              console.log(e);
+            if (this.json) {
+              try {
+                _cookie = JSON.parse(_cookie);
+              } catch (e) {}
             }
 
             if (key === name) {
-              result = _cookie2;
+              result = _cookie;
               break;
             }
 
             if (!key) {
-              result[name] = _cookie2;
+              result[name] = _cookie;
             }
           } catch (e) {}
         }
@@ -1572,7 +1592,7 @@
         return api.call(api, key);
       };
 
-      api.getJSON = api.getjson = api.getJson = function () {
+      api.getJson = api.getJSON = function () {
         return api.apply({
           json: true
         }, [].slice.call(arguments));
@@ -1581,7 +1601,7 @@
       api.defaults = {};
 
       api.remove = function (key, attributes) {
-        api(key, '', _extend(attributes, {
+        api(key, '', cookieAttrExtend(attributes, {
           expires: -1
         }));
       };
@@ -2631,31 +2651,6 @@
     return undefined;
   }
 
-  /**
-   * Gets the size of `collection` by returning its length for array-like
-   * values or the number of own enumerable string keyed properties for objects.
-   *
-   * @category Collection
-   * @param {Array|Object|string} collection The collection to inspect.
-   * @returns {number} Returns the collection size.
-   */
-
-  function size(collection) {
-    if (collection === null || collection === undefined) {
-      return 0;
-    }
-
-    if (isArray(collection) || isString(collection)) {
-      return collection.length;
-    }
-
-    if (isMap(collection) || isSet(collection)) {
-      return collection.size;
-    }
-
-    return Object.keys(collection).length;
-  }
-
   function search(needle, haystack, argStrict) {
     var strict = !!argStrict;
     var key = '';
@@ -2691,10 +2686,6 @@
     }
 
     return false;
-  }
-
-  function isNumber(number) {
-    return getTag(number) === '[object Number]';
   }
 
   function isSymbol(symbol) {
