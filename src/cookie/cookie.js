@@ -1,31 +1,23 @@
+/* eslint-disable no-param-reassign */
+
 /**
  * bbo.cookie()
  * https://github.com/hrout/onavo/blob/master/onavo.js#L209
  */
-const cookie = () => {
-  function _extend() {
-    let i = 0;
-    let result = {};
-    for (; i < arguments.length; i++) {
-      let attributes = arguments[i];
-      for (let key in attributes) {
-        if (Object.prototype.hasOwnProperty.call(key, attributes)) {
-          result[key] = attributes[key];
-        }
-      }
-    }
-    return result;
-  }
 
+import extend from '../collection/extend';
+import size from '../collection/size';
+import isNumber from '../lodash/is_number';
+
+const cookie = () => {
   function init(converter) {
-    // #lizard forgives
     function api(key, value, attributes) {
       let result;
       if (typeof document === 'undefined') {
         return;
       }
-      if (arguments.length > 1) {
-        let _attributes = _extend(
+      if (size(arguments) > 1) {
+        attributes = extend(
           {
             path: '/'
           },
@@ -33,33 +25,35 @@ const cookie = () => {
           attributes
         );
 
-        if (typeof _attributes.expires === 'number') {
+        if (isNumber(attributes.expires)) {
           let expires = new Date();
-          expires.setMilliseconds(expires.getMilliseconds() + _attributes.expires * 864e5);
-          _attributes.expires = expires;
+          expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e5);
+          attributes.expires = expires;
         }
-        let _value = value;
+
         try {
-          result = JSON.stringify(_value);
+          result = JSON.stringify(value);
           if (/^[\{\[]/.test(result)) {
-            _value = result;
+            value = result;
           }
         } catch (e) {}
 
         if (!converter.write) {
-          _value = encodeURIComponent(String(_value)).replace(
+          value = encodeURIComponent(String(value)).replace(
             /%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g,
             decodeURIComponent
           );
         } else {
-          _value = converter.write(_value, key);
+          value = converter.write(value, key);
         }
 
-        let _key = encodeURIComponent(String(key));
-        let __key = _key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
-        let ___key = __key.replace(/[\(\)]/g, escape);
-        let _cookie = (document.cookie = [
-          ___key,
+        key = encodeURIComponent(String(key));
+        key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+        key = key.replace(/[\(\)]/g, escape);
+
+        // eslint-disable-next-line no-return-assign
+        return (document.cookie = [
+          key,
           '=',
           value,
           attributes.expires ? '; expires=' + attributes.expires.toUTCString() : '',
@@ -67,14 +61,12 @@ const cookie = () => {
           attributes.domain ? '; domain=' + attributes.domain : '',
           attributes.secure ? '; secure' : ''
         ].join(''));
-
-        return _cookie;
       }
       if (!key) {
         result = {};
       }
       let cookies = document.cookie ? document.cookie.split('; ') : [];
-      let setDecode = /(%[0-9A-Z]{2})+/g;
+      let rdecode = /(%[0-9A-Z]{2})+/g;
       let i = 0;
 
       for (; i < cookies.length; i++) {
@@ -86,15 +78,16 @@ const cookie = () => {
         }
 
         try {
-          let name = parts[0].replace(setDecode, decodeURIComponent);
+          let name = parts[0].replace(rdecode, decodeURIComponent);
           cookie = converter.read
             ? converter.read(cookie, name)
-            : converter(cookie, name) || cookie.replace(setDecode, decodeURIComponent);
+            : converter(cookie, name) || cookie.replace(rdecode, decodeURIComponent);
 
-          try {
-            cookie = JSON.parse(cookie);
-          } catch (e) {
-            console.log(e);
+          // eslint-disable-next-line no-invalid-this
+          if (this.json) {
+            try {
+              cookie = JSON.parse(cookie);
+            } catch (e) {}
           }
 
           if (key === name) {
@@ -115,7 +108,7 @@ const cookie = () => {
     api.get = function(key) {
       return api.call(api, key);
     };
-    api.getJSON = api.getjson = api.getJson = function() {
+    api.getJSON = function() {
       return api.apply(
         {
           json: true
@@ -129,7 +122,7 @@ const cookie = () => {
       api(
         key,
         '',
-        _extend(attributes, {
+        extend(attributes, {
           expires: -1
         })
       );
