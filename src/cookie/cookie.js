@@ -1,6 +1,6 @@
 /**
- * cookie
- * https://github.com/jiayi2/onavo/blob/master/onavo.js#L209
+ * bbo.cookie()
+ * https://github.com/hrout/onavo/blob/master/onavo.js#L209
  */
 const cookie = () => {
   function _extend() {
