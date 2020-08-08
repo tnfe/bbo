@@ -4,12 +4,24 @@
  * bbo.cookie()
  * https://github.com/hrout/onavo/blob/master/onavo.js#L209
  */
-
-import extend from '../collection/extend';
+import hasOwnProperty from '../args/has_own_property';
 import size from '../collection/size';
 import isNumber from '../lodash/is_number';
 
 const cookie = () => {
+  function cookieAttrExtend() {
+    let i = 0;
+    let result = {};
+    for (; i < arguments.length; i++) {
+      let attributes = arguments[i];
+      for (let key in attributes) {
+        if (hasOwnProperty(attributes, key)) {
+          result[key] = attributes[key];
+        }
+      }
+    }
+    return result;
+  }
   function init(converter) {
     function api(key, value, attributes) {
       let result;
@@ -17,7 +29,7 @@ const cookie = () => {
         return;
       }
       if (size(arguments) > 1) {
-        attributes = extend(
+        attributes = cookieAttrExtend(
           {
             path: '/'
           },
@@ -122,7 +134,7 @@ const cookie = () => {
       api(
         key,
         '',
-        extend(attributes, {
+        cookieAttrExtend(attributes, {
           expires: -1
         })
       );

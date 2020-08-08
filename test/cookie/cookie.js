@@ -3,6 +3,18 @@ import bbo from '../bbo';
 describe('bbo.cookie()', () => {
   const cookie = 'c=v; c1=v';
   const cookieName = 'name={%22foo%22:%22bar%22}';
+  const object = {
+    c: 'v1',
+    c1: 'v',
+    name: '{"foo":"bar"}'
+  };
+  const objectJson = {
+    c: 'v1',
+    c1: 'v',
+    name: {
+      foo: 'bar'
+    }
+  };
 
   test('bbo.cookie() is a Function', () => {
     expect(bbo.cookie()).toBeInstanceOf(Function);
@@ -10,6 +22,7 @@ describe('bbo.cookie()', () => {
     expect(bbo.cookie().get).toBeInstanceOf(Function);
     expect(bbo.cookie().getJSON).toBeInstanceOf(Function);
     expect(bbo.cookie().getJson).toBeInstanceOf(Function);
+    expect(bbo.cookie().remove).toBeInstanceOf(Function);
   });
 
   test('cookie().set()', function() {
@@ -36,24 +49,22 @@ describe('bbo.cookie()', () => {
   });
 
   test('cookie().get()', function() {
-    const object = {
-      c: 'v1',
-      c1: 'v',
-      name: '{"foo":"bar"}'
-    };
-    const objectJson = {
-      c: 'v1',
-      c1: 'v',
-      name: {
-        foo: 'bar'
-      }
-    };
     const c = bbo.cookie().get('c');
     const get = bbo.cookie().get();
     const getJson = bbo.cookie().getJSON();
+    const getkey = bbo.cookie().get('name');
+    const getkeyJson = bbo.cookie().getJson('name');
 
     expect(c).toBe('v1');
     expect(get).toEqual(object);
     expect(getJson).toEqual(objectJson);
+    expect(getkey).toEqual(object.name);
+    expect(getkeyJson).toEqual(objectJson.name);
+  });
+
+  test('cookie().remove()', function() {
+    bbo.cookie().remove('c');
+    const c = bbo.cookie().get('c');
+    expect(c).toBe(undefined);
   });
 });
