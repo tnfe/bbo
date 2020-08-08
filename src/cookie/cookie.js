@@ -108,7 +108,7 @@ const cookie = () => {
     api.get = function(key) {
       return api.call(api, key);
     };
-    api.getJSON = function() {
+    api.getJson = api.getJSON = function() {
       return api.apply(
         {
           json: true
