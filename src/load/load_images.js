@@ -1,3 +1,7 @@
+import isFunction from '../lodash/is_function';
+import isObject from '../lodash/is_object';
+import size from '../collection/size';
+
 export default function loadImages(options) {
   let len = 0;
   let index = 0;
@@ -12,12 +16,12 @@ export default function loadImages(options) {
   let needOneStep = options.needOneStep || false;
   let path = options.path || false;
 
-  if (typeof data !== 'object' || data.length === 0) {
+  if (!isObject(data) || size(data) === 0) {
     step(100);
     return false;
   }
 
-  len = data.length;
+  len = size(data);
   if (path) {
     for (let i = len - 1; i > -1; i--) {
       data[i] = path + data[i];
@@ -34,7 +38,7 @@ export default function loadImages(options) {
         processStep();
       }, stepTimeValue);
     } else if (targetPercent === 100 && percentageValue === targetPercent) {
-      if (complete && typeof complete === 'function') {
+      if (complete && isFunction(complete)) {
         complete();
       }
     }
