@@ -1,10 +1,7 @@
-const stopPropagation = (e) => {
-  let _e = e || window.event;
-  if (_e.stopPropagation) {
-    _e.stopPropagation(); // W3C
-  } else {
-    _e.cancelBubble = true; // IE
-  }
+const stopPropagation = (event) => {
+  const e = event || window.event;
+  const stop = e.stopPropagation ? e.stopPropagation() : (e.cancelBubble = true);
+  return stop;
 };
 
 export default stopPropagation;
