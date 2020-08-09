@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.20
+ * version 1.1.21
  */
 
 (function (global, factory) {
@@ -96,7 +96,19 @@
     throw new TypeError("Invalid attempt to destructure non-iterable instance");
   }
 
-  var version = '1.1.20';
+  function getTag(src) {
+    return Object.prototype.toString.call(src);
+  }
+
+  function isString(str) {
+    return getTag(str) === '[object String]';
+  }
+
+  function isFunction(func) {
+    return getTag(func) === '[object Function]';
+  }
+
+  var version = '1.1.21';
 
   var globalObject = null;
 
@@ -193,11 +205,11 @@
   }
 
   function isQQ() {
-    return /qq\//.test(ua()); // 手机QQ
+    return /qq\//.test(ua('l')); // 手机QQ
   }
 
-  function mqqbrowser() {
-    return /mqqbrowser\//.test(ua()); // QQ浏览器
+  function isQQbrowser() {
+    return /mqqbrowser\//.test(ua('l')); // QQ浏览器
   }
 
   function isTenvideo() {
@@ -438,16 +450,10 @@
    * https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
    */
   var trigger = (element, event, eventType) => {
-    if (document.createEventObject) {
-      var e = document.createEventObject();
-      return element.fireEvent('on' + event, e);
-    } else {
-      var _e = document.createEvent(eventType || 'HTMLEvents');
-
-      _e.initEvent(event, true, true);
-
-      element.dispatchEvent(_e);
-    }
+    // delete document.createEventObject of ie
+    var e = document.createEvent(eventType || 'HTMLEvents');
+    e.initEvent(event, true, true);
+    element.dispatchEvent(e);
   };
 
   /**
@@ -464,15 +470,10 @@
     trigger(a, 'click', 'MouseEvents');
   };
 
-  var stopPropagation = e => {
-    var _e = e || window.event;
-
-    if (_e.stopPropagation) {
-      _e.stopPropagation(); // W3C
-
-    } else {
-      _e.cancelBubble = true; // IE
-    }
+  var stopPropagation = event => {
+    var e = event || window.event;
+    var stop = e.stopPropagation ? e.stopPropagation() : e.cancelBubble = true;
+    return stop;
   };
 
   function gc(cn) {
@@ -579,14 +580,6 @@
    */
   function paramsName(fn) {
     return /\(\s*([\s\S]*?)\s*\)/.exec(fn.toString())[1].split(/\s*,\s*/);
-  }
-
-  function getTag(src) {
-    return Object.prototype.toString.call(src);
-  }
-
-  function isFunction(func) {
-    return getTag(func) === '[object Function]';
   }
 
   function isObject(value) {
@@ -910,10 +903,6 @@
 
   var properObject = o => isObject(o) && !o.hasOwnProperty ? { ...o
   } : o;
-
-  function isString(str) {
-    return getTag(str) === '[object String]';
-  }
 
   function isMap(map) {
     return getTag(map) === '[object Map]';
@@ -1485,7 +1474,7 @@
     return getTag(number) === '[object Number]';
   }
 
-  /* eslint-disable no-param-reassign */
+  /* eslint-disable guard-for-in */
 
   var cookie = () => {
     function cookieAttrExtend() {
@@ -1508,10 +1497,6 @@
     function init(converter) {
       function api(key, value, attributes) {
         var result;
-
-        if (typeof document === 'undefined') {
-          return;
-        }
 
         if (size(arguments) > 1) {
           attributes = cookieAttrExtend({
@@ -3725,7 +3710,7 @@
     isWeixin: isWeixin,
     isNewsApp: isNewsApp,
     isQQ: isQQ,
-    mqqbrowser: mqqbrowser,
+    isQQbrowser: isQQbrowser,
     isTenvideo: isTenvideo,
     isWeiShi: isWeiShi,
     isIphoneXmodel: isIphoneXmodel,
@@ -3960,7 +3945,7 @@
   };
 
   ChainWrapper.prototype.thru = function (changer) {
-    if (typeof changer === 'function') {
+    if (isFunction(changer)) {
       return new ChainWrapper(changer(this._wrappedValue), this._explicitChain);
     }
 
@@ -3977,7 +3962,7 @@
 
       var result = functionInstance.apply(void 0, [this._wrappedValue].concat(args));
 
-      if (this._explicitChain || typeof result === 'string') {
+      if (this._explicitChain || isString(result)) {
         return new ChainWrapper(result, this._explicitChain);
       } else {
         return result;
