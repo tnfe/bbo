@@ -1,7 +1,7 @@
 import bbo from '../bbo';
 import { chrome, edge, Edge12, Edge13, IE10, IE11 } from '../const';
 
-describe('isMobile', () => {
+describe('ieVersion', () => {
   // ua = navigator.userAgent , isMobile = bbo.isMobile
   // jest jsdom ua = "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0"
   const ieVersion = (ua) => {
@@ -25,8 +25,8 @@ describe('isMobile', () => {
     return '';
   };
 
-  test('bbo.isMobile is a Function', () => {
-    expect(bbo.isMobile).toBeInstanceOf(Function);
+  test('bbo.ieVersion is a Function', () => {
+    expect(bbo.ieVersion).toBeInstanceOf(Function);
   });
 
   test('bbo.ieVersion() for ua', () => {
