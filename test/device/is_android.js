@@ -1,6 +1,6 @@
 import bbo from '../bbo';
 describe('isAndroid', () => {
-  // ua = navigator.userAgent , isMobile = bbo.isMobile
+  // ua = navigator.userAgent
   // jest jsdom ua = "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0"
 
   test('bbo.isAndroid is a Function', () => {
