@@ -1331,6 +1331,9 @@ const qq =
 const qqLiveBrowser =
   'Mozilla/5.0 (Linux; Android 4.4.2; HTC 919d Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile MQQBrowser/6.8 TBS/036824 Safari/537.36 QQLiveBrowser/5.0.0.10658';
 
+const weishi =
+  'Mozilla/5.0 (Linux; Android 9; LYA-AL00 Build/HUAWEILYA-AL00L; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/66.0.3359.126 MQQBrowser/6.2 TBS/044904 Mobile Safari/537.36 WEISHI/1.3';
+
 export {
   HOT_COUNT,
   LARGE_ARRAY_SIZE,
@@ -1449,5 +1452,6 @@ export {
   iphone,
   qqNews,
   qq,
-  qqLiveBrowser
+  qqLiveBrowser,
+  weishi
 };
