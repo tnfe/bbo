@@ -1,3 +1,4 @@
+/* eslint-disable guard-for-in */
 /* eslint-disable no-param-reassign */
 
 /**
@@ -25,9 +26,6 @@ const cookie = () => {
   function init(converter) {
     function api(key, value, attributes) {
       let result;
-      if (typeof document === 'undefined') {
-        return;
-      }
       if (size(arguments) > 1) {
         attributes = cookieAttrExtend(
           {
