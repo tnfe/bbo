@@ -1328,6 +1328,9 @@ const qqNews =
 const qq =
   'Mozilla/5.0 (Linux; Android 5.0; SM-N9100 Build/LRX21V) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36 V1_AND_SQ_5.3.1_196_YYB_D QQ/5.3.1.2335 NetType/WIFI';
 
+const qqLiveBrowser =
+  'Mozilla/5.0 (Linux; Android 4.4.2; HTC 919d Build/KOT49H) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile MQQBrowser/6.8 TBS/036824 Safari/537.36 QQLiveBrowser/5.0.0.10658';
+
 export {
   HOT_COUNT,
   LARGE_ARRAY_SIZE,
@@ -1445,5 +1448,6 @@ export {
   android,
   iphone,
   qqNews,
-  qq
+  qq,
+  qqLiveBrowser
 };
