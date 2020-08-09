@@ -48,7 +48,7 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [isWeixin][isweixin]                 | [stopPropagation][stoppropagation]     | **random**                         | [mapString][mapstring]         | [includesAll][includesall]           |
 | [isNewsApp][isnewsapp]               | [g][g]                                 | [randomColor][randomcolor]         | [mask][mask]                   | [includesAny][includesany]           |
 | [isQQ][isqq]                         | [gc][gc]                               | [randomA2B][randoma2b]             | [splitLines][splitlines]       | [removeAt][removeat]                 |
-| [mqqbrowser][mqqbrowser]             | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
+| [isQQbrowser][isqqbrowser]           | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
 | [isTenvideo][istenvideo]             | [query][query]                         | **behavior**                       | [underscored][underscored]     | [compact][compact]                   |
 | [isWeiShi][isweishi]                 | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [pluck][pluck]                       |
 | [isIphoneXmodel][isiphonexmodel]     | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [union][union]                       |
@@ -305,7 +305,7 @@ bbo is [MIT](http://www.opensource.org/licenses/mit-license) licensed.
 [isweixin]: https://tnfe.github.io/bbo/#isweixin
 [isnewsapp]: https://tnfe.github.io/bbo/#isnewsapp
 [isqq]: https://tnfe.github.io/bbo/#isqq
-[mqqbrowser]: https://tnfe.github.io/bbo/#mqqbrowser
+[isqqbrowser]: https://tnfe.github.io/bbo/#isqqbrowser
 [istenvideo]: https://tnfe.github.io/bbo/#istenvideo
 [isweishi]: https://tnfe.github.io/bbo/#isweishi
 [isiphonexmodel]: https://tnfe.github.io/bbo/#isiphonexmodel
