@@ -1,4 +1,6 @@
 /* eslint-disable no-invalid-this */
+import isString from '../lodash/is_string';
+import isFunction from '../lodash/is_function';
 import functions from 'functions';
 
 function ChainWrapper(subject, explicitChain) {
@@ -27,7 +29,7 @@ ChainWrapper.prototype.chain = function() {
 };
 
 ChainWrapper.prototype.thru = function(changer) {
-  if (typeof changer === 'function') {
+  if (isFunction(changer)) {
     return new ChainWrapper(changer(this._wrappedValue), this._explicitChain);
   }
   return this;
@@ -38,7 +40,7 @@ ChainWrapper.prototype._explicitChain = true;
 function makeFunctionChainable(functionInstance) {
   return function(...args) {
     const result = functionInstance(this._wrappedValue, ...args);
-    if (this._explicitChain || typeof result === 'string') {
+    if (this._explicitChain || isString(result)) {
       return new ChainWrapper(result, this._explicitChain);
     } else {
       return result;
