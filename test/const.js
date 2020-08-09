@@ -1325,6 +1325,9 @@ const iphone =
 const qqNews =
   'Mozilla/5.0 (iPhone; CPU iPhone OS 13_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148- qqnews/6.2.10 6.2.10.738';
 
+const qq =
+  'Mozilla/5.0 (Linux; Android 5.0; SM-N9100 Build/LRX21V) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/37.0.0.0 Mobile Safari/537.36 V1_AND_SQ_5.3.1_196_YYB_D QQ/5.3.1.2335 NetType/WIFI';
+
 export {
   HOT_COUNT,
   LARGE_ARRAY_SIZE,
@@ -1441,5 +1444,6 @@ export {
   ipad,
   android,
   iphone,
-  qqNews
+  qqNews,
+  qq
 };
