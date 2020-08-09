@@ -1,5 +1,5 @@
 import bbo from '../bbo';
-import { ios } from '../const';
+import { ios, ipad, android, iphone } from '../const';
 describe('isIOS', () => {
   // jest jsdom ua = "Mozilla/5.0 (darwin) AppleWebKit/537.36 (KHTML, like Gecko) jsdom/11.12.0"
 
@@ -14,5 +14,8 @@ describe('isIOS', () => {
   test('bbo.isIOS() for ua', () => {
     expect(bbo.isIOS()).toBe(false);
     expect(isIOS(ios)).toBe(true);
+    expect(isIOS(iphone)).toBe(true);
+    expect(isIOS(ipad)).toBe(true);
+    expect(isIOS(android)).toBe(false);
   });
 });
