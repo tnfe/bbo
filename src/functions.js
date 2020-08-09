@@ -12,7 +12,7 @@ import isPC from './device/is_pc';
 import isWeixin from './device/is_weixin';
 import isNewsApp from './device/is_news_app';
 import isQQ from './device/is_qq';
-import mqqbrowser from './device/mqqbrowser';
+import isQQbrowser from './device/is_qq_browser';
 import isTenvideo from './device/is_tenvideo';
 import isWeiShi from './device/is_weishi';
 import isIphoneXmodel from './device/is_iphonex_model';
@@ -244,7 +244,7 @@ export default {
   isWeixin,
   isNewsApp,
   isQQ,
-  mqqbrowser,
+  isQQbrowser,
   isTenvideo,
   isWeiShi,
   isIphoneXmodel,
