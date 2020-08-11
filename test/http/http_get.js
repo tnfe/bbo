@@ -10,11 +10,11 @@ describe('httpGet', () => {
       'https://api.github.com/',
       (res) => {
         const cb = JSON.parse(res); // {message: "API...", documentation_url: "https://developer.github.com/v3/#rate-limiting"}
-
         expect(bbo.isObject(cb)).toBe(true);
       },
-      console.log
+      (error) => {
+        console.log(error);
+      }
     );
-    //
   });
 });
