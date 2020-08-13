@@ -54,7 +54,7 @@ function jsonp(url, opts, fn) {
     cleanup();
     if (fn) fn(data, null);
   };
-
+  console.log(url);
   url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
   url = url.replace('?&', '?');
   script = document.createElement('script');
