@@ -1,4 +1,3 @@
-import isTypeof from '../other/is_typeof';
 /**
  * to json
  */
@@ -20,8 +19,6 @@ const toJson = (res) => {
     } catch (e) {
       return evil('(' + res + ')');
     }
-  } else if (isTypeof(res.json, 'function')) {
-    return res.json();
   } else {
     return res;
   }
