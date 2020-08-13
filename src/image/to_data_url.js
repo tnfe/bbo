@@ -2,7 +2,7 @@ const DEFAULT = {
   enabledType: false
 };
 
-export default function toDataUrl(url, { enabledType } = DEFAULT) {
+export default function toDataUrl(url, { enabledType } = DEFAULT, callback) {
   return new Promise((resolve, reject) => {
     try {
       const request = new XMLHttpRequest();
@@ -15,9 +15,11 @@ export default function toDataUrl(url, { enabledType } = DEFAULT) {
             image.src = reader.result;
             image.onload = () => {
               resolve(image);
+              callback && callback(null, image);
             };
           } else {
             resolve(reader.result);
+            callback && callback(reader.result);
           }
         };
         reader.readAsDataURL(request.response);

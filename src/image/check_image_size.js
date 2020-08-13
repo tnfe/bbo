@@ -12,7 +12,7 @@ const DEFAULT = {
   ratio: 1
 };
 
-const checkImageSize = (image, { enabledMaxSize, enabledNatural, ratio } = DEFAULT) => {
+const checkImageSize = (image, { enabledMaxSize, enabledNatural, ratio } = DEFAULT, callback) => {
   return new Promise((resolve, reject) => {
     /**
      * Check type of image
@@ -53,9 +53,11 @@ const checkImageSize = (image, { enabledMaxSize, enabledNatural, ratio } = DEFAU
         h = h >> 0;
 
         resolve({ width: w, height: h });
+        callback && callback(null, { width: w, height: h });
       };
       image.onerror = (e) => {
         reject(e);
+        callback && callback(e);
       };
     }
   });

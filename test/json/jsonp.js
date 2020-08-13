@@ -48,7 +48,7 @@ describe('jsonp', () => {
       },
       {
         name: 'callback',
-        timeout: 1,
+        timeout: 100,
         prefix: 'bbo',
         param: {
           a: 1,
