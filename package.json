@@ -26,6 +26,12 @@
   },
   "main": "index.js",
   "module": "es/index.js",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run lint"
+    }
+  },
   "scripts": {
     "start": "webpack-dev-server --progress --config ./config/webpack.config.js",
     "lint": "npm run eslint && npm run prettier",
