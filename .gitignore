@@ -27,6 +27,7 @@ coverage
 npm-debug.log
 docs
 .tern-project
+.codecov.yml
 dist_mod/
 test_runner/test_bundle.js
 development/
