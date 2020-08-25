@@ -1,7 +1,5 @@
 /**
- * @ zh_cn
- * @desc   格式化${startTime}距现在的已过时间
- * @param  {Date} startTime
+ * @param  {Date} startTime timestamp
  * @return {String}
  */
 const formatPassTime = (startTime) => {
@@ -12,12 +10,12 @@ const formatPassTime = (startTime) => {
   let min = parseInt(time / (1000 * 60), 10);
   let month = parseInt(day / 30, 10);
   let year = parseInt(month / 12, 10);
-  if (year) return year + '年前';
-  if (month) return month + '个月前';
-  if (day) return day + '天前';
-  if (hour) return hour + '小时前';
-  if (min) return min + '分钟前';
-  else return '刚刚';
+  if (year) return year + 'years ago';
+  if (month) return month + 'months ago';
+  if (day) return day + 'days ago';
+  if (hour) return hour + 'hours ago';
+  if (min) return min + 'minutes ago';
+  else return 'just now';
 };
 
 export default formatPassTime;

@@ -1,8 +1,3 @@
-/**
- * @ en
- * bbo.formatDuration(1001); // '1 second, 1 millisecond'
- * bbo.formatDuration(34325055574); // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
- */
 const formatDuration = (ms) => {
   // eslint-disable-next-line no-param-reassign
   if (ms < 0) ms = -ms;
