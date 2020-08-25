@@ -8,7 +8,7 @@
 [![gzip size](https://img.shields.io/bundlephobia/minzip/ppo-cli.svg?label=gzip%20size)](https://www.npmjs.com/package/bbo)
 [![monthly npm installs](https://img.shields.io/npm/dm/ppo-cli.svg?label=npm%20downloads)](https://www.npmjs.com/package/bbo)
 [![jest](https://img.shields.io/badge/test%20with-jest-brightgreen.svg)](https://github.com/facebook/jest)
-[![codecov-image](https://codecov.io/gh/tnfe/bbo/branch/bbo-next/graphs/badge.svg)](https://codecov.io/gh/tnfe/bbo/branch/bbo-next)
+[![codecov](https://codecov.io/gh/tnfe/bbo/branch/master/graph/badge.svg)](https://codecov.io/gh/tnfe/bbo)
 ![license](https://img.shields.io/badge/license-MIT-blue.svg)
 
 > bbo 项目是一个实用的 javba 函数工具库。
