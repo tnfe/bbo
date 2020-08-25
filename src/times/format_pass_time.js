@@ -3,19 +3,28 @@
  * @return {String}
  */
 const formatPassTime = (startTime) => {
-  let currentTime = Date.parse(new Date());
-  let time = currentTime - startTime;
-  let day = parseInt(time / (1000 * 60 * 60 * 24), 10);
-  let hour = parseInt(time / (1000 * 60 * 60), 10);
-  let min = parseInt(time / (1000 * 60), 10);
-  let month = parseInt(day / 30, 10);
-  let year = parseInt(month / 12, 10);
-  if (year) return year + 'years ago';
-  if (month) return month + 'months ago';
-  if (day) return day + 'days ago';
-  if (hour) return hour + 'hours ago';
-  if (min) return min + 'minutes ago';
-  else return 'just now';
+  let seconds = Math.floor((new Date() - startTime) / 1000);
+  let interval = seconds / 31536000;
+  if (interval > 1) {
+    return Math.floor(interval) + ' years';
+  }
+  interval = seconds / 2592000;
+  if (interval > 1) {
+    return Math.floor(interval) + ' months';
+  }
+  interval = seconds / 86400;
+  if (interval > 1) {
+    return Math.floor(interval) + ' days';
+  }
+  interval = seconds / 3600;
+  if (interval > 1) {
+    return Math.floor(interval) + ' hours';
+  }
+  interval = seconds / 60;
+  if (interval > 1) {
+    return Math.floor(interval) + ' minutes';
+  }
+  return Math.floor(seconds) + ' seconds';
 };
 
 export default formatPassTime;
