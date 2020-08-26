@@ -1,4 +1,5 @@
 import args from '../args/args';
+import clearTimesout from '../times/clear_timesout';
 /**
  * setInterval func fix times
  * https://stackoverflow.com/questions/2956966/javascript-telling-setinterval-to-only-fire-x-amount-of-times
@@ -17,7 +18,7 @@ export default function setTimesout() {
   let id = setInterval(function() {
     target.index++;
     if (target.index > times) {
-      clearInterval(id);
+      clearTimesout(id);
     } else {
       if (target.index === times) target.over = true;
       func.apply(target, _args);
