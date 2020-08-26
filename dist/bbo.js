@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.21
+ * version 1.1.22
  */
 
 (function (global, factory) {
@@ -31,23 +31,19 @@
   }
 
   function _slicedToArray(arr, i) {
-    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _nonIterableRest();
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
   }
 
   function _toArray(arr) {
-    return _arrayWithHoles(arr) || _iterableToArray(arr) || _nonIterableRest();
+    return _arrayWithHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableRest();
   }
 
   function _toConsumableArray(arr) {
-    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
   }
 
   function _arrayWithoutHoles(arr) {
-    if (Array.isArray(arr)) {
-      for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
-
-      return arr2;
-    }
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
   }
 
   function _arrayWithHoles(arr) {
@@ -55,14 +51,11 @@
   }
 
   function _iterableToArray(iter) {
-    if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
   }
 
   function _iterableToArrayLimit(arr, i) {
-    if (!(Symbol.iterator in Object(arr) || Object.prototype.toString.call(arr) === "[object Arguments]")) {
-      return;
-    }
-
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
     var _arr = [];
     var _n = true;
     var _d = false;
@@ -88,12 +81,29 @@
     return _arr;
   }
 
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
   function _nonIterableSpread() {
-    throw new TypeError("Invalid attempt to spread non-iterable instance");
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   function _nonIterableRest() {
-    throw new TypeError("Invalid attempt to destructure non-iterable instance");
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
   }
 
   function getTag(src) {
@@ -108,7 +118,7 @@
     return getTag(func) === '[object Function]';
   }
 
-  var version = '1.1.21';
+  var version = '1.1.22';
 
   var globalObject = null;
 
@@ -320,7 +330,7 @@
     if (ele === null) {
       ele = c('div');
       attr(ele, 'id', '_bbo_log');
-      attr('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
+      attr(ele, 'style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
       document.body.appendChild(ele);
     }
 
@@ -1039,6 +1049,31 @@
     updated: updatedDiff(lhs, rhs)
   });
 
+  /**
+   * Gets the size of `collection` by returning its length for array-like
+   * values or the number of own enumerable string keyed properties for objects.
+   *
+   * @category Collection
+   * @param {Array|Object|string} collection The collection to inspect.
+   * @returns {number} Returns the collection size.
+   */
+
+  function size(collection) {
+    if (collection === null || collection === undefined) {
+      return 0;
+    }
+
+    if (isArray(collection) || isString(collection)) {
+      return collection.length;
+    }
+
+    if (isMap(collection) || isSet(collection)) {
+      return collection.size;
+    }
+
+    return Object.keys(collection).length;
+  }
+
   function loadImages(options) {
     var len = 0;
     var index = 0;
@@ -1056,12 +1091,12 @@
     var needOneStep = options.needOneStep || false;
     var path = options.path || false;
 
-    if (typeof data !== 'object' || data.length === 0) {
+    if (!isObject(data) || size(data) === 0) {
       step(100);
       return false;
     }
 
-    len = data.length;
+    len = size(data);
 
     if (path) {
       for (var i = len - 1; i > -1; i--) {
@@ -1079,7 +1114,7 @@
           processStep();
         }, stepTimeValue);
       } else if (targetPercent === 100 && percentageValue === targetPercent) {
-        if (complete && typeof complete === 'function') {
+        if (complete && isFunction(complete)) {
           complete();
         }
       }
@@ -1361,7 +1396,6 @@
    * to json
    */
   // eval hack
-
   var evil = fn => {
     // A variable points to Function, preventing reporting errors
     var Fn = Function;
@@ -1378,8 +1412,6 @@
       } catch (e) {
         return evil('(' + res + ')');
       }
-    } else if (isTypeof(res.json, 'function')) {
-      return res.json();
     } else {
       return res;
     }
@@ -1437,37 +1469,13 @@
       if (fn) fn(data, null);
     };
 
+    console.log(url);
     url += (~url.indexOf('?') ? '&' : '?') + param + '=' + enc(id);
     url = url.replace('?&', '?');
     script = document.createElement('script');
     script.src = url;
     target.parentNode.insertBefore(script, target);
     return cancel;
-  }
-
-  /**
-   * Gets the size of `collection` by returning its length for array-like
-   * values or the number of own enumerable string keyed properties for objects.
-   *
-   * @category Collection
-   * @param {Array|Object|string} collection The collection to inspect.
-   * @returns {number} Returns the collection size.
-   */
-
-  function size(collection) {
-    if (collection === null || collection === undefined) {
-      return 0;
-    }
-
-    if (isArray(collection) || isString(collection)) {
-      return collection.length;
-    }
-
-    if (isMap(collection) || isSet(collection)) {
-      return collection.size;
-    }
-
-    return Object.keys(collection).length;
   }
 
   function isNumber(number) {
@@ -1822,21 +1830,14 @@
    * From https://stackoverflow.com/questions/5999118/add-or-update-query-string-parameter
    */
   var setUrlParam = function (key, value) {
-    var url = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window.location.href;
-    var re = new RegExp('([?|&])' + key + '=.*?(&|#|$)', 'i');
+    var uri = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : window.location.href;
+    var re = new RegExp('([?&])' + key + '=.*?(&|$)', 'i');
+    var separator = uri.indexOf('?') !== -1 ? '&' : '?';
 
-    if (url.match(re)) {
-      return url.replace(re, '$1' + key + '=' + encodeURIComponent(value) + '$2');
+    if (uri.match(re)) {
+      return uri.replace(re, '$1' + key + '=' + value + '$2');
     } else {
-      var hash = '';
-
-      if (url.indexOf('#') !== -1) {
-        hash = url.replace(/.*#/, '#');
-        url.replace(/#.*/, '');
-      }
-
-      var separator = url.indexOf('?') !== -1 ? '&' : '?';
-      return url + separator + key + '=' + encodeURIComponent(value) + hash;
+      return uri + separator + key + '=' + value;
     }
   };
 
@@ -1869,8 +1870,8 @@
   var objectParam = arr => {
     var str = '';
 
-    if (Array.isArray(arr)) {
-      str = arr.map(function (item) {
+    if (isArray(arr)) {
+      str = arr.map(item => {
         return item.name + '=' + item.value;
       }).join('&');
     } else {
@@ -1882,9 +1883,9 @@
 
   var objectBigParam = obj => {
     var arr = [];
-    Object.keys(obj).forEach(function (k) {
-      if (Array.isArray(obj[k])) {
-        arr = arr.concat(obj[k].map(function (v) {
+    Object.keys(obj).forEach(k => {
+      if (isArray(obj[k])) {
+        arr = arr.concat(obj[k].map(v => {
           return {
             name: k,
             value: v
@@ -1931,6 +1932,10 @@
    */
   var isAbsoluteURL = str => /^[a-z][a-z0-9+.-]*:/.test(str);
 
+  function clearTimesout(id) {
+    return clearInterval(id);
+  }
+
   /**
    * setInterval func fix times
    * https://stackoverflow.com/questions/2956966/javascript-telling-setinterval-to-only-fire-x-amount-of-times
@@ -1952,7 +1957,7 @@
       target.index++;
 
       if (target.index > times) {
-        clearInterval(id);
+        clearTimesout(id);
       } else {
         if (target.index === times) target.over = true;
         func.apply(target, _args);
@@ -1961,14 +1966,10 @@
     return id;
   }
 
-  function clearTimesout(id) {
-    clearInterval(id);
-  }
-
   function fill0(num) {
     var _num = parseFloat(num);
 
-    return _num < 10 ? '0' + _num : _num;
+    return _num < 10 ? '0' + _num : String(_num);
   }
 
   /**
@@ -1998,39 +1999,55 @@
   };
 
   /**
-   * @ zh_cn
-   * @desc   格式化${startTime}距现在的已过时间
-   * @param  {Date} startTime
+   * @param  {Date} startTime timestamp
    * @return {String}
    */
   var formatPassTime = startTime => {
-    var currentTime = Date.parse(new Date());
-    var time = currentTime - startTime;
-    var day = parseInt(time / (1000 * 60 * 60 * 24), 10);
-    var hour = parseInt(time / (1000 * 60 * 60), 10);
-    var min = parseInt(time / (1000 * 60), 10);
-    var month = parseInt(day / 30, 10);
-    var year = parseInt(month / 12, 10);
-    if (year) return year + '年前';
-    if (month) return month + '个月前';
-    if (day) return day + '天前';
-    if (hour) return hour + '小时前';
-    if (min) return min + '分钟前';else return '刚刚';
+    var seconds = Math.floor((new Date() - startTime) / 1000);
+    var interval = seconds / 31536000;
+
+    if (interval > 1) {
+      return Math.floor(interval) + ' years';
+    }
+
+    interval = seconds / 2592000;
+
+    if (interval > 1) {
+      return Math.floor(interval) + ' months';
+    }
+
+    interval = seconds / 86400;
+
+    if (interval > 1) {
+      return Math.floor(interval) + ' days';
+    }
+
+    interval = seconds / 3600;
+
+    if (interval > 1) {
+      return Math.floor(interval) + ' hours';
+    }
+
+    interval = seconds / 60;
+
+    if (interval > 1) {
+      return Math.floor(interval) + ' minutes';
+    }
+
+    return Math.floor(seconds) + ' seconds';
   };
 
   /**
-   * @ zh_cn
-   * @desc   格式化现在距${endTime}的剩余时间
+   * @desc   format the remaining time from ${endTime}
    * @param  {Date} endTime
    * @return {String}
    */
   var formatRemainTime = endTime => {
-    var startDate = new Date(); // 开始时间
+    var startDate = new Date(); // startDate
 
-    var endDate = new Date(endTime); // 结束时间
+    var endDate = new Date(endTime); // endDate
 
-    var t = endDate.getTime() - startDate.getTime(); // 时间差
-
+    var t = endDate.getTime() - startDate.getTime();
     var d = 0;
     var h = 0;
     var m = 0;
@@ -2043,14 +2060,9 @@
       s = Math.floor(t / 1000 % 60);
     }
 
-    return d + '天 ' + h + '小时 ' + m + '分钟 ' + s + '秒';
+    return d + 'day ' + h + 'hour ' + m + 'minute ' + s + 'second';
   };
 
-  /**
-   * @ en
-   * bbo.formatDuration(1001); // '1 second, 1 millisecond'
-   * bbo.formatDuration(34325055574); // '397 days, 6 hours, 44 minutes, 15 seconds, 574 milliseconds'
-   */
   var formatDuration = ms => {
     // eslint-disable-next-line no-param-reassign
     if (ms < 0) ms = -ms;
@@ -2122,34 +2134,6 @@
    */
   // eslint-disable-next-line max-params
   var numberFormat = (number, decimals, decPoint, thousandsSep) => {
-    //   example 1: bbo.math.numberFormat(1234.56)
-    //   returns 1: '1,235'
-    //   example 2: bbo.math.numberFormat(1234.56, 2, ',', ' ')
-    //   returns 2: '1 234,56'
-    //   example 3: bbo.math.numberFormat(1234.5678, 2, '.', '')
-    //   returns 3: '1234.57'
-    //   example 4: bbo.math.numberFormat(67, 2, ',', '.')
-    //   returns 4: '67,00'
-    //   example 5: bbo.math.numberFormat(1000)
-    //   returns 5: '1,000'
-    //   example 6: bbo.math.numberFormat(67.311, 2)
-    //   returns 6: '67.31'
-    //   example 7: bbo.math.numberFormat(1000.55, 1)
-    //   returns 7: '1,000.6'
-    //   example 8: bbo.math.numberFormat(67000, 5, ',', '.')
-    //   returns 8: '67.000,00000'
-    //   example 9: bbo.math.numberFormat(0.9, 0)
-    //   returns 9: '1'
-    //  example 10: bbo.math.numberFormat('1.20', 2)
-    //  returns 10: '1.20'
-    //  example 11: bbo.math.numberFormat('1.20', 4)
-    //  returns 11: '1.2000'
-    //  example 12: bbo.math.numberFormat('1.2000', 3)
-    //  returns 12: '1.200'
-    //  example 13: bbo.math.numberFormat('1 000,50', 2, '.', ' ')
-    //  returns 13: '100 050.00'
-    //  example 14: bbo.math.numberFormat(1e-8, 8, '.', '')
-    //  returns 14: '0.00000001'
     var _number = String(number).replace(/[^0-9+\-Ee.]/g, '');
 
     var _decimals = decimals;
@@ -2281,6 +2265,7 @@
         enabledNatural = _ref.enabledNatural,
         ratio = _ref.ratio;
 
+    var callback = arguments.length > 2 ? arguments[2] : undefined;
     return new Promise((resolve, reject) => {
       /**
        * Check type of image
@@ -2327,10 +2312,15 @@
             width: w,
             height: h
           });
+          callback && callback(null, {
+            width: w,
+            height: h
+          });
         };
 
         image.onerror = e => {
           reject(e);
+          callback && callback(e);
         };
       }
     });
@@ -2421,6 +2411,7 @@
     var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT$1,
         enabledType = _ref.enabledType;
 
+    var callback = arguments.length > 2 ? arguments[2] : undefined;
     return new Promise((resolve, reject) => {
       try {
         var request = new XMLHttpRequest();
@@ -2436,9 +2427,11 @@
 
               image.onload = () => {
                 resolve(image);
+                callback && callback(null, image);
               };
             } else {
               resolve(reader.result);
+              callback && callback(reader.result);
             }
           };
 
@@ -2639,30 +2632,9 @@
   function search(needle, haystack, argStrict) {
     var strict = !!argStrict;
     var key = '';
-    var _needle = needle;
-
-    if (isFunction(_needle) && _needle.exec) {
-      // Duck-type for RegExp
-      if (!strict) {
-        // Let's consider case sensitive searches as strict
-        var flags = 'i' + (_needle.global ? 'g' : '') + (_needle.multiline ? 'm' : '') + ( // sticky is FF only
-        _needle.sticky ? 'y' : '');
-        _needle = new RegExp(_needle.source, flags);
-      }
-
-      for (key in haystack) {
-        if (haystack.hasOwnProperty(key)) {
-          if (_needle.test(haystack[key])) {
-            return key;
-          }
-        }
-      }
-
-      return false;
-    }
 
     for (key in haystack) {
-      if (haystack.hasOwnProperty(key)) {
+      if (hasOwnProperty(haystack, key)) {
         // eslint-disable-next-line eqeqeq
         if (strict && haystack[key] === needle || !strict && haystack[key] == needle) {
           return key;
@@ -2764,7 +2736,7 @@
   /* , initialValue */
   ) {
     var args = [callback];
-    var hasInitialValue = 2 in arguments;
+    var hasInitialValue = (2 in arguments);
     hasInitialValue && args.push(arguments[2]);
 
     function callback(previousValue, currentKey, currentIndex, array) {
