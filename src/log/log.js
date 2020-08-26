@@ -13,7 +13,7 @@ export default function log(msg, styles) {
   if (ele === null) {
     ele = c('div');
     attr(ele, 'id', '_bbo_log');
-    attr('style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
+    attr(ele, 'style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
     document.body.appendChild(ele);
   }
 
