@@ -75,4 +75,19 @@ describe('storage', () => {
     let has = bbo.storage({ type, prefix }).has(name);
     expect(has).toBe(false);
   });
+
+  test('bbo.storage().doItem() error', () => {
+    let type = 'session'; // or session
+    let prefix = 'debug';
+    let name = 'view';
+
+    const error = bbo.storage({ type, prefix }).doItem({}, name);
+    expect(error).toBe(true);
+
+    const warn = bbo.storage({ type, prefix })._warn('set');
+    expect(warn).toBe(undefined);
+
+    const getName = bbo.storage({ type, prefix }).getItem(name);
+    expect(getName).toEqual({ a: 1, b: 2 });
+  });
 });
