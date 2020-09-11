@@ -10,7 +10,8 @@ export default function judge(v, vals, strict) {
     if (strict) {
       if (v === vals[key]) return true;
     } else {
-      if (v === vals[key]) return true;
+      // eslint-disable-next-line eqeqeq
+      if (v == vals[key]) return true;
     }
   }
 
