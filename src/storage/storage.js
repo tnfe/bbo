@@ -4,6 +4,8 @@
  * Some extension method 'has' 'get' adn Store prefix
  *************************************************************************/
 import containsWith from '../string/contains_with';
+import isFunction from '../lodash/is_function';
+import isObject from '../lodash/is_object';
 
 const ulocalStorage = window.localStorage;
 const ussesionStorage = window.sessionStorage;
@@ -31,7 +33,7 @@ class Storage {
 
   doItem(func, action) {
     try {
-      if (typeof func === 'function') {
+      if (isFunction(func)) {
         return func();
       }
     } catch (err) {
@@ -42,7 +44,7 @@ class Storage {
   }
 
   setItem(key, value) {
-    if (typeof key === 'object') {
+    if (isObject(key)) {
       Object.keys(key).forEach((k, index) => {
         this.doItem(
           () => this._storage.setItem(`${this.prefix}.${k}`, JSON.stringify(key[k])),
