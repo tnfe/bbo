@@ -1,6 +1,6 @@
 import bbo from '../bbo';
 
-describe('uuid', () => {
+describe('judge', () => {
   test('bbo.judge() is a Function', () => {
     expect(bbo.judge).toBeInstanceOf(Function);
   });
