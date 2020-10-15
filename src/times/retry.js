@@ -7,10 +7,10 @@
  *  timeout: 8000 //ms
  */
 export default function(attempt, options) {
-  let options = options || {};
-  let interval = options.interval || 400;
-  let retries = options.retries || 2;
-  let timeout = options.timeout || 8000;
+  const option = options || {};
+  let interval = option.interval || 400;
+  let retries = option.retries || 2;
+  let timeout = option.timeout || 8000;
 
   function rejectDelay(reason) {
     return new Promise(function(resolve, reject) {
