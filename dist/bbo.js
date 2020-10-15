@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.22
+ * version 1.1.23
  */
 
 (function (global, factory) {
@@ -118,7 +118,7 @@
     return getTag(func) === '[object Function]';
   }
 
-  var version = '1.1.22';
+  var version = '1.1.23';
 
   var globalObject = null;
 
@@ -530,6 +530,43 @@
     });
   }
 
+  function isArray(arr) {
+    return getTag(arr) === '[object Array]';
+  }
+
+  function isMap(map) {
+    return getTag(map) === '[object Map]';
+  }
+
+  function isSet(set) {
+    return getTag(set) === '[object Set]';
+  }
+
+  /**
+   * Gets the size of `collection` by returning its length for array-like
+   * values or the number of own enumerable string keyed properties for objects.
+   *
+   * @category Collection
+   * @param {Array|Object|string} collection The collection to inspect.
+   * @returns {number} Returns the collection size.
+   */
+
+  function size(collection) {
+    if (collection === null || collection === undefined) {
+      return 0;
+    }
+
+    if (isArray(collection) || isString(collection)) {
+      return collection.length;
+    }
+
+    if (isMap(collection) || isSet(collection)) {
+      return collection.size;
+    }
+
+    return Object.keys(collection).length;
+  }
+
   /**
    * string hash map
    * From https://stackoverflow.com/questions/7616461/generate-a-hash-from-string-in-javascript-jquery
@@ -540,7 +577,7 @@
     var hash = 0;
     var i;
     var chr;
-    if (_str.length === 0) return hash;
+    if (size(_str) === 0) return hash;
 
     for (i = 0; i < _str.length; i++) {
       chr = _str.charCodeAt(i);
@@ -570,7 +607,8 @@
       if (strict) {
         if (v === vals[key]) return true;
       } else {
-        if (v === vals[key]) return true;
+        // eslint-disable-next-line eqeqeq
+        if (v == vals[key]) return true;
       }
     }
 
@@ -595,10 +633,6 @@
   function isObject(value) {
     var type = typeof value;
     return value !== null && (type === 'object' || type === 'function');
-  }
-
-  function isArray(arr) {
-    return getTag(arr) === '[object Array]';
   }
 
   function forEach(src, func) {
@@ -914,14 +948,6 @@
   var properObject = o => isObject(o) && !o.hasOwnProperty ? { ...o
   } : o;
 
-  function isMap(map) {
-    return getTag(map) === '[object Map]';
-  }
-
-  function isSet(set) {
-    return getTag(set) === '[object Set]';
-  }
-
   function isEmpty(obj) {
     if (obj === null) {
       return true;
@@ -1048,31 +1074,6 @@
     deleted: deletedDiff(lhs, rhs),
     updated: updatedDiff(lhs, rhs)
   });
-
-  /**
-   * Gets the size of `collection` by returning its length for array-like
-   * values or the number of own enumerable string keyed properties for objects.
-   *
-   * @category Collection
-   * @param {Array|Object|string} collection The collection to inspect.
-   * @returns {number} Returns the collection size.
-   */
-
-  function size(collection) {
-    if (collection === null || collection === undefined) {
-      return 0;
-    }
-
-    if (isArray(collection) || isString(collection)) {
-      return collection.length;
-    }
-
-    if (isMap(collection) || isSet(collection)) {
-      return collection.size;
-    }
-
-    return Object.keys(collection).length;
-  }
 
   function loadImages(options) {
     var len = 0;
@@ -1721,7 +1722,7 @@
 
     doItem(func, action) {
       try {
-        if (typeof func === 'function') {
+        if (isFunction(func)) {
           return func();
         }
       } catch (err) {
@@ -1734,7 +1735,7 @@
     }
 
     setItem(key, value) {
-      if (typeof key === 'object') {
+      if (isObject(key)) {
         Object.keys(key).forEach((k, index) => {
           this.doItem(() => this._storage.setItem(`${this.prefix}.${k}`, JSON.stringify(key[k])), 'setItem');
         });
@@ -2110,6 +2111,52 @@
 
     promiseFunction.catch = Promise.resolve().catch;
     return promiseFunction;
+  }
+
+  /* eslint-disable prefer-promise-reject-errors */
+
+  /**
+   * @param {any} attempt
+   * @param {any} options
+   *  interval: 200,  //ms
+   *  retries: 2
+   *  timeout: 8000 //ms
+   */
+  function retry (attempt, options) {
+    var option = options || {};
+    var interval = option.interval || 400;
+    var retries = option.retries || 2;
+    var timeout = option.timeout || 8000;
+
+    function rejectDelay(reason) {
+      return new Promise(function (resolve, reject) {
+        setTimeout(reject.bind(null, reason), interval);
+      });
+    }
+
+    var p = Promise.reject();
+
+    for (var i = 0; i < retries; i++) {
+      p = p.catch(timeoutReject(attempt, timeout)).catch(rejectDelay);
+    }
+
+    return p;
+  }
+
+  function timeoutReject(task, timeout) {
+    var timer;
+    return function () {
+      return Promise.race([Promise.reject().catch(task), new Promise(function (rs, rj) {
+        timer = setTimeout(function () {
+          rj('timeout.');
+        }, timeout || 8000);
+      })]).then(function (r) {
+        clearTimeout(timer);
+        return r;
+      }, function (err) {
+        return Promise.reject(err);
+      });
+    };
   }
 
   var floor = function (n) {
@@ -3765,6 +3812,7 @@
     formatRemainTime: formatRemainTime,
     formatDuration: formatDuration,
     sleep: sleep,
+    retry: retry,
     // fill
     fill0: fill0,
     floor: floor,
