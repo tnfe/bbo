@@ -101,6 +101,7 @@ import formatPassTime from './times/format_pass_time';
 import formatRemainTime from './times/format_remain_time';
 import formatDuration from './times/format_duration';
 import sleep from './times/sleep';
+import retry from './times/retry';
 
 // fill
 import fill0 from './fill/fill0';
@@ -327,6 +328,7 @@ export default {
   formatRemainTime,
   formatDuration,
   sleep,
+  retry,
   // fill
   fill0,
   floor,
