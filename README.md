@@ -76,12 +76,12 @@ When you use react, vue, angular，you often need to write a lot of utils method
 | [formatRemainTime][formatremaintime] | **image**                              | [get][get]                         | [values][values]               | [unary][unary]                       |
 | [formatDuration][formatduration]     | [checkImageSize][checkimagesize]       | [set][set]                         | [size][size]                   | [indexBy][indexby]                   |
 | [sleep][sleep]                       | [imageOptimization][imageoptimization] | [debounce][debounce]               | [search][search]               |                                      |
-| **json**                             | [toDataUrl][todataurl]                 | [throttle][throttle]               |                                |                                      |
-| [toJson][tojson]                     |                                        | [pick][pick]                       |                                |                                      |
-| [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
-| **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
-| [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
-|                                      |                                        | [mapValues][mapvalues]             |                                |                                      |
+| [retry][retry]                       | [toDataUrl][todataurl]                 | [throttle][throttle]               |                                |                                      |
+| **json**                             |                                        | [pick][pick]                       |                                |                                      |
+| [toJson][tojson]                     |                                        | [omit][omit]                       |                                |                                      |
+| [jsonp][jsonp]                       |                                        | [isSymbol][issymbol]               |                                |                                      |
+| **storage**                          |                                        | [isDate][isdate]                   |                                |                                      |
+| [storage][storage]                   |                                        | [mapValues][mapvalues]             |                                |                                      |
 
 ### Usage
 
@@ -481,3 +481,4 @@ bbo is [MIT](http://www.opensource.org/licenses/mit-license) licensed.
 [detaileddiff]: https://tnfe.github.io/bbo/#detaileddiff
 [addeddiff]: https://tnfe.github.io/bbo/#addeddiff
 [updateddiff]: https://tnfe.github.io/bbo/#updateddiff
+[retry]: https://tnfe.github.io/bbo/#retry

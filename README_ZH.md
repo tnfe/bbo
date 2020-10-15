@@ -42,12 +42,12 @@
 | [isWeixin][isweixin]                 | [stopPropagation][stoppropagation]     | **random**                         | [mapString][mapstring]         | [includesAll][includesall]           |
 | [isNewsApp][isnewsapp]               | [g][g]                                 | [randomColor][randomcolor]         | [mask][mask]                   | [includesAny][includesany]           |
 | [isQQ][isqq]                         | [gc][gc]                               | [randomA2B][randoma2b]             | [splitLines][splitlines]       | [removeAt][removeat]                 |
-| [isQQbrowser][isqqbrowser]             | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
+| [isQQbrowser][isqqbrowser]           | [c][c]                                 | [randomKey][randomkey]             | [camelize][camelize]           | [remove][remove]                     |
 | [isTenvideo][istenvideo]             | [query][query]                         | **behavior**                       | [underscored][underscored]     | [compact][compact]                   |
 | [isWeiShi][isweishi]                 | [show][show]                           | [trigger][trigger]                 | [dasherize][dasherize]         | [pluck][pluck]                       |
 | [isIphoneXmodel][isiphonexmodel]     | [hide][hide]                           | [lockTouch][locktouch]             | [truncate][truncate]           | [union][union]                       |
 | [isIE][isie]                         | [elementContains][elementcontains]     | [copyToClipboard][copytoclipboard] | [byteSize][bytesize]           | [unionBy][unionby]                   |
-| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **mlodash**                         | [byteLen][bytelen]             | [unionWith][unionwith]               |
+| [ieVersion][ieversion]               | [formToObject][formtoobject]           | **mlodash**                        | [byteLen][bytelen]             | [unionWith][unionwith]               |
 | **log**                              | [getStyle][getstyle]                   | [getTag][gettag]                   | [repeat][repeat]               | [intersect][intersect]               |
 | [log][log]                           | [setStyle][setstyle]                   | [is][is]                           | [endsWith][endswith]           | [intersectBy][intersectby]           |
 | [logs][logs]                         | [attr][attr]                           | [isObject][isobject]               | [startsWith][startswith]       | [difference][difference]             |
@@ -70,12 +70,12 @@
 | [formatRemainTime][formatremaintime] | **image**                              | [get][get]                         | [values][values]               | [unary][unary]                       |
 | [formatDuration][formatduration]     | [checkImageSize][checkimagesize]       | [set][set]                         | [size][size]                   | [indexBy][indexby]                   |
 | [sleep][sleep]                       | [imageOptimization][imageoptimization] | [debounce][debounce]               | [search][search]               |                                      |
-| **json**                             | [toDataUrl][todataurl]                 | [throttle][throttle]               |                                |                                      |
-| [toJson][tojson]                     |                                        | [pick][pick]                       |                                |                                      |
-| [jsonp][jsonp]                       |                                        | [omit][omit]                       |                                |                                      |
-| **storage**                          |                                        | [isSymbol][issymbol]               |                                |                                      |
-| [storage][storage]                   |                                        | [isDate][isdate]                   |                                |                                      |
-|                                      |                                        | [mapValues][mapvalues]             |                                |                                      |
+| [retry][retry]                       | [toDataUrl][todataurl]                 | [throttle][throttle]               |                                |                                      |
+| **json**                             |                                        | [pick][pick]                       |                                |                                      |
+| [toJson][tojson]                     |                                        | [omit][omit]                       |                                |                                      |
+| [jsonp][jsonp]                       |                                        | [isSymbol][issymbol]               |                                |                                      |
+| **storage**                          |                                        | [isDate][isdate]                   |                                |                                      |
+| [storage][storage]                   |                                        | [mapValues][mapvalues]             |                                |                                      |
 
 ### 使用
 
@@ -485,3 +485,4 @@ Detailed changes for each release are documented in the [release notes](https://
 [detaileddiff]: https://tnfe.github.io/bbo/#detaileddiff
 [addeddiff]: https://tnfe.github.io/bbo/#addeddiff
 [updateddiff]: https://tnfe.github.io/bbo/#updateddiff
+[retry]: https://tnfe.github.io/bbo/#retry
