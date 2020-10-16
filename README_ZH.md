@@ -281,7 +281,7 @@ vuepress build .
 
 ### 维护者
 
-[@vsuke](https://github.com/vsuke).
+[@halldwang](https://github.com/halldwang).
 
 ### 贡献者
 
