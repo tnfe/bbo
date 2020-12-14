@@ -1,3 +1,4 @@
+/* eslint-disable */
 import assert from 'assert';
 import bbo from '../bbo';
 import lodashStable from 'lodash';

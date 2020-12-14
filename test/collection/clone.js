@@ -2,14 +2,14 @@ import bbo from '../bbo';
 
 describe('clone', () => {
   test('copies entire tree', function() {
-    var arr = [1, 2, 3];
-    var subObj = { aa: 1 };
-    var obj = { a: 3, b: 5, c: arr, d: subObj };
-    var objClone = bbo.clone(obj);
+    let arr = [1, 2, 3];
+    let subObj = { aa: 1 };
+    let obj = { a: 3, b: 5, c: arr, d: subObj };
+    let objClone = bbo.clone(obj);
     expect(objClone).toEqual(obj);
 
-    var arr = [1, 2, ['a', 'b', { dd: [1, 2, 3] }]];
-    var arrClone = bbo.clone(arr);
+    arr = [1, 2, ['a', 'b', { dd: [1, 2, 3] }]];
+    let arrClone = bbo.clone(arr);
     expect(arrClone).toEqual(arr);
   });
 

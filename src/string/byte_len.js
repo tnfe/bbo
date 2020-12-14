@@ -1,3 +1,4 @@
+/* eslint-disable */
 /**
  * Returns the length of a string in bytes by Unicode (utf-8 utf8 utf-16 utf16)
  */
