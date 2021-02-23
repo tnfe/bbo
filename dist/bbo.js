@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2020
  * https://github.com/tnfe/bbo.git
- * version 1.1.23
+ * version 1.1.24
  */
 
 (function (global, factory) {
@@ -118,7 +118,7 @@
     return getTag(func) === '[object Function]';
   }
 
-  var version = '1.1.23';
+  var version = '1.1.24';
 
   var globalObject = null;
 
@@ -1693,124 +1693,133 @@
    * Method for safely supporting localStorage sessionStorage 'setItem' 'getItem' 'removeItem' 'removeAll',
    * Some extension method 'has' 'get' adn Store prefix
    *************************************************************************/
-  var ulocalStorage = window.localStorage;
-  var ussesionStorage = window.sessionStorage;
+  var storage;
 
-  class Storage {
-    constructor(options) {
-      var _options$type = options.type,
-          type = _options$type === void 0 ? 'local' : _options$type,
-          _options$prefix = options.prefix,
-          prefix = _options$prefix === void 0 ? 'bbo.storage' : _options$prefix,
-          _options$message = options.message,
-          message = _options$message === void 0 ? {
-        setItem: 'write in',
-        getItem: 'read',
-        removeAll: 'remove all',
-        removeItem: 'remove item'
-      } : _options$message;
-      this.prefix = prefix;
-      this.type = type;
-      this.message = message;
+  try {
+    var ulocalStorage = window.localStorage;
+    var ussesionStorage = window.sessionStorage;
 
-      if (type === 'local') {
-        this._storage = ulocalStorage;
-      } else if (type === 'session') {
-        this._storage = ussesionStorage;
-      }
-    }
+    class Storage {
+      constructor(options) {
+        var _options$type = options.type,
+            type = _options$type === void 0 ? 'local' : _options$type,
+            _options$prefix = options.prefix,
+            prefix = _options$prefix === void 0 ? 'bbo.storage' : _options$prefix,
+            _options$message = options.message,
+            message = _options$message === void 0 ? {
+          setItem: 'write in',
+          getItem: 'read',
+          removeAll: 'remove all',
+          removeItem: 'remove item'
+        } : _options$message;
+        this.prefix = prefix;
+        this.type = type;
+        this.message = message;
 
-    doItem(func, action) {
-      try {
-        if (isFunction(func)) {
-          return func();
+        if (type === 'local') {
+          this._storage = ulocalStorage;
+        } else if (type === 'session') {
+          this._storage = ussesionStorage;
         }
-      } catch (err) {
-        this._warn(action);
-
-        return null;
       }
 
-      return true;
-    }
-
-    setItem(key, value) {
-      if (isObject(key)) {
-        Object.keys(key).forEach((k, index) => {
-          this.doItem(() => this._storage.setItem(`${this.prefix}.${k}`, JSON.stringify(key[k])), 'setItem');
-        });
-      } else {
-        this.doItem(() => this._storage.setItem(`${this.prefix}.${key}`, JSON.stringify(value)), 'setItem');
-      }
-    }
-
-    has() {
-      for (var _len = arguments.length, keys = new Array(_len), _key = 0; _key < _len; _key++) {
-        keys[_key] = arguments[_key];
-      }
-
-      return keys.every((key, index) => this._storage.getItem(`${this.prefix}.${key}`));
-    }
-
-    get() {
-      var result = {};
-
-      for (var _len2 = arguments.length, keys = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-        keys[_key2] = arguments[_key2];
-      }
-
-      keys.forEach((key, index) => {
-        if (`${this._storage.getItem(`${this.prefix}.${key}`)}` !== 'null') {
-          try {
-            result[key] = JSON.parse(this._storage.getItem(`${this.prefix}.${key}`));
-          } catch (err) {
-            console.warn(this._warn('getItem'));
+      doItem(func, action) {
+        try {
+          if (isFunction(func)) {
+            return func();
           }
+        } catch (err) {
+          this._warn(action);
+
+          return null;
         }
-      });
-      return result;
-    }
 
-    getItem(key) {
-      return this.doItem(() => JSON.parse(this._storage.getItem(`${this.prefix}.${key}`)), 'getItem');
-    }
-
-    removeAll() {
-      Object.keys(this._storage).forEach(k => {
-        if (containsWith(k, this.prefix)) {
-          this._remove(`${k}`);
-        }
-      });
-    }
-
-    removeItem() {
-      for (var _len3 = arguments.length, keys = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
-        keys[_key3] = arguments[_key3];
+        return true;
       }
 
-      console.log(keys);
-      keys.forEach((key, index) => this.doItem(() => this._storage.removeItem(`${this.prefix}.${key}`), 'removeItem'));
+      setItem(key, value) {
+        if (isObject(key)) {
+          Object.keys(key).forEach((k, index) => {
+            this.doItem(() => this._storage.setItem(`${this.prefix}.${k}`, JSON.stringify(key[k])), 'setItem');
+          });
+        } else {
+          this.doItem(() => this._storage.setItem(`${this.prefix}.${key}`, JSON.stringify(value)), 'setItem');
+        }
+      }
+
+      has() {
+        for (var _len = arguments.length, keys = new Array(_len), _key = 0; _key < _len; _key++) {
+          keys[_key] = arguments[_key];
+        }
+
+        return keys.every((key, index) => this._storage.getItem(`${this.prefix}.${key}`));
+      }
+
+      get() {
+        var result = {};
+
+        for (var _len2 = arguments.length, keys = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+          keys[_key2] = arguments[_key2];
+        }
+
+        keys.forEach((key, index) => {
+          if (`${this._storage.getItem(`${this.prefix}.${key}`)}` !== 'null') {
+            try {
+              result[key] = JSON.parse(this._storage.getItem(`${this.prefix}.${key}`));
+            } catch (err) {
+              console.warn(this._warn('getItem'));
+            }
+          }
+        });
+        return result;
+      }
+
+      getItem(key) {
+        return this.doItem(() => JSON.parse(this._storage.getItem(`${this.prefix}.${key}`)), 'getItem');
+      }
+
+      removeAll() {
+        Object.keys(this._storage).forEach(k => {
+          if (containsWith(k, this.prefix)) {
+            this._remove(`${k}`);
+          }
+        });
+      }
+
+      removeItem() {
+        for (var _len3 = arguments.length, keys = new Array(_len3), _key3 = 0; _key3 < _len3; _key3++) {
+          keys[_key3] = arguments[_key3];
+        }
+
+        console.log(keys);
+        keys.forEach((key, index) => this.doItem(() => this._storage.removeItem(`${this.prefix}.${key}`), 'removeItem'));
+      }
+
+      _warn(action) {
+        var message = this.message;
+        console.warn(`Unable to ${message[action] || ''} ${this.type} Storage`);
+      }
+
+      _remove(keys) {
+        this.doItem(() => this._storage.removeItem(`${keys}`), 'removeItem');
+      }
+
     }
 
-    _warn(action) {
-      var message = this.message;
-      console.warn(`Unable to ${message[action] || ''} ${this.type} Storage`);
-    }
-
-    _remove(keys) {
-      this.doItem(() => this._storage.removeItem(`${keys}`), 'removeItem');
-    }
-
+    storage = (_ref) => {
+      var type = _ref.type,
+          prefix = _ref.prefix;
+      return new Storage({
+        type: type,
+        prefix: prefix
+      });
+    };
+  } catch (e) {
+    storage = noop;
+    console.error(e);
   }
 
-  var storage = (_ref) => {
-    var type = _ref.type,
-        prefix = _ref.prefix;
-    return new Storage({
-      type: type,
-      prefix: prefix
-    });
-  };
+  var storage$1 = storage;
 
   /**
    * getUrlParam / deleteUrlParam
@@ -2293,205 +2302,6 @@
       document.getSelection().removeAllRanges();
       document.getSelection().addRange(selected);
     }
-  }
-
-  /**
-   * Check image size
-   * @param {(Object|String)} image - image information，allow File Object or Data URLs
-   * @param {Object} [options={}] - Check options
-   */
-  var DEFAULT = {
-    enabledMaxSize: false,
-    enabledNatural: false,
-    ratio: 1
-  };
-
-  var checkImageSize = function (image) {
-    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT,
-        enabledMaxSize = _ref.enabledMaxSize,
-        enabledNatural = _ref.enabledNatural,
-        ratio = _ref.ratio;
-
-    var callback = arguments.length > 2 ? arguments[2] : undefined;
-    return new Promise((resolve, reject) => {
-      /**
-       * Check type of image
-       */
-      if (image instanceof File) {
-        var reader = new FileReader();
-
-        reader.onload = () => {
-          checkSize(reader.result);
-        };
-
-        reader.readAsDataURL(image);
-      } else if (isString(image)) {
-        checkSize(image);
-      }
-      /**
-       * Check picture size
-       * @param {String} data：Data URL
-       */
-
-
-      function checkSize(url) {
-        var image = new Image();
-        image.src = url;
-
-        image.onload = () => {
-          var w = image.width / ratio;
-          var h = image.height / ratio;
-
-          if (enabledMaxSize) {
-            var nw = Math.min(w, 750 / 2);
-            h = h * (nw / w);
-            w = nw;
-          }
-
-          if (enabledNatural) {
-            w = image.naturalWidth / ratio;
-            h = image.naturalHeight / ratio;
-          }
-
-          w = w >> 0;
-          h = h >> 0;
-          resolve({
-            width: w,
-            height: h
-          });
-          callback && callback(null, {
-            width: w,
-            height: h
-          });
-        };
-
-        image.onerror = e => {
-          reject(e);
-          callback && callback(e);
-        };
-      }
-    });
-  };
-
-  /**
-   * Image optimization
-   * Gif images are not supported
-   * @param {(Object|String)} - image ,supported File Object or Data URLs
-   * @param {Number} [quality = 0.9] - Image quality, between 0 - 1, only image/jpeg or image/webp is accept.
-   * @param {Object} [options = {}] - Image options
-   * @param {Number} [options.maxWidth = 1920] - The maximum width of the output picture.
-   * If the original width of the picture is less than this width, the original size picture is returned.
-   * If the original width of the picture is greater than the width, the picture scaled to the size is returned.
-   * @param {String} [options.mimeType] - Output image type，Types of MIME.
-   * @returns {Object} Promise , resolve Function parameters are optimized pictures Blob Object,
-   * If the output type is image/gif，Then return as is image Parameter content.
-   */
-
-  var imageOptimization = function (image) {
-    var quality = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.9;
-
-    var _ref = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : {},
-        _ref$maxWidth = _ref.maxWidth,
-        maxWidth = _ref$maxWidth === void 0 ? 1920 : _ref$maxWidth,
-        mimeType = _ref.mimeType;
-
-    return new Promise((resolve, reject) => {
-      if (image instanceof File) {
-        var reader = new FileReader();
-
-        reader.onload = function () {
-          toBlob(this.result);
-        };
-
-        reader.readAsDataURL(image);
-      } else if (isString(image)) {
-        toBlob(image);
-      }
-      /**
-       * To Blob
-       * @param {String} data - Image: Data URL
-       */
-
-
-      function toBlob(data) {
-        var type = data.match(/data:([^;,]+)/);
-
-        if (Array.isArray(type)) {
-          var outputType = mimeType ? mimeType : type[1];
-
-          if (outputType === 'image/gif') {
-            return resolve(image);
-          }
-
-          var virtualImage = new Image();
-          virtualImage.src = data;
-
-          virtualImage.onload = function () {
-            var width = this.naturalWidth;
-            var height = this.naturalHeight;
-
-            if (width > maxWidth) {
-              height = Math.round(maxWidth * height / width);
-              width = maxWidth;
-            }
-
-            var canvas = document.createElement('canvas');
-            canvas.width = width;
-            canvas.height = height;
-            var context = canvas.getContext('2d');
-            context.drawImage(this, 0, 0, width, height);
-            canvas.toBlob(blob => {
-              resolve(blob);
-            }, mimeType ? mimeType : type[1], quality);
-          };
-        } else {
-          reject(new Error('Non-picture type Data URLs'));
-        }
-      }
-    });
-  };
-
-  var DEFAULT$1 = {
-    enabledType: false
-  };
-  function toDataUrl(url) {
-    var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : DEFAULT$1,
-        enabledType = _ref.enabledType;
-
-    var callback = arguments.length > 2 ? arguments[2] : undefined;
-    return new Promise((resolve, reject) => {
-      try {
-        var request = new XMLHttpRequest();
-
-        request.onload = () => {
-          var reader = new FileReader();
-
-          reader.onloadend = () => {
-            if (enabledType) {
-              var image = new Image();
-              image.crossOrigin = 'Anonymous';
-              image.src = reader.result;
-
-              image.onload = () => {
-                resolve(image);
-                callback && callback(null, image);
-              };
-            } else {
-              resolve(reader.result);
-              callback && callback(reader.result);
-            }
-          };
-
-          reader.readAsDataURL(request.response);
-        };
-
-        request.open('GET', url, true);
-        request.responseType = 'blob';
-        request.send();
-      } catch (error) {
-        reject(error);
-      }
-    });
   }
 
   /* eslint-disable eqeqeq */
@@ -3168,6 +2978,8 @@
     return new Blob([str]).size;
   }
 
+  /* eslint-disable */
+
   /**
    * Returns the length of a string in bytes by Unicode (utf-8 utf8 utf-16 utf16)
    */
@@ -3794,7 +3606,7 @@
     delCookie: deleteCookie,
     parseCookie: parseCookie,
     // storage
-    storage: storage,
+    storage: storage$1,
     // http
     open: open,
     getUrlParam: getUrlParam,
@@ -3827,10 +3639,6 @@
     // behavior
     lockTouch: lockTouch,
     copyToClipboard: copyToClipboard,
-    // image
-    checkImageSize: checkImageSize,
-    imageOptimization: imageOptimization,
-    toDataUrl: toDataUrl,
     // collection
     clone: clone,
     deepClone: clone,
