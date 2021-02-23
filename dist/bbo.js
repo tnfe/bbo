@@ -3,7 +3,7 @@
  * bbo is a utility library of zero dependencies for javascript.
  * (c) 2011 - 2021
  * https://github.com/tnfe/bbo.git
- * version 1.1.24
+ * version 1.1.25
  */
 
 (function (global, factory) {
@@ -118,7 +118,7 @@
     return getTag(func) === '[object Function]';
   }
 
-  var version = '1.1.24';
+  var version = '1.1.25';
 
   var globalObject = null;
 
@@ -295,56 +295,6 @@
     return ieVersion() > 0;
   }
 
-  function attr(el, ruleName, val) {
-    el.setAttribute(ruleName, val);
-  }
-
-  function c(t, cn, i, id) {
-    var el = document.createElement(t);
-
-    if (cn) {
-      attr(el, 'class', cn);
-    }
-
-    if (i) {
-      el.innerHTML = i;
-    }
-
-    if (id) {
-      attr(el, 'id', id);
-    }
-
-    return el;
-  }
-
-  function g(i) {
-    return document.getElementById(i);
-  }
-
-  /************************************************************************
-   * LOGS
-   *************************************************************************/
-  function log(msg, styles) {
-    var ele = g('_bbo_log');
-
-    if (ele === null) {
-      ele = c('div');
-      attr(ele, 'id', '_bbo_log');
-      attr(ele, 'style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
-      document.body.appendChild(ele);
-    }
-
-    if (styles) {
-      for (var style in styles) {
-        if (Object.prototype.hasOwnProperty.call(styles, style)) {
-          ele.style[style] = styles[style];
-        }
-      }
-    }
-
-    ele.innerHTML = msg;
-  }
-
   /**
    * arguments to array
    */
@@ -361,58 +311,7 @@
     return Array.prototype.slice.call($arguments, first || 0);
   }
 
-  /************************************************************************
-   *   Private Method
-   *************************************************************************/
-
-  var _cache = {
-    urls: {},
-    logs: {}
-  };
-  /**
-   * bbo.logs('only id&10', 1, 2);
-   */
-
-  function logs() {
-    if (window.console && window.console.log) {
-      var onlyId = String(arguments[0]);
-      var times = parseInt(onlyId.split('&')[1], 10) || 10;
-      var logsCache = _cache.logs;
-      if (!logsCache[onlyId]) logsCache[onlyId] = {};
-      if (!logsCache[onlyId].once) logsCache[onlyId].once = 1;
-
-      if (logsCache[onlyId].once <= times) {
-        console.log.apply(console, args(arguments, 1));
-        logsCache[onlyId].once++;
-      }
-    }
-  }
-
-  /**
-   * a trash object
-   */
-  var trash = {
-    clear: () => {
-      for (var key in trash) {
-        if (key !== 'log' && key !== 'clear') delete trash[key];
-      }
-    },
-    log: () => {
-      for (var key in trash) {
-        if (key !== 'log' && key !== 'clear') console.log('bbo.trash:: ', key, trash[key]);
-      }
-    }
-  };
-
   var noop = () => {};
-
-  function removeConsole(clear) {
-    try {
-      if (!window.console) window.console = {};
-      window.console.log = window.console.info = window.console.dir = window.console.warn = window.console.trace = noop;
-      if (clear === 'clear' && window.console.clear) window.console.clear();
-    } catch (e) {}
-  }
 
   var merge = function () {
     for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
@@ -455,6 +354,10 @@
     el.style[ruleName] = val;
   }
 
+  function attr(el, ruleName, val) {
+    el.setAttribute(ruleName, val);
+  }
+
   /**
    * trigger event
    * https://stackoverflow.com/questions/2490825/how-to-trigger-event-in-javascript
@@ -465,6 +368,28 @@
     e.initEvent(event, true, true);
     element.dispatchEvent(e);
   };
+
+  function g(i) {
+    return document.getElementById(i);
+  }
+
+  function c(t, cn, i, id) {
+    var el = document.createElement(t);
+
+    if (cn) {
+      attr(el, 'class', cn);
+    }
+
+    if (i) {
+      el.innerHTML = i;
+    }
+
+    if (id) {
+      attr(el, 'id', id);
+    }
+
+    return el;
+  }
 
   /**
    * open new url dont not blocked by browser
@@ -630,323 +555,39 @@
     return /\(\s*([\s\S]*?)\s*\)/.exec(fn.toString())[1].split(/\s*,\s*/);
   }
 
+  /************************************************************************
+   * LOGS
+   *************************************************************************/
+  function log(msg, styles) {
+    var ele = g('_bbo_log');
+
+    if (ele === null) {
+      ele = c('div');
+      attr(ele, 'id', '_bbo_log');
+      attr(ele, 'style', 'position:fixed;left:0;top:0;z-index:9999;padding:4px;');
+      document.body.appendChild(ele);
+    }
+
+    if (styles) {
+      for (var style in styles) {
+        if (Object.prototype.hasOwnProperty.call(styles, style)) {
+          ele.style[style] = styles[style];
+        }
+      }
+    }
+
+    ele.innerHTML = msg;
+  }
+
   function isObject(value) {
     var type = typeof value;
     return value !== null && (type === 'object' || type === 'function');
   }
 
-  function forEach(src, func) {
-    var i = 0;
-
-    if (isArray(src)) {
-      while (i < src.length) {
-        var rst = func(src[i], i, src);
-
-        if (rst === false) {
-          break;
-        }
-
-        i += 1;
-      }
-    } else if (isObject(src)) {
-      var keys = Object.keys(src);
-
-      while (i < keys.length) {
-        var key = keys[i];
-
-        var _rst = func(src[key], key, src);
-
-        if (_rst === false) {
-          break;
-        }
-
-        i += 1;
-      }
-    }
-  }
-
-  /* eslint-disable no-self-compare */
-  function is(x, y) {
-    // inlined Object.is polyfill to avoid requiring consumers ship their own
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
-    if (x === y) {
-      // Steps 1-5, 7-10
-      // Steps 6.b-6.e: +0 != -0
-      // Added the nonzero y check to make Flow happy, but it is redundant
-      return x !== 0 || y !== 0 || 1 / x === 1 / y;
-    } else {
-      // Step 6.a: NaN == NaN
-      return x !== x && y !== y;
-    }
-  }
-
-  var isDate = d => d instanceof Date;
-
-  /* eslint-disable guard-for-in */
-  function isShallowEqual() {
-    for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
-      objs[_key] = arguments[_key];
-    }
-
-    if (objs.length < 2) return false;
-
-    for (var i in objs) {
-      i = Number(i);
-
-      if (objs[i + 1] !== undefined) {
-        if (isArray(objs[i])) {
-          if (!compareArrays(objs[i], objs[i + 1])) {
-            return false;
-          }
-        } else if (isObject(objs[i])) {
-          if (!compareObjects(objs[i], objs[i + 1])) {
-            return false;
-          }
-        } else if (isDate(objs[i])) {
-          if (!compareDates(objs[i], objs[i + 1])) {
-            return false;
-          }
-        } else {
-          if (objs[i] !== objs[i + 1]) {
-            return false;
-          }
-        }
-      }
-    }
-
-    return true;
-  }
-
-  function compare(obj, obj1) {
-    for (var i in obj) {
-      if (obj1[i] === undefined) {
-        return false;
-      }
-
-      if (isArray(obj[i])) {
-        if (!compareArrays(obj[i], obj1[i])) {
-          return false;
-        }
-      } else if (isObject(obj[i])) {
-        if (!compareObjects(obj[i], obj1[i])) {
-          return false;
-        }
-      } else if (isDate(obj[i])) {
-        if (!compareDates(obj[i], obj1[i])) {
-          return false;
-        }
-      } else {
-        if (obj[i] !== obj1[i]) {
-          return false;
-        }
-      }
-    }
-
-    return true;
-  }
-
-  function compareArrays(obj, obj1) {
-    if (!isArray(obj1)) return false;
-    if (obj.length !== obj1.length) return false;
-    var equal = compare(obj, obj1);
-    return equal;
-  }
-
-  function compareObjects(obj, obj1) {
-    if (!isObject(obj1)) return false;
-
-    for (var key in obj1) {
-      if (obj[key] === undefined) {
-        return false;
-      }
-    }
-
-    var equal = compare(obj, obj1);
-    return equal;
-  }
-
-  function compareDates(obj, obj1) {
-    if (!isDate(obj1) || obj.getTime() !== obj1.getTime()) {
-      return false;
-    }
-
-    return true;
-  }
-
-  function findIndex(src, func) {
-    var rst = -1;
-    forEach(src, (item, index, obj) => {
-      if (isFunction(func)) {
-        if (func(item, index, obj) === true) {
-          rst = index;
-          return false;
-        }
-      } else if (is(item, func)) {
-        rst = index;
-        return false;
-      } else if (isObject(item) && isObject(func)) {
-        var subEqual = true;
-        forEach(func, (v, k) => {
-          subEqual = isShallowEqual(item[k], v);
-          return subEqual;
-        });
-
-        if (subEqual) {
-          rst = index;
-          return false;
-        }
-      }
-    });
-    return rst;
-  }
-
-  /**
-   * function handle1(a, b, c) {
-   *   console.log('one', a, b, c);
-   * }
-   *
-   * function handle2(a, b, c) {
-   *   console.log('two', a, b, c);
-   * }
-   *
-   * function handle3(a, b, c) {
-   *   console.log('three', a, b, c);
-   * }
-   *
-   * emitter
-   *   .on('demo', handle1)
-   *   .once('demo', handle2)
-   *   .on('demo', handle3);
-   *
-   * emitter.emit('demo', [1, 2, 3]);
-   */
-
-  function EventEmitter() {
-    this.__events = {};
-  }
-
-  function isListener(listener) {
-    if (isFunction(listener)) {
-      return true;
-    } else if (listener && isObject(listener)) {
-      return isListener(listener.listener);
-    } else {
-      return false;
-    }
-  }
-
-  var prototype = EventEmitter.prototype;
-  /**
-   * on
-   * @param  {String} eventName
-   * @param  {Function} listener
-   * @return {Object}
-   */
-
-  prototype.on = function (eventName, listener) {
-    if (!eventName || !listener) return;
-
-    if (!isListener(listener)) {
-      throw new TypeError('listener is a function');
-    }
-
-    var events = this.__events;
-    var listeners = events[eventName] = events[eventName] || [];
-    var listenerIsWrapped = isObject(listener); // not repeat
-
-    if (findIndex(listeners, listener) === -1) {
-      var listenerOnce = {
-        listener: listener,
-        once: false
-      };
-      listeners.push(listenerIsWrapped ? listener : listenerOnce);
-      console.log(listeners);
-    }
-
-    return this;
-  };
-  /**
-   * once
-   * @param  {String} eventName
-   * @param  {Function} listener
-   * @return {Object} can chained call
-   */
-
-
-  prototype.once = function (eventName, listener) {
-    return this.on(eventName, {
-      listener: listener,
-      once: true
-    });
-  };
-  /**
-   * off
-   * @param  {String} eventName
-   * @param  {Function} listener
-   * @return {Object}  can chained call
-   */
-
-
-  prototype.off = function (eventName, listener) {
-    var listeners = this.__events[eventName];
-    if (!listeners) return;
-    var index;
-
-    for (var i = 0, len = listeners.length; i < len; i++) {
-      if (listeners[i] && listeners[i].listener === listener) {
-        index = i;
-        break;
-      }
-    }
-
-    if (typeof index !== 'undefined') {
-      listeners.splice(index, 1, null);
-    }
-
-    return this;
-  };
-  /**
-   * emit
-   * @param  {String} eventName
-   * @param  {Array} args
-   * @return {Object} can chained call
-   */
-
-
-  prototype.emit = function (eventName, args) {
-    var listeners = this.__events[eventName];
-    if (!listeners) return;
-
-    for (var i = 0; i < listeners.length; i++) {
-      var listener = listeners[i];
-
-      if (listener) {
-        listener.listener.apply(this, args || []);
-
-        if (listener.once) {
-          this.off(eventName, listener.listener);
-        }
-      }
-    }
-
-    return this;
-  };
-  /**
-   * allOff && allOne
-   * @param  {String[]}
-   */
-
-
-  prototype.allOff = function (eventName) {
-    if (eventName && this.__events[eventName]) {
-      this.__events[eventName] = [];
-    } else {
-      this.__events = {};
-    }
-  };
-
   var properObject = o => isObject(o) && !o.hasOwnProperty ? { ...o
   } : o;
+
+  var isDate = d => d instanceof Date;
 
   function isEmpty(obj) {
     if (obj === null) {
@@ -1075,324 +716,6 @@
     updated: updatedDiff(lhs, rhs)
   });
 
-  function loadImages(options) {
-    var len = 0;
-    var index = 0;
-    var curIndex = 0;
-    var stepTimer = null;
-    var stepTimeValue = 5;
-    var percentageValue = 0;
-    var targetPercent = 0;
-    var data = options.data || [];
-
-    var step = options.step || function () {};
-
-    var complete = options.complete || function () {};
-
-    var needOneStep = options.needOneStep || false;
-    var path = options.path || false;
-
-    if (!isObject(data) || size(data) === 0) {
-      step(100);
-      return false;
-    }
-
-    len = size(data);
-
-    if (path) {
-      for (var i = len - 1; i > -1; i--) {
-        data[i] = path + data[i]; // console.info(data[i]);
-      }
-    }
-
-    var processStep = function () {
-      percentageValue++; // console.info("processStep = ",percentageValue)
-
-      step(percentageValue);
-
-      if (percentageValue < targetPercent) {
-        stepTimer = setTimeout(function () {
-          processStep();
-        }, stepTimeValue);
-      } else if (targetPercent === 100 && percentageValue === targetPercent) {
-        if (complete && isFunction(complete)) {
-          complete();
-        }
-      }
-    };
-
-    function onload() {
-      curIndex++;
-      targetPercent = Math.floor(curIndex / len * 100);
-
-      if (needOneStep) {
-        if (stepTimer) {
-          clearTimeout(stepTimer);
-        }
-
-        processStep();
-      } else {
-        step(targetPercent);
-
-        if (targetPercent === 100) {
-          complete();
-        }
-      }
-    }
-
-    for (index; index < len; index++) {
-      var strUrl = data[index];
-      new LoadImageItem(strUrl, onload).start();
-    }
-  }
-  /**
-   * @name loadImageItem
-   * @param  {string} url - images full url
-   * @callback cb - called when load image completed
-   */
-
-  function LoadImageItem(url, cb) {
-    var self = this;
-    self.img = new Image(); // readyState:'complete' or 'loaded' => image has been loaded。
-    // for IE6-IE10。
-
-    var onReadyStateChange = function () {
-      removeEventHandlers();
-      console.info('onReadyStateChange');
-      cb(self, 'onReadyStateChange');
-    };
-
-    var onError = function () {
-      console.info('onError');
-      removeEventHandlers();
-      cb(self, 'onError');
-    };
-
-    var onLoad = function () {
-      removeEventHandlers();
-      cb(self, 'onload');
-    };
-
-    var removeEventHandlers = function () {
-      self.unbind('load', onLoad);
-      self.unbind('readystatechange', onReadyStateChange);
-      self.unbind('error', onError);
-    };
-
-    this.start = function () {
-      this.bind('load', onLoad);
-      this.bind('readystatechange', onReadyStateChange);
-      this.bind('error', onError);
-      this.img.src = url;
-
-      if (self.img.complete) {
-        removeEventHandlers();
-        cb(this, 'onload');
-      }
-    };
-  }
-  /**
-   * @name bind
-   * @description cross-browser event binding
-   * @param  {string} eventName
-   * @param  {function} eventHandler
-   */
-
-
-  LoadImageItem.prototype.bind = function (eventName, eventHandler) {
-    if (this.img.addEventListener) {
-      this.img.addEventListener(eventName, eventHandler, false);
-    } else if (this.img.attachEvent) {
-      this.img.attachEvent('on' + eventName, eventHandler);
-    }
-  };
-  /**
-   * @name unbind
-   * @description cross-browser event un-binding
-   * @param  {string} eventName
-   * @param  {function} eventHandler
-   */
-
-
-  LoadImageItem.prototype.unbind = function (eventName, eventHandler) {
-    if (this.img.removeEventListener) {
-      this.img.removeEventListener(eventName, eventHandler, false);
-    } else if (this.img.detachEvent) {
-      this.img.detachEvent('on' + eventName, eventHandler);
-    }
-  };
-
-  /* eslint-disable no-invalid-this */
-  /**
-   * load js
-   * 1. bbo.loadjs("//your_url/a.js",func);
-   * 2. bbo.loadjs("//your_url/a.js","only_id",func);
-   */
-
-  var _cache$1 = {
-    urls: {},
-    logs: {}
-  };
-
-  var _insertScripts = function (arr, callback) {
-    for (var i = 0; i < arr.length; i++) {
-      _insertScript(arr[i], loaded);
-    }
-
-    var _index = 0;
-
-    function loaded() {
-      _index++;
-
-      if (_index >= arr.length) {
-        callback && callback();
-      }
-    }
-  };
-
-  var _insertScript = function (src, callback) {
-    var script = c('script');
-    attr(script, 'type', 'text/javascript');
-    attr(script, 'src', src);
-    attr(script, 'charset', 'utf-8');
-    document.getElementsByTagName('head')[0].appendChild(script);
-
-    if (/msie/.test(ua('l'))) {
-      script.onreadystatechange = function () {
-        if (this.readyState === 'loaded' || this.readyState === 'complete') {
-          callback();
-        }
-      };
-    } else if (/gecko/.test(ua('l'))) {
-      script.onload = function () {
-        callback();
-      };
-    } else {
-      setTimeout(function () {
-        callback();
-      }, 50);
-    }
-  };
-
-  function loadjs(url, b, c) {
-    var onlyId;
-    var callback;
-
-    if (isFunction(b)) {
-      onlyId = String(hash(String(url)));
-      callback = b;
-    } else if (typeof b === 'undefined') {
-      onlyId = String(hash(String(url)));
-      callback = null;
-    } else {
-      onlyId = String(b);
-      callback = c;
-    }
-
-    if (_cache$1.urls[onlyId]) {
-      callback && callback();
-    } else {
-      var func = isString(url) ? _insertScript : _insertScripts;
-      func.call(this, url, function () {
-        _cache$1.urls[onlyId] = true;
-        callback && callback();
-      });
-    }
-  }
-
-  var randomKey = function () {
-    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 32;
-
-    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
-    var possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
-    var key = '';
-
-    for (var i = 0; i < len; i++) {
-      key += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-
-    return key;
-  };
-
-  /* eslint-disable no-invalid-this */
-  function loadcss(url, callback) {
-    var promise;
-    var resolutions = [];
-    var rejections = [];
-    var resolved = false;
-    var rejected = false;
-    var id;
-    id = 'load-css-' + randomKey(5);
-    promise = {
-      done: function (callback) {
-        resolutions.push(callback);
-        if (resolved) callback();
-        return promise;
-      },
-      fail: function (callback) {
-        rejections.push(callback);
-        if (rejected) callback();
-        return promise;
-      }
-    };
-
-    function resolve() {
-      resolved = true;
-
-      for (var i = 0, len = resolutions.length; i < len; i++) {
-        resolutions[i]();
-      }
-    }
-
-    function reject() {
-      rejected = true;
-
-      for (var i = 0, len = rejections.length; i < len; i++) {
-        rejections[i]();
-      }
-    }
-
-    var link = c('link');
-    attr(link, 'id', id);
-    attr(link, 'rel', 'stylesheet');
-    attr(link, 'type', 'text/css');
-
-    if (typeof link.addEventListener !== 'undefined') {
-      link.addEventListener('load', resolve, false);
-      link.addEventListener('error', reject, false);
-    } else if (typeof link.attachEvent !== 'undefined') {
-      link.attachEvent('onload', function () {
-        // IE 8 gives us onload for both success and failure
-        // and also readyState is always "completed", even
-        // for failure.  The only way to see if a stylesheet
-        // load failed from an external domain is to try and
-        // access its cssText, and then catch the error
-        // ... sweet :/
-        var cur;
-        var i = document.styleSheets.length;
-
-        try {
-          while (i--) {
-            cur = document.styleSheets[i];
-
-            if (cur.id === id) {
-              resolve();
-              return;
-            }
-          }
-        } catch (e) {}
-
-        if (!resolved) {
-          reject();
-        }
-      });
-    }
-
-    document.getElementsByTagName('head')[0].appendChild(link);
-    attr(link, 'href', url);
-    return promise;
-  }
-
   /**
    * to json
    */
@@ -1416,6 +739,20 @@
     } else {
       return res;
     }
+  };
+
+  var randomKey = function () {
+    var len = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 32;
+
+    /** Removed confusing characters 'oOLl,9gq,Vv,Uu,I1' **/
+    var possible = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';
+    var key = '';
+
+    for (var i = 0; i < len; i++) {
+      key += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return key;
   };
 
   /* eslint-disable */
@@ -2502,6 +1839,21 @@
     return false;
   }
 
+  /* eslint-disable no-self-compare */
+  function is(x, y) {
+    // inlined Object.is polyfill to avoid requiring consumers ship their own
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is
+    if (x === y) {
+      // Steps 1-5, 7-10
+      // Steps 6.b-6.e: +0 != -0
+      // Added the nonzero y check to make Flow happy, but it is redundant
+      return x !== 0 || y !== 0 || 1 / x === 1 / y;
+    } else {
+      // Step 6.a: NaN == NaN
+      return x !== x && y !== y;
+    }
+  }
+
   function isSymbol(symbol) {
     return getTag(symbol) === '[object Symbol]';
   }
@@ -2511,6 +1863,97 @@
   /* eslint-disable eqeqeq */
   function isNil(value) {
     return value == undefined || value == null;
+  }
+
+  /* eslint-disable guard-for-in */
+  function isShallowEqual() {
+    for (var _len = arguments.length, objs = new Array(_len), _key = 0; _key < _len; _key++) {
+      objs[_key] = arguments[_key];
+    }
+
+    if (objs.length < 2) return false;
+
+    for (var i in objs) {
+      i = Number(i);
+
+      if (objs[i + 1] !== undefined) {
+        if (isArray(objs[i])) {
+          if (!compareArrays(objs[i], objs[i + 1])) {
+            return false;
+          }
+        } else if (isObject(objs[i])) {
+          if (!compareObjects(objs[i], objs[i + 1])) {
+            return false;
+          }
+        } else if (isDate(objs[i])) {
+          if (!compareDates(objs[i], objs[i + 1])) {
+            return false;
+          }
+        } else {
+          if (objs[i] !== objs[i + 1]) {
+            return false;
+          }
+        }
+      }
+    }
+
+    return true;
+  }
+
+  function compare(obj, obj1) {
+    for (var i in obj) {
+      if (obj1[i] === undefined) {
+        return false;
+      }
+
+      if (isArray(obj[i])) {
+        if (!compareArrays(obj[i], obj1[i])) {
+          return false;
+        }
+      } else if (isObject(obj[i])) {
+        if (!compareObjects(obj[i], obj1[i])) {
+          return false;
+        }
+      } else if (isDate(obj[i])) {
+        if (!compareDates(obj[i], obj1[i])) {
+          return false;
+        }
+      } else {
+        if (obj[i] !== obj1[i]) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  function compareArrays(obj, obj1) {
+    if (!isArray(obj1)) return false;
+    if (obj.length !== obj1.length) return false;
+    var equal = compare(obj, obj1);
+    return equal;
+  }
+
+  function compareObjects(obj, obj1) {
+    if (!isObject(obj1)) return false;
+
+    for (var key in obj1) {
+      if (obj[key] === undefined) {
+        return false;
+      }
+    }
+
+    var equal = compare(obj, obj1);
+    return equal;
+  }
+
+  function compareDates(obj, obj1) {
+    if (!isDate(obj1) || obj.getTime() !== obj1.getTime()) {
+      return false;
+    }
+
+    return true;
   }
 
   /* eslint-disable eqeqeq */
@@ -2608,6 +2051,36 @@
     return Array.prototype.reduce.apply(Object.keys(obj), args);
   }
 
+  function forEach(src, func) {
+    var i = 0;
+
+    if (isArray(src)) {
+      while (i < src.length) {
+        var rst = func(src[i], i, src);
+
+        if (rst === false) {
+          break;
+        }
+
+        i += 1;
+      }
+    } else if (isObject(src)) {
+      var keys = Object.keys(src);
+
+      while (i < keys.length) {
+        var key = keys[i];
+
+        var _rst = func(src[key], key, src);
+
+        if (_rst === false) {
+          break;
+        }
+
+        i += 1;
+      }
+    }
+  }
+
   /*
     returns a new object with the predicate applied to each value
     like map-object, but (value, key, object) are passed to the predicate
@@ -2646,6 +2119,33 @@
 
         if (subEqual) {
           rst = item;
+          return false;
+        }
+      }
+    });
+    return rst;
+  }
+
+  function findIndex(src, func) {
+    var rst = -1;
+    forEach(src, (item, index, obj) => {
+      if (isFunction(func)) {
+        if (func(item, index, obj) === true) {
+          rst = index;
+          return false;
+        }
+      } else if (is(item, func)) {
+        rst = index;
+        return false;
+      } else if (isObject(item) && isObject(func)) {
+        var subEqual = true;
+        forEach(func, (v, k) => {
+          subEqual = isShallowEqual(item[k], v);
+          return subEqual;
+        });
+
+        if (subEqual) {
+          rst = index;
           return false;
         }
       }
@@ -3547,13 +3047,8 @@
     isIphoneXmodel: isIphoneXmodel,
     ieVersion: ieVersion,
     isIE: isIE,
-    // log
-    log: log,
-    logs: logs,
-    removeConsole: removeConsole,
     // arg(arguments)
     args: args,
-    trash: trash,
     noop: noop,
     merge: merge,
     over: over,
@@ -3581,7 +3076,7 @@
     isTypeof: isTypeof,
     construct: construct,
     paramsName: paramsName,
-    eventEmitter: EventEmitter,
+    log: log,
     // object
     properObject: properObject,
     objectDiff: objectDiff,
@@ -3589,10 +3084,6 @@
     deletedDiff: deletedDiff,
     updatedDiff: updatedDiff,
     detailedDiff: detailedDiff,
-    // load
-    loadImages: loadImages,
-    loadjs: loadjs,
-    loadcss: loadcss,
     // json
     toJson: toJson,
     toJSON: toJson,
