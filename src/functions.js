@@ -19,12 +19,6 @@ import isIphoneXmodel from './device/is_iphonex_model';
 import isIE from './device/is_ie';
 import ieVersion from './device/ie_version';
 
-// log
-import log from './log/log';
-import logs from './log/logs';
-import trash from './log/trash';
-import removeConsole from './log/remove_console';
-
 // args
 import args from './args/args';
 import noop from './args/noop';
@@ -56,6 +50,7 @@ import isTypeof from './other/is_typeof';
 import construct from './other/construct';
 import paramsName from './other/params_name';
 import eventEmitter from './other/event_emitter';
+import log from './other/log';
 
 // object
 import properObject from './object/proper_object';
@@ -64,11 +59,6 @@ import addedDiff from './object/added_diff';
 import deletedDiff from './object/deleted_diff';
 import updatedDiff from './object/updated_diff';
 import detailedDiff from './object/detailed_diff';
-
-// load
-import loadImages from './load/load_images';
-import loadjs from './load/loadjs';
-import loadcss from './load/loadcss';
 
 // json
 import toJson from './json/to_json';
@@ -246,13 +236,8 @@ export default {
   isIphoneXmodel,
   ieVersion,
   isIE,
-  // log
-  log,
-  logs,
-  removeConsole,
   // arg(arguments)
   args,
-  trash,
   noop,
   merge,
   over,
@@ -280,6 +265,7 @@ export default {
   isTypeof,
   construct,
   paramsName,
+  log,
   eventEmitter,
   // object
   properObject,
@@ -288,10 +274,6 @@ export default {
   deletedDiff,
   updatedDiff,
   detailedDiff,
-  // load
-  loadImages,
-  loadjs,
-  loadcss,
   // json
   toJson,
   toJSON: toJson,
