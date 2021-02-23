@@ -120,11 +120,6 @@ import lockTouch from './behavior/lock_touch';
 import copyToClipboard from './behavior/copy_to_clipboard';
 import trigger from './behavior/trigger';
 
-// image
-import checkImageSize from './image/check_image_size';
-import imageOptimization from './image/image_optimization';
-import toDataUrl from './image/to_data_url';
-
 // collection
 import clone from './collection/clone';
 import values from './collection/values';
@@ -343,10 +338,6 @@ export default {
   // behavior
   lockTouch,
   copyToClipboard,
-  // image
-  checkImageSize,
-  imageOptimization,
-  toDataUrl,
   // collection
   clone,
   deepClone: clone,
