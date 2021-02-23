@@ -49,7 +49,6 @@ import getType from './other/get_type';
 import isTypeof from './other/is_typeof';
 import construct from './other/construct';
 import paramsName from './other/params_name';
-import eventEmitter from './other/event_emitter';
 import log from './other/log';
 
 // object
@@ -266,7 +265,6 @@ export default {
   construct,
   paramsName,
   log,
-  eventEmitter,
   // object
   properObject,
   objectDiff,
