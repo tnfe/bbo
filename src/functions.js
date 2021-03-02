@@ -70,9 +70,6 @@ import getCookie from './cookie/get_cookie';
 import deleteCookie from './cookie/delete_cookie';
 import parseCookie from './cookie/parse_cookie';
 
-// storage
-import storage from './storage/storage';
-
 // http
 import getUrlParam from './http/get_url_param';
 import setUrlParam from './http/set_url_param';
@@ -284,8 +281,6 @@ export default {
   deleteCookie,
   delCookie: deleteCookie,
   parseCookie,
-  // storage
-  storage,
   // http
   open,
   getUrlParam,
